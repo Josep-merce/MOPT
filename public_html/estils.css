@@ -1,0 +1,323 @@
+/* ============================================================
+   La Mercè · Lògica i Programació — full d'estils compartit
+   Paleta i imatge del web de l'Institut La Mercè
+   ============================================================ */
+
+:root{
+  /* Paleta La Mercè */
+  --merce-red:      #C8102E;   /* vermell de marca */
+  --merce-red-dark: #9E0C22;   /* vermell fosc (hover, èmfasi) */
+  --merce-red-soft: #FBEAEC;   /* tint vermell molt clar (fons suaus) */
+  --ink:            #262626;   /* text principal */
+  --ink-2:          #5A5A5A;   /* text secundari */
+  --ink-3:          #8A8A8A;   /* text apagat */
+  --line:           #E4E4E4;   /* vores */
+  --bg:             #FFFFFF;   /* fons */
+  --bg-soft:        #F7F6F6;   /* fons de secció suau */
+  --hero:           #25201F;   /* banda fosca del hero */
+
+  --r:    14px;
+  --r-sm: 8px;
+  --maxw: 1080px;
+
+  /* accent per pàgina (per defecte, el vermell de marca) */
+  --accent: var(--merce-red);
+}
+
+/* Temes per activitat: cada pàgina conserva el seu color
+   afegint la classe al <body> (p. ex. class="tema-a1") */
+.tema-a0{ --accent:#E0552A; }  /* coral / taronja */
+.tema-a1{ --accent:#2563B0; }  /* blau */
+.tema-a2{ --accent:#6D4AA8; }  /* lila */
+.tema-a3{ --accent:#B45309; }  /* ambre */
+.tema-a4{ --accent:#4F46E5; }  /* índigo */
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; scroll-behavior:smooth; }
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'DM Sans', system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+
+a{ color:var(--merce-red); text-decoration:none; }
+a:hover{ color:var(--merce-red-dark); }
+
+/* ---------- Barra vermella superior ---------- */
+.merce-top{ height:4px; background:var(--merce-red); }
+
+/* ---------- Capçalera ---------- */
+.site-head{
+  background:var(--bg);
+  border-bottom:1px solid var(--line);
+}
+.head-inner{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:14px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  flex-wrap:wrap;
+}
+.brand{ display:flex; flex-direction:column; line-height:1.1; }
+.brand-mark{
+  font-family:'DM Serif Display', Georgia, serif;
+  font-size:1.5rem;
+  color:var(--merce-red);
+  letter-spacing:.01em;
+}
+.brand-sub{
+  font-size:.72rem;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:var(--ink-3);
+  margin-top:2px;
+}
+.head-course{
+  font-size:.82rem;
+  font-weight:600;
+  color:var(--ink-2);
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+/* ---------- Hero ---------- */
+.hero{
+  background:
+    radial-gradient(900px 300px at 80% -20%, rgba(200,16,46,.35), transparent 60%),
+    var(--hero);
+  color:#fff;
+  border-bottom:4px solid var(--merce-red);
+}
+.hero-inner{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding:64px 24px 60px;
+}
+.hero-eyebrow{
+  font-size:.78rem;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  color:#E9B7BE;
+  margin:0 0 14px;
+}
+.hero-title{
+  font-family:'DM Serif Display', Georgia, serif;
+  font-size:clamp(2.1rem, 5.2vw, 3.4rem);
+  line-height:1.08;
+  margin:0 0 16px;
+  font-weight:400;
+}
+.hero-lead{
+  font-size:1.08rem;
+  color:#D9D4D3;
+  max-width:54ch;
+  margin:0;
+}
+
+/* ---------- Contenidor general ---------- */
+.wrap{ max-width:var(--maxw); margin:0 auto; padding:0 24px; }
+
+/* ---------- Fila de dades (com les xifres del web) ---------- */
+.facts{
+  display:flex;
+  flex-wrap:wrap;
+  gap:16px;
+  margin:-34px auto 8px;
+  position:relative;
+}
+.fact{
+  flex:1 1 150px;
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  padding:18px 16px;
+  text-align:center;
+  box-shadow:0 6px 20px rgba(0,0,0,.05);
+}
+.fact-num{
+  display:block;
+  font-family:'DM Serif Display', Georgia, serif;
+  font-size:2rem;
+  color:var(--merce-red);
+  line-height:1;
+}
+.fact-label{
+  display:block;
+  font-size:.82rem;
+  color:var(--ink-2);
+  margin-top:6px;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+
+/* ---------- Seccions AEA ---------- */
+.aea{ margin:56px 0; }
+.aea-head{ margin-bottom:22px; }
+.aea-tag{
+  display:inline-block;
+  font-family:'JetBrains Mono', monospace;
+  font-size:.76rem;
+  font-weight:700;
+  letter-spacing:.08em;
+  color:var(--merce-red);
+  background:var(--merce-red-soft);
+  padding:4px 11px;
+  border-radius:20px;
+}
+.aea-title{
+  font-family:'DM Serif Display', Georgia, serif;
+  font-size:clamp(1.6rem, 3.4vw, 2.1rem);
+  color:var(--ink);
+  margin:12px 0 8px;
+  font-weight:400;
+}
+.aea-desc{
+  font-size:1rem;
+  color:var(--ink-2);
+  max-width:64ch;
+  margin:0;
+}
+
+/* ---------- Graella de targetes d'activitat ---------- */
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(270px, 1fr));
+  gap:18px;
+}
+.card{
+  display:flex;
+  flex-direction:column;
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  padding:22px 22px 18px;
+  color:var(--ink);
+  position:relative;
+  overflow:hidden;
+  transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+}
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0 auto 0 0;
+  width:4px;
+  background:var(--merce-red);
+  transform:scaleY(0);
+  transform-origin:top;
+  transition:transform .16s ease;
+}
+.card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 28px rgba(0,0,0,.09);
+  border-color:#d9d9d9;
+}
+.card:hover::before{ transform:scaleY(1); }
+.card-num{
+  font-family:'JetBrains Mono', monospace;
+  font-size:1.05rem;
+  font-weight:700;
+  color:var(--merce-red);
+  background:var(--merce-red-soft);
+  width:46px; height:46px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:10px;
+  margin-bottom:14px;
+}
+.card-title{
+  font-size:1.18rem;
+  font-weight:700;
+  margin:0 0 8px;
+  color:var(--ink);
+}
+.card-text{
+  font-size:.92rem;
+  color:var(--ink-2);
+  margin:0 0 18px;
+  flex:1;
+}
+.card-foot{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-top:1px solid var(--line);
+  padding-top:13px;
+}
+.crit{
+  font-family:'JetBrains Mono', monospace;
+  font-size:.74rem;
+  color:var(--ink-3);
+}
+.go{
+  font-size:.86rem;
+  font-weight:600;
+  color:var(--merce-red);
+}
+.card:hover .go{ color:var(--merce-red-dark); }
+
+/* ---------- Bloc "en preparació" (AEA2) ---------- */
+.soon{
+  border:1px dashed #D6D0D1;
+  border-radius:var(--r);
+  background:var(--bg-soft);
+  padding:34px 28px;
+  text-align:center;
+  color:var(--ink-2);
+}
+.soon-badge{
+  display:inline-block;
+  font-family:'JetBrains Mono', monospace;
+  font-size:.76rem;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  border:1px solid var(--line);
+  background:var(--bg);
+  padding:4px 12px;
+  border-radius:20px;
+  margin-bottom:12px;
+}
+.soon p{ margin:0; font-size:.95rem; }
+
+/* ---------- Peu ---------- */
+.site-foot{
+  margin-top:64px;
+  border-top:1px solid var(--line);
+  background:var(--bg-soft);
+}
+.foot-inner{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:8px;
+  padding-top:22px;
+  padding-bottom:22px;
+  font-size:.82rem;
+  color:var(--ink-3);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width:560px){
+  .hero-inner{ padding:48px 22px 44px; }
+  .facts{ margin-top:-24px; }
+  .fact{ flex-basis:calc(50% - 8px); }
+  .head-course{ display:none; }
+}
+
+/* ---------- Accessibilitat ---------- */
+a:focus-visible, .card:focus-visible{
+  outline:2px solid var(--merce-red);
+  outline-offset:3px;
+}
+@media (prefers-reduced-motion: reduce){
+  *{ transition:none !important; scroll-behavior:auto !important; }
+  .card:hover{ transform:none; }
+}
