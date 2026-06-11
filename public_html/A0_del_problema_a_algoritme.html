@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A0 · Del problema a l'algoritme — RA2 Pensament Computacional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #f7f5f0;
+      --card:         #ffffff;
+      --ink:          #1c1917;
+      --ink-2:        #57534e;
+      --ink-3:        #a8a29e;
+      --border:       #e7e5e4;
+      --accent:       #9a3412;
+      --accent-mid:   #c2410c;
+      --accent-bg:    #fff7ed;
+      --accent-bdr:   #fed7aa;
+      --blue:         #1e40af;
+      --blue-bg:      #eff6ff;
+      --blue-bdr:     #bfdbfe;
+      --green:        #166534;
+      --green-bg:     #f0fdf4;
+      --green-bdr:    #bbf7d0;
+      --red:          #991b1b;
+      --red-bg:       #fef2f2;
+      --red-bdr:      #fecaca;
+      --yellow:       #713f12;
+      --yellow-bg:    #fefce8;
+      --yellow-bdr:   #fef08a;
+      --code-bg:      #1e293b;
+      --code-text:    #e2e8f0;
+      --r:            10px;
+      --r-sm:         6px;
+    }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .wrap { max-width: 820px; margin: 0 auto; padding: 0 24px 80px; }
+
+    /* ─── HEADER ─── */
+    .page-header {
+      padding: 48px 0 36px;
+      border-bottom: 1.5px solid var(--border);
+      margin-bottom: 52px;
+    }
+    .meta-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .badge {
+      font-size: 11px; font-weight: 600; padding: 3px 11px;
+      border-radius: 20px; letter-spacing: 0.05em; text-transform: uppercase;
+    }
+    .b-course  { background: var(--ink); color: #fff; }
+    .b-ra      { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-bdr); }
+    .b-act     { background: var(--accent-mid); color: #fff; }
+    .b-new     { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-bdr); }
+
+    .page-title {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1.15; margin-bottom: 10px;
+    }
+    .page-sub { font-size: 17px; color: var(--ink-2); margin-bottom: 24px; }
+
+    .obj-box {
+      display: flex; gap: 14px; align-items: flex-start;
+      background: var(--accent-bg); border: 1px solid var(--accent-bdr);
+      border-radius: var(--r); padding: 18px 22px;
+    }
+    .obj-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+    .obj-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; color: var(--accent-mid); margin-bottom: 4px;
+    }
+    .obj-text { font-size: 14px; color: var(--ink-2); }
+
+    /* ─── SECTIONS ─── */
+    .section { margin-bottom: 60px; }
+    .sec-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 28px; }
+    .sec-num {
+      font-family: 'DM Serif Display', serif; font-size: 3rem;
+      color: var(--border); line-height: 1; flex-shrink: 0; user-select: none;
+    }
+    .sec-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.5rem; line-height: 1.3; }
+    .sec-sub { font-size: 13px; color: var(--ink-3); margin-top: 3px; }
+
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); }
+
+    /* ─── INFO BOXES ─── */
+    .ibox { border-radius: var(--r); padding: 16px 20px; margin-bottom: 20px; }
+    .ibox-label {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.06em; margin-bottom: 6px;
+    }
+    .ibox-text { font-size: 14px; line-height: 1.65; }
+    .ibox.blue  { background: var(--blue-bg);   border: 1px solid var(--blue-bdr); }
+    .ibox.green { background: var(--green-bg);  border: 1px solid var(--green-bdr); }
+    .ibox.yellow{ background: var(--yellow-bg); border: 1px solid var(--yellow-bdr); }
+    .ibox.blue   .ibox-label, .ibox.blue   .ibox-text  { color: var(--blue); }
+    .ibox.green  .ibox-label, .ibox.green  .ibox-text  { color: var(--green); }
+    .ibox.yellow .ibox-label, .ibox.yellow .ibox-text  { color: var(--yellow); }
+
+    /* ─── REASON / PHASE GRID ─── */
+    .reason-grid { display: grid; gap: 10px; }
+    .reason-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 14px 16px; background: var(--bg);
+      border-radius: var(--r-sm); border: 1px solid var(--border);
+    }
+    .reason-num {
+      min-width: 30px; height: 30px; background: var(--accent-mid); color: #fff;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600; flex-shrink: 0; margin-top: 1px;
+    }
+    .reason-title { font-weight: 600; font-size: 14px; color: var(--ink); margin-bottom: 4px; }
+    .reason-text  { font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+    .reason-text code, .reason-text .kw {
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      background: var(--accent-bg); padding: 1px 6px; border-radius: 3px;
+    }
+
+    /* ─── CODE BLOCK ─── */
+    .motiv-code {
+      background: var(--code-bg); border-radius: var(--r-sm);
+      padding: 16px 20px; margin-bottom: 18px;
+      font-family: 'JetBrains Mono', monospace; font-size: 13px;
+      color: var(--code-text); line-height: 2; overflow-x: auto;
+    }
+    .pseudo-out {
+      font-family: 'JetBrains Mono', monospace; font-size: 13px;
+      background: var(--code-bg); color: var(--code-text);
+      padding: 16px 20px; border-radius: var(--r-sm);
+      line-height: 1.95; white-space: pre-wrap; margin: 0;
+    }
+    .kw  { color: #fbbf24; font-weight: 500; }
+    .var { color: #38bdf8; }
+    .str { color: #4ade80; }
+    .num { color: #f472b6; }
+    .cmt { color: #64748b; }
+    .code-label {
+      font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.09em; color: #64748b; margin-bottom: 8px;
+    }
+
+    /* ─── PROCESS FLOW (entrada-procés-sortida) ─── */
+    .io-flow {
+      display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; align-items: center;
+      gap: 8px; margin-bottom: 22px; text-align: center;
+    }
+    .io-box {
+      padding: 14px 10px; border-radius: var(--r-sm); border: 1px solid var(--border);
+      background: var(--card); font-size: 13px; font-weight: 600;
+    }
+    .io-box.in   { background: var(--blue-bg);   border-color: var(--blue-bdr);   color: var(--blue); }
+    .io-box.proc { background: var(--accent-bg); border-color: var(--accent-bdr); color: var(--accent); }
+    .io-box.out  { background: var(--green-bg);  border-color: var(--green-bdr);  color: var(--green); }
+    .io-box small { display: block; font-weight: 400; font-size: 11px; margin-top: 3px; opacity: .85; }
+    .io-arrow { font-size: 20px; color: var(--ink-3); }
+    @media (max-width: 600px) {
+      .io-flow { grid-template-columns: 1fr; }
+      .io-arrow { transform: rotate(90deg); justify-self: center; }
+    }
+
+    /* ─── SPEC TABLE (anàlisi) ─── */
+    .spec-wrap {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r); overflow: hidden; margin-bottom: 20px;
+    }
+    .spec-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .spec-table th {
+      text-align: left; padding: 10px 14px; font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3);
+      border-bottom: 1.5px solid var(--border); background: #fafaf8;
+    }
+    .spec-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .spec-table tr:last-child td { border-bottom: none; }
+    .spec-role { font-weight: 600; color: var(--ink); white-space: nowrap; }
+    .spec-table td code {
+      font-family: 'JetBrains Mono', monospace; font-size: 12px;
+      background: var(--bg); padding: 2px 7px; border-radius: 4px; color: var(--accent);
+    }
+
+    /* ─── TOP-DOWN TREE ─── */
+    .tree {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 22px; margin-bottom: 20px; text-align: center;
+    }
+    .tree-root {
+      display: inline-block; padding: 10px 18px; background: var(--ink); color: #fff;
+      border-radius: var(--r-sm); font-size: 13px; font-weight: 600; margin-bottom: 18px;
+    }
+    .tree-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .tree-node {
+      flex: 1 1 120px; min-width: 110px; padding: 10px 12px;
+      background: var(--accent-bg); border: 1px solid var(--accent-bdr);
+      border-radius: var(--r-sm); font-size: 12px; color: var(--accent);
+    }
+    .tree-node small {
+      display: block; margin-top: 5px; font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: var(--ink-2); background: #fff; padding: 3px 6px;
+      border-radius: 3px; border: 1px solid var(--border);
+    }
+
+    /* ─── FLOW DIAGRAM (symbols) ─── */
+    .fdiag {
+      display: flex; flex-direction: column; align-items: center; gap: 0;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 26px 22px; margin-bottom: 14px;
+    }
+    .fnode { font-size: 13px; padding: 9px 18px; text-align: center; max-width: 320px; }
+    .fnode.term  { border-radius: 22px; background: var(--ink); color: #fff; }
+    .fnode.io    { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-bdr);
+                   transform: skewX(-14deg); padding: 9px 26px; }
+    .fnode.io span { display: inline-block; transform: skewX(14deg); }
+    .fnode.proc  { background: var(--accent-bg); color: var(--accent); border: 1px solid var(--accent-bdr);
+                   border-radius: var(--r-sm); font-family: 'JetBrains Mono', monospace; }
+    .fnode.dec   { background: var(--yellow-bg); color: var(--yellow); border: 1.5px solid var(--yellow-bdr);
+                   border-radius: var(--r-sm); font-weight: 600; }
+    .farrow { color: var(--ink-3); font-size: 18px; line-height: 1; margin: 4px 0; }
+    .fcaption { font-size: 12px; color: var(--ink-3); text-align: center; font-style: italic; }
+    .legend { display: grid; gap: 6px; margin-top: 14px; }
+    .legend-item { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--ink-2); }
+    .legend-chip { width: 36px; height: 18px; flex-shrink: 0; border: 1px solid var(--border); }
+    .lc-term { border-radius: 12px; background: var(--ink); }
+    .lc-io   { background: var(--blue-bg); border-color: var(--blue-bdr); transform: skewX(-14deg); }
+    .lc-proc { border-radius: 3px; background: var(--accent-bg); border-color: var(--accent-bdr); }
+    .lc-dec  { background: var(--yellow-bg); border-color: var(--yellow-bdr); }
+
+    /* ─── PSEINT MAP TABLE ─── */
+    .map-wrap {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--r); overflow: hidden; margin-bottom: 20px;
+    }
+    .map-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .map-table th {
+      text-align: left; padding: 10px 14px; font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3);
+      border-bottom: 1.5px solid var(--border); background: #fafaf8;
+    }
+    .map-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .map-table tr:last-child td { border-bottom: none; }
+    .map-ca { color: var(--ink); }
+    .map-ps {
+      font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500;
+      color: var(--accent); background: var(--accent-bg); border: 1px solid var(--accent-bdr);
+      padding: 3px 9px; border-radius: 4px; white-space: nowrap;
+    }
+
+    /* ─── FEATURE LIST ─── */
+    .feat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+    .feat {
+      display: flex; gap: 9px; align-items: flex-start; font-size: 13px; color: var(--ink-2);
+      padding: 11px 14px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-sm);
+    }
+    .feat span { color: var(--green); flex-shrink: 0; }
+    @media (max-width: 600px) { .feat-grid { grid-template-columns: 1fr; } }
+
+    /* ─── EXERCISES BLOCK ─── */
+    .ex-block-head {
+      background: var(--ink); color: #fff;
+      border-radius: var(--r) var(--r) 0 0; padding: 22px 28px; margin-top: 56px;
+    }
+    .ex-block-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; margin-bottom: 4px; }
+    .ex-block-sub { font-size: 13px; color: #a8a29e; }
+    .ex-block-body {
+      background: var(--card); border: 1px solid var(--border);
+      border-top: none; border-radius: 0 0 var(--r) var(--r); padding: 28px;
+    }
+    .exercise { margin-bottom: 36px; padding-bottom: 36px; border-bottom: 1px solid var(--border); }
+    .exercise:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+    .ex-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+    .ex-num {
+      min-width: 30px; height: 30px; background: var(--accent-mid); color: #fff;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600; flex-shrink: 0; margin-top: 2px;
+    }
+    .ex-name  { font-weight: 600; font-size: 15px; color: var(--ink); }
+    .ex-level { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+    .ex-intro { font-size: 13px; color: var(--ink-2); margin-bottom: 16px; }
+
+    /* Interactive items */
+    .qi { padding: 14px 16px; border-radius: var(--r-sm); border: 1px solid var(--border); background: #fafaf9; margin-bottom: 10px; }
+    .qi-text { font-size: 14px; font-style: italic; margin-bottom: 10px; color: var(--ink); }
+    .qi-opts { display: flex; gap: 8px; flex-wrap: wrap; }
+    .qi-btn {
+      padding: 6px 14px; border: 1.5px solid var(--border); border-radius: var(--r-sm);
+      background: #fff; cursor: pointer; font-size: 13px;
+      font-family: 'DM Sans', sans-serif; color: var(--ink-2); transition: border-color 0.12s, background 0.12s;
+    }
+    .qi-btn:hover:not(:disabled) { border-color: var(--ink); color: var(--ink); }
+    .qi-btn:disabled { cursor: default; }
+    .qi-btn.ok   { background: var(--green-bg); border-color: var(--green-bdr); color: var(--green); }
+    .qi-btn.fail { background: var(--red-bg);   border-color: var(--red-bdr);   color: var(--red); }
+    .qi-fb { font-size: 12px; margin-top: 10px; padding: 7px 11px; border-radius: var(--r-sm); display: none; }
+    .qi-fb.ok   { display: block; background: var(--green-bg); color: var(--green); border: 1px solid var(--green-bdr); }
+    .qi-fb.fail { display: block; background: var(--red-bg);   color: var(--red);   border: 1px solid var(--red-bdr); }
+
+    /* Reveal items */
+    .ri { border: 1px solid var(--border); border-radius: var(--r-sm); overflow: hidden; margin-bottom: 12px; }
+    .ri-q { padding: 14px 18px; background: #fafaf9; }
+    .ri-q-text { font-size: 14px; color: var(--ink); margin-bottom: 4px; }
+    .ri-vars { font-size: 12px; color: var(--ink-3); font-style: italic; }
+    .ri-btn {
+      display: inline-flex; align-items: center; gap: 6px; margin-top: 12px;
+      padding: 6px 15px; border: 1.5px solid var(--accent-bdr);
+      border-radius: var(--r-sm); background: var(--accent-bg); color: var(--accent);
+      cursor: pointer; font-size: 12px; font-family: 'DM Sans', sans-serif;
+      font-weight: 600; transition: background 0.12s, color 0.12s, border-color 0.12s;
+    }
+    .ri-btn:hover { background: var(--accent-mid); color: #fff; border-color: var(--accent-mid); }
+    .ri-ans { display: none; padding: 16px 18px; background: var(--accent-bg); border-top: 1px solid var(--accent-bdr); }
+    .ri-ans.show { display: block; }
+    .ri-ans-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--accent-mid); margin-bottom: 8px;
+    }
+    .ri-note { font-size: 13px; color: var(--ink-2); margin-top: 10px; line-height: 1.55; }
+
+    /* ─── FOOTER ─── */
+    .page-footer {
+      margin-top: 52px; padding: 20px 26px;
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;
+    }
+    .footer-next-label { font-size: 12px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; }
+    .footer-next-title { font-size: 15px; font-weight: 500; margin-top: 3px; }
+    .footer-btn {
+      background: var(--accent-mid); color: #fff; padding: 10px 22px;
+      border-radius: 8px; font-size: 14px; font-weight: 500;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    }
+
+    /* ─── PRINT ─── */
+    @media print {
+      body { background: white; font-size: 14px; }
+      .ri-ans { display: block !important; }
+      .ri-btn { display: none; }
+      .ex-block-head { background: #1c1917 !important; -webkit-print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ══════════ HEADER ══════════ -->
+  <header class="page-header">
+    <div class="meta-row">
+      <span class="badge b-course">DAW · Pensament Computacional</span>
+      <span class="badge b-ra">AEA2 · RA2</span>
+      <span class="badge b-act">A0</span>
+      <span class="badge b-new">Activitat introductòria</span>
+    </div>
+    <h1 class="page-title">Del problema a l'algoritme</h1>
+    <p class="page-sub">El punt de partida: aprendre a pensar com un programador i conèixer PSeInt, l'eina amb què treballarem tot el curs.</p>
+    <div class="obj-box">
+      <div class="obj-icon">🎯</div>
+      <div>
+        <div class="obj-label">Objectiu · Fonament de l'AEA2</div>
+        <div class="obj-text">
+          Entendre el procés sistemàtic de resolució de problemes (<strong>anàlisi → disseny → codificació → validació</strong>),
+          conèixer el <strong>pseudocodi</strong> i els <strong>diagrames de flux</strong> com a eines de representació, i fer
+          els primers passos amb <strong>PSeInt</strong>. Aquesta activitat prepara el terreny per als criteris
+          <strong>2.1–2.5</strong> que avaluarem a les activitats A1, A2 i A3.
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══════════ SECCIÓ 1 ══════════ -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">1</span>
+      <div>
+        <h2 class="sec-title">Com resol problemes un programador</h2>
+        <p class="sec-sub">Un mètode rigorós i sistemàtic, no improvisar</p>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:28px; padding:22px 26px;">
+      <p style="font-size:15px; color:var(--ink); margin-bottom:18px; line-height:1.6;">
+        Un <strong>problema</strong> és un assumpte que es planteja per ser resolt. Programar és, en el fons,
+        resoldre problemes amb un ordinador. Però l'ordinador no pensa: només transforma unes
+        <strong>dades d'entrada</strong> en una <strong>informació de sortida</strong> seguint els passos que li indiquem.
+        Aquest "seguir passos" és l'<strong>algoritme</strong>.
+      </p>
+
+      <div class="io-flow">
+        <div class="io-box in">ENTRADA<small>dades</small></div>
+        <div class="io-arrow">→</div>
+        <div class="io-box proc">PROCESSADOR<small>algoritme</small></div>
+        <div class="io-arrow">→</div>
+        <div class="io-box out">SORTIDA<small>informació</small></div>
+      </div>
+
+      <p style="font-size:14px; color:var(--ink-2); margin-bottom:18px; line-height:1.6;">
+        Per arribar a la solució no comencem escrivint codi de cop. Seguim <strong>quatre fases</strong>
+        en ordre. Saltar-se'n una és la causa més habitual de programes que no funcionen:
+      </p>
+
+      <div class="reason-grid">
+        <div class="reason-item">
+          <div class="reason-num">1</div>
+          <div>
+            <div class="reason-title">Anàlisi — entendre el problema</div>
+            <div class="reason-text">Quines dades tinc (entrades)? Què vull obtenir (sortides)? Què cal calcular pel mig? Aquí encara no programem: pensem.</div>
+          </div>
+        </div>
+        <div class="reason-item">
+          <div class="reason-num">2</div>
+          <div>
+            <div class="reason-title">Disseny — crear l'algoritme</div>
+            <div class="reason-text">Escrivim la seqüència ordenada de passos que porta a la solució, normalment en <strong>pseudocodi</strong> o amb un <strong>diagrama de flux</strong>.</div>
+          </div>
+        </div>
+        <div class="reason-item">
+          <div class="reason-num">3</div>
+          <div>
+            <div class="reason-title">Codificació — escriure el programa</div>
+            <div class="reason-text">Traduïm l'algoritme a un llenguatge que la màquina pugui executar. En aquest curs farem servir <strong>PSeInt</strong>.</div>
+          </div>
+        </div>
+        <div class="reason-item">
+          <div class="reason-num">4</div>
+          <div>
+            <div class="reason-title">Execució i validació — comprovar</div>
+            <div class="reason-text">Provem el programa amb dades conegudes i verifiquem que el resultat és correcte. Si no ho és, tornem enrere i corregim.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ibox blue">
+      <div class="ibox-label">Definició · Algoritme</div>
+      <div class="ibox-text">
+        Un <strong>algoritme</strong> és un conjunt ordenat de passos que resol un problema. Sempre ha de complir tres propietats:
+        ha de ser <strong>precís</strong> (l'ordre dels passos és clar), <strong>definit</strong> (amb les mateixes dades dóna sempre
+        el mateix resultat) i <strong>finit</strong> (acaba en un nombre limitat de passos).
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ SECCIÓ 2 ══════════ -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">2</span>
+      <div>
+        <h2 class="sec-title">Anàlisi del problema</h2>
+        <p class="sec-sub">Entrades, sortides i variables · la base del criteri 2.1</p>
+      </div>
+    </div>
+
+    <p style="font-size:14px; color:var(--ink-2); margin-bottom:18px; line-height:1.6;">
+      Analitzar és respondre tres preguntes abans de tocar res: <strong>de què disposo</strong>,
+      <strong>què vull aconseguir</strong> i <strong>quines dades necessito guardar</strong>. Les dades es guarden
+      en <strong>variables</strong>, que tenen un tipus (enter, real, text, lògic…). Vegem-ho amb un exemple clàssic.
+    </p>
+
+    <div class="ibox yellow">
+      <div class="ibox-label">Enunciat</div>
+      <div class="ibox-text">
+        «Llegir el <strong>radi</strong> d'una circumferència i calcular i imprimir la seva <strong>superfície</strong> i la seva <strong>longitud</strong>.»
+      </div>
+    </div>
+
+    <div class="spec-wrap">
+      <table class="spec-table">
+        <thead><tr><th>Element</th><th>Anàlisi</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="spec-role">Entrades</td>
+            <td>El radi de la circumferència → <code>radi</code></td>
+          </tr>
+          <tr>
+            <td class="spec-role">Sortides</td>
+            <td>La superfície → <code>superficie</code> · la longitud → <code>longitud</code></td>
+          </tr>
+          <tr>
+            <td class="spec-role">Càlculs</td>
+            <td><code>superficie = π · radi²</code> &nbsp;·&nbsp; <code>longitud = 2 · π · radi</code></td>
+          </tr>
+          <tr>
+            <td class="spec-role">Variables</td>
+            <td><code>radi</code>, <code>superficie</code>, <code>longitud</code> → totes de tipus <strong>real</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ibox green">
+      <div class="ibox-label">Regla clau</div>
+      <div class="ibox-text">
+        Si no saps distingir clarament les <strong>entrades</strong> de les <strong>sortides</strong>, encara no estàs
+        a punt per dissenyar l'algoritme. Una bona anàlisi estalvia hores de correcció després.
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ SECCIÓ 3 ══════════ -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">3</span>
+      <div>
+        <h2 class="sec-title">Estratègies de disseny</h2>
+        <p class="sec-sub">Tècniques per atacar problemes grans · criteris 2.1, 2.2 i 2.3</p>
+      </div>
+    </div>
+
+    <p style="font-size:14px; color:var(--ink-2); margin-bottom:18px; line-height:1.6;">
+      Davant d'un problema complex no l'ataquem sencer. El pensament computacional ens dóna estratègies
+      que reconeixeràs durant tot el curs perquè són, exactament, els criteris d'avaluació de l'AEA2:
+    </p>
+
+    <div class="reason-grid" style="margin-bottom:24px;">
+      <div class="reason-item">
+        <div class="reason-num">A</div>
+        <div>
+          <div class="reason-title">Descomposició — «divideix i venceràs» <span style="color:var(--accent-mid);">· 2.1</span></div>
+          <div class="reason-text">Dividir un problema gran en subproblemes petits que es poden resoldre per separat.
+          <em>Netejar una casa</em> = netejar la cuina + el bany + cada habitació.</div>
+        </div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-num">B</div>
+        <div>
+          <div class="reason-title">Reconeixement de patrons — analogia <span style="color:var(--accent-mid);">· 2.2</span></div>
+          <div class="reason-text">Recordar un problema semblant ja resolt i reaprofitar la solució. Calcular la
+          <em>mitjana de temperatures</em> es fa igual que la <em>mitjana de notes</em>.</div>
+        </div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-num">C</div>
+        <div>
+          <div class="reason-title">Abstracció — models <span style="color:var(--accent-mid);">· 2.3</span></div>
+          <div class="reason-text">Quedar-nos només amb el que és essencial i ignorar els detalls irrellevants. Una circumferència,
+          per al càlcul, es redueix a un únic dada: el radi.</div>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size:14px; color:var(--ink-2); margin-bottom:14px; line-height:1.6;">
+      En aplicar la descomposició de dalt a baix (<strong>disseny descendent</strong> o <em>top-down</em>), el problema
+      de la circumferència queda així:
+    </p>
+
+    <div class="tree">
+      <div class="tree-root">Càlcul de longitud i superfície</div>
+      <div class="tree-row">
+        <div class="tree-node">Entrada de dades<small>Llegir radi</small></div>
+        <div class="tree-node">Càlcul longitud<small>l = 2·π·radi</small></div>
+        <div class="tree-node">Càlcul superfície<small>s = π·radi²</small></div>
+        <div class="tree-node">Sortida resultats<small>Escriure l, s</small></div>
+      </div>
+    </div>
+    <p class="fcaption">Cada caixa és un subproblema petit i resoluble. Junts resolen el problema sencer.</p>
+  </section>
+
+  <!-- ══════════ SECCIÓ 4 ══════════ -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">4</span>
+      <div>
+        <h2 class="sec-title">Representar l'algoritme</h2>
+        <p class="sec-sub">Dues eines: pseudocodi i diagrama de flux</p>
+      </div>
+    </div>
+
+    <p style="font-size:14px; color:var(--ink-2); margin-bottom:20px; line-height:1.6;">
+      Un cop dissenyat l'algoritme, l'hem d'escriure d'una manera que sigui clara i sense ambigüitats.
+      Tenim dues tècniques que representen <strong>exactament el mateix</strong>:
+    </p>
+
+    <div class="ibox blue">
+      <div class="ibox-label">Pseudocodi</div>
+      <div class="ibox-text">Una aproximació de l'algoritme al llenguatge natural amb paraules clau. És ràpid d'escriure i fàcil de llegir.</div>
+    </div>
+    <div class="ibox blue">
+      <div class="ibox-label">Diagrama de flux</div>
+      <div class="ibox-text">Una representació gràfica amb figures connectades per fletxes que mostren el recorregut del programa.</div>
+    </div>
+
+    <p style="font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-3); margin:24px 0 10px;">El mateix algoritme, en pseudocodi</p>
+    <div class="motiv-code">
+      <span class="kw">Inici</span><br>
+      &nbsp;&nbsp;<span class="kw">Llegir</span> <span class="var">radi</span><br>
+      &nbsp;&nbsp;<span class="var">superficie</span> ← <span class="num">3.1416</span> * <span class="var">radi</span>^<span class="num">2</span><br>
+      &nbsp;&nbsp;<span class="var">longitud</span> ← <span class="num">2</span> * <span class="num">3.1416</span> * <span class="var">radi</span><br>
+      &nbsp;&nbsp;<span class="kw">Escriure</span> <span class="var">superficie</span><br>
+      &nbsp;&nbsp;<span class="kw">Escriure</span> <span class="var">longitud</span><br>
+      <span class="kw">Fi</span>
+    </div>
+
+    <p style="font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-3); margin:8px 0 10px;">El mateix algoritme, en diagrama de flux</p>
+    <div class="fdiag">
+      <div class="fnode term">Inici</div>
+      <div class="farrow">↓</div>
+      <div class="fnode io"><span>Llegir radi</span></div>
+      <div class="farrow">↓</div>
+      <div class="fnode proc">superficie ← 3.1416 · radi²</div>
+      <div class="farrow">↓</div>
+      <div class="fnode proc">longitud ← 2 · 3.1416 · radi</div>
+      <div class="farrow">↓</div>
+      <div class="fnode io"><span>Escriure superficie, longitud</span></div>
+      <div class="farrow">↓</div>
+      <div class="fnode term">Fi</div>
+    </div>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-chip lc-term"></span> <strong>Òval</strong> · inici i fi del programa</div>
+      <div class="legend-item"><span class="legend-chip lc-io"></span> <strong>Paral·lelogram</strong> · entrada (llegir) i sortida (escriure)</div>
+      <div class="legend-item"><span class="legend-chip lc-proc"></span> <strong>Rectangle</strong> · procés o càlcul</div>
+      <div class="legend-item"><span class="legend-chip lc-dec"></span> <strong>Rombe</strong> · decisió (l'estudiarem a l'A1)</div>
+    </div>
+  </section>
+
+  <!-- ══════════ SECCIÓ 5 ══════════ -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">5</span>
+      <div>
+        <h2 class="sec-title">PSeInt: el nostre entorn de treball</h2>
+        <p class="sec-sub">On escriurem i executarem el pseudocodi</p>
+      </div>
+    </div>
+
+    <p style="font-size:14px; color:var(--ink-2); margin-bottom:20px; line-height:1.6;">
+      <strong>PSeInt</strong> (<em>PSeudo Intèrpret</em>) és un programa lliure i gratuït, multiplataforma
+      (Windows, Linux i macOS), pensat per a qui comença a programar. Ens deixa escriure pseudocodi,
+      generar-ne el diagrama de flux automàticament i, sobretot, <strong>executar-lo</strong> per comprovar si funciona.
+    </p>
+
+    <div class="feat-grid">
+      <div class="feat"><span>✓</span> Autocompletat i coloració de sintaxi</div>
+      <div class="feat"><span>✓</span> Genera el diagrama de flux automàticament</div>
+      <div class="feat"><span>✓</span> Executa l'algoritme pas a pas</div>
+      <div class="feat"><span>✓</span> Marca clarament els errors</div>
+      <div class="feat"><span>✓</span> Inspecciona el valor de les variables</div>
+      <div class="feat"><span>✓</span> Converteix el pseudocodi a llenguatges reals</div>
+    </div>
+
+    <div class="ibox yellow">
+      <div class="ibox-label">⚠️ Important · l'idioma de les ordres</div>
+      <div class="ibox-text">
+        Tot el material i les explicacions d'aquest curs són en <strong>català</strong>, però PSeInt funciona
+        amb paraules clau en <strong>castellà</strong>. Per tant, quan escriguis codi a PSeInt has de fer servir
+        <code style="font-family:'JetBrains Mono',monospace;font-size:12px;background:#fff;padding:1px 6px;border-radius:3px;">Escribir</code>,
+        <code style="font-family:'JetBrains Mono',monospace;font-size:12px;background:#fff;padding:1px 6px;border-radius:3px;">Leer</code>,
+        <code style="font-family:'JetBrains Mono',monospace;font-size:12px;background:#fff;padding:1px 6px;border-radius:3px;">Si…Entonces</code>, etc.
+        Els <strong>noms de les variables</strong>, en canvi, els tries tu i poden ser en català (<code style="font-family:'JetBrains Mono',monospace;font-size:12px;background:#fff;padding:1px 6px;border-radius:3px;">radi</code>, <code style="font-family:'JetBrains Mono',monospace;font-size:12px;background:#fff;padding:1px 6px;border-radius:3px;">superficie</code>).
+      </div>
+    </div>
+
+    <p style="font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-3); margin:24px 0 10px;">Equivalències · concepte → ordre PSeInt</p>
+    <div class="map-wrap">
+      <table class="map-table">
+        <thead><tr><th>Concepte (en català)</th><th>Ordre PSeInt (en castellà)</th></tr></thead>
+        <tbody>
+          <tr><td class="map-ca">Inici i fi del programa</td><td><span class="map-ps">Proceso … FinProceso</span></td></tr>
+          <tr><td class="map-ca">Declarar una variable</td><td><span class="map-ps">Definir … Como Real;</span></td></tr>
+          <tr><td class="map-ca">Llegir dades del teclat</td><td><span class="map-ps">Leer variable;</span></td></tr>
+          <tr><td class="map-ca">Mostrar per pantalla</td><td><span class="map-ps">Escribir "text", variable;</span></td></tr>
+          <tr><td class="map-ca">Assignar un valor</td><td><span class="map-ps">variable &lt;- valor;</span></td></tr>
+          <tr><td class="map-ca">Decisió (la veurem a l'A1)</td><td><span class="map-ps">Si … Entonces … SiNo … FinSi</span></td></tr>
+          <tr><td class="map-ca">Repetició (la veurem a l'A1)</td><td><span class="map-ps">Mientras / Para … Hacer</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-3); margin:24px 0 10px;">El nostre primer pseudocodi complet, ja en PSeInt</p>
+    <pre class="pseudo-out"><span class="kw">Proceso</span> Circumferencia
+    <span class="cmt">// Anàlisi: entrada = radi · sortides = superficie, longitud</span>
+    <span class="kw">Definir</span> <span class="var">radi</span>, <span class="var">superficie</span>, <span class="var">longitud</span> <span class="kw">Como</span> <span class="kw">Real</span>;
+
+    <span class="kw">Escribir</span> <span class="str">"Introdueix el radi:"</span>;
+    <span class="kw">Leer</span> <span class="var">radi</span>;
+
+    <span class="var">superficie</span> &lt;- <span class="num">3.1416</span> * <span class="var">radi</span>^<span class="num">2</span>;
+    <span class="var">longitud</span> &lt;- <span class="num">2</span> * <span class="num">3.1416</span> * <span class="var">radi</span>;
+
+    <span class="kw">Escribir</span> <span class="str">"Superfície: "</span>, <span class="var">superficie</span>;
+    <span class="kw">Escribir</span> <span class="str">"Longitud: "</span>, <span class="var">longitud</span>;
+<span class="kw">FinProceso</span></pre>
+    <p class="fcaption" style="margin-top:10px;">Fixa't com cada part del codi surt directament de l'anàlisi de la secció 2. Això és el procés complet: anàlisi → disseny → codificació.</p>
+  </section>
+
+  <!-- ══════════ EXERCICIS ══════════ -->
+  <div class="ex-block-head">
+    <h2 class="ex-block-title">Exercicis de demostració</h2>
+    <p class="ex-block-sub">Quatre nivells · del reconeixement a la codificació · fonament AEA2</p>
+  </div>
+  <div class="ex-block-body">
+
+    <!-- Exercici 1 -->
+    <div class="exercise">
+      <div class="ex-head">
+        <div class="ex-num">1</div>
+        <div>
+          <div class="ex-name">Entrada o sortida?</div>
+          <div class="ex-level">Nivell bàsic · anàlisi del problema</div>
+        </div>
+      </div>
+      <p class="ex-intro">
+        Per a cada dada, decideix si és una <strong>entrada</strong> (la donem nosaltres) o una
+        <strong>sortida</strong> (la calcula el programa). Fes clic i veuràs la resposta a l'instant.
+      </p>
+      <div id="ex1-cont"></div>
+    </div>
+
+    <!-- Exercici 2 -->
+    <div class="exercise">
+      <div class="ex-head">
+        <div class="ex-num">2</div>
+        <div>
+          <div class="ex-name">Quina estratègia de pensament computacional?</div>
+          <div class="ex-level">Nivell bàsic · classificació</div>
+        </div>
+      </div>
+      <p class="ex-intro">
+        Cada situació aplica una estratègia diferent. Tria entre descomposició, reconeixement de patrons o abstracció.
+      </p>
+      <div id="ex2-cont"></div>
+    </div>
+
+    <!-- Exercici 3 -->
+    <div class="exercise">
+      <div class="ex-head">
+        <div class="ex-num">3</div>
+        <div>
+          <div class="ex-name">Fes l'anàlisi del problema</div>
+          <div class="ex-level">Nivell mitjà · entrades, sortides i variables</div>
+        </div>
+      </div>
+      <p class="ex-intro">
+        Llegeix l'enunciat i identifica les entrades, les sortides i el càlcul.
+        Pensa-ho tu primer i després compara amb la solució.
+      </p>
+      <div id="ex3-cont"></div>
+    </div>
+
+    <!-- Exercici 4 -->
+    <div class="exercise">
+      <div class="ex-head">
+        <div class="ex-num">4</div>
+        <div>
+          <div class="ex-name">De l'anàlisi al codi PSeInt</div>
+          <div class="ex-level">Nivell connexió · preview de la codificació</div>
+        </div>
+      </div>
+      <p class="ex-intro">
+        A partir de l'anàlisi, escriu mentalment el pseudocodi de PSeInt
+        (<code style="font-family:'JetBrains Mono',monospace;font-size:12px;">Proceso / Definir / Leer / Escribir / FinProceso</code>)
+        i comprova'l. Recorda: ordres en castellà, variables com vulguis.
+      </p>
+      <div id="ex4-cont"></div>
+    </div>
+
+  </div>
+
+
+</div><!-- /wrap -->
+
+<!-- ══════════ JAVASCRIPT ══════════ -->
+<script>
+/* ── Dades exercici 1 ── */
+const E1 = [
+  { text:'El radi d\'una circumferència.',          ans:'in',  exp:'El donem nosaltres perquè el programa pugui treballar. És una entrada.' },
+  { text:'La superfície que es calcula a partir del radi.', ans:'out', exp:'El programa la calcula i la mostra. És una sortida.' },
+  { text:'Les tres notes d\'un alumne.',            ans:'in',  exp:'Les dades de partida. Són entrades.' },
+  { text:'La mitjana de les tres notes.',           ans:'out', exp:'Resultat d\'un càlcul que fa el programa. És una sortida.' },
+  { text:'El preu i la quantitat d\'un producte.',  ans:'in',  exp:'Dades que aporta l\'usuari. Són entrades.' },
+  { text:'El total a pagar d\'una compra.',         ans:'out', exp:'El programa el calcula (preu × quantitat). És una sortida.' }
+];
+
+/* ── Dades exercici 2 ── */
+const E2 = [
+  {
+    text: 'Per fer una app de gestió la dividim en mòduls: usuaris, productes i comandes.',
+    opts: ['Descomposició','Patrons / analogia','Abstracció'], ans: 0,
+    exp:  'Dividim un problema gran en parts més petites i independents: descomposició (2.1).'
+  },
+  {
+    text: 'Ja sé calcular la mitjana de notes, així que calculo la mitjana de temperatures igual.',
+    opts: ['Descomposició','Patrons / analogia','Abstracció'], ans: 1,
+    exp:  'Reaprofitem una solució coneguda per a un problema semblant: reconeixement de patrons (2.2).'
+  },
+  {
+    text: 'Per gestionar una biblioteca em quedo només amb títol, autor i ISBN; ignoro el color de la tapa.',
+    opts: ['Descomposició','Patrons / analogia','Abstracció'], ans: 2,
+    exp:  'Ens quedem amb l\'essencial i descartem els detalls irrellevants: abstracció (2.3).'
+  },
+  {
+    text: 'El problema "organitzar un viatge" el separo en transport, allotjament i activitats.',
+    opts: ['Descomposició','Patrons / analogia','Abstracció'], ans: 0,
+    exp:  'Trossegem el problema en subproblemes resolubles per separat: descomposició (2.1).'
+  }
+];
+
+/* ── Dades exercici 3 ── */
+const E3 = [
+  {
+    q:    'Llegir la base i l\'alçada d\'un rectangle i calcular-ne l\'àrea.',
+    ans:  'Entrades: base, alcada  ·  Sortida: area  ·  Càlcul: area = base * alcada',
+    exp:  'La base i l\'alçada són dades que aportem (entrades). L\'àrea és el que volem obtenir (sortida). Totes són variables de tipus real.'
+  },
+  {
+    q:    'Llegir tres notes d\'un alumne i mostrar-ne la mitjana.',
+    ans:  'Entrades: nota1, nota2, nota3  ·  Sortida: mitjana  ·  Càlcul: mitjana = (nota1+nota2+nota3) / 3',
+    exp:  'Tres entrades (les notes) i una sortida (la mitjana). El càlcul és la suma dividida entre 3. Variables de tipus real.'
+  },
+  {
+    q:    'Demanar el preu d\'un producte i la quantitat comprada, i mostrar el total a pagar.',
+    ans:  'Entrades: preu, quantitat  ·  Sortida: total  ·  Càlcul: total = preu * quantitat',
+    exp:  'preu (real) i quantitat (enter) són entrades; total (real) és la sortida. Sempre convé pensar el tipus de cada variable.'
+  }
+];
+
+/* ── Dades exercici 4 ── */
+const E4 = [
+  {
+    ctx:    'Anàlisi: entrada = base, alcada · sortida = area · area = base * alcada',
+    pseudo: 'Proceso AreaRectangle\n    Definir base, alcada, area Como Real;\n    Escribir "Introdueix la base:";\n    Leer base;\n    Escribir "Introdueix l\'alçada:";\n    Leer alcada;\n    area <- base * alcada;\n    Escribir "Àrea: ", area;\nFinProceso',
+    exp:    'Cada entrada de l\'anàlisi és un Leer; el càlcul és una assignació amb <- ; la sortida és un Escribir. Observa: ordres en castellà, variables en català.'
+  },
+  {
+    ctx:    'Anàlisi: entrades = nota1, nota2, nota3 · sortida = mitjana',
+    pseudo: 'Proceso Mitjana\n    Definir nota1, nota2, nota3, mitjana Como Real;\n    Escribir "Introdueix les tres notes:";\n    Leer nota1;\n    Leer nota2;\n    Leer nota3;\n    mitjana <- (nota1 + nota2 + nota3) / 3;\n    Escribir "La mitjana és: ", mitjana;\nFinProceso',
+    exp:    'Tres Leer per a les tres entrades. El parèntesi a la suma és imprescindible: sense ell, només es dividiria nota3 entre 3.'
+  },
+  {
+    ctx:    'Anàlisi: entrades = preu, quantitat · sortida = total · total = preu * quantitat',
+    pseudo: 'Proceso TotalCompra\n    Definir preu, total Como Real;\n    Definir quantitat Como Entero;\n    Escribir "Preu del producte:";\n    Leer preu;\n    Escribir "Quantitat:";\n    Leer quantitat;\n    total <- preu * quantitat;\n    Escribir "Total a pagar: ", total;\nFinProceso',
+    exp:    'Aquí la quantitat es declara com Entero (no té sentit comprar 2.5 unitats) i el preu i el total com Real. Triar bé el tipus forma part de l\'anàlisi.'
+  }
+];
+
+/* ── Helpers ── */
+function colorPseudo(text) {
+  return text
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\b(Proceso|FinProceso|Definir|Como|Real|Entero|Logico|Caracter|Texto|Escribir|Leer|Si|Entonces|SiNo|FinSi|Mientras|FinMientras|Para|Hasta|Con|Paso|Hacer|FinPara|Y|O|NO)\b/g,
+             m => `<span class='kw'>${m}</span>`)
+    .replace(/(\/\/[^\n]*)/g, m => `<span class='cmt'>${m}</span>`)
+    .replace(/"([^"]*)"/g, (_, s) => `<span class='str'>"${s}"</span>`);
+}
+
+function reveal(btn, id) {
+  document.getElementById(id).classList.add('show');
+  btn.style.display = 'none';
+}
+
+/* ── Render E1 ── */
+(function() {
+  const c = document.getElementById('ex1-cont');
+  E1.forEach((d, i) => {
+    const div = document.createElement('div');
+    div.className = 'qi';
+    div.innerHTML = `
+      <div class="qi-text">${i+1}. "${d.text}"</div>
+      <div class="qi-opts">
+        <button class="qi-btn" onclick="checkE1(this,${i},'in')">⬇ Entrada</button>
+        <button class="qi-btn" onclick="checkE1(this,${i},'out')">⬆ Sortida</button>
+      </div>
+      <div class="qi-fb" id="e1f${i}"></div>`;
+    c.appendChild(div);
+  });
+})();
+function checkE1(btn, i, choice) {
+  const d = E1[i], fb = document.getElementById('e1f'+i);
+  btn.closest('.qi-opts').querySelectorAll('.qi-btn').forEach(b => b.disabled = true);
+  if (choice === d.ans) {
+    btn.classList.add('ok'); fb.className = 'qi-fb ok'; fb.textContent = '✓ Correcte! ' + d.exp;
+  } else {
+    btn.classList.add('fail');
+    btn.closest('.qi-opts').querySelectorAll('.qi-btn').forEach(b => { if (b !== btn) b.classList.add('ok'); });
+    fb.className = 'qi-fb fail'; fb.textContent = '✗ Incorrecte. ' + d.exp;
+  }
+}
+
+/* ── Render E2 ── */
+(function() {
+  const c = document.getElementById('ex2-cont');
+  E2.forEach((d, i) => {
+    const opts = d.opts.map((o, j) => `<button class="qi-btn" onclick="checkE2(this,${i},${j})">${o}</button>`).join('');
+    const div = document.createElement('div');
+    div.className = 'qi';
+    div.innerHTML = `
+      <div class="qi-text">${i+1}. "${d.text}"</div>
+      <div class="qi-opts">${opts}</div>
+      <div class="qi-fb" id="e2f${i}"></div>`;
+    c.appendChild(div);
+  });
+})();
+function checkE2(btn, i, choice) {
+  const d = E2[i], fb = document.getElementById('e2f'+i);
+  const btns = btn.closest('.qi-opts').querySelectorAll('.qi-btn');
+  btns.forEach(b => b.disabled = true);
+  if (choice === d.ans) {
+    btn.classList.add('ok'); fb.className = 'qi-fb ok'; fb.textContent = '✓ Correcte! ' + d.exp;
+  } else {
+    btn.classList.add('fail'); btns[d.ans].classList.add('ok');
+    fb.className = 'qi-fb fail'; fb.textContent = '✗ Incorrecte. ' + d.exp;
+  }
+}
+
+/* ── Render E3 ── */
+(function() {
+  const c = document.getElementById('ex3-cont');
+  E3.forEach((d, i) => {
+    const div = document.createElement('div');
+    div.className = 'ri';
+    div.innerHTML = `
+      <div class="ri-q">
+        <div class="ri-q-text"><strong>${i+1}.</strong> ${d.q}</div>
+        <button class="ri-btn" onclick="reveal(this,'e3a${i}')">▶ Veure anàlisi</button>
+      </div>
+      <div class="ri-ans" id="e3a${i}">
+        <div class="ri-ans-label">Anàlisi</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--accent);line-height:1.7;">${d.ans}</div>
+        <div class="ri-note">${d.exp}</div>
+      </div>`;
+    c.appendChild(div);
+  });
+})();
+
+/* ── Render E4 ── */
+(function() {
+  const c = document.getElementById('ex4-cont');
+  E4.forEach((d, i) => {
+    const div = document.createElement('div');
+    div.className = 'ri';
+    div.innerHTML = `
+      <div class="ri-q">
+        <div class="ri-q-text">${i+1}. ${d.ctx}</div>
+        <button class="ri-btn" onclick="reveal(this,'e4a${i}')">▶ Veure codi PSeInt</button>
+      </div>
+      <div class="ri-ans" id="e4a${i}">
+        <div class="ri-ans-label">PSeInt</div>
+        <pre class="pseudo-out">${colorPseudo(d.pseudo)}</pre>
+        <div class="ri-note">${d.exp}</div>
+      </div>`;
+    c.appendChild(div);
+  });
+})();
+</script>
+</body>
+</html>

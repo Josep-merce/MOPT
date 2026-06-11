@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A1.3 · Estructures repetitives — RA2 Pensament Computacional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#f7f5f0; --card:#ffffff; --ink:#1c1917; --ink-2:#57534e; --ink-3:#a8a29e;
+      --border:#e7e5e4; --accent:#9a3412; --accent-mid:#c2410c; --accent-bg:#fff7ed; --accent-bdr:#fed7aa;
+      --blue:#1e40af; --blue-bg:#eff6ff; --blue-bdr:#bfdbfe;
+      --green:#166534; --green-bg:#f0fdf4; --green-bdr:#bbf7d0;
+      --red:#991b1b; --red-bg:#fef2f2; --red-bdr:#fecaca;
+      --yellow:#713f12; --yellow-bg:#fefce8; --yellow-bdr:#fef08a;
+      --code-bg:#1e293b; --code-text:#e2e8f0; --r:10px; --r-sm:6px;
+    }
+    body { font-family:'DM Sans',system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.7; font-size:16px; }
+    .wrap { max-width:820px; margin:0 auto; padding:0 24px 80px; }
+    .page-header { padding:48px 0 36px; border-bottom:1.5px solid var(--border); margin-bottom:52px; }
+    .meta-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+    .badge { font-size:11px; font-weight:600; padding:3px 11px; border-radius:20px; letter-spacing:.05em; text-transform:uppercase; }
+    .b-course { background:var(--ink); color:#fff; }
+    .b-ra { background:var(--blue-bg); color:var(--blue); border:1px solid var(--blue-bdr); }
+    .b-act { background:var(--accent-mid); color:#fff; }
+    .b-new { background:var(--green-bg); color:var(--green); border:1px solid var(--green-bdr); }
+    .page-title { font-family:'DM Serif Display',Georgia,serif; font-size:clamp(2rem,5vw,2.8rem); line-height:1.15; margin-bottom:10px; }
+    .page-sub { font-size:17px; color:var(--ink-2); margin-bottom:24px; }
+    .obj-box { display:flex; gap:14px; align-items:flex-start; background:var(--accent-bg); border:1px solid var(--accent-bdr); border-radius:var(--r); padding:18px 22px; }
+    .obj-icon { font-size:20px; flex-shrink:0; margin-top:2px; }
+    .obj-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--accent-mid); margin-bottom:4px; }
+    .obj-text { font-size:14px; color:var(--ink-2); }
+    .section { margin-bottom:60px; }
+    .sec-head { display:flex; align-items:flex-start; gap:16px; margin-bottom:28px; }
+    .sec-num { font-family:'DM Serif Display',serif; font-size:3rem; color:var(--border); line-height:1; flex-shrink:0; user-select:none; }
+    .sec-title { font-family:'DM Serif Display',Georgia,serif; font-size:1.5rem; line-height:1.3; }
+    .sec-sub { font-size:13px; color:var(--ink-3); margin-top:3px; }
+    .lead { font-size:14px; color:var(--ink-2); margin-bottom:18px; line-height:1.6; }
+    .lead code, p code, li code, td code { font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--accent-bg); padding:1px 6px; border-radius:3px; color:var(--accent); }
+    .ibox { border-radius:var(--r); padding:16px 20px; margin-bottom:20px; }
+    .ibox-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px; }
+    .ibox-text { font-size:14px; line-height:1.65; }
+    .ibox.blue { background:var(--blue-bg); border:1px solid var(--blue-bdr); }
+    .ibox.green { background:var(--green-bg); border:1px solid var(--green-bdr); }
+    .ibox.yellow { background:var(--yellow-bg); border:1px solid var(--yellow-bdr); }
+    .ibox.red { background:var(--red-bg); border:1px solid var(--red-bdr); }
+    .ibox.blue .ibox-label, .ibox.blue .ibox-text { color:var(--blue); }
+    .ibox.green .ibox-label, .ibox.green .ibox-text { color:var(--green); }
+    .ibox.yellow .ibox-label, .ibox.yellow .ibox-text { color:var(--yellow); }
+    .ibox.red .ibox-label, .ibox.red .ibox-text { color:var(--red); }
+    .ibox code { background:#ffffffaa; font-family:'JetBrains Mono',monospace; font-size:12px; padding:1px 6px; border-radius:3px; }
+    .demo { margin-bottom:22px; }
+    .demo-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.09em; color:var(--ink-3); margin-bottom:8px; }
+    .pseudo-out { font-family:'JetBrains Mono',monospace; font-size:13px; background:var(--code-bg); color:var(--code-text); padding:16px 20px; border-radius:var(--r-sm); line-height:1.95; white-space:pre-wrap; margin:0; overflow-x:auto; }
+    .exp-box { background:var(--accent-bg); border:1px solid var(--accent-bdr); border-left:3px solid var(--accent-mid); border-radius:0 var(--r-sm) var(--r-sm) 0; padding:13px 16px; margin-top:10px; }
+    .exp-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--accent-mid); margin-bottom:5px; }
+    .exp-text { font-size:13px; color:var(--ink-2); line-height:1.6; }
+    .exp-text code { background:#fff; }
+    .kw { color:#fbbf24; font-weight:500; } .var { color:#38bdf8; } .str { color:#4ade80; } .num { color:#f472b6; } .cmt { color:#64748b; }
+    /* COMPARATIVA LOOPS */
+    .cmp-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:20px; }
+    .cmp { background:var(--card); border:1px solid var(--border); border-radius:var(--r-sm); padding:14px; }
+    .cmp h4 { font-size:13px; font-family:'JetBrains Mono',monospace; color:var(--accent); margin-bottom:8px; }
+    .cmp p { font-size:12px; color:var(--ink-2); line-height:1.5; }
+    @media (max-width:600px){ .cmp-grid { grid-template-columns:1fr; } }
+    /* TAULA */
+    .tbl-wrap { background:var(--card); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; margin-bottom:20px; }
+    .tbl { width:100%; border-collapse:collapse; font-size:14px; }
+    .tbl th { text-align:left; padding:10px 14px; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-3); border-bottom:1.5px solid var(--border); background:#fafaf8; }
+    .tbl td { padding:11px 14px; border-bottom:1px solid var(--border); vertical-align:middle; }
+    .tbl tr:last-child td { border-bottom:none; }
+    .tbl .sym { font-family:'JetBrains Mono',monospace; font-size:14px; font-weight:500; color:var(--accent); background:var(--accent-bg); border:1px solid var(--accent-bdr); padding:2px 9px; border-radius:4px; white-space:nowrap; display:inline-block; }
+    .tbl .ex { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-2); }
+    /* TRAÇA */
+    .trace { width:100%; border-collapse:collapse; font-size:13px; background:var(--card); border:1px solid var(--border); border-radius:var(--r-sm); overflow:hidden; margin-top:10px; }
+    .trace th, .trace td { padding:7px 12px; text-align:center; border-bottom:1px solid var(--border); font-family:'JetBrains Mono',monospace; }
+    .trace th { color:var(--ink-3); font-weight:600; background:#fafaf8; }
+    .trace tr:last-child td { border-bottom:none; }
+    /* EXERCISES */
+    .ex-block-head { background:var(--ink); color:#fff; border-radius:var(--r) var(--r) 0 0; padding:22px 28px; margin-top:56px; }
+    .ex-block-title { font-family:'DM Serif Display',serif; font-size:1.5rem; margin-bottom:4px; }
+    .ex-block-sub { font-size:13px; color:#a8a29e; }
+    .ex-block-body { background:var(--card); border:1px solid var(--border); border-top:none; border-radius:0 0 var(--r) var(--r); padding:28px; }
+    .exercise { margin-bottom:36px; padding-bottom:36px; border-bottom:1px solid var(--border); }
+    .exercise:last-child { margin-bottom:0; padding-bottom:0; border-bottom:none; }
+    .ex-head { display:flex; align-items:flex-start; gap:12px; margin-bottom:14px; }
+    .ex-num { min-width:30px; height:30px; background:var(--accent-mid); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; flex-shrink:0; margin-top:2px; }
+    .ex-name { font-weight:600; font-size:15px; color:var(--ink); }
+    .ex-level { font-size:12px; color:var(--ink-3); margin-top:2px; }
+    .ex-intro { font-size:13px; color:var(--ink-2); margin-bottom:16px; }
+    .qi { padding:14px 16px; border-radius:var(--r-sm); border:1px solid var(--border); background:#fafaf9; margin-bottom:10px; }
+    .qi-text { font-size:14px; margin-bottom:10px; color:var(--ink); }
+    .qi-text code { font-family:'JetBrains Mono',monospace; font-size:13px; background:var(--code-bg); color:var(--code-text); padding:2px 8px; border-radius:4px; }
+    .qi pre.pseudo-out { margin:8px 0 12px; font-size:12px; }
+    .qi-opts { display:flex; gap:8px; flex-wrap:wrap; }
+    .qi-btn { padding:6px 14px; border:1.5px solid var(--border); border-radius:var(--r-sm); background:#fff; cursor:pointer; font-size:13px; font-family:'DM Sans',sans-serif; color:var(--ink-2); transition:border-color .12s,background .12s; }
+    .qi-btn:hover:not(:disabled) { border-color:var(--ink); color:var(--ink); }
+    .qi-btn:disabled { cursor:default; }
+    .qi-btn.ok { background:var(--green-bg); border-color:var(--green-bdr); color:var(--green); }
+    .qi-btn.fail { background:var(--red-bg); border-color:var(--red-bdr); color:var(--red); }
+    .qi-fb { font-size:12px; margin-top:10px; padding:7px 11px; border-radius:var(--r-sm); display:none; }
+    .qi-fb.ok { display:block; background:var(--green-bg); color:var(--green); border:1px solid var(--green-bdr); }
+    .qi-fb.fail { display:block; background:var(--red-bg); color:var(--red); border:1px solid var(--red-bdr); }
+    .ri { border:1px solid var(--border); border-radius:var(--r-sm); overflow:hidden; margin-bottom:12px; }
+    .ri-q { padding:14px 18px; background:#fafaf9; }
+    .ri-q-text { font-size:14px; color:var(--ink); margin-bottom:4px; }
+    .ri-q-text code { font-family:'JetBrains Mono',monospace; font-size:13px; background:var(--code-bg); color:var(--code-text); padding:2px 7px; border-radius:4px; }
+    .ri-btn { display:inline-flex; align-items:center; gap:6px; margin-top:12px; padding:6px 15px; border:1.5px solid var(--accent-bdr); border-radius:var(--r-sm); background:var(--accent-bg); color:var(--accent); cursor:pointer; font-size:12px; font-family:'DM Sans',sans-serif; font-weight:600; transition:background .12s,color .12s,border-color .12s; }
+    .ri-btn:hover { background:var(--accent-mid); color:#fff; border-color:var(--accent-mid); }
+    .ri-ans { display:none; padding:16px 18px; background:var(--accent-bg); border-top:1px solid var(--accent-bdr); }
+    .ri-ans.show { display:block; }
+    .ri-ans-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--accent-mid); margin-bottom:8px; }
+    .ri-note { font-size:13px; color:var(--ink-2); margin-top:10px; line-height:1.55; }
+    @media print {
+      body { background:white; font-size:14px; }
+      .ri-ans { display:block !important; } .ri-btn { display:none; }
+      .ex-block-head { background:#1c1917 !important; -webkit-print-color-adjust:exact; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <div class="meta-row">
+      <span class="badge b-course">DAW · Pensament Computacional</span>
+      <span class="badge b-ra">AEA2 · RA2</span>
+      <span class="badge b-act">A1.3</span>
+      <span class="badge b-new">Estructures repetitives</span>
+    </div>
+    <h1 class="page-title">Repetir sense repetir-se</h1>
+    <p class="page-sub">Quan el programa ha de fer una mateixa feina moltes vegades: <code>Mientras</code>, <code>Repetir</code> i <code>Para</code>.</p>
+    <div class="obj-box">
+      <div class="obj-icon">🎯</div>
+      <div>
+        <div class="obj-label">Objectiu · criteris 2.1 i 2.5</div>
+        <div class="obj-text">
+          Automatitzar tasques repetitives amb bucles, triant l'estructura adequada en cada cas, i dominar les variables
+          que els acompanyen: <strong>comptadors</strong>, <strong>acumuladors</strong> i <strong>indicadors</strong>.
+          Validarem cada bucle executant-lo i comprovant que acaba i dóna el resultat esperat.
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SECCIÓ 1 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">1</span>
+      <div>
+        <h2 class="sec-title">Per què repetir</h2>
+        <p class="sec-sub">Els bucles i el risc del bucle infinit</p>
+      </div>
+    </div>
+    <p class="lead">
+      Imagina que has de sumar 100 nombres o demanar una contrasenya fins que sigui correcta. Escriure 100 línies
+      iguals seria absurd. Les <strong>estructures repetitives</strong> (o <strong>bucles</strong>) executen un bloc
+      d'instruccions diverses vegades. Totes funcionen amb una <strong>condició</strong> que decideix si el bucle
+      continua o s'atura.
+    </p>
+
+    <div class="ibox red">
+      <div class="ibox-label">⚠️ El perill: el bucle infinit</div>
+      <div class="ibox-text">
+        Si la condició no canvia mai, el bucle no s'atura mai i el programa es penja. Dins de tot bucle hi ha d'haver
+        <strong>alguna instrucció que modifiqui</strong> la variable de la condició perquè, tard o d'hora, el bucle acabi.
+      </div>
+    </div>
+
+    <p class="lead">Tenim tres bucles. La diferència clau és <strong>quan</strong> es comprova la condició i si sabem per endavant <strong>quantes vegades</strong> repetirem:</p>
+
+    <div class="cmp-grid">
+      <div class="cmp">
+        <h4>Mientras</h4>
+        <p>Comprova <strong>abans</strong>. Pot no executar-se cap vegada. Per a repeticions de <strong>nombre desconegut</strong>.</p>
+      </div>
+      <div class="cmp">
+        <h4>Repetir</h4>
+        <p>Comprova <strong>al final</strong>. S'executa <strong>com a mínim un cop</strong>. Nombre desconegut, però amb almenys una passada.</p>
+      </div>
+      <div class="cmp">
+        <h4>Para</h4>
+        <p>Repeticions de <strong>nombre conegut</strong>. Gestiona el comptatge automàticament.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓ 2 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">2</span>
+      <div>
+        <h2 class="sec-title">Bucle <code>Mientras</code></h2>
+        <p class="sec-sub">Repeteix mentre la condició sigui certa</p>
+      </div>
+    </div>
+    <p class="lead">
+      El <code>Mientras</code> avalua la condició <strong>abans</strong> d'entrar al bucle. Si és certa, executa el cos
+      i torna a comprovar; quan es fa falsa, surt. Si la primera vegada ja és falsa, el cos no s'executa ni una sola vegada.
+    </p>
+
+    <div class="ibox blue">
+      <div class="ibox-label">Sintaxi</div>
+      <div class="ibox-text"><code>Mientras &lt;condició&gt; Hacer<br>&nbsp;&nbsp;&nbsp;&nbsp;instruccions;<br>FinMientras</code></div>
+    </div>
+
+    <div class="ibox yellow">
+      <div class="ibox-label">Operador nou: «diferent de»</div>
+      <div class="ibox-text">
+        Per dir que dos valors <strong>no</strong> són iguals, PSeInt usa l'operador <code>&lt;&gt;</code>. Amplia la
+        taula d'operadors de comparació de l'A1.1: <code>a &lt;&gt; b</code> és cert quan <code>a</code> i <code>b</code>
+        són diferents. Molt útil per repetir «mentre encara no s'hagi encertat».
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · demanar la clau fins que sigui correcta</div>
+      <pre class="pseudo-out" data-code="Proceso Login
+    Definir secret, clau Como Cadena;
+    secret <- 'asdasd';
+    Escribir 'Digues la clau:';
+    Leer clau;
+    Mientras clau <> secret Hacer
+        Escribir 'Clau incorrecta!';
+        Escribir 'Digues la clau:';
+        Leer clau;
+    FinMientras
+    Escribir 'Benvingut/da!';
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          Demanem la clau <strong>una primera vegada</strong> abans del bucle (si no, la condició no tindria cap valor
+          a comparar). Mentre la clau sigui diferent del secret (<code>clau &lt;&gt; secret</code>), avisem i tornem a
+          demanar-la. Aquesta nova lectura <strong>modifica</strong> la variable de la condició: és el que evita el
+          bucle infinit. Quan l'usuari encerta, la condició es fa falsa i sortim.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓ 3 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">3</span>
+      <div>
+        <h2 class="sec-title">Bucle <code>Repetir … Hasta Que</code></h2>
+        <p class="sec-sub">Repeteix fins que la condició es compleixi</p>
+      </div>
+    </div>
+    <p class="lead">
+      El <code>Repetir</code> executa el cos <strong>primer</strong> i comprova la condició <strong>al final</strong>.
+      Per això s'executa sempre <strong>com a mínim un cop</strong>. A més, funciona a l'inrevés del <code>Mientras</code>:
+      es repeteix <em>mentre la condició és falsa</em> i s'atura <em>quan es fa certa</em>.
+    </p>
+
+    <div class="ibox blue">
+      <div class="ibox-label">Sintaxi</div>
+      <div class="ibox-text"><code>Repetir<br>&nbsp;&nbsp;&nbsp;&nbsp;instruccions;<br>Hasta Que &lt;condició&gt;</code></div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · la mateixa clau, ara amb Repetir</div>
+      <pre class="pseudo-out" data-code="Proceso Login
+    Definir secret, clau Como Cadena;
+    secret <- 'asdasd';
+    Repetir
+        Escribir 'Digues la clau:';
+        Leer clau;
+        Si clau <> secret Entonces
+            Escribir 'Clau incorrecta!';
+        FinSi
+    Hasta Que clau = secret
+    Escribir 'Benvingut/da!';
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          Aquí <strong>no</strong> cal demanar la clau abans del bucle: com que el cos s'executa sempre un cop, la
+          lectura ja hi és a dins. Es repeteix fins que <code>clau = secret</code> sigui cert. Compara-ho amb el
+          <code>Mientras</code>: fa el mateix, però el <code>Repetir</code> és més natural quan l'acció s'ha de fer
+          <strong>almenys una vegada</strong> (com demanar una dada).
+        </div>
+      </div>
+    </div>
+
+    <div class="ibox green">
+      <div class="ibox-label">Mientras o Repetir?</div>
+      <div class="ibox-text">
+        Si pot ser que el bucle <strong>no s'executi cap vegada</strong>, fes servir <code>Mientras</code>.
+        Si sempre s'ha d'executar <strong>almenys un cop</strong> (menús, demanar dades…), <code>Repetir</code> sol ser més clar.
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓ 4 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">4</span>
+      <div>
+        <h2 class="sec-title">Bucle <code>Para</code></h2>
+        <p class="sec-sub">Quan sabem quantes vegades repetirem</p>
+      </div>
+    </div>
+    <p class="lead">
+      Quan coneixem el <strong>nombre exacte</strong> de repeticions, el <code>Para</code> és la millor opció: gestiona
+      ell sol una variable de control que va d'un valor inicial a un de final, augmentant cada volta. Si no indiquem
+      <code>Con Paso</code>, augmenta d'1 en 1.
+    </p>
+
+    <div class="ibox blue">
+      <div class="ibox-label">Sintaxi</div>
+      <div class="ibox-text"><code>Para &lt;var&gt; &lt;- &lt;inici&gt; Hasta &lt;final&gt; [Con Paso &lt;pas&gt;] Hacer<br>&nbsp;&nbsp;&nbsp;&nbsp;instruccions;<br>FinPara</code></div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · escriure de l'1 al 10</div>
+      <pre class="pseudo-out" data-code="Proceso Comptar
+    Definir i Como Entero;
+    Para i <- 1 Hasta 10 Hacer
+        Escribir Sin Saltar i, ' ';
+    FinPara
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          La variable <code>i</code> comença valent 1. Cada volta s'escriu i després augmenta automàticament en 1;
+          el bucle s'atura quan <code>i</code> supera 10. Fixa't que <strong>no</strong> hem d'escriure
+          <code>i &lt;- i + 1</code> enlloc: el <code>Para</code> ho fa per nosaltres. Sortida: <code>1 2 3 4 5 6 7 8 9 10</code>.
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · amb pas diferent d'1</div>
+      <pre class="pseudo-out" data-code="// Descendent, de 10 a 1
+Para i <- 10 Hasta 1 Con Paso -1 Hacer
+    Escribir Sin Saltar i, ' ';
+FinPara
+
+// Només els parells del 2 al 10
+Para i <- 2 Hasta 10 Con Paso 2 Hacer
+    Escribir Sin Saltar i, ' ';
+FinPara"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          Amb <code>Con Paso -1</code> la variable <strong>disminueix</strong> i comptem cap enrere (<code>10 9 8 … 1</code>).
+          Amb <code>Con Paso 2</code> avança de dos en dos i obtenim els parells (<code>2 4 6 8 10</code>). El pas és, doncs,
+          quant canvia la variable a cada volta.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓ 5 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">5</span>
+      <div>
+        <h2 class="sec-title">Comptadors, acumuladors i indicadors</h2>
+        <p class="sec-sub">Tres patrons de variable que viuen dins dels bucles</p>
+      </div>
+    </div>
+    <p class="lead">
+      Els bucles gairebé sempre van acompanyats d'unes variables especials que recullen informació al llarg de les
+      repeticions. Dominar aquests tres patrons et permet resoldre la majoria de problemes amb bucles.
+    </p>
+
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Patró</th><th>Per a què</th><th>S'inicialitza a…</th><th>Dins del bucle</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Comptador</strong></td><td>Comptar quants cops passa una cosa</td><td class="ex">0</td><td class="ex">cont &lt;- cont + 1</td></tr>
+          <tr><td><strong>Acumulador</strong></td><td>Anar sumant (o multiplicant) valors</td><td class="ex">0 (suma) / 1 (producte)</td><td class="ex">suma &lt;- suma + num</td></tr>
+          <tr><td><strong>Indicador</strong></td><td>Recordar si ha passat un fet (sí/no)</td><td class="ex">Falso</td><td class="ex">indicador &lt;- Verdadero</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · comptar i sumar els parells de 5 nombres</div>
+      <pre class="pseudo-out" data-code="Proceso ComptarSumarParells
+    Definir i, num, cont, suma Como Entero;
+    cont <- 0;       // comptador: quants parells
+    suma <- 0;       // acumulador: suma dels parells
+    Para i <- 1 Hasta 5 Hacer
+        Escribir Sin Saltar 'Digues un nombre:';
+        Leer num;
+        Si num % 2 = 0 Entonces
+            cont <- cont + 1;
+            suma <- suma + num;
+        FinSi
+    FinPara
+    Escribir 'Has introduït ', cont, ' nombres parells';
+    Escribir 'La seva suma és ', suma;
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          Abans del bucle, <code>cont</code> i <code>suma</code> es posen a 0. Dins, cada cop que el nombre és parell
+          (<code>num % 2 = 0</code>), el comptador puja en 1 i l'acumulador hi afegeix el nombre. En sortir del bucle,
+          les dues variables ja contenen el total. Aquest és el cor del patró: <strong>inicialitzar fora, actualitzar dins</strong>.
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · indicador (s'ha introduït algun parell?)</div>
+      <pre class="pseudo-out" data-code="Proceso HiHaParell
+    Definir i, num Como Entero;
+    Definir trobat Como Logico;
+    trobat <- Falso;          // encara no n'hem vist cap
+    Para i <- 1 Hasta 5 Hacer
+        Escribir Sin Saltar 'Digues un nombre:';
+        Leer num;
+        Si num % 2 = 0 Entonces
+            trobat <- Verdadero;   // ja n'hi ha almenys un
+        FinSi
+    FinPara
+    Si trobat Entonces
+        Escribir 'Has introduït algun nombre parell';
+    SiNo
+        Escribir 'No has introduït cap nombre parell';
+    FinSi
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          L'indicador <code>trobat</code> comença a <code>Falso</code> (suposem que no ha passat res). En trobar el
+          primer parell, passa a <code>Verdadero</code> i ja no torna enrere. Al final, una simple condició
+          (<code>Si trobat</code>) ens diu si el fet va arribar a passar. És la manera de «recordar» un succés sense
+          comptar-lo.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXERCICIS -->
+  <div class="ex-block-head">
+    <h2 class="ex-block-title">Exercicis de demostració</h2>
+    <p class="ex-block-sub">Quatre nivells · del reconeixement a la codificació · criteris 2.1 i 2.5</p>
+  </div>
+  <div class="ex-block-body">
+
+    <div class="exercise">
+      <div class="ex-head"><div class="ex-num">1</div><div>
+        <div class="ex-name">Quin bucle faries servir?</div>
+        <div class="ex-level">Nivell bàsic · reconeixement</div>
+      </div></div>
+      <p class="ex-intro">Per a cada situació, tria el bucle més adequat.</p>
+      <div id="ex1-cont"></div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-head"><div class="ex-num">2</div><div>
+        <div class="ex-name">Què mostra el bucle?</div>
+        <div class="ex-level">Nivell mitjà · seguiment (traça)</div>
+      </div></div>
+      <p class="ex-intro">Segueix l'execució de cada bucle i tria què s'escriu per pantalla.</p>
+      <div id="ex2-cont"></div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-head"><div class="ex-num">3</div><div>
+        <div class="ex-name">Comptador, acumulador o indicador?</div>
+        <div class="ex-level">Nivell mitjà · patrons de variable</div>
+      </div></div>
+      <p class="ex-intro">Identifica quin patró de variable cal per resoldre cada problema.</p>
+      <div id="ex3-cont"></div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-head"><div class="ex-num">4</div><div>
+        <div class="ex-name">Programa complet</div>
+        <div class="ex-level">Nivell avançat · de l'anàlisi al codi</div>
+      </div></div>
+      <p class="ex-intro">Escriu el programa PSeInt sencer per a cada enunciat. Després obre la solució per comparar.</p>
+      <div id="ex4-cont"></div>
+    </div>
+
+  </div>
+
+</div><!-- /wrap -->
+
+<script>
+/* ── Acoloridor de pseudocodi (escapa &, <, > ABANS de res; marcador sense dígits) ── */
+function colorPseudo(text) {
+  text = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return text.split('\n').map(function(line){
+    var idx = line.indexOf('//');
+    var code = idx >= 0 ? line.slice(0, idx) : line;
+    var comment = idx >= 0 ? line.slice(idx) : '';
+    var strs = [];
+    code = code.replace(/'(?:''|[^'])*'/g, function(m){ strs.push(m); return '\u0001'; });
+    code = code.replace(/\b(Proceso|FinProceso|Algoritmo|FinAlgoritmo|Definir|Como|Entero|Real|Numerico|Numero|Caracter|Texto|Cadena|Logico|Leer|Escribir|Sin|Saltar|Si|Entonces|SiNo|FinSi|Segun|FinSegun|Mientras|FinMientras|Repetir|Hasta|Que|Para|Con|Paso|Hacer|FinPara|Y|O|NO|mod)\b/g, "<span class='kw'>$1</span>");
+    code = code.replace(/\b(Verdadero|Falso|PI)\b/g, "<span class='num'>$1</span>");
+    code = code.replace(/\b(\d+\.?\d*)\b/g, "<span class='num'>$1</span>");
+    var k = 0;
+    code = code.replace(/\u0001/g, function(){ return "<span class='str'>" + strs[k++] + "</span>"; });
+    return code + (comment ? "<span class='cmt'>" + comment + "</span>" : '');
+  }).join('\n');
+}
+document.querySelectorAll('pre[data-code]').forEach(function(pre){
+  pre.innerHTML = colorPseudo(pre.getAttribute('data-code'));
+});
+
+/* ── Exercici 1 ── */
+const E1 = [
+  { t:'Escriure la taula de multiplicar del 7 (del 7×1 al 7×10).', opts:['Mientras','Repetir','Para'], ans:2, exp:'Sabem exactament que són 10 repeticions: el Para és el més net.' },
+  { t:'Demanar nombres fins que l\'usuari escrigui un 0.', opts:['Mientras','Repetir','Para'], ans:1, exp:'No sabem quants en posarà i cal demanar-ne almenys un: Repetir encaixa molt bé (també valdria Mientras amb una lectura prèvia).' },
+  { t:'Mostrar un menú una vegada i tornar-lo a mostrar mentre no es triï "Sortir".', opts:['Mientras','Repetir','Para'], ans:1, exp:'El menú s\'ha de veure com a mínim un cop: Repetir … Hasta Que opcio = sortir.' },
+  { t:'Retirar diners d\'un caixer mentre el saldo sigui suficient (pot ser que no ho sigui d\'entrada).', opts:['Mientras','Repetir','Para'], ans:0, exp:'Si d\'entrada el saldo no arriba, no s\'ha de fer res: cal comprovar abans, amb Mientras.' },
+  { t:'Sumar els 12 imports mensuals d\'estalvi d\'un any.', opts:['Mientras','Repetir','Para'], ans:2, exp:'Nombre conegut de voltes (12): Para amb un acumulador.' }
+];
+(function(){
+  const c = document.getElementById('ex1-cont');
+  E1.forEach((d,i)=>{
+    const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E1',this,${i},${j})">${o}</button>`).join('');
+    const div = document.createElement('div'); div.className='qi';
+    div.innerHTML = `<div class="qi-text">${i+1}. ${d.t}</div><div class="qi-opts">${opts}</div><div class="qi-fb" id="E1f${i}"></div>`;
+    c.appendChild(div);
+  });
+})();
+
+/* ── Exercici 2 ── */
+const E2 = [
+  { code:"Definir i Como Entero;\nPara i <- 1 Hasta 4 Hacer\n    Escribir Sin Saltar i, ' ';\nFinPara",
+    opts:['1 2 3 4','1 2 3','0 1 2 3 4'], ans:0, exp:'i va d\'1 a 4 augmentant d\'1 en 1: escriu 1 2 3 4.' },
+  { code:"Definir i Como Entero;\nPara i <- 10 Hasta 2 Con Paso -2 Hacer\n    Escribir Sin Saltar i, ' ';\nFinPara",
+    opts:['10 8 6 4 2','2 4 6 8 10','10 9 8 ... 2'], ans:0, exp:'Comença a 10 i baixa de 2 en 2 fins a 2: 10 8 6 4 2.' },
+  { code:"Definir n, cont Como Entero;\nn <- 8;\ncont <- 0;\nMientras n > 1 Hacer\n    n <- n / 2;\n    cont <- cont + 1;\nFinMientras\nEscribir cont;",
+    opts:['3','4','8'], ans:0, exp:'8→4 (cont=1), 4→2 (cont=2), 2→1 (cont=3). Quan n=1 la condició n>1 és falsa. Escriu 3.' },
+  { code:"Definir x Como Entero;\nx <- 5;\nRepetir\n    Escribir Sin Saltar x, ' ';\n    x <- x - 1;\nHasta Que x = 2",
+    opts:['5 4 3','5 4 3 2','4 3 2'], ans:0, exp:'Escriu i baixa: 5 (x→4), 4 (x→3), 3 (x→2); quan x=2 la condició es compleix i s\'atura. Escriu 5 4 3.' }
+];
+(function(){
+  const c = document.getElementById('ex2-cont');
+  E2.forEach((d,i)=>{
+    const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E2',this,${i},${j})">${o.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</button>`).join('');
+    const div = document.createElement('div'); div.className='qi';
+    div.innerHTML = `<div class="qi-text">${i+1}. Què s'escriu per pantalla?</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="qi-opts">${opts}</div><div class="qi-fb" id="E2f${i}"></div>`;
+    c.appendChild(div);
+  });
+})();
+
+/* Comprovació compartida E1/E2 */
+const DATA = { E1:E1, E2:E2 };
+function checkQ(grp,btn,i,choice){
+  const d = DATA[grp][i], fb = document.getElementById(grp+'f'+i);
+  const btns = btn.closest('.qi-opts').querySelectorAll('.qi-btn'); btns.forEach(b=>b.disabled=true);
+  if(choice===d.ans){ btn.classList.add('ok'); fb.className='qi-fb ok'; fb.textContent='✓ Correcte! '+d.exp; }
+  else{ btn.classList.add('fail'); btns[d.ans].classList.add('ok'); fb.className='qi-fb fail'; fb.textContent='✗ Incorrecte. '+d.exp; }
+}
+
+/* ── Exercici 3 ── */
+const E3 = [
+  { t:'Saber quants aprovats hi ha en una llista de notes.', ans:'Comptador', exp:'Comptes un succés (nota >= 5): comptador que comença a 0 i puja d\'1 en 1.' },
+  { t:'Calcular la suma total de la compra a partir dels preus de cada producte.', ans:'Acumulador', exp:'Vas sumant valors: acumulador inicialitzat a 0.' },
+  { t:'Saber si en una sèrie de nombres n\'hi ha hagut algun de negatiu.', ans:'Indicador', exp:'Només vols recordar si el fet ha passat (sí/no): indicador lògic que comença a Falso.' },
+  { t:'Multiplicar tots els nombres d\'una llista (el seu producte).', ans:'Acumulador', exp:'Acumules un producte: acumulador inicialitzat a 1 (no a 0, o el resultat seria sempre 0).' },
+  { t:'Comptar quantes vocals té una paraula.', ans:'Comptador', exp:'Comptes ocurrències d\'un succés: comptador a 0 que s\'incrementa.' }
+];
+const E3OPTS = ['Comptador','Acumulador','Indicador'];
+(function(){
+  const c = document.getElementById('ex3-cont');
+  E3.forEach((d,i)=>{
+    const opts = E3OPTS.map(o=>`<button class="qi-btn" onclick="checkE3(this,${i},'${o}')">${o}</button>`).join('');
+    const div = document.createElement('div'); div.className='qi';
+    div.innerHTML = `<div class="qi-text">${i+1}. ${d.t}</div><div class="qi-opts">${opts}</div><div class="qi-fb" id="E3f${i}"></div>`;
+    c.appendChild(div);
+  });
+})();
+function checkE3(btn,i,choice){
+  const d = E3[i], fb = document.getElementById('E3f'+i);
+  const btns = btn.closest('.qi-opts').querySelectorAll('.qi-btn'); btns.forEach(b=>b.disabled=true);
+  if(choice===d.ans){ btn.classList.add('ok'); fb.className='qi-fb ok'; fb.textContent='✓ Correcte! '+d.exp; }
+  else{ btn.classList.add('fail'); btns.forEach(b=>{ if(b.textContent===d.ans) b.classList.add('ok'); }); fb.className='qi-fb fail'; fb.textContent='✗ Incorrecte. '+d.exp; }
+}
+
+/* ── Exercici 4 ── */
+const E4 = [
+  { ctx:'Mostra la taula de multiplicar d\'un nombre que demanis per teclat (de l\'1 al 10).',
+    code:"// Anàlisi\n// Entrada: n (Entero)\n// Sortida: les 10 línies de la taula\n\nProceso TaulaMultiplicar\n    Definir n, i Como Entero;\n    Escribir 'De quin nombre vols la taula?';\n    Leer n;\n    Para i <- 1 Hasta 10 Hacer\n        Escribir n, ' x ', i, ' = ', n * i;\n    FinPara\nFinProceso",
+    exp:'Nombre conegut de voltes (10) → Para. La variable i fa de multiplicador a cada línia.' },
+  { ctx:'Demana nombres fins que s\'introdueixi un 0 i mostra la suma i la mitjana de tots els introduïts (sense comptar el 0).',
+    code:"// Anàlisi\n// Entrades: num (fins a un 0)\n// Sortides: suma i mitjana\n\nProceso SumaMitjana\n    Definir num, suma, cont Como Entero;\n    Definir mitjana Como Real;\n    suma <- 0;\n    cont <- 0;\n    Escribir 'Escriu un nombre (0 per acabar):';\n    Leer num;\n    Mientras num <> 0 Hacer\n        suma <- suma + num;\n        cont <- cont + 1;\n        Escribir 'Escriu un nombre (0 per acabar):';\n        Leer num;\n    FinMientras\n    Si cont > 0 Entonces\n        mitjana <- suma / cont;\n        Escribir 'Suma: ', suma, ' - Mitjana: ', mitjana;\n    SiNo\n        Escribir 'No has introduït cap nombre';\n    FinSi\nFinProceso",
+    exp:'No sabem quants nombres vindran → Mientras amb lectura prèvia. Combinem acumulador (suma) i comptador (cont). El Si final evita dividir per zero.' },
+  { ctx:'Demana un nombre i digues si és primer (només divisible per 1 i per ell mateix).',
+    code:"// Anàlisi\n// Entrada: n (Entero)\n// Sortida: és primer / no és primer\n\nProceso EsPrimer\n    Definir n, i, divisors Como Entero;\n    Escribir 'Escriu un nombre:';\n    Leer n;\n    divisors <- 0;\n    Para i <- 1 Hasta n Hacer\n        Si n % i = 0 Entonces\n            divisors <- divisors + 1;\n        FinSi\n    FinPara\n    Si divisors = 2 Entonces\n        Escribir 'És primer';\n    SiNo\n        Escribir 'No és primer';\n    FinSi\nFinProceso",
+    exp:'Fem servir un comptador de divisors. Si un nombre té exactament 2 divisors (l\'1 i ell mateix), és primer. Validació: 7 → primer; 8 → no.' }
+];
+(function(){
+  const c = document.getElementById('ex4-cont');
+  E4.forEach((d,i)=>{
+    const div = document.createElement('div'); div.className='ri';
+    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><button class="ri-btn" onclick="reveal(this,'E4a${i}')">▶ Veure codi PSeInt</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
+    c.appendChild(div);
+  });
+})();
+
+function reveal(btn,id){ document.getElementById(id).classList.add('show'); btn.style.display='none'; }
+</script>
+</body>
+</html>

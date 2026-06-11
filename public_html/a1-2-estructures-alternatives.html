@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A1.2 · Estructures alternatives — RA2 Pensament Computacional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#f7f5f0; --card:#ffffff; --ink:#1c1917; --ink-2:#57534e; --ink-3:#a8a29e;
+      --border:#e7e5e4; --accent:#9a3412; --accent-mid:#c2410c; --accent-bg:#fff7ed; --accent-bdr:#fed7aa;
+      --blue:#1e40af; --blue-bg:#eff6ff; --blue-bdr:#bfdbfe;
+      --green:#166534; --green-bg:#f0fdf4; --green-bdr:#bbf7d0;
+      --red:#991b1b; --red-bg:#fef2f2; --red-bdr:#fecaca;
+      --yellow:#713f12; --yellow-bg:#fefce8; --yellow-bdr:#fef08a;
+      --code-bg:#1e293b; --code-text:#e2e8f0; --r:10px; --r-sm:6px;
+    }
+    body { font-family:'DM Sans',system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.7; font-size:16px; }
+    .wrap { max-width:820px; margin:0 auto; padding:0 24px 80px; }
+    .page-header { padding:48px 0 36px; border-bottom:1.5px solid var(--border); margin-bottom:52px; }
+    .meta-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+    .badge { font-size:11px; font-weight:600; padding:3px 11px; border-radius:20px; letter-spacing:.05em; text-transform:uppercase; }
+    .b-course { background:var(--ink); color:#fff; }
+    .b-ra { background:var(--blue-bg); color:var(--blue); border:1px solid var(--blue-bdr); }
+    .b-act { background:var(--accent-mid); color:#fff; }
+    .b-new { background:var(--green-bg); color:var(--green); border:1px solid var(--green-bdr); }
+    .page-title { font-family:'DM Serif Display',Georgia,serif; font-size:clamp(2rem,5vw,2.8rem); line-height:1.15; margin-bottom:10px; }
+    .page-sub { font-size:17px; color:var(--ink-2); margin-bottom:24px; }
+    .obj-box { display:flex; gap:14px; align-items:flex-start; background:var(--accent-bg); border:1px solid var(--accent-bdr); border-radius:var(--r); padding:18px 22px; }
+    .obj-icon { font-size:20px; flex-shrink:0; margin-top:2px; }
+    .obj-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--accent-mid); margin-bottom:4px; }
+    .obj-text { font-size:14px; color:var(--ink-2); }
+    .section { margin-bottom:60px; }
+    .sec-head { display:flex; align-items:flex-start; gap:16px; margin-bottom:28px; }
+    .sec-num { font-family:'DM Serif Display',serif; font-size:3rem; color:var(--border); line-height:1; flex-shrink:0; user-select:none; }
+    .sec-title { font-family:'DM Serif Display',Georgia,serif; font-size:1.5rem; line-height:1.3; }
+    .sec-sub { font-size:13px; color:var(--ink-3); margin-top:3px; }
+    .lead { font-size:14px; color:var(--ink-2); margin-bottom:18px; line-height:1.6; }
+    .lead code, p code, li code, td code { font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--accent-bg); padding:1px 6px; border-radius:3px; color:var(--accent); }
+    .ibox { border-radius:var(--r); padding:16px 20px; margin-bottom:20px; }
+    .ibox-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px; }
+    .ibox-text { font-size:14px; line-height:1.65; }
+    .ibox.blue { background:var(--blue-bg); border:1px solid var(--blue-bdr); }
+    .ibox.green { background:var(--green-bg); border:1px solid var(--green-bdr); }
+    .ibox.yellow { background:var(--yellow-bg); border:1px solid var(--yellow-bdr); }
+    .ibox.red { background:var(--red-bg); border:1px solid var(--red-bdr); }
+    .ibox.blue .ibox-label, .ibox.blue .ibox-text { color:var(--blue); }
+    .ibox.green .ibox-label, .ibox.green .ibox-text { color:var(--green); }
+    .ibox.yellow .ibox-label, .ibox.yellow .ibox-text { color:var(--yellow); }
+    .ibox.red .ibox-label, .ibox.red .ibox-text { color:var(--red); }
+    .ibox code { background:#ffffffaa; font-family:'JetBrains Mono',monospace; font-size:12px; padding:1px 6px; border-radius:3px; }
+    .demo { margin-bottom:22px; }
+    .demo-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.09em; color:var(--ink-3); margin-bottom:8px; }
+    .pseudo-out { font-family:'JetBrains Mono',monospace; font-size:13px; background:var(--code-bg); color:var(--code-text); padding:16px 20px; border-radius:var(--r-sm); line-height:1.95; white-space:pre-wrap; margin:0; overflow-x:auto; }
+    .exp-box { background:var(--accent-bg); border:1px solid var(--accent-bdr); border-left:3px solid var(--accent-mid); border-radius:0 var(--r-sm) var(--r-sm) 0; padding:13px 16px; margin-top:10px; }
+    .exp-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--accent-mid); margin-bottom:5px; }
+    .exp-text { font-size:13px; color:var(--ink-2); line-height:1.6; }
+    .exp-text code { background:#fff; }
+    .kw { color:#fbbf24; font-weight:500; } .var { color:#38bdf8; } .str { color:#4ade80; } .num { color:#f472b6; } .cmt { color:#64748b; }
+    /* BRANCH VISUAL */
+    .branch { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:20px; margin-bottom:14px; }
+    .branch-cond { text-align:center; background:var(--yellow-bg); border:1.5px solid var(--yellow-bdr); color:var(--yellow); border-radius:var(--r-sm); padding:9px 14px; font-weight:600; font-size:13px; max-width:380px; margin:0 auto; font-family:'JetBrains Mono',monospace; }
+    .branch-arrow { text-align:center; color:var(--ink-3); font-size:16px; margin:4px 0; }
+    .branch-cols { display:flex; gap:14px; }
+    .branch-col { flex:1; }
+    .branch-tag { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; text-align:center; margin-bottom:6px; }
+    .branch-tag.v { color:var(--green); } .branch-tag.f { color:var(--red); }
+    .branch-act { font-size:13px; text-align:center; padding:10px; border-radius:var(--r-sm); }
+    .branch-act.v { background:var(--green-bg); border:1px solid var(--green-bdr); color:var(--green); }
+    .branch-act.f { background:var(--red-bg); border:1px solid var(--red-bdr); color:var(--red); }
+    .branch-act.skip { background:var(--bg); border:1px dashed var(--border); color:var(--ink-3); font-style:italic; }
+    /* EXERCISES */
+    .ex-block-head { background:var(--ink); color:#fff; border-radius:var(--r) var(--r) 0 0; padding:22px 28px; margin-top:56px; }
+    .ex-block-title { font-family:'DM Serif Display',serif; font-size:1.5rem; margin-bottom:4px; }
+    .ex-block-sub { font-size:13px; color:#a8a29e; }
+    .ex-block-body { background:var(--card); border:1px solid var(--border); border-top:none; border-radius:0 0 var(--r) var(--r); padding:28px; }
+    .exercise { margin-bottom:36px; padding-bottom:36px; border-bottom:1px solid var(--border); }
+    .exercise:last-child { margin-bottom:0; padding-bottom:0; border-bottom:none; }
+    .ex-head { display:flex; align-items:flex-start; gap:12px; margin-bottom:14px; }
+    .ex-num { min-width:30px; height:30px; background:var(--accent-mid); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; flex-shrink:0; margin-top:2px; }
+    .ex-name { font-weight:600; font-size:15px; color:var(--ink); }
+    .ex-level { font-size:12px; color:var(--ink-3); margin-top:2px; }
+    .ex-intro { font-size:13px; color:var(--ink-2); margin-bottom:16px; }
+    .qi { padding:14px 16px; border-radius:var(--r-sm); border:1px solid var(--border); background:#fafaf9; margin-bottom:10px; }
+    .qi-text { font-size:14px; margin-bottom:10px; color:var(--ink); }
+    .qi-text code { font-family:'JetBrains Mono',monospace; font-size:13px; background:var(--code-bg); color:var(--code-text); padding:2px 8px; border-radius:4px; }
+    .qi pre.pseudo-out { margin:8px 0 12px; font-size:12px; }
+    .qi-opts { display:flex; gap:8px; flex-wrap:wrap; }
+    .qi-btn { padding:6px 14px; border:1.5px solid var(--border); border-radius:var(--r-sm); background:#fff; cursor:pointer; font-size:13px; font-family:'DM Sans',sans-serif; color:var(--ink-2); transition:border-color .12s,background .12s; }
+    .qi-btn:hover:not(:disabled) { border-color:var(--ink); color:var(--ink); }
+    .qi-btn:disabled { cursor:default; }
+    .qi-btn.ok { background:var(--green-bg); border-color:var(--green-bdr); color:var(--green); }
+    .qi-btn.fail { background:var(--red-bg); border-color:var(--red-bdr); color:var(--red); }
+    .qi-fb { font-size:12px; margin-top:10px; padding:7px 11px; border-radius:var(--r-sm); display:none; }
+    .qi-fb.ok { display:block; background:var(--green-bg); color:var(--green); border:1px solid var(--green-bdr); }
+    .qi-fb.fail { display:block; background:var(--red-bg); color:var(--red); border:1px solid var(--red-bdr); }
+    .ri { border:1px solid var(--border); border-radius:var(--r-sm); overflow:hidden; margin-bottom:12px; }
+    .ri-q { padding:14px 18px; background:#fafaf9; }
+    .ri-q-text { font-size:14px; color:var(--ink); margin-bottom:4px; }
+    .ri-vars { font-size:12px; color:var(--ink-3); font-style:italic; }
+    .ri-btn { display:inline-flex; align-items:center; gap:6px; margin-top:12px; padding:6px 15px; border:1.5px solid var(--accent-bdr); border-radius:var(--r-sm); background:var(--accent-bg); color:var(--accent); cursor:pointer; font-size:12px; font-family:'DM Sans',sans-serif; font-weight:600; transition:background .12s,color .12s,border-color .12s; }
+    .ri-btn:hover { background:var(--accent-mid); color:#fff; border-color:var(--accent-mid); }
+    .ri-ans { display:none; padding:16px 18px; background:var(--accent-bg); border-top:1px solid var(--accent-bdr); }
+    .ri-ans.show { display:block; }
+    .ri-ans-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--accent-mid); margin-bottom:8px; }
+    .ri-note { font-size:13px; color:var(--ink-2); margin-top:10px; line-height:1.55; }
+    @media print {
+      body { background:white; font-size:14px; }
+      .ri-ans { display:block !important; } .ri-btn { display:none; }
+      .ex-block-head { background:#1c1917 !important; -webkit-print-color-adjust:exact; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <div class="meta-row">
+      <span class="badge b-course">DAW · Pensament Computacional</span>
+      <span class="badge b-ra">AEA2 · RA2</span>
+      <span class="badge b-act">A1.2</span>
+      <span class="badge b-new">Estructures alternatives</span>
+    </div>
+    <h1 class="page-title">Prendre decisions</h1>
+    <p class="page-sub">Quan el programa ha de triar quin camí seguir segons una condició: <code>Si</code>, <code>SiNo</code> i <code>Según</code>.</p>
+    <div class="obj-box">
+      <div class="obj-icon">🎯</div>
+      <div>
+        <div class="obj-label">Objectiu · criteris 2.1 i 2.5</div>
+        <div class="obj-text">
+          Fer que un programa executi unes instruccions o unes altres segons el valor d'una condició. Aprofitarem el
+          raonament lògic de l'AEA1 (condicions certes o falses, connectors <code>Y</code>/<code>O</code>/<code>NO</code>)
+          per controlar el flux, i validarem cada decisió executant el programa amb diferents dades.
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SECCIÓ 1 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">1</span>
+      <div>
+        <h2 class="sec-title">Quan el camí es bifurca</h2>
+        <p class="sec-sub">De la seqüència a la decisió</p>
+      </div>
+    </div>
+    <p class="lead">
+      Fins ara els programes eren <strong>seqüencials</strong>: totes les instruccions s'executaven, una rere l'altra.
+      Però sovint volem que el programa <strong>triï</strong>: mostrar un missatge només en certs casos, fer un càlcul
+      o un altre segons les dades… Per això existeixen les <strong>estructures alternatives</strong>. Totes parteixen
+      d'una <strong>condició</strong> que, en avaluar-se, dóna <strong>Verdadero</strong> o <strong>Falso</strong>
+      (exactament la lògica de l'AEA1) i, segons el resultat, s'executa un bloc d'instruccions o un altre.
+    </p>
+    <div class="ibox blue">
+      <div class="ibox-label">Recorda</div>
+      <div class="ibox-text">
+        Una condició és una expressió lògica: <code>edat &gt;= 18</code>, <code>nota &lt; 5</code>,
+        <code>(es_soci) O (compra &gt; 100)</code>. Pots combinar comparacions amb els connectors
+        <code>Y</code>, <code>O</code> i <code>NO</code> que ja coneixes.
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓ 2 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">2</span>
+      <div>
+        <h2 class="sec-title">Alternativa simple: <code>Si … FinSi</code></h2>
+        <p class="sec-sub">Fer alguna cosa només si es compleix la condició</p>
+      </div>
+    </div>
+    <p class="lead">
+      És la decisió més bàsica: si la condició és certa, s'executen unes accions; si és falsa,
+      <strong>no es fa res</strong> i el programa continua. En tots dos casos, després es continua per la instrucció
+      que hi ha sota el <code>FinSi</code>.
+    </p>
+
+    <div class="ibox blue">
+      <div class="ibox-label">Sintaxi</div>
+      <div class="ibox-text"><code>Si &lt;condició&gt; Entonces<br>&nbsp;&nbsp;&nbsp;&nbsp;accions;<br>FinSi</code></div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · digues si és major d'edat</div>
+      <pre class="pseudo-out" data-code="Proceso MajorEdat
+    Definir edat Como Entero;
+    Escribir 'Quina edat tens?';
+    Leer edat;
+    Si edat >= 18 Entonces
+        Escribir 'Ets major d''edat';
+    FinSi
+    Escribir 'Fi del programa';
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          Si l'usuari escriu <code>20</code>, la condició <code>edat &gt;= 18</code> és certa i es mostra
+          <em>"Ets major d'edat"</em>; si escriu <code>15</code>, és falsa i aquesta línia se salta. En tots dos casos
+          el programa acaba mostrant <em>"Fi del programa"</em>, perquè és fora del <code>Si</code>. Fixa-t'hi: per
+          escriure un apòstrof dins del text el dupliquem (<code>d''edat</code>).
+        </div>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-cond">edat &gt;= 18 ?</div>
+      <div class="branch-arrow">↓</div>
+      <div class="branch-cols">
+        <div class="branch-col">
+          <div class="branch-tag v">Verdadero</div>
+          <div class="branch-act v">Escriu "Ets major d'edat"</div>
+        </div>
+        <div class="branch-col">
+          <div class="branch-tag f">Falso</div>
+          <div class="branch-act skip">no fa res</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓ 3 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">3</span>
+      <div>
+        <h2 class="sec-title">Alternativa doble: <code>Si … SiNo … FinSi</code></h2>
+        <p class="sec-sub">Un camí si es compleix, un altre si no</p>
+      </div>
+    </div>
+    <p class="lead">
+      Quan volem fer una cosa si la condició és certa i <strong>una altra de diferent</strong> si és falsa, afegim el
+      bloc <code>SiNo</code>. Sempre s'executa exactament <strong>un</strong> dels dos blocs, mai els dos ni cap.
+    </p>
+
+    <div class="ibox blue">
+      <div class="ibox-label">Sintaxi</div>
+      <div class="ibox-text"><code>Si &lt;condició&gt; Entonces<br>&nbsp;&nbsp;&nbsp;&nbsp;accions A;<br>SiNo<br>&nbsp;&nbsp;&nbsp;&nbsp;accions B;<br>FinSi</code></div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · major o menor d'edat</div>
+      <pre class="pseudo-out" data-code="Proceso MajorMenor
+    Definir edat Como Entero;
+    Escribir 'Quina edat tens?';
+    Leer edat;
+    Si edat >= 18 Entonces
+        Escribir 'Ets major d''edat';
+    SiNo
+        Escribir 'Ets menor d''edat';
+    FinSi
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          Ara cobrim els dos casos. Amb <code>edat = 20</code> es mostra <em>"Ets major d'edat"</em> (bloc del
+          <code>Entonces</code>); amb <code>edat = 15</code> es mostra <em>"Ets menor d'edat"</em> (bloc del
+          <code>SiNo</code>). Mai s'executen tots dos: la condició només pot ser certa o falsa.
+        </div>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-cond">edat &gt;= 18 ?</div>
+      <div class="branch-arrow">↓</div>
+      <div class="branch-cols">
+        <div class="branch-col">
+          <div class="branch-tag v">Verdadero</div>
+          <div class="branch-act v">Escriu "Ets major d'edat"</div>
+        </div>
+        <div class="branch-col">
+          <div class="branch-tag f">Falso</div>
+          <div class="branch-act f">Escriu "Ets menor d'edat"</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓ 4 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">4</span>
+      <div>
+        <h2 class="sec-title">Condicions encadenades</h2>
+        <p class="sec-sub">Més de dos casos amb <code>Si</code> niats</p>
+      </div>
+    </div>
+    <p class="lead">
+      Quan hi ha <strong>més de dues</strong> possibilitats, podem encadenar diversos <code>Si</code> col·locant-ne un
+      de nou dins del <code>SiNo</code> anterior. L'<strong>ordre</strong> de les condicions importa: s'avaluen de dalt
+      a baix i s'executa la primera que sigui certa.
+    </p>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · positiu, negatiu o zero</div>
+      <pre class="pseudo-out" data-code="Proceso Signe
+    Definir numero Como Entero;
+    Escribir 'Escriu un nombre:';
+    Leer numero;
+    Si numero > 0 Entonces
+        Escribir 'És positiu';
+    SiNo
+        Si numero < 0 Entonces
+            Escribir 'És negatiu';
+        SiNo
+            Escribir 'És zero';
+        FinSi
+    FinSi
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          Primer es comprova si <code>numero &gt; 0</code>. Si no ho és, entrem al <code>SiNo</code> i allà comprovem
+          <code>numero &lt; 0</code>. Si tampoc, només queda una possibilitat: és zero. Aquesta cascada cobreix els tres
+          casos sense solapaments. Amb <code>numero = 0</code>, les dues condicions són falses i s'arriba a
+          <em>"És zero"</em>.
+        </div>
+      </div>
+    </div>
+
+    <div class="ibox yellow">
+      <div class="ibox-label">Compte amb l'ordre</div>
+      <div class="ibox-text">
+        Si poses primer una condició massa àmplia, "atraparà" casos que volies tractar després. Posa sempre les
+        condicions <strong>de la més específica a la més general</strong>.
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓ 5 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">5</span>
+      <div>
+        <h2 class="sec-title">Alternativa múltiple: <code>Según</code></h2>
+        <p class="sec-sub">Triar entre molts valors concrets d'una variable</p>
+      </div>
+    </div>
+    <p class="lead">
+      Quan la decisió depèn dels <strong>valors concrets d'una variable numèrica</strong> (un menú, un dia de la
+      setmana, una nota…), encadenar molts <code>Si</code> es fa pesat. La instrucció <code>Según</code> ho expressa
+      de manera molt més clara: per a cada valor (o grup de valors) indiquem què cal fer.
+    </p>
+
+    <div class="ibox blue">
+      <div class="ibox-label">Sintaxi</div>
+      <div class="ibox-text"><code>Según &lt;variable&gt; Hacer<br>&nbsp;&nbsp;&nbsp;&nbsp;valor1: accions;<br>&nbsp;&nbsp;&nbsp;&nbsp;valor2, valor3: accions;<br>&nbsp;&nbsp;&nbsp;&nbsp;De Otro Modo: accions;<br>FinSegún</code></div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · qualificació segons la nota</div>
+      <pre class="pseudo-out" data-code="Proceso Qualificacio
+    Definir nota Como Entero;
+    Escribir 'Quina nota has tret?';
+    Leer nota;
+    Segun nota Hacer
+        1,2,3,4: Escribir 'Suspès';
+        5: Escribir 'Suficient';
+        6,7: Escribir 'Bé';
+        8: Escribir 'Notable';
+        9,10: Escribir 'Excel·lent';
+        De Otro Modo:
+            Escribir 'Nota incorrecta';
+    FinSegun
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          PSeInt mira el valor de <code>nota</code> i salta directament al cas que coincideix. Diversos valors poden
+          compartir acció separant-los per comes (<code>1,2,3,4</code>). El bloc <code>De Otro Modo</code> és opcional
+          i s'executa només si cap cas anterior coincideix: aquí ens serveix per avisar d'una nota fora de rang
+          (per exemple, <code>11</code>).
+        </div>
+      </div>
+    </div>
+
+    <div class="ibox green">
+      <div class="ibox-label">Según o Si encadenat?</div>
+      <div class="ibox-text">
+        Fes servir <code>Según</code> quan compares una variable amb <strong>valors exactes</strong> (1, 2, 3…).
+        Si necessites <strong>rangs</strong> (<code>nota &gt;= 5</code>) o condicions amb <code>Y</code>/<code>O</code>,
+        has d'usar <code>Si</code> encadenats: <code>Según</code> no admet intervals.
+      </div>
+    </div>
+  </section>
+
+  <!-- EXERCICIS -->
+  <div class="ex-block-head">
+    <h2 class="ex-block-title">Exercicis de demostració</h2>
+    <p class="ex-block-sub">Quatre nivells · del reconeixement a la codificació · criteris 2.1 i 2.5</p>
+  </div>
+  <div class="ex-block-body">
+
+    <div class="exercise">
+      <div class="ex-head"><div class="ex-num">1</div><div>
+        <div class="ex-name">Quina estructura faries servir?</div>
+        <div class="ex-level">Nivell bàsic · reconeixement</div>
+      </div></div>
+      <p class="ex-intro">Per a cada situació, tria l'estructura alternativa més adequada.</p>
+      <div id="ex1-cont"></div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-head"><div class="ex-num">2</div><div>
+        <div class="ex-name">Què mostra el programa?</div>
+        <div class="ex-level">Nivell mitjà · seguiment (traça)</div>
+      </div></div>
+      <p class="ex-intro">Llegeix cada fragment, segueix-ne l'execució amb el valor indicat i tria què s'escriu per pantalla.</p>
+      <div id="ex2-cont"></div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-head"><div class="ex-num">3</div><div>
+        <div class="ex-name">Escriu la condició</div>
+        <div class="ex-level">Nivell mitjà · de l'enunciat a la condició</div>
+      </div></div>
+      <p class="ex-intro">Tradueix cada situació a una estructura <code>Si</code> amb la condició correcta. Pensa-ho i compara amb la solució.</p>
+      <div id="ex3-cont"></div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-head"><div class="ex-num">4</div><div>
+        <div class="ex-name">Programa complet</div>
+        <div class="ex-level">Nivell avançat · de l'anàlisi al codi</div>
+      </div></div>
+      <p class="ex-intro">Escriu el programa PSeInt sencer per a cada enunciat. Després obre la solució per comparar.</p>
+      <div id="ex4-cont"></div>
+    </div>
+
+  </div>
+
+</div><!-- /wrap -->
+
+<script>
+/* ── Acoloridor de pseudocodi (escapa &, <, > ABANS de res) ── */
+function colorPseudo(text) {
+  text = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return text.split('\n').map(function(line){
+    var idx = line.indexOf('//');
+    var code = idx >= 0 ? line.slice(0, idx) : line;
+    var comment = idx >= 0 ? line.slice(idx) : '';
+    var strs = [];
+    code = code.replace(/'(?:''|[^'])*'/g, function(m){ strs.push(m); return '\u0001'; });
+    code = code.replace(/\b(Proceso|FinProceso|Algoritmo|FinAlgoritmo|Definir|Como|Entero|Real|Numerico|Numero|Caracter|Texto|Cadena|Logico|Leer|Escribir|Sin|Saltar|Si|Entonces|SiNo|FinSi|Segun|FinSegun|Hacer|De|Otro|Modo|Mientras|FinMientras|Repetir|Hasta|Que|Para|Con|Paso|FinPara|Y|O|NO|mod)\b/g, "<span class='kw'>$1</span>");
+    code = code.replace(/\b(Verdadero|Falso|PI)\b/g, "<span class='num'>$1</span>");
+    code = code.replace(/\b(\d+\.?\d*)\b/g, "<span class='num'>$1</span>");
+    var k = 0;
+    code = code.replace(/\u0001/g, function(){ return "<span class='str'>" + strs[k++] + "</span>"; });
+    return code + (comment ? "<span class='cmt'>" + comment + "</span>" : '');
+  }).join('\n');
+}
+document.querySelectorAll('pre[data-code]').forEach(function(pre){
+  pre.innerHTML = colorPseudo(pre.getAttribute('data-code'));
+});
+
+/* ── Exercici 1 ── */
+const E1 = [
+  { t:'Mostrar un avís només quan el saldo del compte és negatiu.', opts:['Si simple','Si doble','Según'], ans:0, exp:'Només cal fer alguna cosa en un cas (saldo negatiu); si no, res. Alternativa simple.' },
+  { t:'Dir si un nombre és parell o senar.', opts:['Si simple','Si doble','Según'], ans:1, exp:'Hi ha dos camins excloents (parell / senar): alternativa doble Si–SiNo.' },
+  { t:'A partir del dia de la setmana (1 a 7), escriure el seu nom.', opts:['Si simple','Si doble','Según'], ans:2, exp:'Comparem una variable amb molts valors exactes (1..7): Según és el més clar.' },
+  { t:'Si la nota és 5 o més, escriure "Aprovat"; si no, "Suspès".', opts:['Si simple','Si doble','Según'], ans:1, exp:'Dos resultats segons un rang (nota >= 5): alternativa doble. (Según no admet rangs.)' },
+  { t:'Menú amb opcions 1, 2, 3 i 4 que fan accions diferents.', opts:['Si simple','Si doble','Según'], ans:2, exp:'Valors concrets d\'una variable: cas típic de Según.' }
+];
+(function(){
+  const c = document.getElementById('ex1-cont');
+  E1.forEach((d,i)=>{
+    const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E1',this,${i},${j})">${o}</button>`).join('');
+    const div = document.createElement('div'); div.className='qi';
+    div.innerHTML = `<div class="qi-text">${i+1}. ${d.t}</div><div class="qi-opts">${opts}</div><div class="qi-fb" id="E1f${i}"></div>`;
+    c.appendChild(div);
+  });
+})();
+
+/* ── Exercici 2 ── */
+const E2 = [
+  { code:"Leer edat;   // edat = 16\nSi edat >= 18 Entonces\n    Escribir 'Pots votar';\nSiNo\n    Escribir 'Encara no';\nFinSi",
+    opts:['Pots votar','Encara no'], ans:1, exp:'16 >= 18 és fals, així que s\'executa el bloc SiNo: "Encara no".' },
+  { code:"Leer n;   // n = 0\nSi n > 0 Entonces\n    Escribir 'positiu';\nSiNo\n    Si n < 0 Entonces\n        Escribir 'negatiu';\n    SiNo\n        Escribir 'zero';\n    FinSi\nFinSi",
+    opts:['positiu','negatiu','zero'], ans:2, exp:'0 > 0 fals i 0 < 0 fals; s\'arriba a l\'últim SiNo: "zero".' },
+  { code:"Leer dia;   // dia = 3\nSegun dia Hacer\n    1: Escribir 'dilluns';\n    2: Escribir 'dimarts';\n    3: Escribir 'dimecres';\n    De Otro Modo: Escribir 'altre';\nFinSegun",
+    opts:['dimarts','dimecres','altre'], ans:1, exp:'El valor 3 coincideix amb el cas 3: "dimecres".' },
+  { code:"Leer nota;   // nota = 11\nSegun nota Hacer\n    9,10: Escribir 'Excel·lent';\n    De Otro Modo: Escribir 'Nota incorrecta';\nFinSegun",
+    opts:['Excel·lent','Nota incorrecta'], ans:1, exp:'11 no coincideix amb cap cas, així que entra a De Otro Modo: "Nota incorrecta".' }
+];
+(function(){
+  const c = document.getElementById('ex2-cont');
+  E2.forEach((d,i)=>{
+    const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E2',this,${i},${j})">${o}</button>`).join('');
+    const div = document.createElement('div'); div.className='qi';
+    div.innerHTML = `<div class="qi-text">${i+1}. Amb el valor indicat al comentari, què s'escriu?</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="qi-opts">${opts}</div><div class="qi-fb" id="E2f${i}"></div>`;
+    c.appendChild(div);
+  });
+})();
+
+/* Comprovació compartida E1/E2 */
+const DATA = { E1:E1, E2:E2 };
+function checkQ(grp,btn,i,choice){
+  const d = DATA[grp][i], fb = document.getElementById(grp+'f'+i);
+  const btns = btn.closest('.qi-opts').querySelectorAll('.qi-btn'); btns.forEach(b=>b.disabled=true);
+  if(choice===d.ans){ btn.classList.add('ok'); fb.className='qi-fb ok'; fb.textContent='✓ Correcte! '+d.exp; }
+  else{ btn.classList.add('fail'); btns[d.ans].classList.add('ok'); fb.className='qi-fb fail'; fb.textContent='✗ Incorrecte. '+d.exp; }
+}
+
+/* ── Exercici 3 ── */
+const E3 = [
+  { q:'Permet l\'accés només si l\'usuari és "pepe" i la contrasenya és "1234"; si no, mostra un error.',
+    code:"Si usuari = 'pepe' Y clau = '1234' Entonces\n    Escribir 'Has entrat al sistema';\nSiNo\n    Escribir 'Error d''accés';\nFinSi",
+    exp:'Calen les dues condicions alhora, per això les unim amb Y. Si en falla una, s\'executa el SiNo.' },
+  { q:'Mostra la divisió de a entre b, però evita dividir per zero.',
+    code:"Si b = 0 Entonces\n    Escribir 'No es pot dividir per zero';\nSiNo\n    Escribir a / b;\nFinSi",
+    exp:'Comprovem el cas problemàtic (b = 0) primer. Així només dividim quan és segur fer-ho. Invertir la condició és més clar que escriure "b diferent de 0".' },
+  { q:'Una sol·licitud és "ACCEPTADA" si la nota és 5 o més I l\'edat és 18 o més; en qualsevol altre cas, "DENEGADA".',
+    code:"Si nota >= 5 Y edat >= 18 Entonces\n    Escribir 'ACCEPTADA';\nSiNo\n    Escribir 'DENEGADA';\nFinSi",
+    exp:'Dues condicions de rang unides amb Y. Com que hi ha rangs (>=), cal Si i no Según.' }
+];
+(function(){
+  const c = document.getElementById('ex3-cont');
+  E3.forEach((d,i)=>{
+    const div = document.createElement('div'); div.className='ri';
+    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.q}</div><button class="ri-btn" onclick="reveal(this,'E3a${i}')">▶ Veure solució</button></div><div class="ri-ans" id="E3a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
+    c.appendChild(div);
+  });
+})();
+
+/* ── Exercici 4 ── */
+const E4 = [
+  { ctx:'Demana un nombre enter i digues si és parell o senar.',
+    code:"// Anàlisi\n// Entrada: numero (Entero)\n// Sortida: missatge (parell/senar)\n\nProceso ParellSenar\n    Definir numero Como Entero;\n    Escribir 'Escriu un nombre enter:';\n    Leer numero;\n    Si numero % 2 = 0 Entonces\n        Escribir 'És parell';\n    SiNo\n        Escribir 'És senar';\n    FinSi\nFinProceso",
+    exp:'Un nombre és parell si el residu de dividir-lo entre 2 és 0 (numero % 2 = 0). Validació: amb 4 → parell; amb 7 → senar.' },
+  { ctx:'Demana un nombre i digues si és positiu, negatiu o zero.',
+    code:"// Anàlisi\n// Entrada: numero (Entero)\n// Sortida: positiu / negatiu / zero\n\nProceso Signe\n    Definir numero Como Entero;\n    Escribir 'Escriu un nombre:';\n    Leer numero;\n    Si numero > 0 Entonces\n        Escribir 'És positiu';\n    SiNo\n        Si numero < 0 Entonces\n            Escribir 'És negatiu';\n        SiNo\n            Escribir 'És zero';\n        FinSi\n    FinSi\nFinProceso",
+    exp:'Tres casos → Si encadenat. L\'ordre cobreix positiu, després negatiu i, per descart, zero.' },
+  { ctx:'Demana el número d\'un dia de la setmana (1 a 7) i escriu-ne el nom. Si el número no és vàlid, mostra un error.',
+    code:"// Anàlisi\n// Entrada: dia (Entero, 1..7)\n// Sortida: nom del dia o error\n\nProceso DiaSetmana\n    Definir dia Como Entero;\n    Escribir 'Número del dia (1-7):';\n    Leer dia;\n    Segun dia Hacer\n        1: Escribir 'Dilluns';\n        2: Escribir 'Dimarts';\n        3: Escribir 'Dimecres';\n        4: Escribir 'Dijous';\n        5: Escribir 'Divendres';\n        6: Escribir 'Dissabte';\n        7: Escribir 'Diumenge';\n        De Otro Modo:\n            Escribir 'ERROR: número incorrecte';\n    FinSegun\nFinProceso",
+    exp:'Valors exactes 1..7 → Según. El bloc De Otro Modo captura qualsevol número fora de rang.' }
+];
+(function(){
+  const c = document.getElementById('ex4-cont');
+  E4.forEach((d,i)=>{
+    const div = document.createElement('div'); div.className='ri';
+    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><button class="ri-btn" onclick="reveal(this,'E4a${i}')">▶ Veure codi PSeInt</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
+    c.appendChild(div);
+  });
+})();
+
+function reveal(btn,id){ document.getElementById(id).classList.add('show'); btn.style.display='none'; }
+</script>
+</body>
+</html>
