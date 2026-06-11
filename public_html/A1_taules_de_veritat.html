@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A1 · Taules de veritat — RA1 Raonament Lògic</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #f7f5f0;
+      --card:       #fff;
+      --ink:        #1c1917;
+      --ink-2:      #57534e;
+      --ink-3:      #a8a29e;
+      --border:     #e7e5e4;
+      --blue:       #1e40af;
+      --blue-bg:    #eff6ff;
+      --blue-bdr:   #bfdbfe;
+      --blue-mid:   #378ADD;
+      --green:      #166534;
+      --green-bg:   #f0fdf4;
+      --green-bdr:  #bbf7d0;
+      --red:        #991b1b;
+      --red-bg:     #fef2f2;
+      --red-bdr:    #fecaca;
+      --yellow:     #713f12;
+      --yellow-bg:  #fefce8;
+      --yellow-bdr: #fef08a;
+      --accent:     #9a3412;
+      --accent-mid: #c2410c;
+      --accent-bg:  #fff7ed;
+      --accent-bdr: #fed7aa;
+      --code-bg:    #1e293b;
+      --code-text:  #e2e8f0;
+      --r:          10px;
+      --r-sm:       6px;
+    }
+
+    body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.7; font-size: 16px; }
+    .wrap { max-width: 820px; margin: 0 auto; padding: 0 24px 80px; }
+
+    /* ─── HEADER ─── */
+    .page-header { padding: 48px 0 36px; border-bottom: 1.5px solid var(--border); margin-bottom: 52px; }
+    .meta-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .badge { font-size: 11px; font-weight: 600; padding: 3px 11px; border-radius: 20px; letter-spacing: .05em; text-transform: uppercase; }
+    .b-course { background: var(--ink); color: #fff; }
+    .b-ra     { background: var(--blue-bg); color: var(--blue); border: 1px solid var(--blue-bdr); }
+    .b-act    { background: var(--blue-mid); color: #fff; }
+    .page-title { font-family: 'DM Serif Display', Georgia, serif; font-size: clamp(2rem,5vw,2.8rem); line-height: 1.15; margin-bottom: 10px; }
+    .page-sub { font-size: 17px; color: var(--ink-2); margin-bottom: 24px; }
+    .obj-box { display: flex; gap: 14px; align-items: flex-start; background: var(--blue-bg); border: 1px solid var(--blue-bdr); border-radius: var(--r); padding: 18px 22px; }
+    .obj-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+    .obj-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--blue); margin-bottom: 4px; }
+    .obj-text { font-size: 14px; color: var(--ink-2); }
+
+    /* ─── SECTIONS ─── */
+    .section { margin-bottom: 60px; }
+    .sec-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 28px; }
+    .sec-num { font-family: 'DM Serif Display', serif; font-size: 3rem; color: var(--border); line-height: 1; flex-shrink: 0; user-select: none; }
+    .sec-title { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.5rem; line-height: 1.3; }
+    .sec-sub { font-size: 13px; color: var(--ink-3); margin-top: 3px; }
+
+    /* ─── CARDS & IBOXES ─── */
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); }
+    .ibox { border-radius: var(--r); padding: 16px 20px; margin-bottom: 20px; }
+    .ibox-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 6px; }
+    .ibox-text { font-size: 14px; line-height: 1.65; }
+    .ibox.blue   { background: var(--blue-bg);   border: 1px solid var(--blue-bdr); }
+    .ibox.green  { background: var(--green-bg);  border: 1px solid var(--green-bdr); }
+    .ibox.yellow { background: var(--yellow-bg); border: 1px solid var(--yellow-bdr); }
+    .ibox.blue   .ibox-label { color: var(--blue); }   .ibox.blue   .ibox-text { color: var(--blue); }
+    .ibox.green  .ibox-label { color: var(--green); }  .ibox.green  .ibox-text { color: var(--green); }
+    .ibox.yellow .ibox-label { color: var(--yellow); } .ibox.yellow .ibox-text { color: var(--yellow); }
+
+    /* ─── MOTIVATION BLOCKS ─── */
+    .motiv-code { background: var(--code-bg); border-radius: var(--r-sm); padding: 14px 20px; margin-bottom: 18px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--code-text); line-height: 2; }
+    .reason-grid { display: grid; gap: 10px; }
+    .reason-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px 16px; background: var(--bg); border-radius: var(--r-sm); border: 1px solid var(--border); }
+    .reason-num { min-width: 30px; height: 30px; background: var(--blue-mid); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+    .reason-title { font-weight: 600; font-size: 14px; color: var(--ink); margin-bottom: 4px; }
+    .reason-text { font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+    .reason-text code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--blue-bg); padding: 1px 6px; border-radius: 3px; color: var(--blue); }
+
+    /* ─── CODE COLORS ─── */
+    .kw  { color: #fbbf24; font-weight: 500; }
+    .var { color: #38bdf8; }
+    .str { color: #4ade80; }
+    .cmt { color: #64748b; font-style: italic; }
+
+    /* ─── TRUTH TABLE ─── */
+    .tt-wrap { overflow-x: auto; margin-bottom: 12px; }
+    .tt { border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+    .tt th { padding: 8px 16px; border: 0.5px solid var(--border); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; text-align: center; white-space: nowrap; }
+    .tt th.h-var   { color: var(--blue);  background: var(--blue-bg); }
+    .tt th.h-inter { color: var(--accent-mid); background: var(--accent-bg); }
+    .tt th.h-res   { color: #fff; background: var(--ink); }
+    .tt td { padding: 8px 16px; border: 0.5px solid var(--border); text-align: center; }
+    .tt tr:nth-child(even) td { background: #fafaf8; }
+    .tt td.v { color: var(--green); font-weight: 600; }
+    .tt td.f { color: var(--red);   font-weight: 600; }
+    .tt td.hidden-cell { background: var(--border); color: transparent; user-select: none; }
+    .tt td.interp { text-align: left; font-family: 'DM Sans', sans-serif; color: var(--ink-2); font-size: 13px; padding: 8px 14px; }
+
+    /* ─── OPERATOR CARDS ─── */
+    .op-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 18px 20px; margin-bottom: 16px; }
+    .op-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+    .op-sym { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 500; color: var(--ink); }
+    .op-name { font-size: 16px; font-weight: 600; color: var(--ink); }
+    .op-ex { font-size: 14px; color: var(--ink-2); margin-bottom: 14px; line-height: 1.5; }
+    .op-rule { font-size: 13px; color: var(--blue); margin-top: 12px; line-height: 1.5; background: var(--blue-bg); padding: 10px 14px; border-radius: var(--r-sm); }
+
+    /* ─── CLASSIFICATION BADGES ─── */
+    .class-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; margin-top: 10px; }
+    .class-badge.tauto   { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-bdr); }
+    .class-badge.contra  { background: var(--red-bg);   color: var(--red);   border: 1px solid var(--red-bdr); }
+    .class-badge.conting { background: var(--blue-bg);  color: var(--blue);  border: 1px solid var(--blue-bdr); }
+
+    /* ─── TYPE CARDS (S3) ─── */
+    .type-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+    .type-card { padding: 16px; border-radius: var(--r); border: 1px solid var(--border); }
+    .type-card.tauto  { border-color: var(--green-bdr); background: var(--green-bg); }
+    .type-card.contra { border-color: var(--red-bdr);   background: var(--red-bg); }
+    .type-card.conting { border-color: var(--blue-bdr);  background: var(--blue-bg); }
+    .type-card-sym { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 600; margin-bottom: 6px; }
+    .type-card-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .type-card.tauto  .type-card-sym,.type-card.tauto  .type-card-title { color: var(--green); }
+    .type-card.contra .type-card-sym,.type-card.contra .type-card-title { color: var(--red); }
+    .type-card.conting .type-card-sym,.type-card.conting .type-card-title { color: var(--blue); }
+    .type-card-sub { font-size: 12px; color: var(--ink-2); line-height: 1.45; }
+
+    /* ─── STEP BUILDER ─── */
+    .step-bar { display: flex; align-items: center; gap: 6px; margin-bottom: 16px; }
+    .step-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; border: 1px solid var(--border); background: var(--bg); color: var(--ink-3); flex-shrink: 0; }
+    .step-dot.active { background: var(--blue-mid); color: #fff; border-color: var(--blue-mid); }
+    .step-dot.done   { background: var(--green-bg); color: var(--green); border-color: var(--green-bdr); }
+    .step-line { flex: 1; height: .5px; background: var(--border); max-width: 40px; }
+    .step-label-text { font-size: 13px; color: var(--ink-2); background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 10px 14px; margin-bottom: 12px; line-height: 1.55; }
+
+    /* ─── 2ⁿ GRID ─── */
+    .n-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+    .n-card { padding: 14px; background: var(--card); border: 1px solid var(--border); border-radius: var(--r-sm); text-align: center; }
+    .n-card-num { font-family: 'DM Serif Display', serif; font-size: 26px; color: var(--blue-mid); }
+    .n-card-label { font-size: 11px; color: var(--ink-3); margin-bottom: 6px; }
+    .n-card-result { font-size: 20px; font-weight: 600; color: var(--ink); }
+    .n-card-rlabel { font-size: 11px; color: var(--ink-3); }
+
+    /* ─── EXERCISES ─── */
+    .ex-block-head { background: var(--ink); color: #fff; border-radius: var(--r) var(--r) 0 0; padding: 22px 28px; margin-top: 56px; }
+    .ex-block-title { font-family: 'DM Serif Display', serif; font-size: 1.5rem; margin-bottom: 4px; }
+    .ex-block-sub { font-size: 13px; color: #a8a29e; }
+    .ex-block-body { background: var(--card); border: 1px solid var(--border); border-top: none; border-radius: 0 0 var(--r) var(--r); padding: 28px; }
+    .exercise { margin-bottom: 36px; padding-bottom: 36px; border-bottom: 1px solid var(--border); }
+    .exercise:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+    .ex-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+    .ex-num { min-width: 30px; height: 30px; background: var(--blue-mid); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; flex-shrink: 0; margin-top: 2px; }
+    .ex-name  { font-weight: 600; font-size: 15px; color: var(--ink); }
+    .ex-level { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+    .ex-intro { font-size: 13px; color: var(--ink-2); margin-bottom: 16px; }
+
+    /* ─── INTERACTIVE ITEMS ─── */
+    .qi { padding: 14px 16px; border-radius: var(--r-sm); border: 1px solid var(--border); background: #fafaf9; margin-bottom: 10px; }
+    .qi-opts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .qi-btn { padding: 6px 14px; border: 1.5px solid var(--border); border-radius: var(--r-sm); background: #fff; cursor: pointer; font-size: 13px; font-family: 'DM Sans', sans-serif; color: var(--ink-2); transition: border-color .12s, background .12s; }
+    .qi-btn:hover:not(:disabled) { border-color: var(--ink); color: var(--ink); }
+    .qi-btn:disabled { cursor: default; }
+    .qi-btn.ok   { background: var(--green-bg); border-color: var(--green-bdr); color: var(--green); }
+    .qi-btn.fail { background: var(--red-bg);   border-color: var(--red-bdr);   color: var(--red); }
+    .qi-fb { font-size: 12px; margin-top: 10px; padding: 7px 11px; border-radius: var(--r-sm); display: none; }
+    .qi-fb.ok   { display: block; background: var(--green-bg); color: var(--green); border: 1px solid var(--green-bdr); }
+    .qi-fb.fail { display: block; background: var(--red-bg);   color: var(--red);   border: 1px solid var(--red-bdr); }
+
+    /* ─── REVEAL ITEMS ─── */
+    .ri { border: 1px solid var(--border); border-radius: var(--r-sm); overflow: hidden; margin-bottom: 12px; }
+    .ri-q { padding: 14px 18px; background: #fafaf9; }
+    .ri-q-text { font-size: 14px; color: var(--ink); margin-bottom: 4px; }
+    .ri-btn { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 6px 15px; border: 1.5px solid var(--blue-bdr); border-radius: var(--r-sm); background: var(--blue-bg); color: var(--blue); cursor: pointer; font-size: 12px; font-family: 'DM Sans', sans-serif; font-weight: 600; transition: background .12s, color .12s, border-color .12s; }
+    .ri-btn:hover { background: var(--blue-mid); color: #fff; border-color: var(--blue-mid); }
+    .ri-ans { display: none; padding: 16px 18px; background: var(--blue-bg); border-top: 1px solid var(--blue-bdr); }
+    .ri-ans.show { display: block; }
+    .ri-ans-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--blue); margin-bottom: 10px; }
+    .ri-note { font-size: 13px; color: var(--ink-2); margin-top: 10px; line-height: 1.55; }
+    .pseudo-out { font-family: 'JetBrains Mono', monospace; font-size: 13px; background: var(--code-bg); color: var(--code-text); padding: 14px 18px; border-radius: var(--r-sm); line-height: 1.9; white-space: pre-wrap; }
+    .formula { font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--blue-mid); font-weight: 500; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 600px) {
+      .type-grid { grid-template-columns: 1fr; }
+      .n-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── PRINT ─── */
+    @media print {
+      body { background: white; font-size: 14px; }
+      .ri-ans { display: block !important; }
+      .ri-btn, #step-btn { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ══════════ HEADER ══════════ -->
+  <header class="page-header">
+    <div class="meta-row">
+      <span class="badge b-course">DAW · Optativa</span>
+      <span class="badge b-ra">RA1 · Raonament Lògic</span>
+      <span class="badge b-act">A1</span>
+    </div>
+    <h1 class="page-title">Taules de veritat</h1>
+    <p class="page-sub">Avaluar totes les combinacions possibles d'una condició — de forma sistemàtica i sense errors</p>
+    <div class="obj-box">
+      <div class="obj-icon">🎯</div>
+      <div>
+        <div class="obj-label">Objectiu · Criteri 1.2</div>
+        <div class="obj-text">
+          Construir taules de veritat per a expressions d'1, 2 i 3 variables,
+          identificar les columnes intermèdies necessàries i classificar el resultat com a
+          <strong>tautologia</strong>, <strong>contradicció</strong> o <strong>contingència</strong>.
+          Aplicar les taules per verificar si dues expressions són equivalents.
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══════════ SECCIÓ 1: PER A QUÈ SERVEIX? ══════════ -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">1</span>
+      <div>
+        <h2 class="sec-title">Per a què serveix una taula de veritat?</h2>
+        <p class="sec-sub">Certesa total sobre el comportament d'una condició</p>
+      </div>
+    </div>
+
+    <!-- Motivació -->
+    <div class="card" style="margin-bottom:28px; padding:22px 26px;">
+      <p style="font-size:15px; color:var(--ink); margin-bottom:18px; line-height:1.6;">
+        Tens una condició complexa en el teu programa i creus que és correcta,
+        però... <strong>funciona per a totes les combinacions possibles de valors?</strong>
+      </p>
+
+      <div class="motiv-code">
+        <span class='kw'>Si</span> (<span class='var'>logged_in</span> Y <span class='var'>admin</span>) O <span class='var'>superuser</span> <span class='kw'>Entonces</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class='kw'>Escribir</span> <span class='str'>"Accés d'administrador concedit"</span>;<br>
+        <span class='kw'>FinSi</span>
+      </div>
+
+      <p style="font-size:14px; color:var(--ink-2); margin-bottom:18px; line-height:1.6;">
+        Quan és certa aquesta condició? Funciona si
+        <code style="font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--blue-bg);padding:1px 6px;border-radius:3px;color:var(--blue);">logged_in=F</code>
+        però
+        <code style="font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--blue-bg);padding:1px 6px;border-radius:3px;color:var(--blue);">superuser=V</code>?
+        Pots intentar endevinar-ho de cap... o posar-ho en una taula i saber-ho
+        amb <strong>total seguretat</strong> per a cada combinació possible.
+      </p>
+
+      <div class="reason-grid">
+        <div class="reason-item">
+          <div class="reason-num">1</div>
+          <div>
+            <div class="reason-title">Comprovar tots els casos, sense oblidar-ne cap</div>
+            <div class="reason-text">Amb n variables hi ha exactament 2ⁿ combinacions de V i F.
+              La taula les posa totes, una per una. Així no te'n deixes cap sense mirar.</div>
+          </div>
+        </div>
+        <div class="reason-item">
+          <div class="reason-num">2</div>
+          <div>
+            <div class="reason-title">Trobar errors abans d'executar el programa</div>
+            <div class="reason-text">Si el resultat és <em>sempre</em> V o <em>sempre</em> F,
+              segurament hi ha un error en la condició. La taula ho ensenya de seguida,
+              sense ni tan sols engegar el programa.</div>
+          </div>
+        </div>
+        <div class="reason-item">
+          <div class="reason-num">3</div>
+          <div>
+            <div class="reason-title">Demostrar que dues condicions fan el mateix</div>
+            <div class="reason-text">Dues condicions que semblen molt diferents poden donar
+              sempre el mateix resultat. La taula ho demostra de manera segura, una cosa que
+              "mirant-les a ull" no es pot saber.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ibox blue">
+      <div class="ibox-label">Definició</div>
+      <div class="ibox-text">
+        Una <strong>taula de veritat</strong> és una llista de totes les maneres possibles
+        en què les variables (p, q, r…) poden ser certes o falses, i el resultat que dóna
+        l'expressió en cada cas. Si l'expressió té <strong>n variables</strong>, la taula té
+        sempre <strong>2ⁿ files</strong>: una per a cada combinació de V i F.
+      </div>
+    </div>
+
+    <div class="n-grid">
+      <div class="n-card">
+        <div class="n-card-num">1</div>
+        <div class="n-card-label">variable</div>
+        <div class="n-card-result">2¹ = 2</div>
+        <div class="n-card-rlabel">files</div>
+      </div>
+      <div class="n-card">
+        <div class="n-card-num">2</div>
+        <div class="n-card-label">variables</div>
+        <div class="n-card-result">2² = 4</div>
+        <div class="n-card-rlabel">files</div>
+      </div>
+      <div class="n-card">
+        <div class="n-card-num">3</div>
+        <div class="n-card-label">variables</div>
+        <div class="n-card-result">2³ = 8</div>
+        <div class="n-card-rlabel">files</div>
+      </div>
+    </div>
+
+    <div class="ibox green">
+      <div class="ibox-label">Connexió amb PSeInt i Java</div>
+      <div class="ibox-text">
+        La taula de veritat et diu exactament <strong>quan</strong> una condició és certa.
+        Quan escriguis
+        <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">Si condicio Entonces</code>
+        en PSeInt (o
+        <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">if (condicio)</code>
+        en Java), la taula et dirà en quins casos el programa entrarà dins del bloc i en quins no.
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ SECCIÓ 2: ELS OPERADORS ══════════ -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">2</span>
+      <div>
+        <h2 class="sec-title">Els sis operadors i les seves taules</h2>
+        <p class="sec-sub">Les peces bàsiques amb què es construeix tota la resta</p>
+      </div>
+    </div>
+
+    <p style="font-size:14px; color:var(--ink-2); margin-bottom:24px; line-height:1.6;">
+      Cada operador lògic té la seva pròpia taula de veritat, que sempre és la mateixa.
+      Si te les saps, pots resoldre qualsevol expressió per llarga que sigui.
+      Aquí les tens totes sis amb un exemple de cada dia. La capçalera
+      <span style="color:var(--blue);">blava</span> són les entrades i la fosca és el resultat.
+    </p>
+
+    <!-- NEGACIÓ -->
+    <div class="op-card">
+      <div class="op-head"><span class="op-sym">¬</span><span class="op-name">La negació · "no"</span></div>
+      <p class="op-ex">És un interruptor que ho posa tot al revés: <em>p = "la porta està oberta", ¬p = "la porta NO està oberta"</em> (tancada).</p>
+      <div class="tt-wrap">
+        <table class="tt" style="width:100%;">
+          <thead><tr><th class="h-var">p</th><th class="h-res">¬p</th><th class="h-res" style="background:var(--bg); color:var(--ink-3); text-align:left;">Què passa</th></tr></thead>
+          <tbody>
+            <tr><td class="v">V</td><td class="f">F</td><td class="interp">La porta està oberta → "no està oberta" és fals</td></tr>
+            <tr><td class="f">F</td><td class="v">V</td><td class="interp">La porta està tancada → "no està oberta" és cert</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="op-rule"><strong>Regla d'or:</strong> la negació sempre dóna el contrari. Gira la V en F i la F en V.</div>
+    </div>
+
+    <!-- CONJUNCIÓ -->
+    <div class="op-card">
+      <div class="op-head"><span class="op-sym">∧</span><span class="op-name">La conjunció · "i"</span></div>
+      <p class="op-ex">Demana totes dues coses alhora: <em>"Per veure la peli +18 has de ser major d'edat I tenir entrada."</em> · p = ets major · q = tens entrada.</p>
+      <div class="tt-wrap">
+        <table class="tt" style="width:100%;">
+          <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-res">p∧q</th><th class="h-res" style="background:var(--bg); color:var(--ink-3); text-align:left;">Què passa</th></tr></thead>
+          <tbody>
+            <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="interp">Ets major i tens entrada → entres</td></tr>
+            <tr><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="interp">Ets major però no tens entrada → no entres</td></tr>
+            <tr><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="interp">Ets menor però tens entrada → no entres</td></tr>
+            <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="interp">Ets menor i no tens entrada → no entres</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="op-rule"><strong>Regla d'or:</strong> la "i" només dóna V quan TOTES les condicions són V. Si en falla una, ja dóna F. Amb tres variables és igual: <span style="font-family:'JetBrains Mono',monospace;">p∧q∧r</span> només dóna V quan les tres són V (1 sola fila de 8).</div>
+    </div>
+
+    <!-- DISJUNCIÓ -->
+    <div class="op-card">
+      <div class="op-head"><span class="op-sym">∨</span><span class="op-name">La disjunció · "o"</span></div>
+      <p class="op-ex">N'hi ha prou amb una cosa: <em>"Pots pagar amb targeta O en efectiu."</em> · p = tens targeta · q = tens efectiu.</p>
+      <div class="tt-wrap">
+        <table class="tt" style="width:100%;">
+          <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-res">p∨q</th><th class="h-res" style="background:var(--bg); color:var(--ink-3); text-align:left;">Què passa</th></tr></thead>
+          <tbody>
+            <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="interp">Tens targeta i efectiu → pots pagar</td></tr>
+            <tr><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="interp">Tens només targeta → pots pagar</td></tr>
+            <tr><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="interp">Tens només efectiu → pots pagar</td></tr>
+            <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="interp">No tens ni targeta ni efectiu → no pots pagar</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="op-rule"><strong>Regla d'or:</strong> la "o" dóna V si almenys una condició és V. Ull: tenir-ne les dues també val (és la "o" inclusiva). Amb tres variables: <span style="font-family:'JetBrains Mono',monospace;">p∨q∨r</span> només dóna F quan les tres són F (1 sola fila de 8).</div>
+    </div>
+
+    <!-- CONDICIONAL -->
+    <div class="op-card">
+      <div class="op-head"><span class="op-sym">→</span><span class="op-name">El condicional · "si... llavors"</span></div>
+      <p class="op-ex">Pensa'l com una <strong>promesa</strong>: <em>"Si aproves l'examen, et compro la bici."</em> · p = aproves · q = et compro la bici.</p>
+      <div class="tt-wrap">
+        <table class="tt" style="width:100%;">
+          <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-res">p→q</th><th class="h-res" style="background:var(--bg); color:var(--ink-3); text-align:left;">Què passa</th></tr></thead>
+          <tbody>
+            <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="interp">Aproves i et compro la bici → promesa complerta</td></tr>
+            <tr><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="interp">Aproves però NO et compro la bici → promesa trencada!</td></tr>
+            <tr><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="interp">No aproves, però et compro la bici igualment → no havia promès res sobre això</td></tr>
+            <tr><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="interp">No aproves i no et compro la bici → no he trencat la promesa</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="op-rule"><strong>Regla d'or:</strong> el condicional només és fals quan p=V però q=F (la promesa es trenca). En tots els altres casos és cert. Si la primera part no es compleix, no s'ha promès res.</div>
+      <div style="font-size:13px; color:var(--ink-2); background:var(--yellow-bg); border:1px solid var(--yellow-bdr); border-radius:var(--r-sm); padding:10px 14px; margin-top:10px; line-height:1.55;">
+        <strong>⚠ L'ordre importa: p→q NO és el mateix que q→p.</strong> "Si plou, el terra es mulla" no vol dir el mateix que "si el terra es mulla, plou" (el terra es pot mullar per molts altres motius). A diferència de la "i" i la "o", el condicional <strong>no es pot girar</strong>.
+      </div>
+    </div>
+
+    <!-- BICONDICIONAL -->
+    <div class="op-card">
+      <div class="op-head"><span class="op-sym">↔</span><span class="op-name">El bicondicional · "si i només si"</span></div>
+      <p class="op-ex">Com un <strong>interruptor i una llum ben connectats</strong>: <em>"La llum s'encén si i només si prems l'interruptor."</em> · p = prems · q = s'encén.</p>
+      <div class="tt-wrap">
+        <table class="tt" style="width:100%;">
+          <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-res">p↔q</th><th class="h-res" style="background:var(--bg); color:var(--ink-3); text-align:left;">Què passa</th></tr></thead>
+          <tbody>
+            <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="interp">Prems i s'encén → tot correcte</td></tr>
+            <tr><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="interp">Prems però NO s'encén → avaria!</td></tr>
+            <tr><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="interp">No prems però s'encén sola → avaria!</td></tr>
+            <tr><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="interp">No prems i està apagada → tot correcte</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="op-rule"><strong>Regla d'or:</strong> és cert quan les dues parts són iguals (totes dues V o totes dues F), i fals quan són diferents.</div>
+    </div>
+
+    <!-- XOR -->
+    <div class="op-card">
+      <div class="op-head"><span class="op-sym">⊻</span><span class="op-name">L'o exclusiva (XOR) · "o l'una o l'altra, no totes dues"</span></div>
+      <p class="op-ex">Quan has de triar <strong>exactament una</strong> cosa: <em>"En el menú tries o sopa o amanida, però només una."</em> · p = tries sopa · q = tries amanida.</p>
+      <div class="tt-wrap">
+        <table class="tt" style="width:100%;">
+          <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-res">p⊻q</th><th class="h-res" style="background:var(--bg); color:var(--ink-3); text-align:left;">Què passa</th></tr></thead>
+          <tbody>
+            <tr><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="interp">Vols sopa i amanida → no es pot, només una</td></tr>
+            <tr><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="interp">Només sopa → has triat una, correcte</td></tr>
+            <tr><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="interp">Només amanida → has triat una, correcte</td></tr>
+            <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="interp">No tries res → no és vàlid</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="op-rule"><strong>Regla d'or:</strong> és cert quan n'hi ha <strong>exactament una</strong> de certa (una sí i l'altra no). És com la "o" (∨), però amb una diferència clau: si tens les <strong>dues</strong>, la XOR dóna F (mentre que l'∨ dóna V).</div>
+    </div>
+
+    <div class="ibox blue" style="margin-bottom:16px;">
+      <div class="ibox-label">🔗 El XOR i el bicondicional són oposats</div>
+      <div class="ibox-text">
+        Fixa't que el <strong>bicondicional (↔)</strong> i el <strong>XOR (⊻)</strong> són exactament al revés: el ↔ dóna V quan les dues parts són <em>iguals</em>; el ⊻ dóna V quan són <em>diferents</em>. Les seves columnes són oposades fila per fila:
+        <span style="font-family:'JetBrains Mono',monospace; font-size:13px;">p↔q = V F F V</span> i <span style="font-family:'JetBrains Mono',monospace; font-size:13px;">p⊻q = F V V F</span>.
+        Per això <strong>p ⊻ q ≡ ¬(p ↔ q)</strong>: el XOR és, literalment, la negació del bicondicional.
+      </div>
+    </div>
+
+    <div class="ibox yellow">
+      <div class="ibox-label">⚠ Dos avisos importants</div>
+      <div class="ibox-text">
+        <strong>1.</strong> No confonguis la "o" (∨) amb la "o exclusiva" (⊻). L'<strong>∨ és inclusiva</strong>: tenir les dues coses també compta com a V. La <strong>⊻ és exclusiva</strong>: si tens les dues, dóna F. Es diferencien només en la primera fila (V V).<br>
+        <strong>2.</strong> El cas <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">F → V = V</code> és el que més despista.
+        Recorda la promesa: si no es compleix la primera part, no s'ha promès res, així que no es pot trencar.
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ SECCIÓ 3: COM CONSTRUIR-LA ══════════ -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">3</span>
+      <div>
+        <h2 class="sec-title">Com construir una taula de veritat</h2>
+        <p class="sec-sub">Procés pas a pas — mai cap combinació oblidada</p>
+      </div>
+    </div>
+
+    <!-- Motivació -->
+    <div class="card" style="margin-bottom:28px; padding:22px 26px;">
+      <p style="font-size:15px; color:var(--ink); margin-bottom:16px; line-height:1.6;">
+        Fer una taula no és endevinar. Hi ha un <strong>mètode de quatre passos</strong>
+        que sempre funciona: així no t'oblides cap combinació i calcules cada columna
+        en l'ordre correcte.
+      </p>
+      <p style="font-size:14px; color:var(--ink-2); margin-bottom:18px; line-height:1.6;">
+        Seguim els passos amb l'expressió <strong style="font-family:'JetBrains Mono',monospace;">¬p ∧ q</strong>.
+        Fes clic a <em>pas següent</em> per veure com creix la taula:
+      </p>
+
+      <!-- Step-by-step builder -->
+      <div id="step-container">
+        <div class="step-bar" id="step-bar"></div>
+        <div class="step-label-text" id="step-explain"></div>
+        <div class="tt-wrap" id="step-table"></div>
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+          <button class="ri-btn" id="step-btn" onclick="nextStep()">▶ Pas següent</button>
+          <button class="ri-btn" id="step-reset" onclick="resetStep()" style="background:var(--bg);border-color:var(--border);color:var(--ink-2);">↺ Reiniciar</button>
+        </div>
+        <div id="step-done"></div>
+      </div>
+    </div>
+
+    <div class="ibox blue">
+      <div class="ibox-label">Truc per omplir les columnes de variables</div>
+      <div class="ibox-text">
+        La columna de <strong>l'última variable (la de la dreta)</strong> va alternant: V F V F V F…
+        La columna de la variable <strong>del costat esquerre</strong> va de dos en dos:
+        VV FF VV FF… I si hi ha una tercera, de quatre en quatre: VVVV FFFF…
+        D'aquesta manera surten totes les combinacions sense repetir-ne cap.
+      </div>
+    </div>
+
+    <div class="ibox yellow">
+      <div class="ibox-label">⚠ En quin ordre es calculen les columnes</div>
+      <div class="ibox-text">
+        Calcula sempre <strong>de dins cap a fora</strong>, com quan resols una operació amb parèntesis:
+        primer les negacions (¬), després les "i" (∧) i les "o" (∨), i al final
+        el "si...llavors" (→) i el "si i només si" (↔).
+        Si et saltes una columna del mig, el resultat final sortirà malament.
+      </div>
+    </div>
+
+    <!-- Exemple complet amb 3 variables -->
+    <p style="font-size:13px; font-weight:600; color:var(--ink-3); text-transform:uppercase; letter-spacing:.05em; margin:30px 0 10px;">Exemple complet · una taula amb 3 variables (8 files)</p>
+    <div class="card" style="padding:22px 26px;">
+      <p style="font-size:14px; color:var(--ink-2); margin-bottom:14px; line-height:1.6;">
+        Amb <strong>3 variables surten 2³ = 8 files</strong>. Vegem <strong style="font-family:'JetBrains Mono',monospace;">(p ∨ q) ∧ ¬r</strong> amb un cas real: <em>aplica descompte si (és soci o té cupó) i el producte no està esgotat</em>. · p = és soci · q = té cupó · r = esgotat. Calculem primer les columnes del mig (p∨q i ¬r), i al final el resultat.
+      </p>
+      <div class="tt-wrap">
+        <table class="tt" style="width:100%;">
+          <thead><tr>
+            <th class="h-var">p</th><th class="h-var">q</th><th class="h-var">r</th>
+            <th class="h-res" style="background:var(--bg); color:var(--ink-2);">p∨q</th>
+            <th class="h-res" style="background:var(--bg); color:var(--ink-2);">¬r</th>
+            <th class="h-res">(p∨q)∧¬r</th>
+            <th class="h-res" style="background:var(--bg); color:var(--ink-3); text-align:left;">Què passa</th>
+          </tr></thead>
+          <tbody>
+            <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="interp">Soci i cupó, però esgotat → no</td></tr>
+            <tr><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="interp">Soci i cupó, no esgotat → descompte</td></tr>
+            <tr><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="interp">Soci, però esgotat → no</td></tr>
+            <tr><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="interp">Soci, no esgotat → descompte</td></tr>
+            <tr><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="interp">Té cupó, però esgotat → no</td></tr>
+            <tr><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="interp">Té cupó, no esgotat → descompte</td></tr>
+            <tr><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="interp">Ni soci ni cupó → no</td></tr>
+            <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="interp">No esgotat, però cal ser soci o tenir cupó → no</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:13px; color:var(--ink-2); margin:10px 0 0; line-height:1.5;">
+        Fixa't en les columnes de variables: <strong>p</strong> va de quatre en quatre (VVVV FFFF), <strong>q</strong> de dos en dos (VV FF VV FF) i <strong>r</strong> alterna (V F V F…). Així surten les 8 combinacions sense repetir-ne cap, i la columna final dóna <span style="font-family:'JetBrains Mono',monospace;">F V F V F V F F</span> (contingència: depèn dels valors).
+      </p>
+    </div>
+
+    <!-- Dos mètodes -->
+    <p style="font-size:13px; font-weight:600; color:var(--ink-3); text-transform:uppercase; letter-spacing:.05em; margin:30px 0 10px;">Dos mètodes per omplir la taula</p>
+    <div class="card" style="padding:22px 26px;">
+      <p style="font-size:14px; color:var(--ink-2); margin-bottom:8px; line-height:1.6;">
+        Una <strong>fórmula proposicional</strong> és una combinació de proposicions i connectors, com <span style="font-family:'JetBrains Mono',monospace;">(p ∨ q) ∧ ¬p</span>. Per omplir-ne la taula hi ha <strong>dues maneres</strong>. Totes dues calculen <strong>de dins cap a fora</strong> i donen el mateix; només canvia com ho escrius.
+      </p>
+
+      <p style="font-size:15px; font-weight:600; color:var(--ink); margin:22px 0 8px;">1. Mètode acumulatiu <span style="font-weight:400; color:var(--ink-3); font-size:13px;">(el que has fet servir fins ara)</span></p>
+      <p style="font-size:14px; color:var(--ink-2); margin-bottom:12px; line-height:1.6;">
+        Poses <strong>una columna per cada tros</strong> de l'expressió, del més senzill fins al complet. És clar i fàcil de seguir. Per a <span style="font-family:'JetBrains Mono',monospace;">(p ∨ q) ∧ ¬p</span>:
+      </p>
+      <div class="tt-wrap">
+        <table class="tt" style="width:100%;">
+          <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-res" style="background:var(--bg); color:var(--ink-2);">p∨q</th><th class="h-res" style="background:var(--bg); color:var(--ink-2);">¬p</th><th class="h-res">(p∨q)∧¬p</th></tr></thead>
+          <tbody>
+            <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="f">F</td></tr>
+            <tr><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="f">F</td></tr>
+            <tr><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v">V</td></tr>
+            <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="f">F</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="font-size:15px; font-weight:600; color:var(--ink); margin:24px 0 8px;">2. Mètode per passos <span style="font-weight:400; color:var(--ink-3); font-size:13px;">(més compacte)</span></p>
+      <p style="font-size:14px; color:var(--ink-2); margin-bottom:12px; line-height:1.6;">
+        En comptes de columnes separades, escrius els valors <strong>a sota de cada símbol</strong> de la fórmula, i numeres l'ordre: primer les variables (①), després els operadors de dins (② i ③), i <strong>l'operador principal l'últim</strong> (④). El resultat és la columna de sota l'operador principal.
+      </p>
+      <div class="tt-wrap">
+        <table class="tt" style="width:100%; font-family:'JetBrains Mono',monospace; text-align:center;">
+          <thead><tr>
+            <th class="h-var" style="color:var(--ink-3);">(</th>
+            <th class="h-var">p</th>
+            <th class="h-var">∨</th>
+            <th class="h-var">q</th>
+            <th class="h-var" style="color:var(--ink-3);">)</th>
+            <th class="h-res">∧</th>
+            <th class="h-var">¬</th>
+            <th class="h-var">p</th>
+          </tr></thead>
+          <tbody>
+            <tr><td></td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td></td><td class="f">F</td><td class="f">F</td><td class="v">V</td></tr>
+            <tr><td></td><td class="v">V</td><td class="v">V</td><td class="f">F</td><td></td><td class="f">F</td><td class="f">F</td><td class="v">V</td></tr>
+            <tr><td></td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td></td><td class="v">V</td><td class="v">V</td><td class="f">F</td></tr>
+            <tr><td></td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td></td><td class="f">F</td><td class="v">V</td><td class="f">F</td></tr>
+            <tr style="border-top:2px solid var(--border);">
+              <td></td>
+              <td style="color:var(--blue); font-weight:700;">①</td>
+              <td style="color:var(--blue); font-weight:700;">②</td>
+              <td style="color:var(--blue); font-weight:700;">①</td>
+              <td></td>
+              <td style="color:var(--blue); font-weight:700; background:var(--blue-bg);">④</td>
+              <td style="color:var(--blue); font-weight:700;">③</td>
+              <td style="color:var(--blue); font-weight:700;">①</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="font-size:13px; color:var(--ink-2); margin:10px 0 0; line-height:1.55;">
+        L'última fila (<span style="color:var(--blue); font-weight:700;">①②③④</span>) marca l'ordre: primer les <strong>variables</strong> (①), després <strong>p∨q</strong> (②) i <strong>¬p</strong> (③), i al final la <strong>∧ principal</strong> (④). La columna de sota la <strong>∧</strong> dóna <span style="font-family:'JetBrains Mono',monospace;">F F V F</span>: <strong>exactament el mateix</strong> que el mètode acumulatiu. S'usa quan vols estalviar espai, per exemple en un examen.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════ SECCIÓ 4: CLASSIFICACIÓ ══════════ -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">4</span>
+      <div>
+        <h2 class="sec-title">Tautologia, contradicció i contingència</h2>
+        <p class="sec-sub">El que diu l'última columna sobre el comportament de l'expressió</p>
+      </div>
+    </div>
+
+    <!-- Motivació -->
+    <div class="card" style="margin-bottom:28px; padding:22px 26px;">
+      <p style="font-size:15px; color:var(--ink); margin-bottom:16px; line-height:1.6;">
+        Quan ja tens la taula feta, mira la <strong>columna final</strong>. No només et diu
+        en quins casos la condició és certa: també et diu si la condició <strong>funciona bé</strong>
+        o si està "trencada". Una condició està trencada quan sempre dóna el mateix
+        (sempre V o sempre F), perquè llavors no serveix per decidir res.
+      </p>
+      <p style="font-size:14px; color:var(--ink-2); margin-bottom:18px; line-height:1.6;">
+        Hi ha tres possibilitats, i les tres tenen un significat directe en codi:
+      </p>
+
+      <div class="reason-grid">
+        <div class="reason-item">
+          <div class="reason-num" style="background:var(--green); font-size:15px;">V</div>
+          <div>
+            <div class="reason-title">Tautologia — l'última columna és sempre V</div>
+            <div class="reason-text">La condició és certa per a <em>qualsevol</em> valor de les variables.
+              El <code>Si</code> en PSeInt <em>sempre</em> entrarà al bloc:
+              el condicional és inútil i probablement és un error de disseny.</div>
+          </div>
+        </div>
+        <div class="reason-item">
+          <div class="reason-num" style="background:var(--red); font-size:15px;">F</div>
+          <div>
+            <div class="reason-title">Contradicció — l'última columna és sempre F</div>
+            <div class="reason-text">La condició és falsa per a <em>qualsevol</em> valor.
+              El bloc del <code>Si</code> <em>mai</em> s'executarà.
+              Codi mort (<em>dead code</em>): un error greu de disseny.</div>
+          </div>
+        </div>
+        <div class="reason-item">
+          <div class="reason-num" style="background:var(--blue-mid); font-size:14px;">V/F</div>
+          <div>
+            <div class="reason-title">Contingència — hi ha V i F a l'última columna</div>
+            <div class="reason-text">La condició és V per a alguns valors i F per a d'altres.
+              És el cas <em>normal</em>: el <code>Si</code> decidirà cada cop, segons com estiguin
+              les variables. Això és el que volem quasi sempre.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="type-grid">
+      <div class="type-card tauto">
+        <div class="type-card-sym">∀ V</div>
+        <div class="type-card-title">Tautologia</div>
+        <div class="type-card-sub">Totes les files de l'última columna valen V. Exemple: <strong>p ∨ ¬p</strong></div>
+      </div>
+      <div class="type-card contra">
+        <div class="type-card-sym">∀ F</div>
+        <div class="type-card-title">Contradicció</div>
+        <div class="type-card-sub">Totes les files de l'última columna valen F. Exemple: <strong>p ∧ ¬p</strong></div>
+      </div>
+      <div class="type-card conting">
+        <div class="type-card-sym">V / F</div>
+        <div class="type-card-title">Contingència</div>
+        <div class="type-card-sub">Hi ha files V i files F. Exemple: <strong>p ∧ q</strong></div>
+      </div>
+    </div>
+
+    <!-- Classificar condicions de codi -->
+    <div class="card" style="margin-top:28px; padding:22px 26px;">
+      <p style="font-size:15px; color:var(--ink); margin-bottom:6px; line-height:1.6;">
+        <strong>I quan la condició ja està escrita com a codi?</strong>
+      </p>
+      <p style="font-size:14px; color:var(--ink-2); margin-bottom:20px; line-height:1.6;">
+        El truc és el mateix: busca si una variable apareix <strong>afirmada i negada alhora</strong>.
+        No cal ni fer tota la taula. Mira aquests <code>Si</code> reals:
+      </p>
+
+      <div style="display:flex; flex-direction:column; gap:14px;">
+
+        <div style="border:1px solid var(--border); border-radius:var(--r-sm); padding:14px 16px; background:var(--bg);">
+          <pre style="font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--ink); margin:0 0 8px;">Si (te_estoc = CERT O te_estoc = FALS) Entonces ...</pre>
+          <p style="font-size:13px; color:var(--ink-2); margin:0 0 8px; line-height:1.5;"><code>te_estoc = CERT</code> és <strong>p</strong> i <code>te_estoc = FALS</code> és <strong>¬p</strong>. Una cosa <em>o</em> el seu contrari sempre es compleix (llei de complement: p ∨ ¬p = V).</p>
+          <span style="display:inline-block; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:#fff; background:var(--green); padding:3px 10px; border-radius:20px;">Tautologia · sempre entra</span>
+        </div>
+
+        <div style="border:1px solid var(--border); border-radius:var(--r-sm); padding:14px 16px; background:var(--bg);">
+          <pre style="font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--ink); margin:0 0 8px;">Si (edat >= 18 Y edat < 18) Entonces ...</pre>
+          <p style="font-size:13px; color:var(--ink-2); margin:0 0 8px; line-height:1.5;"><code>edat >= 18</code> és <strong>p</strong> i <code>edat < 18</code> és <strong>¬p</strong>. No poden ser certes alhora (p ∧ ¬p = F).</p>
+          <span style="display:inline-block; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:#fff; background:var(--red); padding:3px 10px; border-radius:20px;">Contradicció · mai entra (codi mort)</span>
+        </div>
+
+        <div style="border:1px solid var(--border); border-radius:var(--r-sm); padding:14px 16px; background:var(--bg);">
+          <pre style="font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--ink); margin:0 0 8px;">Si (te_permis Y edat >= 16 Y NO te_permis) Entonces ...</pre>
+          <p style="font-size:13px; color:var(--ink-2); margin:0 0 8px; line-height:1.5;">Dins de la mateixa "i" hi ha <code>te_permis</code> i <code>NO te_permis</code>: p ∧ ¬p. Si una part d'una "i" és sempre F, tota la "i" és F.</p>
+          <span style="display:inline-block; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:#fff; background:var(--red); padding:3px 10px; border-radius:20px;">Contradicció · mai entra</span>
+        </div>
+
+        <div style="border:1px solid var(--border); border-radius:var(--r-sm); padding:14px 16px; background:var(--bg);">
+          <pre style="font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--ink); margin:0 0 8px;">Si (te_estoc = CERT O te_estoc = FALS) Y preu > 0 Entonces ...</pre>
+          <p style="font-size:13px; color:var(--ink-2); margin:0 0 8px; line-height:1.5;">La primera part és sempre V (com abans). Però <code>V Y (preu > 0)</code> = <code>preu > 0</code> (llei de neutre). Així que el resultat depèn del preu.</p>
+          <span style="display:inline-block; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; color:#fff; background:var(--blue-mid); padding:3px 10px; border-radius:20px;">Contingència · depèn del preu</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ EXERCICIS ══════════ -->
+  <div class="ex-block-head">
+    <h2 class="ex-block-title">Exercicis de demostració</h2>
+    <p class="ex-block-sub">Quatre nivells · de l'observació a la construcció · Criteri 1.2</p>
+  </div>
+  <div class="ex-block-body">
+
+    <!-- Exercici 1 -->
+    <div class="exercise">
+      <div class="ex-head">
+        <div class="ex-num">1</div>
+        <div>
+          <div class="ex-name">Observa i completa la taula</div>
+          <div class="ex-level">Nivell bàsic · reconeixement</div>
+        </div>
+      </div>
+      <p class="ex-intro">
+        Les columnes de variables (capçalera blava) ja estan omplertes.
+        Calcula mentalment el resultat de l'expressió per a cada fila i
+        comprova clicant el botó.
+      </p>
+      <div id="ex1-cont"></div>
+    </div>
+
+    <!-- Exercici 2 -->
+    <div class="exercise">
+      <div class="ex-head">
+        <div class="ex-num">2</div>
+        <div>
+          <div class="ex-name">Classifica l'expressió</div>
+          <div class="ex-level">Nivell bàsic · classificació</div>
+        </div>
+      </div>
+      <p class="ex-intro">
+        Aquí tens les taules completes. Analitza la columna final (capçalera fosca)
+        i decideix: tautologia, contradicció o contingència?
+      </p>
+      <div id="ex2-cont"></div>
+    </div>
+
+    <!-- Exercici 3 -->
+    <div class="exercise">
+      <div class="ex-head">
+        <div class="ex-num">3</div>
+        <div>
+          <div class="ex-name">Construeix la taula completa</div>
+          <div class="ex-level">Nivell mitjà · construcció</div>
+        </div>
+      </div>
+      <p class="ex-intro">
+        Donada l'expressió, construeix mentalment la taula de veritat completa
+        (columnes de variables, intermèdies i resultat final) i compara-la
+        amb la solució. Recorda l'ordre: primer les negacions, després la resta.
+      </p>
+      <div id="ex3-cont"></div>
+    </div>
+
+    <!-- Exercici 4 -->
+    <div class="exercise">
+      <div class="ex-head">
+        <div class="ex-num">4</div>
+        <div>
+          <div class="ex-name">Implicació en el codi PSeInt</div>
+          <div class="ex-level">Nivell connexió · del raonament al codi</div>
+        </div>
+      </div>
+      <p class="ex-intro">
+        Donada la classificació d'una expressió, raona quina és la
+        seva implicació pràctica quan s'usa com a condició d'un <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">Si</code> en PSeInt.
+      </p>
+      <div id="ex4-cont"></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* ══ STEP BUILDER ══ */
+const STEPS = [
+  {
+    label: 'Pas 1 · Comptem les variables: p i q → 2 variables → 4 files. La de la dreta (q) va V F V F. La de l\'esquerra (p) va de dos en dos: VV FF.',
+    headers: ['p', 'q'],
+    htypes:  ['var', 'var'],
+    rows: [['V','V'],['V','F'],['F','V'],['F','F']]
+  },
+  {
+    label: 'Pas 2 · Afegim la columna ¬p (la negació de p): on hi havia V posem F, i on hi havia F posem V.',
+    headers: ['p', 'q', '¬p'],
+    htypes:  ['var', 'var', 'inter'],
+    rows: [['V','V','F'],['V','F','F'],['F','V','V'],['F','F','V']]
+  },
+  {
+    label: 'Pas 3 · Calculem ¬p ∧ q. La "i" (∧) només dóna V quan les dues columnes (¬p i q) valen V alhora. Això passa només a la fila 3. La resta donen F.',
+    headers: ['p', 'q', '¬p', '¬p ∧ q'],
+    htypes:  ['var', 'var', 'inter', 'res'],
+    rows: [['V','V','F','F'],['V','F','F','F'],['F','V','V','V'],['F','F','V','F']]
+  }
+];
+
+let curStep = 0;
+
+function renderStep(s) {
+  const d = STEPS[s];
+  const bar = document.getElementById('step-bar');
+  bar.innerHTML = STEPS.map((_, i) => {
+    const cls = i < s ? 'done' : i === s ? 'active' : '';
+    const line = i < STEPS.length - 1 ? '<div class="step-line"></div>' : '';
+    return `<div class="step-dot ${cls}">${i+1}</div>${line}`;
+  }).join('');
+  document.getElementById('step-explain').innerHTML = d.label;
+  const thRow = d.headers.map((h,i) => `<th class="h-${d.htypes[i]}">${h}</th>`).join('');
+  const rows  = d.rows.map(r => `<tr>${r.map(c => `<td class="${c==='V'?'v':'f'}">${c}</td>`).join('')}</tr>`).join('');
+  document.getElementById('step-table').innerHTML = `<table class="tt"><thead><tr>${thRow}</tr></thead><tbody>${rows}</tbody></table>`;
+  const btn = document.getElementById('step-btn');
+  const done = document.getElementById('step-done');
+  if (s >= STEPS.length - 1) {
+    btn.style.display = 'none';
+    done.innerHTML = '<div class="class-badge conting" style="margin-top:12px;">~ Contingència: hi ha V i F al resultat</div>';
+  } else {
+    btn.style.display = '';
+    done.innerHTML = '';
+  }
+}
+
+function nextStep() { if (curStep < STEPS.length - 1) { curStep++; renderStep(curStep); } }
+function resetStep() { curStep = 0; renderStep(0); document.getElementById('step-btn').style.display = ''; document.getElementById('step-done').innerHTML = ''; }
+
+/* ══ TABLE BUILDER ══ */
+function makeTable(data, hideRes) {
+  const thRow = data.headers.map((h, i) => {
+    const hide = hideRes && i === data.headers.length - 1;
+    return `<th class="h-${hide ? 'res' : data.htypes[i]}">${h}</th>`;
+  }).join('');
+  const rows = data.rows.map(r =>
+    `<tr>${r.map((c, i) => {
+      if (hideRes && i === r.length - 1) return `<td class="hidden-cell">?</td>`;
+      return `<td class="${c==='V'?'v':'f'}">${c}</td>`;
+    }).join('')}</tr>`
+  ).join('');
+  return `<div class="tt-wrap"><table class="tt"><thead><tr>${thRow}</tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+
+function reveal(btn, id) { document.getElementById(id).classList.add('show'); btn.style.display = 'none'; }
+
+/* ══ E1 DATA ══ */
+const E1 = [
+  {
+    expr: '¬p',
+    headers: ['p', '¬p'],
+    htypes:  ['var', 'res'],
+    rows: [['V','F'],['F','V']],
+    cls: 'conting',
+    clsText: '~ Contingència',
+    explain: '¬p gira el valor de p: on hi ha V posem F, i a l\'inrevés. Com que surten V i F, és contingència.'
+  },
+  {
+    expr: 'p ∧ q',
+    headers: ['p', 'q', 'p ∧ q'],
+    htypes:  ['var', 'var', 'res'],
+    rows: [['V','V','V'],['V','F','F'],['F','V','F'],['F','F','F']],
+    cls: 'conting',
+    clsText: '~ Contingència',
+    explain: 'La "i" (∧) només dóna V quan les dues variables valen V alhora. Aquí això passa només a la fila 1.'
+  },
+  {
+    expr: 'p ∨ ¬q',
+    headers: ['p', 'q', '¬q', 'p ∨ ¬q'],
+    htypes:  ['var', 'var', 'inter', 'res'],
+    rows: [['V','V','F','V'],['V','F','V','V'],['F','V','F','F'],['F','F','V','V']],
+    cls: 'conting',
+    clsText: '~ Contingència',
+    explain: 'Primer girem la q per obtenir ¬q. Després fem la "o" (∨) entre p i ¬q: dóna V si almenys una val V. Només surt una F (fila 3).'
+  }
+];
+
+/* ══ E2 DATA ══ */
+const E2 = [
+  {
+    expr: 'p ∨ ¬p',
+    headers: ['p', '¬p', 'p ∨ ¬p'],
+    htypes:  ['var', 'inter', 'res'],
+    rows: [['V','F','V'],['F','V','V']],
+    cls: 'tautologia',
+    explain: "Tautologia: o bé p val V, o bé ¬p val V — mai poden ser les dues F alhora. Per això el resultat sempre dóna V."
+  },
+  {
+    expr: 'p ∧ ¬p',
+    headers: ['p', '¬p', 'p ∧ ¬p'],
+    htypes:  ['var', 'inter', 'res'],
+    rows: [['V','F','F'],['F','V','F']],
+    cls: 'contradicció',
+    explain: "Contradicció: p i ¬p mai poden valer V alhora (sempre són contràries). Com que la \"i\" (∧) necessita les dues V, el resultat sempre dóna F."
+  },
+  {
+    expr: 'p → q',
+    headers: ['p', 'q', 'p → q'],
+    htypes:  ['var', 'var', 'res'],
+    rows: [['V','V','V'],['V','F','F'],['F','V','V'],['F','F','V']],
+    cls: 'contingència',
+    explain: "Contingència: el \"si...llavors\" (→) només dóna F quan p=V i q=F. En tots els altres casos dóna V. Com que hi ha V i F, és contingència."
+  }
+];
+
+/* ══ E3 DATA ══ */
+const E3 = [
+  {
+    expr: '¬p ∨ q',
+    headers: ['p', 'q', '¬p', '¬p ∨ q'],
+    htypes:  ['var', 'var', 'inter', 'res'],
+    rows: [['V','V','F','V'],['V','F','F','F'],['F','V','V','V'],['F','F','V','V']],
+    cls: 'conting', clsText: '~ Contingència',
+    explain: "Primer fem ¬p (girem la p), després la \"o\" (∨) entre ¬p i q. Surt una sola F (fila 2), així que és contingència."
+  },
+  {
+    expr: '(p ∧ q) → p',
+    headers: ['p', 'q', 'p ∧ q', '(p ∧ q) → p'],
+    htypes:  ['var', 'var', 'inter', 'res'],
+    rows: [['V','V','V','V'],['V','F','F','V'],['F','V','F','V'],['F','F','F','V']],
+    cls: 'tauto', clsText: '✓ Tautologia',
+    explain: "Tautologia: si p i q són certs alhora, llavors p també ha de ser cert segur. Per això el resultat sempre dóna V. Exercici molt típic!"
+  },
+  {
+    expr: 'p ↔ ¬p',
+    headers: ['p', '¬p', 'p ↔ ¬p'],
+    htypes:  ['var', 'inter', 'res'],
+    rows: [['V','F','F'],['F','V','F']],
+    cls: 'contra', clsText: '✗ Contradicció',
+    explain: "El \"si i només si\" (↔) dóna V quan les dues parts són iguals. Però p i ¬p mai són iguals, així que sempre dóna F. És una contradicció."
+  }
+];
+
+/* ══ E4 DATA ══ */
+const E4 = [
+  {
+    clsBadge: 'tauto',
+    clsLabel: 'Tautologia',
+    q: 'La condició p ∨ ¬p és una tautologia. Quina implicació té en un programa PSeInt?',
+    ctx: 'Exemple real: Si logged_in O NO logged_in — condició sempre V.',
+    pseudo: "Si logged_in O NO logged_in Entonces\n    Escribir \"Sempre s'executa\";\nFinSi\n\n// El Si és inútil. Equivalent a:\nEscribir \"Sempre s'executa\";",
+    explain: "Una tautologia fa que el bloc s'executi sempre, valguin el que valguin les variables. El Si no serveix de res i s'hauria de treure. En Java, l'editor t'avisa: \"Condition is always true\" (la condició sempre és certa)."
+  },
+  {
+    clsBadge: 'contra',
+    clsLabel: 'Contradicció',
+    q: 'La condició p ∧ ¬p és una contradicció. Quina implicació té en un programa PSeInt?',
+    ctx: 'Exemple real: Si es_actiu Y NO es_actiu — condició mai V.',
+    pseudo: "Si es_actiu Y NO es_actiu Entonces\n    Escribir \"Mai s'executa\";\nFinSi\n\n// CODI MORT (dead code): mai s'executa",
+    explain: "Una contradicció fa que el bloc no s'executi mai. Es diu codi mort (dead code) i és un error que cal corregir. En Java, l'editor t'avisa: \"Unreachable code\" (codi inabastable)."
+  },
+  {
+    clsBadge: 'conting',
+    clsLabel: 'Contingència',
+    q: 'La condició logged_in ∧ te_permisos és una contingència. Quina implicació té?',
+    ctx: 'Exemple real: Si logged_in Y te_permisos — comportament normal.',
+    pseudo: "Si logged_in Y te_permisos Entonces\n    Escribir \"Accés concedit\";\nSiNo\n    Escribir \"Accés denegat\";\nFinSi",
+    explain: "Una contingència és el cas normal i el que volem quasi sempre: de vegades la condició és certa i de vegades no. El Si decidirà cada cop, segons com estiguin les variables en aquell moment."
+  }
+];
+
+/* ══ RENDER E1 ══ */
+(function() {
+  const c = document.getElementById('ex1-cont');
+  E1.forEach((d, i) => {
+    const div = document.createElement('div');
+    div.className = 'ri';
+    div.innerHTML = `
+      <div class="ri-q">
+        <p style="font-size:14px;font-weight:500;margin-bottom:10px;">
+          ${i+1}. Expressió: <span class="formula">${d.expr}</span>
+        </p>
+        ${makeTable(d, true)}
+        <button class="ri-btn" onclick="reveal(this,'e1a${i}')">▶ Mostra la solució</button>
+      </div>
+      <div class="ri-ans" id="e1a${i}">
+        <div class="ri-ans-label">Taula completa</div>
+        ${makeTable(d, false)}
+        <div class="class-badge ${d.cls}">${d.clsText}</div>
+        <div class="ri-note">${d.explain}</div>
+      </div>`;
+    c.appendChild(div);
+  });
+})();
+
+/* ══ RENDER E2 ══ */
+(function() {
+  const c = document.getElementById('ex2-cont');
+  E2.forEach((d, i) => {
+    const div = document.createElement('div');
+    div.className = 'qi';
+    div.innerHTML = `
+      <p style="font-size:14px;font-weight:500;margin-bottom:10px;">
+        ${i+1}. Expressió: <span class="formula">${d.expr}</span>
+      </p>
+      ${makeTable(d, false)}
+      <p style="font-size:13px;color:var(--ink-2);margin:10px 0 0;">Classifica aquesta expressió:</p>
+      <div class="qi-opts">
+        <button class="qi-btn" data-cls="tautologia"  onclick="checkCls(this,${i},'tautologia')">✓ Tautologia</button>
+        <button class="qi-btn" data-cls="contradicció" onclick="checkCls(this,${i},'contradicció')">✗ Contradicció</button>
+        <button class="qi-btn" data-cls="contingència" onclick="checkCls(this,${i},'contingència')">~ Contingència</button>
+      </div>
+      <div class="qi-fb" id="e2f${i}"></div>`;
+    c.appendChild(div);
+  });
+})();
+
+function checkCls(btn, i, choice) {
+  const d  = E2[i];
+  const fb = document.getElementById('e2f'+i);
+  const btns = btn.closest('.qi-opts').querySelectorAll('.qi-btn');
+  btns.forEach(b => b.disabled = true);
+  if (choice === d.cls) {
+    btn.classList.add('ok');
+    fb.className = 'qi-fb ok';
+    fb.textContent = '✓ Correcte! ' + d.explain;
+  } else {
+    btn.classList.add('fail');
+    btns.forEach(b => { if (b.dataset.cls === d.cls) b.classList.add('ok'); });
+    fb.className = 'qi-fb fail';
+    fb.textContent = '✗ Incorrecte. ' + d.explain;
+  }
+}
+
+/* ══ RENDER E3 ══ */
+(function() {
+  const c = document.getElementById('ex3-cont');
+  E3.forEach((d, i) => {
+    const nVars  = d.htypes.filter(t => t === 'var').length;
+    const nFiles = Math.pow(2, nVars);
+    const div = document.createElement('div');
+    div.className = 'ri';
+    div.innerHTML = `
+      <div class="ri-q">
+        <p style="font-size:14px;font-weight:500;margin-bottom:4px;">
+          ${i+1}. Construeix la taula per: <span class="formula">${d.expr}</span>
+        </p>
+        <p style="font-size:12px;color:var(--ink-3);margin-bottom:10px;">
+          Variables: ${d.headers.filter((_,j) => d.htypes[j]==='var').join(', ')} ·
+          ${nFiles} files · ${d.headers.length - nVars} columna(es) a calcular
+        </p>
+        <button class="ri-btn" onclick="reveal(this,'e3a${i}')">▶ Mostra la taula completa</button>
+      </div>
+      <div class="ri-ans" id="e3a${i}">
+        <div class="ri-ans-label">Taula de veritat</div>
+        ${makeTable(d, false)}
+        <div class="class-badge ${d.cls}">${d.clsText}</div>
+        <div class="ri-note">${d.explain}</div>
+      </div>`;
+    c.appendChild(div);
+  });
+})();
+
+/* ══ RENDER E4 ══ */
+(function() {
+  const c = document.getElementById('ex4-cont');
+  E4.forEach((d, i) => {
+    const div = document.createElement('div');
+    div.className = 'ri';
+    div.innerHTML = `
+      <div class="ri-q">
+        <div style="margin-bottom:8px;">
+          <span class="class-badge ${d.clsBadge}" style="margin-top:0;">${d.clsLabel}</span>
+        </div>
+        <div class="ri-q-text">${d.q}</div>
+        <div style="font-size:12px;color:var(--ink-3);margin-top:5px;">${d.ctx}</div>
+        <button class="ri-btn" onclick="reveal(this,'e4a${i}')">▶ Veure implicació en codi</button>
+      </div>
+      <div class="ri-ans" id="e4a${i}">
+        <div class="ri-ans-label">PSeInt</div>
+        <pre class="pseudo-out">${colorPseudo(d.pseudo)}</pre>
+        <div class="ri-note">${d.explain}</div>
+      </div>`;
+    c.appendChild(div);
+  });
+})();
+
+/* ══ colorPseudo ══ */
+function colorPseudo(text) {
+  return text
+    .replace(/\b(Si|SiNo|FinSi|Entonces|Mientras|FinMientras|Hacer|Proceso|FinProceso|Definir|Como|Escribir|Leer)\b/g,
+             m => `<span class='kw'>${m}</span>`)
+    .replace(/\b(logged_in|admin|superuser|es_actiu|te_permisos|p|q|r)\b/g,
+             m => `<span class='var'>${m}</span>`)
+    .replace(/"([^"]+)"/g, (_, s) => `<span class='str'>"${s}"</span>`)
+    .replace(/(\/\/.+)/g, m => `<span class='cmt'>${m}</span>`);
+}
+
+/* ══ INIT ══ */
+renderStep(0);
+</script>
+</body>
+</html>
