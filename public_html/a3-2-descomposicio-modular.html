@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A3.2 · Descomposició modular — RA2 Pensament Computacional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#f7f5f0; --card:#ffffff; --ink:#1c1917; --ink-2:#57534e; --ink-3:#a8a29e;
+      --border:#e7e5e4; --accent:#9a3412; --accent-mid:#c2410c; --accent-bg:#fff7ed; --accent-bdr:#fed7aa;
+      --blue:#1e40af; --blue-bg:#eff6ff; --blue-bdr:#bfdbfe;
+      --green:#166534; --green-bg:#f0fdf4; --green-bdr:#bbf7d0;
+      --red:#991b1b; --red-bg:#fef2f2; --red-bdr:#fecaca;
+      --yellow:#713f12; --yellow-bg:#fefce8; --yellow-bdr:#fef08a;
+      --code-bg:#1e293b; --code-text:#e2e8f0; --r:10px; --r-sm:6px;
+    }
+    body { font-family:'DM Sans',system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.7; font-size:16px; }
+    .wrap { max-width:820px; margin:0 auto; padding:0 24px 80px; }
+    .page-header { padding:48px 0 36px; border-bottom:1.5px solid var(--border); margin-bottom:52px; }
+    .meta-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
+    .badge { font-size:11px; font-weight:600; padding:3px 11px; border-radius:20px; letter-spacing:.05em; text-transform:uppercase; }
+    .b-course { background:var(--ink); color:#fff; }
+    .b-ra { background:var(--blue-bg); color:var(--blue); border:1px solid var(--blue-bdr); }
+    .b-act { background:var(--accent-mid); color:#fff; }
+    .b-new { background:var(--green-bg); color:var(--green); border:1px solid var(--green-bdr); }
+    .page-title { font-family:'DM Serif Display',Georgia,serif; font-size:clamp(2rem,5vw,2.8rem); line-height:1.15; margin-bottom:10px; }
+    .page-sub { font-size:17px; color:var(--ink-2); margin-bottom:24px; }
+    .obj-box { display:flex; gap:14px; align-items:flex-start; background:var(--accent-bg); border:1px solid var(--accent-bdr); border-radius:var(--r); padding:18px 22px; }
+    .obj-icon { font-size:20px; flex-shrink:0; margin-top:2px; }
+    .obj-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--accent-mid); margin-bottom:4px; }
+    .obj-text { font-size:14px; color:var(--ink-2); }
+    .section { margin-bottom:60px; }
+    .sec-head { display:flex; align-items:flex-start; gap:16px; margin-bottom:28px; }
+    .sec-num { font-family:'DM Serif Display',serif; font-size:3rem; color:var(--border); line-height:1; flex-shrink:0; user-select:none; }
+    .sec-title { font-family:'DM Serif Display',Georgia,serif; font-size:1.5rem; line-height:1.3; }
+    .sec-sub { font-size:13px; color:var(--ink-3); margin-top:3px; }
+    .lead { font-size:14px; color:var(--ink-2); margin-bottom:18px; line-height:1.6; }
+    .lead code, p code, li code, td code { font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--accent-bg); padding:1px 6px; border-radius:3px; color:var(--accent); }
+    .ibox { border-radius:var(--r); padding:16px 20px; margin-bottom:20px; }
+    .ibox-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px; }
+    .ibox-text { font-size:14px; line-height:1.65; }
+    .ibox.blue { background:var(--blue-bg); border:1px solid var(--blue-bdr); }
+    .ibox.green { background:var(--green-bg); border:1px solid var(--green-bdr); }
+    .ibox.yellow { background:var(--yellow-bg); border:1px solid var(--yellow-bdr); }
+    .ibox.red { background:var(--red-bg); border:1px solid var(--red-bdr); }
+    .ibox.blue .ibox-label, .ibox.blue .ibox-text { color:var(--blue); }
+    .ibox.green .ibox-label, .ibox.green .ibox-text { color:var(--green); }
+    .ibox.yellow .ibox-label, .ibox.yellow .ibox-text { color:var(--yellow); }
+    .ibox.red .ibox-label, .ibox.red .ibox-text { color:var(--red); }
+    .ibox code { background:#ffffffaa; font-family:'JetBrains Mono',monospace; font-size:12px; padding:1px 6px; border-radius:3px; }
+    .demo { margin-bottom:22px; }
+    .demo-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.09em; color:var(--ink-3); margin-bottom:8px; }
+    .pseudo-out { font-family:'JetBrains Mono',monospace; font-size:13px; background:var(--code-bg); color:var(--code-text); padding:16px 20px; border-radius:var(--r-sm); line-height:1.95; white-space:pre-wrap; margin:0; overflow-x:auto; }
+    .exp-box { background:var(--accent-bg); border:1px solid var(--accent-bdr); border-left:3px solid var(--accent-mid); border-radius:0 var(--r-sm) var(--r-sm) 0; padding:13px 16px; margin-top:10px; }
+    .exp-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--accent-mid); margin-bottom:5px; }
+    .exp-text { font-size:13px; color:var(--ink-2); line-height:1.6; }
+    .exp-text code { background:#fff; }
+    .kw { color:#fbbf24; font-weight:500; } .var { color:#38bdf8; } .str { color:#4ade80; } .num { color:#f472b6; } .cmt { color:#64748b; }
+    /* TREE (descomposició descendent) */
+    .tree { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:22px; margin-bottom:14px; text-align:center; }
+    .tree-root { display:inline-block; padding:10px 18px; background:var(--ink); color:#fff; border-radius:var(--r-sm); font-size:13px; font-weight:600; margin-bottom:18px; }
+    .tree-row { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+    .tree-node { flex:1 1 130px; min-width:120px; padding:10px 12px; background:var(--accent-bg); border:1px solid var(--accent-bdr); border-radius:var(--r-sm); font-size:12px; color:var(--accent); font-family:'JetBrains Mono',monospace; }
+    .tree-node small { display:block; margin-top:5px; color:var(--ink-2); font-size:11px; font-family:'DM Sans',sans-serif; }
+    .tree-cap { text-align:center; font-size:12px; color:var(--ink-3); font-style:italic; }
+    /* TRAÇA RECURSIVA */
+    .steps { display:flex; flex-direction:column; gap:4px; margin:10px 0; }
+    .steps div { font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--bg); border:1px solid var(--border); border-radius:var(--r-sm); padding:6px 10px; color:var(--ink-2); }
+    .steps .hl { background:var(--accent-bg); border-color:var(--accent-bdr); color:var(--accent); }
+    /* EXERCISES */
+    .ex-block-head { background:var(--ink); color:#fff; border-radius:var(--r) var(--r) 0 0; padding:22px 28px; margin-top:56px; }
+    .ex-block-title { font-family:'DM Serif Display',serif; font-size:1.5rem; margin-bottom:4px; }
+    .ex-block-sub { font-size:13px; color:#a8a29e; }
+    .ex-block-body { background:var(--card); border:1px solid var(--border); border-top:none; border-radius:0 0 var(--r) var(--r); padding:28px; }
+    .exercise { margin-bottom:36px; padding-bottom:36px; border-bottom:1px solid var(--border); }
+    .exercise:last-child { margin-bottom:0; padding-bottom:0; border-bottom:none; }
+    .ex-head { display:flex; align-items:flex-start; gap:12px; margin-bottom:14px; }
+    .ex-num { min-width:30px; height:30px; background:var(--accent-mid); color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; flex-shrink:0; margin-top:2px; }
+    .ex-name { font-weight:600; font-size:15px; color:var(--ink); }
+    .ex-level { font-size:12px; color:var(--ink-3); margin-top:2px; }
+    .ex-intro { font-size:13px; color:var(--ink-2); margin-bottom:16px; }
+    .qi { padding:14px 16px; border-radius:var(--r-sm); border:1px solid var(--border); background:#fafaf9; margin-bottom:10px; }
+    .qi-text { font-size:14px; margin-bottom:10px; color:var(--ink); }
+    .qi-text code { font-family:'JetBrains Mono',monospace; font-size:13px; background:var(--code-bg); color:var(--code-text); padding:2px 8px; border-radius:4px; }
+    .qi pre.pseudo-out { margin:8px 0 12px; font-size:12px; }
+    .qi-opts { display:flex; gap:8px; flex-wrap:wrap; }
+    .qi-btn { padding:6px 14px; border:1.5px solid var(--border); border-radius:var(--r-sm); background:#fff; cursor:pointer; font-size:13px; font-family:'DM Sans',sans-serif; color:var(--ink-2); transition:border-color .12s,background .12s; }
+    .qi-btn:hover:not(:disabled) { border-color:var(--ink); color:var(--ink); }
+    .qi-btn:disabled { cursor:default; }
+    .qi-btn.ok { background:var(--green-bg); border-color:var(--green-bdr); color:var(--green); }
+    .qi-btn.fail { background:var(--red-bg); border-color:var(--red-bdr); color:var(--red); }
+    .qi-fb { font-size:12px; margin-top:10px; padding:7px 11px; border-radius:var(--r-sm); display:none; }
+    .qi-fb.ok { display:block; background:var(--green-bg); color:var(--green); border:1px solid var(--green-bdr); }
+    .qi-fb.fail { display:block; background:var(--red-bg); color:var(--red); border:1px solid var(--red-bdr); }
+    .ri { border:1px solid var(--border); border-radius:var(--r-sm); overflow:hidden; margin-bottom:12px; }
+    .ri-q { padding:14px 18px; background:#fafaf9; }
+    .ri-q-text { font-size:14px; color:var(--ink); margin-bottom:4px; }
+    .ri-btn { display:inline-flex; align-items:center; gap:6px; margin-top:12px; padding:6px 15px; border:1.5px solid var(--accent-bdr); border-radius:var(--r-sm); background:var(--accent-bg); color:var(--accent); cursor:pointer; font-size:12px; font-family:'DM Sans',sans-serif; font-weight:600; transition:background .12s,color .12s,border-color .12s; }
+    .ri-btn:hover { background:var(--accent-mid); color:#fff; border-color:var(--accent-mid); }
+    .ri-ans { display:none; padding:16px 18px; background:var(--accent-bg); border-top:1px solid var(--accent-bdr); }
+    .ri-ans.show { display:block; }
+    .ri-ans-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--accent-mid); margin-bottom:8px; }
+    .ri-note { font-size:13px; color:var(--ink-2); margin-top:10px; line-height:1.55; }
+    @media print {
+      body { background:white; font-size:14px; }
+      .ri-ans { display:block !important; } .ri-btn { display:none; }
+      .ex-block-head { background:#1c1917 !important; -webkit-print-color-adjust:exact; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="page-header">
+    <div class="meta-row">
+      <span class="badge b-course">DAW · Pensament Computacional</span>
+      <span class="badge b-ra">AEA2 · RA2</span>
+      <span class="badge b-act">A3.2</span>
+      <span class="badge b-new">Descomposició modular</span>
+    </div>
+    <h1 class="page-title">Construir un programa amb peces</h1>
+    <p class="page-sub">Agafar un problema gran, repartir-lo en subrutines i muntar-les en un programa complet amb menú.</p>
+    <div class="obj-box">
+      <div class="obj-icon">🎯</div>
+      <div>
+        <div class="obj-label">Objectiu · criteris 2.3, 2.4 i 2.5</div>
+        <div class="obj-text">
+          Aplicar "divideix i venceràs" per dissenyar un programa com un conjunt de subrutines (criteri 2.3), provar-les
+          per separat (criteri 2.4) i muntar-les en un programa amb menú que es valida executant-lo (criteri 2.5).
+          Al final, una mirada opcional a la recursivitat.
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- SECCIÓ 1 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">1</span>
+      <div>
+        <h2 class="sec-title">Pensar en subrutines</h2>
+        <p class="sec-sub">Repartir el problema abans d'escriure codi</p>
+      </div>
+    </div>
+    <p class="lead">
+      Ja saps crear funcions i procediments. Ara la pregunta important és: <strong>com reparteixo un problema gran</strong>
+      en peces? La idea, que ja vam veure a l'A0, és "divideix i venceràs": trencar el problema en feines petites, cada
+      una resolta per una subrutina, i un <strong>programa principal</strong> que les va cridant.
+    </p>
+    <p class="lead">
+      Imagina un <strong>convertidor de temps</strong> amb un menú. Abans de programar, el dibuixem de dalt a baix:
+    </p>
+
+    <div class="tree">
+      <div class="tree-root">Convertidor de temps (programa principal)</div>
+      <div class="tree-row">
+        <div class="tree-node">MostrarMenu<small>procediment: ensenya les opcions</small></div>
+        <div class="tree-node">ASegons<small>funció: torna el total en segons</small></div>
+        <div class="tree-node">AHMS<small>procediment: mostra hores/minuts/segons</small></div>
+      </div>
+    </div>
+    <p class="tree-cap">El programa principal només coordina; cada feina concreta viu en la seva subrutina.</p>
+
+    <div class="ibox blue">
+      <div class="ibox-label">Per què val la pena</div>
+      <div class="ibox-text">
+        Amb les peces separades, el programa principal queda <strong>curt i clar</strong>, pots <strong>reutilitzar</strong>
+        una subrutina tantes vegades com vulguis, i pots <strong>provar-la tota sola</strong> abans de muntar-ho tot.
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓ 2 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">2</span>
+      <div>
+        <h2 class="sec-title">Un programa modular complet</h2>
+        <p class="sec-sub">Les peces + un menú que les fa servir</p>
+      </div>
+    </div>
+    <p class="lead">
+      Muntem el convertidor. Fixa't com es combina tot el que has après: <strong>funcions</strong> i
+      <strong>procediments</strong> (A3.1), un <code>Según</code> (A1.2) i un bucle <code>Repetir</code> per al menú (A1.3).
+    </p>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · convertidor de temps amb menú</div>
+      <pre class="pseudo-out" data-code="// Procediment: mostra les opcions del menú
+Funcion MostrarMenu()
+    Escribir '--- CONVERTIDOR DE TEMPS ---';
+    Escribir '1. Convertir a segons';
+    Escribir '2. Convertir a hores/minuts/segons';
+    Escribir '3. Sortir';
+FinFuncion
+
+// Funció: torna el temps total en segons
+Funcion s <- ASegons(h, m, seg)
+    Definir s Como Entero;
+    s <- h * 3600 + m * 60 + seg;
+FinFuncion
+
+// Procediment: mostra un total de segons en h/m/s
+Funcion AHMS(total)
+    Definir hores, minuts, segons, resta Como Entero;
+    hores <- trunc(total / 3600);
+    resta <- total mod 3600;
+    minuts <- trunc(resta / 60);
+    segons <- resta mod 60;
+    Escribir hores, 'h ', minuts, 'm ', segons, 's';
+FinFuncion
+
+Proceso Convertidor
+    Definir opcio, h, m, seg, total Como Entero;
+    Repetir
+        MostrarMenu();
+        Escribir 'Tria una opció:';
+        Leer opcio;
+        Segun opcio Hacer
+            1:
+                Escribir 'Hores, minuts i segons:';
+                Leer h;
+                Leer m;
+                Leer seg;
+                Escribir 'Total: ', ASegons(h, m, seg), ' segons';
+            2:
+                Escribir 'Quants segons?';
+                Leer total;
+                AHMS(total);
+            3:
+                Escribir 'Adéu!';
+            De Otro Modo:
+                Escribir 'Opció no vàlida';
+        FinSegun
+    Hasta Que opcio = 3
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona, pas a pas</div>
+        <div class="exp-text">
+          El programa principal és un <strong>bucle de menú</strong>: mostra les opcions (cridant
+          <code>MostrarMenu</code>), llegeix l'opció i, amb un <code>Según</code>, decideix què fer. L'opció 1 crida la
+          <strong>funció</strong> <code>ASegons</code> i ensenya el que torna; l'opció 2 crida el <strong>procediment</strong>
+          <code>AHMS</code>, que ja mostra el resultat ell mateix. El bucle es repeteix fins que tries el 3. Cada peça fa
+          una sola cosa i el principal només les coordina.
+        </div>
+      </div>
+    </div>
+
+    <div class="ibox yellow">
+      <div class="ibox-label">Eina nova · <code>trunc()</code></div>
+      <div class="ibox-text">
+        <code>trunc(x)</code> et torna la <strong>part entera</strong> d'un número, descartant els decimals. Aquí la fem
+        servir perquè <code>total / 3600</code> dóna un resultat amb decimals i nosaltres volem les hores senceres.
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓ 3 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">3</span>
+      <div>
+        <h2 class="sec-title">Reutilitzar i validar</h2>
+        <p class="sec-sub">Provar cada peça per separat</p>
+      </div>
+    </div>
+    <p class="lead">
+      Una de les grans avantatges de dividir en subrutines és que pots <strong>validar-les una a una</strong> (criteris
+      2.4 i 2.5) sense haver de muntar tot el programa. Si cada peça funciona, el conjunt també funcionarà.
+    </p>
+
+    <div class="ibox green">
+      <div class="ibox-label">Com validar una funció tota sola</div>
+      <div class="ibox-text">
+        Abans d'enganxar <code>ASegons</code> al menú, prova-la amb valors que coneguis: <code>ASegons(1, 0, 0)</code> ha
+        de tornar <strong>3600</strong>; <code>ASegons(0, 2, 0)</code> ha de tornar <strong>120</strong>. Si dóna el que
+        esperes, ja saps que la peça és correcta. Aquesta és l'essència del criteri 2.5: validar amb proves.
+      </div>
+    </div>
+
+    <div class="ibox blue">
+      <div class="ibox-label">Reutilització</div>
+      <div class="ibox-text">
+        <code>MostrarMenu</code> es crida a cada volta del bucle sense reescriure'n el codi. I si demà vols un altre
+        programa que també converteixi a segons, pots <strong>copiar la funció <code>ASegons</code></strong> tal qual:
+        ja està feta i provada.
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓ 4 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">4</span>
+      <div>
+        <h2 class="sec-title">Recursivitat <span style="font-size:13px;color:var(--ink-3);font-family:'DM Sans';font-weight:400;">· opcional, avançat</span></h2>
+        <p class="sec-sub">Una funció que es crida a si mateixa</p>
+      </div>
+    </div>
+    <p class="lead">
+      Hi ha funcions que, per resoldre el seu problema, es <strong>criden a si mateixes</strong> amb un cas més petit.
+      S'anomenen <strong>recursives</strong>. Perquè no es cridin infinitament, sempre necessiten un <strong>cas base</strong>:
+      una situació senzilla que es resol directament i atura la cadena de crides.
+    </p>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · factorial (n! = n · (n-1) · … · 1)</div>
+      <pre class="pseudo-out" data-code="Funcion fact <- Factorial(num)
+    Definir fact Como Entero;
+    Si num = 0 O num = 1 Entonces
+        fact <- 1;              // cas base: atura la recursió
+    SiNo
+        fact <- num * Factorial(num - 1);   // es crida a si mateixa
+    FinSi
+FinFuncion
+
+Proceso ProvaFactorial
+    Definir n Como Entero;
+    Escribir 'Escriu un número:';
+    Leer n;
+    Escribir 'El factorial és: ', Factorial(n);
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona · seguim Factorial(3)</div>
+        <div class="steps">
+          <div>Factorial(3) = 3 × Factorial(2)</div>
+          <div>Factorial(2) = 2 × Factorial(1)</div>
+          <div class="hl">Factorial(1) = 1 &nbsp;← cas base, ja no es crida més</div>
+          <div>…tornant enrere: 2 × 1 = 2, després 3 × 2 = <strong>6</strong></div>
+        </div>
+        <div class="exp-text">
+          Cada crida treballa amb un número més petit fins arribar a l'1 (el cas base). A partir d'aquí, els resultats
+          es van multiplicant en sentit invers fins a obtenir 6.
+        </div>
+      </div>
+    </div>
+
+    <div class="ibox red">
+      <div class="ibox-label">⚠️ Sense cas base, crides infinites</div>
+      <div class="ibox-text">
+        Si oblides el cas base, la funció es crida sense parar i el programa es penja, igual que un bucle infinit
+        (recorda l'A1.3). El cas base és, per a la recursivitat, el que fa que tot acabi.
+      </div>
+    </div>
+  </section>
+
+  <!-- EXERCICIS -->
+  <div class="ex-block-head">
+    <h2 class="ex-block-title">Exercicis de demostració</h2>
+    <p class="ex-block-sub">Quatre nivells · del reconeixement a la codificació · criteris 2.3, 2.4 i 2.5</p>
+  </div>
+  <div class="ex-block-body">
+
+    <div class="exercise">
+      <div class="ex-head"><div class="ex-num">1</div><div>
+        <div class="ex-name">Funció o procediment dins del programa?</div>
+        <div class="ex-level">Nivell bàsic · disseny de les peces</div>
+      </div></div>
+      <p class="ex-intro">Per a cada peça d'un programa modular, decideix si convé que sigui funció (torna un valor) o procediment (fa una feina).</p>
+      <div id="ex1-cont"></div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-head"><div class="ex-num">2</div><div>
+        <div class="ex-name">Segueix la recursió</div>
+        <div class="ex-level">Nivell mitjà · seguiment (traça)</div>
+      </div></div>
+      <p class="ex-intro">Fes servir l'exemple del factorial per respondre.</p>
+      <div id="ex2-cont"></div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-head"><div class="ex-num">3</div><div>
+        <div class="ex-name">Reparteix el problema</div>
+        <div class="ex-level">Nivell mitjà · descomposició</div>
+      </div></div>
+      <p class="ex-intro">Dissenya les capçaleres de les subrutines que faries servir per a cada programa. Després compara.</p>
+      <div id="ex3-cont"></div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-head"><div class="ex-num">4</div><div>
+        <div class="ex-name">Programa modular complet</div>
+        <div class="ex-level">Nivell avançat · de l'enunciat al codi</div>
+      </div></div>
+      <p class="ex-intro">Escriu el programa sencer amb les seves subrutines. Després obre la solució per comparar.</p>
+      <div id="ex4-cont"></div>
+    </div>
+
+  </div>
+
+</div><!-- /wrap -->
+
+<script>
+/* ── Acoloridor de pseudocodi (escapa &, <, > ABANS de res; marcador sense dígits) ── */
+function colorPseudo(text) {
+  text = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return text.split('\n').map(function(line){
+    var idx = line.indexOf('//');
+    var code = idx >= 0 ? line.slice(0, idx) : line;
+    var comment = idx >= 0 ? line.slice(idx) : '';
+    var strs = [];
+    code = code.replace(/'(?:''|[^'])*'/g, function(m){ strs.push(m); return '\u0001'; });
+    code = code.replace(/\b(Proceso|FinProceso|Algoritmo|FinAlgoritmo|Funcion|FinFuncion|SubProceso|SubAlgoritmo|Por|Valor|Referencia|Definir|Dimension|Como|Entero|Real|Numerico|Numero|Caracter|Texto|Cadena|Logico|Leer|Escribir|Sin|Saltar|Si|Entonces|SiNo|FinSi|Segun|FinSegun|Mientras|FinMientras|Repetir|Hasta|Que|Para|Con|Paso|Hacer|FinPara|Y|O|NO|mod)\b/g, "<span class='kw'>$1</span>");
+    code = code.replace(/\b(Verdadero|Falso|PI)\b/g, "<span class='num'>$1</span>");
+    code = code.replace(/\b(\d+\.?\d*)\b/g, "<span class='num'>$1</span>");
+    var k = 0;
+    code = code.replace(/\u0001/g, function(){ return "<span class='str'>" + strs[k++] + "</span>"; });
+    return code + (comment ? "<span class='cmt'>" + comment + "</span>" : '');
+  }).join('\n');
+}
+document.querySelectorAll('pre[data-code]').forEach(function(pre){
+  pre.innerHTML = colorPseudo(pre.getAttribute('data-code'));
+});
+
+/* ── Exercici 1 ── */
+const E1 = [
+  { t:'Una peça que rep dos números i torna el seu màxim comú divisor.', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor (el MCD): funció.' },
+  { t:'Una peça que ensenya per pantalla les opcions d\'un menú.', opts:['Funció','Procediment'], ans:1, exp:'Només mostra coses, no torna res: procediment.' },
+  { t:'Una peça que rep una fracció i la mostra simplificada.', opts:['Funció','Procediment'], ans:1, exp:'La seva feina és mostrar; no torna cap valor: procediment.' },
+  { t:'Una peça que rep un any i torna si és de traspàs (cert/fals).', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor lògic: funció.' }
+];
+(function(){
+  const c = document.getElementById('ex1-cont');
+  E1.forEach((d,i)=>{
+    const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E1',this,${i},${j})">${o}</button>`).join('');
+    const div = document.createElement('div'); div.className='qi';
+    div.innerHTML = `<div class="qi-text">${i+1}. ${d.t}</div><div class="qi-opts">${opts}</div><div class="qi-fb" id="E1f${i}"></div>`;
+    c.appendChild(div);
+  });
+})();
+
+/* ── Exercici 2 ── */
+const E2 = [
+  { t:'Quant val Factorial(4)? (4 × 3 × 2 × 1)', opts:['12','24','10'], ans:1, exp:'4 × 3 × 2 × 1 = 24.' },
+  { t:'Quin és el cas base de la funció Factorial?', opts:['num = 0 o num = 1','num = 10','num > 0'], ans:0, exp:'Quan num és 0 o 1, es torna 1 directament i s\'atura la recursió.' },
+  { t:'Què passaria si traguéssim el cas base?', opts:['Donaria 0','Es cridaria infinitament i es penjaria','Donaria el doble'], ans:1, exp:'Sense cas base, les crides no s\'aturarien mai: recursió infinita.' }
+];
+(function(){
+  const c = document.getElementById('ex2-cont');
+  E2.forEach((d,i)=>{
+    const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E2',this,${i},${j})">${o}</button>`).join('');
+    const div = document.createElement('div'); div.className='qi';
+    div.innerHTML = `<div class="qi-text">${i+1}. ${d.t}</div><div class="qi-opts">${opts}</div><div class="qi-fb" id="E2f${i}"></div>`;
+    c.appendChild(div);
+  });
+})();
+
+/* Comprovació compartida E1/E2 */
+const DATA = { E1:E1, E2:E2 };
+function checkQ(grp,btn,i,choice){
+  const d = DATA[grp][i], fb = document.getElementById(grp+'f'+i);
+  const btns = btn.closest('.qi-opts').querySelectorAll('.qi-btn'); btns.forEach(b=>b.disabled=true);
+  if(choice===d.ans){ btn.classList.add('ok'); fb.className='qi-fb ok'; fb.textContent='✓ Correcte! '+d.exp; }
+  else{ btn.classList.add('fail'); btns[d.ans].classList.add('ok'); fb.className='qi-fb fail'; fb.textContent='✗ Incorrecte. '+d.exp; }
+}
+
+/* ── Exercici 3 ── */
+const E3 = [
+  { q:'Un programa que treballa amb fraccions a/b: vol simplificar-les, sumar-les i mostrar-les.',
+    code:"Funcion m <- CalcularMCD(a, b)        // funció (torna el MCD)\nFuncion SimplificarFraccio(n Por Referencia, d Por Referencia)  // procediment (modifica n i d)\nFuncion SumarFraccions(n1, d1, n2, d2)  // procediment (mostra el resultat)\nFuncion EscriureFraccio(n, d)           // procediment (mostra n/d)",
+    exp:'El MCD és una funció (torna un valor) i el reutilitzem per simplificar. La resta són procediments que modifiquen o mostren.' },
+  { q:'Un programa amb un menú per a una calculadora simple (sumar i restar dos números).',
+    code:"Funcion MostrarMenu()              // procediment\nFuncion s <- Sumar(a, b)           // funció (torna a + b)\nFuncion r <- Restar(a, b)          // funció (torna a - b)",
+    exp:'El menú és un procediment; cada operació és una funció que torna el resultat del càlcul.' }
+];
+(function(){
+  const c = document.getElementById('ex3-cont');
+  E3.forEach((d,i)=>{
+    const div = document.createElement('div'); div.className='ri';
+    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.q}</div><button class="ri-btn" onclick="reveal(this,'E3a${i}')">▶ Veure proposta</button></div><div class="ri-ans" id="E3a${i}"><div class="ri-ans-label">Subrutines proposades</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
+    c.appendChild(div);
+  });
+})();
+
+/* ── Exercici 4 ── */
+const E4 = [
+  { ctx:'Crea una funció CalcularMCD(a, b) que torni el màxim comú divisor pel mètode d\'Euclides (anar dividint i quedar-se amb el residu fins que sigui 0). Fes un programa que llegeixi dos números i mostri el MCD.',
+    code:"Funcion mcd <- CalcularMCD(a, b)\n    Definir mcd, resta Como Entero;\n    Mientras b <> 0 Hacer\n        resta <- a mod b;\n        a <- b;\n        b <- resta;\n    FinMientras\n    mcd <- a;\nFinFuncion\n\nProceso ProgramaMCD\n    Definir x, y Como Entero;\n    Escribir 'Escriu dos números:';\n    Leer x;\n    Leer y;\n    Escribir 'El MCD és: ', CalcularMCD(x, y);\nFinProceso",
+    exp:'Euclides: mentre el segon no sigui 0, ens quedem amb el residu (a mod b) i avancem. Quan b arriba a 0, el MCD és a. Reutilitza el mod i el <> de l\'A1.3.' },
+  { ctx:'Crea una calculadora amb menú: opcions sumar i restar dos números, i sortir. Fes servir una funció per a cada operació i un procediment per al menú.',
+    code:"Funcion MostrarMenu()\n    Escribir '--- CALCULADORA ---';\n    Escribir '1. Sumar';\n    Escribir '2. Restar';\n    Escribir '3. Sortir';\nFinFuncion\n\nFuncion s <- Sumar(a, b)\n    Definir s Como Real;\n    s <- a + b;\nFinFuncion\n\nFuncion r <- Restar(a, b)\n    Definir r Como Real;\n    r <- a - b;\nFinFuncion\n\nProceso Calculadora\n    Definir opcio Como Entero;\n    Definir x, y Como Real;\n    Repetir\n        MostrarMenu();\n        Leer opcio;\n        Si opcio = 1 O opcio = 2 Entonces\n            Escribir 'Escriu dos números:';\n            Leer x;\n            Leer y;\n        FinSi\n        Segun opcio Hacer\n            1: Escribir 'Resultat: ', Sumar(x, y);\n            2: Escribir 'Resultat: ', Restar(x, y);\n            3: Escribir 'Adéu!';\n            De Otro Modo: Escribir 'Opció no vàlida';\n        FinSegun\n    Hasta Que opcio = 3\nFinProceso",
+    exp:'El procediment MostrarMenu i les funcions Sumar/Restar són les peces; el programa principal les coordina amb un bucle de menú (Repetir + Según), igual que el convertidor de temps.' }
+];
+(function(){
+  const c = document.getElementById('ex4-cont');
+  E4.forEach((d,i)=>{
+    const div = document.createElement('div'); div.className='ri';
+    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><button class="ri-btn" onclick="reveal(this,'E4a${i}')">▶ Veure codi PSeInt</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
+    c.appendChild(div);
+  });
+})();
+
+function reveal(btn,id){ document.getElementById(id).classList.add('show'); btn.style.display='none'; }
+</script>
+</body>
+</html>
