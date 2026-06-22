@@ -825,12 +825,12 @@ const E3 = [
 const E4 = [
   {
     ctx:    'Anàlisi: entrada = base, alcada · sortida = area · area = base * alcada',
-    pseudo: 'Proceso AreaRectangle\n    Definir base, alcada, area Como Real;\n    Escribir "Introdueix la base:";\n    Leer base;\n    Escribir "Introdueix l\'alçada:";\n    Leer alcada;\n    area <- base * alcada;\n    Escribir "Àrea: ", area;\nFinProceso',
+    pseudo: 'Proceso AreaRectangle\n    Definir base, alcada, area Como Real;\n    Escribir "Introdueix la base:";\n    Leer base;\n    Escribir "Introdueix l_alçada:";\n    Leer alcada;\n    area <- base * alcada;\n    Escribir "Àrea: ", area;\nFinProceso',
     exp:    'Cada entrada de l\'anàlisi és un Leer; el càlcul és una assignació amb <- ; la sortida és un Escribir. Observa: ordres en castellà, variables en català.'
   },
   {
     ctx:    'Anàlisi: entrades = nota1, nota2, nota3 · sortida = mitjana',
-    pseudo: 'Proceso Mitjana\n    Definir nota1, nota2, nota3, mitjana Como Real;\n    Escribir "Introdueix les tres notes:";\n    Leer nota1;\n    Leer nota2;\n    Leer nota3;\n    mitjana <- (nota1 + nota2 + nota3) / 3;\n    Escribir "La mitjana és: ", mitjana;\nFinProceso',
+    pseudo: 'Proceso MitjanaNotes\n    Definir nota1, nota2, nota3, mitjana Como Real;\n    Escribir "Introdueix les tres notes:";\n    Leer nota1;\n    Leer nota2;\n    Leer nota3;\n    mitjana <- (nota1 + nota2 + nota3) / 3;\n    Escribir "La mitjana és: ", mitjana;\nFinProceso',
     exp:    'Tres Leer per a les tres entrades. El parèntesi a la suma és imprescindible: sense ell, només es dividiria nota3 entre 3.'
   },
   {

@@ -1,161 +1,158 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lògica i Programació · Institut La Mercè</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AEA1 — Fonaments de la programació · M0485</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="estils.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    :root {
+      --hero-bg:#1a1114; --hero-line:#c0392b; --accent:#e74c3c; --accent-bg:#fdecea;
+      --text:#1a1a1a; --text-soft:#666; --text-hero:#f0ece8; --text-hero-sub:#a89f9a;
+      --border:#e8e8e8; --radius:14px;
+      --shadow:0 1px 4px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.06);
+      --shadow-h:0 4px 8px rgba(0,0,0,.08),0 8px 28px rgba(0,0,0,.10);
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',system-ui,sans-serif; background:#fff; color:var(--text); line-height:1.6; min-height:100vh; display:flex; flex-direction:column; }
+
+    /* Hero */
+    .hero { background:var(--hero-bg); padding:3.5rem 3rem 3rem; border-bottom:3px solid var(--hero-line); }
+    .hero-eyebrow { font-size:.72rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--text-hero-sub); margin-bottom:1rem; }
+    .hero h1 { font-family:'Playfair Display',Georgia,serif; font-size:clamp(2rem,4.5vw,3rem); font-weight:700; color:var(--text-hero); line-height:1.15; margin-bottom:1rem; }
+    .hero p { color:var(--text-hero-sub); font-size:1rem; max-width:560px; line-height:1.65; }
+
+    /* Breadcrumb */
+    .breadcrumb { background:#fafafa; border-bottom:1px solid var(--border); padding:.65rem 2rem; font-size:.82rem; color:var(--text-soft); }
+    .breadcrumb a { color:var(--accent); text-decoration:none; font-weight:500; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .breadcrumb span { margin:0 .4rem; color:#ccc; }
+
+    /* Main */
+    main { flex:1; max-width:1000px; width:100%; margin:0 auto; padding:3.5rem 2rem; }
+
+    .section-intro { margin-bottom:1.75rem; }
+    .section-intro h2 { font-family:'Playfair Display',Georgia,serif; font-size:1.6rem; font-weight:700; color:var(--text); margin-bottom:.4rem; }
+    .section-intro p  { font-size:.92rem; color:var(--text-soft); max-width:680px; }
+
+    /* Cards */
+    .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.1rem; }
+
+    .card { background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:1.4rem 1.4rem 1.1rem; display:flex; flex-direction:column; gap:.4rem; text-decoration:none; color:inherit; box-shadow:var(--shadow); transition:box-shadow .18s,transform .18s; }
+    .card:hover { box-shadow:var(--shadow-h); transform:translateY(-3px); }
+
+    .card-badge { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; background:var(--accent-bg); color:var(--accent); border-radius:8px; font-size:.78rem; font-weight:700; margin-bottom:.3rem; }
+
+    .card-title { font-size:1rem; font-weight:700; color:var(--text); line-height:1.3; }
+    .card-desc  { font-size:.84rem; color:var(--text-soft); line-height:1.55; flex:1; }
+
+    .card-footer { display:flex; align-items:center; justify-content:space-between; margin-top:.6rem; padding-top:.6rem; border-top:1px solid var(--border); }
+    .card-meta { display:flex; flex-direction:column; gap:.1rem; }
+    .card-criteri { font-size:.74rem; color:var(--text-soft); }
+    .card-hores   { font-size:.74rem; color:var(--text-soft); }
+    .card-link { font-size:.84rem; font-weight:600; color:var(--accent); white-space:nowrap; }
+
+    /* Prova escrita card — estil diferent */
+    .card-exam { background:#fafafa; border:1px dashed #ddd; }
+    .card-exam .card-badge { background:#f0f0f0; color:#999; }
+    .card-exam .card-title { color:#555; }
+    .card-exam .card-link  { color:#aaa; pointer-events:none; }
+
+    /* Footer */
+    footer { background:var(--hero-bg); color:var(--text-hero-sub); text-align:center; padding:1.4rem; font-size:.82rem; margin-top:auto; }
+
+    @media(max-width:640px){ .hero{padding:2.5rem 1.5rem 2rem;} main{padding:2rem 1rem;} .breadcrumb{padding:.65rem 1rem;} }
+  </style>
 </head>
-<body class="pagina-index">
+<body>
 
-  <div class="merce-top"></div>
+<header class="hero">
+  <p class="hero-eyebrow">Cicle DAW · Desenvolupament d'Aplicacions Web</p>
+  <h1>AEA1 — Fonaments de la programació</h1>
+  <p>De la configuració de l'entorn fins als primers algorismes: variables, operadors, estructures de control i tractament d'excepcions en Java.</p>
+</header>
 
-  <header class="site-head">
-    <div class="head-inner">
-      <a class="brand" href="index.html">
-        <span class="brand-mark">La Mercè</span>
-        <span class="brand-sub">Formació Professional</span>
-      </a>
-      <div class="head-course">Lògica i Programació · DAW</div>
+<nav class="breadcrumb">
+  <a href="index.html">M0485 Programació</a>
+  <span>›</span>
+  AEA1 — Fonaments de la programació
+</nav>
+
+<main>
+
+  <div class="section-intro">
+    <h2>AEA1 — Fonaments de la programació</h2>
+    <p>Quatre blocs progressius, de la instal·lació de l'entorn fins a les estructures de control avançades. Total: 39 hores.</p>
+  </div>
+
+  <div class="cards">
+
+    <!-- A0 -->
+    <a class="card" href="aea1/A0_introduccio_netbeans.html">
+      <span class="card-badge">A0</span>
+      <span class="card-title">Introducció i NetBeans</span>
+      <span class="card-desc">Instal·lació del JDK, configuració de NetBeans, primer projecte i programa Hola Món. Estructura bàsica d'un fitxer Java.</span>
+      <div class="card-footer">
+        <div class="card-meta">
+          <span class="card-criteri">RA1 · CA 1.2 · 1.3</span>
+          <span class="card-hores">3 hores</span>
+        </div>
+        <span class="card-link">Obrir →</span>
+      </div>
+    </a>
+
+    <!-- A1 -->
+    <a class="card" href="aea1/A1_elements_programa.html">
+      <span class="card-badge">A1</span>
+      <span class="card-title">Elements d'un programa informàtic</span>
+      <span class="card-desc">Variables, tipus de dades, literals, constants, operadors aritmètics, relacionals i lògics, conversions de tipus i comentaris.</span>
+      <div class="card-footer">
+        <div class="card-meta">
+          <span class="card-criteri">RA1 · CA 1.1 · 1.4 a 1.9</span>
+          <span class="card-hores">9 hores</span>
+        </div>
+        <span class="card-link">Obrir →</span>
+      </div>
+    </a>
+
+    <!-- A2 -->
+    <a class="card" href="aea1/A2_estructures_control.html">
+      <span class="card-badge">A2</span>
+      <span class="card-title">Estructures de control</span>
+      <span class="card-desc">Selecció (if/else, switch), repetició (while, for), salt (break, continue), esquemes de recorregut i cerca, excepcions i assercions.</span>
+      <div class="card-footer">
+        <div class="card-meta">
+          <span class="card-criteri">RA3 · CA 3.1 a 3.9</span>
+          <span class="card-hores">24 hores</span>
+        </div>
+        <span class="card-link">Obrir →</span>
+      </div>
+    </a>
+
+    <!-- Pe1 -->
+    <div class="card card-exam">
+      <span class="card-badge">Pe1</span>
+      <span class="card-title">Prova escrita</span>
+      <span class="card-desc">Avaluació dels continguts de l'AEA1: RA1 i RA3.</span>
+      <div class="card-footer">
+        <div class="card-meta">
+          <span class="card-criteri">RA1 + RA3</span>
+          <span class="card-hores">3 hores</span>
+        </div>
+        <span class="card-link">—</span>
+      </div>
     </div>
-  </header>
 
-  <section class="hero">
-    <div class="hero-inner">
-      <p class="hero-eyebrow">Cicle DAW · Desenvolupament d'Aplicacions Web</p>
-      <h1 class="hero-title">Raonament Lògic i Pseudocodi</h1>
-      <p class="hero-lead">Materials interactius per aprendre a pensar amb lògica i convertir-la en codi, pas a pas i amb exemples del dia a dia.</p>
-    </div>
-  </section>
+  </div>
 
-  <main class="wrap">
+</main>
 
-    <!-- ════════ AEA1 ════════ -->
-    <section class="aea">
-      <div class="aea-head">
-        <h1 class="aea-title">AEA1 - Raonament Lògic</h1>
-        <p class="aea-desc">De les proposicions a la resolució de problemes: formalitzar condicions, construir taules de veritat, transformar expressions amb les lleis i resoldre problemes amb lògica.</p>
-      </div>
-
-      <div class="cards">
-
-        <a class="card" href="A0_pensar_en_condicions.html">
-          <span class="card-num">A0</span>
-          <h3 class="card-title">Pensar en condicions</h3>
-          <p class="card-text">Proposicions, connectors lògics i com passar del llenguatge natural a una expressió formal.</p>
-          <span class="card-foot"><span class="crit">Criteri 1.1</span><span class="go">Obrir →</span></span>
-        </a>
-
-        <a class="card" href="A1_taules_de_veritat.html">
-          <span class="card-num">A1</span>
-          <h3 class="card-title">Taules de veritat</h3>
-          <p class="card-text">Els sis operadors, com construir una taula i classificar-la com a tautologia, contradicció o contingència.</p>
-          <span class="card-foot"><span class="crit">Criteri 1.2</span><span class="go">Obrir →</span></span>
-        </a>
-
-        <a class="card" href="A2_equivalencies_i_lleis.html">
-          <span class="card-num">A2</span>
-          <h3 class="card-title">Equivalències i lleis</h3>
-          <p class="card-text">Les lleis de la lògica per simplificar expressions i demostrar que dues condicions són equivalents.</p>
-          <span class="card-foot"><span class="crit">Criteri 1.3</span><span class="go">Obrir →</span></span>
-        </a>
-
-        <a class="card" href="A3_resolucio_de_problemes.html">
-          <span class="card-num">A3</span>
-          <h3 class="card-title">Resolució de problemes</h3>
-          <p class="card-text">Estratègies i raonament ordenat per resoldre problemes de lògica, validacions i control de flux.</p>
-          <span class="card-foot"><span class="crit">Criteri 1.5</span><span class="go">Obrir →</span></span>
-        </a>
-
-        <a class="card" href="A4_de_la_logica_al_pseudocodi.html">
-          <span class="card-num">A4</span>
-          <h3 class="card-title">De la lògica al pseudocodi</h3>
-          <p class="card-text">Traduir condicions lògiques a estructures <code>Si</code> i <code>Mientras</code> de PSeInt. El pont cap a la programació.</p>
-          <span class="card-foot"><span class="crit">Criteris 1.1 · 1.5</span><span class="go">Obrir →</span></span>
-        </a>
-
-      </div>
-    </section>
-
-    <!-- ════════ AEA2 ════════ -->
-    <section class="aea">
-      <div class="aea-head">
-        <h1 class="aea-title">AEA2 - Pseudocodi</h1>
-        <p class="aea-desc">Del raonament lògic a l'algorisme: variables, estructures de control, arrays i descomposició modular amb pseudocodi i PSeInt.</p>
-      </div>
-
-      <div class="cards">
-
-        <a class="card" href="A0_del_problema_a_algoritme.html">
-          <span class="card-num">A0</span>
-          <h3 class="card-title">Del problema a l'algoritme</h3>
-          <p class="card-text">Com analitza un programador un problema, estratègies de disseny descendent i els primers passos amb PSeInt.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.1 · 2.2 · 2.3</span><span class="go">Obrir →</span></span>
-        </a>
-
-        <a class="card" href="A1_1_fonaments_sequencials.html">
-          <span class="card-num">A1.1</span>
-          <h3 class="card-title">Variables, dades i operacions</h3>
-          <p class="card-text">Estructura del programa, tipus de dades, literals, variables i operadors. La base de qualsevol algorisme seqüencial.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.1 · 2.5</span><span class="go">Obrir →</span></span>
-        </a>
-
-        <a class="card" href="a1-2-estructures-alternatives.html">
-          <span class="card-num">A1.2</span>
-          <h3 class="card-title">Prendre decisions</h3>
-          <p class="card-text">Alternativa simple, doble i condicions encadenades amb <code>Si … SiNo … FinSi</code> per controlar el flux del programa.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.1 · 2.5</span><span class="go">Obrir →</span></span>
-        </a>
-
-        <a class="card" href="A1_3_estructures_repetitives.html">
-          <span class="card-num">A1.3</span>
-          <h3 class="card-title">Repetir sense repetir-se</h3>
-          <p class="card-text">Els tres bucles de PSeInt: <code>Mientras</code>, <code>Repetir … Hasta Que</code> i <code>Para</code>. Quan usar cada un i com evitar bucles infinits.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.1 · 2.5</span><span class="go">Obrir →</span></span>
-        </a>
-
-        <a class="card" href="a2-1-vectors.html">
-          <span class="card-num">A2.1</span>
-          <h3 class="card-title">Moltes dades amb un sol nom</h3>
-          <p class="card-text">Els vectors: guardar una llista d'elements del mateix tipus i recórrer-los amb un bucle, amb índexs que comencen pel 0.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.2 · 2.5</span><span class="go">Obrir →</span></span>
-        </a>
-
-        <a class="card" href="a2-2-matrius.html">
-          <span class="card-num">A2.2</span>
-          <h3 class="card-title">Files i columnes</h3>
-          <p class="card-text">Les matrius: organitzar dades en una graella de files i columnes i recórrer-les amb dos bucles niats.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.2 · 2.5</span><span class="go">Obrir →</span></span>
-        </a>
-
-        <a class="card" href="a3-1-funcions-procediments.html">
-          <span class="card-num">A3.1</span>
-          <h3 class="card-title">Trossos de programa amb nom propi</h3>
-          <p class="card-text">Dividir el programa en peces reutilitzables: funcions que tornen un valor i procediments que fan una tasca.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.3 · 2.4</span><span class="go">Obrir →</span></span>
-        </a>
-
-        <a class="card" href="a3-2-descomposicio-modular.html">
-          <span class="card-num">A3.2</span>
-          <h3 class="card-title">Construir un programa amb peces</h3>
-          <p class="card-text">Repartir un problema en subrutines i muntar-les en un programa complet amb menú. Inclou una introducció a la recursivitat.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.3 · 2.4 · 2.5</span><span class="go">Obrir →</span></span>
-        </a>
-
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="site-foot">
-    <div class="wrap foot-inner">
-      <span>Institut La Mercè · Formació Professional</span>
-      <span>Cicle DAW · Mòdul Lògica i Programació</span>
-    </div>
-  </footer>
+<footer>
+  Institut La Mercè · Formació Professional &nbsp;·&nbsp; Cicle DAW · Mòdul M0485 Programació
+</footer>
 
 </body>
 </html>
