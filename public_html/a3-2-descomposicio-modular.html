@@ -192,7 +192,7 @@
     <div class="demo">
       <div class="demo-label">Exemple · convertidor de temps amb menú</div>
       <pre class="pseudo-out" data-code="// Procediment: mostra les opcions del menú
-Funcion MostrarMenu()
+Funcion MostrarMenu
     Escribir '--- CONVERTIDOR DE TEMPS ---';
     Escribir '1. Convertir a segons';
     Escribir '2. Convertir a hores/minuts/segons';
@@ -481,10 +481,10 @@ const E3 = [
 /* ── Exercici 4 ── */
 const E4 = [
   { ctx:'Crea una funció CalcularMCD(a, b) que torni el màxim comú divisor pel mètode d\'Euclides (anar dividint i quedar-se amb el residu fins que sigui 0). Fes un programa que llegeixi dos números i mostri el MCD.',
-    code:"Funcion mcd <- CalcularMCD(a, b)\n    Definir mcd, resta Como Entero;\n    Mientras b <> 0 Hacer\n        resta <- a mod b;\n        a <- b;\n        b <- resta;\n    FinMientras\n    mcd <- a;\nFinFuncion\n\nProceso ProgramaMCD\n    Definir x, y Como Entero;\n    Escribir 'Escriu dos números:';\n    Leer x;\n    Leer y;\n    Escribir 'El MCD és: ', CalcularMCD(x, y);\nFinProceso",
+    code:"Funcion mcd <- CalcularMCD(a, b)\n    Definir mcd, resta Como Entero;\n    Mientras b <> 0 Hacer\n        resta <- a mod b;\n        a <- b;\n        b <- resta;\n    FinMientras\n    mcd <- a;\nFinFuncion\n\nProceso ProgramaMCD\n    Definir x, z Como Entero;\n    Escribir 'Escriu dos números:';\n    Leer x;\n    Leer z;\n    Escribir 'El MCD és: ', CalcularMCD(x, z);\nFinProceso",
     exp:'Euclides: mentre el segon no sigui 0, ens quedem amb el residu (a mod b) i avancem. Quan b arriba a 0, el MCD és a. Reutilitza el mod i el <> de l\'A1.3.' },
   { ctx:'Crea una calculadora amb menú: opcions sumar i restar dos números, i sortir. Fes servir una funció per a cada operació i un procediment per al menú.',
-    code:"Funcion MostrarMenu()\n    Escribir '--- CALCULADORA ---';\n    Escribir '1. Sumar';\n    Escribir '2. Restar';\n    Escribir '3. Sortir';\nFinFuncion\n\nFuncion s <- Sumar(a, b)\n    Definir s Como Real;\n    s <- a + b;\nFinFuncion\n\nFuncion r <- Restar(a, b)\n    Definir r Como Real;\n    r <- a - b;\nFinFuncion\n\nProceso Calculadora\n    Definir opcio Como Entero;\n    Definir x, y Como Real;\n    Repetir\n        MostrarMenu();\n        Leer opcio;\n        Si opcio = 1 O opcio = 2 Entonces\n            Escribir 'Escriu dos números:';\n            Leer x;\n            Leer y;\n        FinSi\n        Segun opcio Hacer\n            1: Escribir 'Resultat: ', Sumar(x, y);\n            2: Escribir 'Resultat: ', Restar(x, y);\n            3: Escribir 'Adéu!';\n            De Otro Modo: Escribir 'Opció no vàlida';\n        FinSegun\n    Hasta Que opcio = 3\nFinProceso",
+    code:"Funcion MostrarMenu\n    Escribir '--- CALCULADORA ---';\n    Escribir '1. Sumar';\n    Escribir '2. Restar';\n    Escribir '3. Sortir';\nFinFuncion\n\nFuncion s <- Sumar(a, b)\n    Definir s Como Real;\n    s <- a + b;\nFinFuncion\n\nFuncion r <- Restar(a, b)\n    Definir r Como Real;\n    r <- a - b;\nFinFuncion\n\nProceso Calculadora\n    Definir opcio Como Entero;\n    Definir x, z Como Real;\n    Repetir\n        MostrarMenu();\n        Leer opcio;\n        Si opcio = 1 O opcio = 2 Entonces\n            Escribir 'Escriu dos números:';\n            Leer x;\n            Leer z;\n        FinSi\n        Segun opcio Hacer\n            1: Escribir 'Resultat: ', Sumar(x, z);\n            2: Escribir 'Resultat: ', Restar(x, z);\n            3: Escribir 'Adéu!';\n            De Otro Modo: Escribir 'Opció no vàlida';\n        FinSegun\n    Hasta Que opcio = 3\nFinProceso",
     exp:'El procediment MostrarMenu i les funcions Sumar/Restar són les peces; el programa principal les coordina amb un bucle de menú (Repetir + Según), igual que el convertidor de temps.' }
 ];
 (function(){
