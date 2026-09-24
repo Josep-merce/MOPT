@@ -66,6 +66,17 @@
     .cmp h4 { font-size:13px; font-family:'JetBrains Mono',monospace; color:var(--accent); margin-bottom:8px; }
     .cmp p { font-size:12px; color:var(--ink-2); line-height:1.5; }
     @media (max-width:600px){ .cmp-grid { grid-template-columns:1fr; } }
+    /* COMPARACIÓ DE CODI COSTAT A COSTAT */
+    .code-cmp { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0 4px; }
+    .code-cmp-col { border-radius:var(--r-sm); overflow:hidden; border:1px solid var(--border); }
+    .code-cmp-head { font-size:12px; font-weight:700; padding:8px 12px; font-family:'JetBrains Mono',monospace; }
+    .code-cmp-head.ok { background:var(--green-bg); color:var(--green); border-bottom:1px solid var(--green-bdr); }
+    .code-cmp-head.bad { background:var(--red-bg); color:var(--red); border-bottom:1px solid var(--red-bdr); }
+    .code-cmp-col pre.pseudo-out { border-radius:0; margin:0; font-size:11.5px; line-height:1.7; }
+    .code-cmp-note { font-size:12px; padding:9px 12px; line-height:1.5; }
+    .code-cmp-note.ok { background:var(--green-bg); color:var(--green); }
+    .code-cmp-note.bad { background:var(--red-bg); color:var(--red); }
+    @media (max-width:600px){ .code-cmp { grid-template-columns:1fr; } }
     /* TAULA */
     .tbl-wrap { background:var(--card); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; margin-bottom:20px; }
     .tbl { width:100%; border-collapse:collapse; font-size:14px; }
@@ -157,17 +168,25 @@
       </div>
     </div>
     <p class="lead">
-      Imagina que has de sumar 100 nombres o demanar una contrasenya fins que sigui correcta. Escriure 100 línies
-      iguals seria absurd. Les <strong>estructures repetitives</strong> (o <strong>bucles</strong>) executen un bloc
-      d'instruccions diverses vegades. Totes funcionen amb una <strong>condició</strong> que decideix si el bucle
-      continua o s'atura.
+      Hi ha feines que consisteixen a fer <strong>el mateix moltes vegades seguides</strong>. Pensa a pujar una
+      escala: repeteixes el mateix pas —posar el peu al graó següent— una vegada i una altra fins que arribes a dalt.
+    </p>
+    <p class="lead">
+      A l'ordinador li passa igual: en comptes d'escriure la mateixa ordre moltes vegades, li diem
+      «<strong>repeteix això fins que…</strong>». Aquesta és la feina de les <strong>estructures repetitives</strong>,
+      que també s'anomenen <strong>bucles</strong>.
+    </p>
+    <p class="lead">
+      El més important és que tot bucle ha de saber <strong>quan ha de parar</strong>, igual que l'escala s'acaba
+      quan arribes a dalt.
     </p>
 
     <div class="ibox red">
-      <div class="ibox-label">⚠️ El perill: el bucle infinit</div>
+      <div class="ibox-label">⚠️ Compte: el bucle que no s'acaba mai</div>
       <div class="ibox-text">
-        Si la condició no canvia mai, el bucle no s'atura mai i el programa es penja. Dins de tot bucle hi ha d'haver
-        <strong>alguna instrucció que modifiqui</strong> la variable de la condició perquè, tard o d'hora, el bucle acabi.
+        Perquè un bucle pugui parar, hi ha d'haver <strong>alguna cosa que vagi canviant</strong> a cada volta fins
+        que arribi el moment d'aturar-se. Si res no canvia mai, l'ordinador es queda repetint per sempre i el programa
+        es <strong>penja</strong>. Seria com una escala que no s'acaba: no arribaries mai a dalt.
       </div>
     </div>
 
@@ -185,6 +204,68 @@
       <div class="cmp">
         <h4>Para</h4>
         <p>Repeticions de <strong>nombre conegut</strong>. Gestiona el comptatge automàticament.</p>
+      </div>
+    </div>
+
+    <!-- MODEL MENTAL SENZILL -->
+    <div class="ibox green">
+      <div class="ibox-label">💡 La pregunta que ho decideix tot</div>
+      <div class="ibox-text">
+        <strong>Saps quantes vegades ho has de repetir?</strong><br>
+        · <strong>Sí</strong> → fes servir <code>Para</code><br>
+        · <strong>No</strong> → fes servir <code>Mientras</code> (o <code>Repetir</code> si segur que ho fas com a mínim un cop)
+      </div>
+    </div>
+
+    <p class="lead">Un exemple ràpid de cadascun perquè ho vegis d'un cop d'ull:</p>
+
+    <div class="demo">
+      <div class="demo-label">Para · escriure els números de l'1 al 5 (sé que són 5 voltes)</div>
+      <pre class="pseudo-out" data-code="Para i <- 1 Hasta 5 Hacer
+    Escribir i;
+FinPara"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Per què Para</div>
+        <div class="exp-text">
+          El bucle compta sol: comença a 1, puja d'1 en 1 i s'atura al 5. Tu no has de fer res més.
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Mientras · demanar un nombre fins que s'escrigui un 0 (no sé quants en posarà)</div>
+      <pre class="pseudo-out" data-code="Leer numero;
+Mientras numero <> 0 Hacer
+    Escribir 'Has escrit: ', numero;
+    Leer numero;
+FinMientras"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Per què Mientras</div>
+        <div class="exp-text">
+          Mira la condició al principi: si l'usuari posa un 0 de bon començament, el bucle no fa res.
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Repetir · demanar una contrasenya fins que sigui correcta (l'he de demanar mínim un cop)</div>
+      <pre class="pseudo-out" data-code="Repetir
+    Leer clau;
+Hasta Que clau = 1234
+Escribir 'Correcte!';"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Per què Repetir</div>
+        <div class="exp-text">
+          Sempre demana la clau almenys una vegada, perquè mira la condició al final.
+        </div>
+      </div>
+    </div>
+
+    <div class="ibox yellow">
+      <div class="ibox-label">La regla d'or</div>
+      <div class="ibox-text">
+        Dins de tot bucle hi ha d'haver <strong>alguna cosa que canviï</strong> (llegir un nombre nou, pujar un
+        comptador…). Si res no canvia, el bucle no s'atura mai.
       </div>
     </div>
   </section>
@@ -264,35 +345,71 @@ FinProceso"></pre>
     </div>
 
     <div class="demo">
-      <div class="demo-label">Exemple · la mateixa clau, ara amb Repetir</div>
-      <pre class="pseudo-out" data-code="Proceso Login
-    Definir secret, clau Como Cadena;
-    secret <- 'asdasd';
+      <div class="demo-label">Exemple · un menú que es repeteix fins que tries «Sortir»</div>
+      <pre class="pseudo-out" data-code="Proceso MenuPrincipal
+    Definir opcio Como Entero;
     Repetir
-        Escribir 'Digues la clau:';
-        Leer clau;
-        Si clau <> secret Entonces
-            Escribir 'Clau incorrecta!';
-        FinSi
-    Hasta Que clau = secret
-    Escribir 'Benvingut/da!';
+        Escribir '--- MENÚ ---';
+        Escribir '1. Jugar';
+        Escribir '2. Opcions';
+        Escribir '3. Sortir';
+        Escribir 'Tria una opció:';
+        Leer opcio;
+    Hasta Que opcio = 3
+    Escribir 'Fins aviat!';
 FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          Aquí <strong>no</strong> cal demanar la clau abans del bucle: com que el cos s'executa sempre un cop, la
-          lectura ja hi és a dins. Es repeteix fins que <code>clau = secret</code> sigui cert. Compara-ho amb el
-          <code>Mientras</code>: fa el mateix, però el <code>Repetir</code> és més natural quan l'acció s'ha de fer
-          <strong>almenys una vegada</strong> (com demanar una dada).
+          Un menú s'ha de mostrar sempre <strong>almenys un cop</strong> abans que l'usuari pugui triar res. Per això
+          el <code>Repetir</code> hi encaixa de manera natural: mostra les opcions, llegeix la tria i, si no és
+          «Sortir», torna a començar. Es repeteix fins que <code>opcio = 3</code> sigui cert. Amb un
+          <code>Mientras</code> hauríem d'escriure el menú <strong>dues vegades</strong> (un cop abans del bucle i un
+          altre a dins), i quedaria més embolicat.
         </div>
       </div>
     </div>
 
     <div class="ibox green">
-      <div class="ibox-label">Mientras o Repetir?</div>
+      <div class="ibox-label">Mientras o Repetir? La diferència de veritat</div>
       <div class="ibox-text">
-        Si pot ser que el bucle <strong>no s'executi cap vegada</strong>, fes servir <code>Mientras</code>.
-        Si sempre s'ha d'executar <strong>almenys un cop</strong> (menús, demanar dades…), <code>Repetir</code> sol ser més clar.
+        Amb la <strong>clau</strong> i amb el <strong>menú</strong> els dos bucles funcionen igual, perquè totes dues
+        coses s'han de fer <strong>com a mínim un cop</strong>. La diferència només es nota en <strong>un cas</strong>:
+        quan potser no cal repetir <strong>ni una sola vegada</strong>.
+        <br><br>
+        Mira el <strong>mateix caixer</strong> resolt amb els dos bucles. La regla és «treu 50 € mentre el saldo sigui
+        suficient» i arribem amb el compte a <strong>0 €</strong>:
+      </div>
+
+      <div class="code-cmp">
+        <div class="code-cmp-col">
+          <div class="code-cmp-head ok">✔️ Amb Mientras</div>
+          <pre class="pseudo-out" data-code="saldo <- 0;
+Mientras saldo >= 50 Hacer
+    saldo <- saldo - 50;
+    Escribir 'Has tret 50 €';
+FinMientras
+Escribir 'Saldo: ', saldo;"></pre>
+          <div class="code-cmp-note ok">Mira primer: <strong>0 &gt;= 50</strong> és fals, així que no entra al bucle. No treu res i el saldo es queda a 0. Correcte.</div>
+        </div>
+        <div class="code-cmp-col">
+          <div class="code-cmp-head bad">✘ Amb Repetir</div>
+          <pre class="pseudo-out" data-code="saldo <- 0;
+Repetir
+    saldo <- saldo - 50;
+    Escribir 'Has tret 50 €';
+Hasta Que saldo < 50
+Escribir 'Saldo: ', saldo;"></pre>
+          <div class="code-cmp-note bad">Fa el cos primer: treu 50 € que no tens (el saldo queda a <strong>-50</strong>) i <em>després</em> comprova. Error!</div>
+        </div>
+      </div>
+
+      <div class="ibox-text">
+        Per això la regla és:
+        <br><strong>1)</strong> Si pot passar que <strong>no calgui fer-ho cap vegada</strong> → <code>Mientras</code>
+        (com el caixer amb 0 €).
+        <br><strong>2)</strong> Si <strong>sempre s'ha de fer almenys un cop</strong> (menús, demanar dades…) →
+        <code>Repetir</code>, que queda més net.
       </div>
     </div>
   </section>
