@@ -379,6 +379,46 @@ FinProceso"></pre>
       </div>
     </div>
 
+    <div class="demo">
+      <div class="demo-label">El mateix, però tot amb Si … SiNo … FinSi</div>
+      <pre class="pseudo-out" data-code="Proceso Qualificacio
+    Definir nota Como Entero;
+    Escribir 'Quina nota has tret?';
+    Leer nota;
+    Si nota >= 1 Y nota <= 4 Entonces
+        Escribir 'Suspès';
+    SiNo
+        Si nota = 5 Entonces
+            Escribir 'Suficient';
+        SiNo
+            Si nota = 6 O nota = 7 Entonces
+                Escribir 'Bé';
+            SiNo
+                Si nota = 8 Entonces
+                    Escribir 'Notable';
+                SiNo
+                    Si nota = 9 O nota = 10 Entonces
+                        Escribir 'Excel·lent';
+                    SiNo
+                        Escribir 'Nota incorrecta';
+                    FinSi
+                FinSi
+            FinSi
+        FinSi
+    FinSi
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">D'on ve el Según</div>
+        <div class="exp-text">
+          És <strong>exactament la mateixa lògica</strong>! Cada cas del <code>Según</code> es converteix en un
+          <code>Si … SiNo</code>, i cada <code>SiNo</code> conté el <code>Si</code> següent. Sis casos es tradueixen en
+          <strong>cinc <code>Si</code> niats</strong> i una pila de <code>FinSi</code>. Es veu clar per què, quan comparem
+          una variable amb valors concrets, el <code>Según</code> és una <strong>drecera</strong> molt més neta i fàcil de
+          llegir que aquesta escala de <code>Si</code>.
+        </div>
+      </div>
+    </div>
+
     <div class="ibox green">
       <div class="ibox-label">Según o Si encadenat?</div>
       <div class="ibox-text">
@@ -509,8 +549,8 @@ function checkQ(grp,btn,i,choice){
 /* ── Exercici 3 ── */
 const E3 = [
   { q:'Permet l\'accés només si l\'usuari és "pepe" i la contrasenya és "1234"; si no, mostra un error.',
-    code:"Si usuari = 'pepe' Y clau = '1234' Entonces\n    Escribir 'Has entrat al sistema';\nSiNo\n    Escribir 'Error d''accés';\nFinSi",
-    exp:'Calen les dues condicions alhora, per això les unim amb Y. Si en falla una, s\'executa el SiNo.' },
+    code:"// VERSIÓ 1: amb Y (les dues condicions alhora)\nSi usuari = 'pepe' Y clau = '1234' Entonces\n    Escribir 'Has entrat al sistema';\nSiNo\n    Escribir 'Error d''accés';\nFinSi\n\n// VERSIÓ 2: amb 2 Si encadenats\nSi usuari = 'pepe' Entonces\n    Si clau = '1234' Entonces\n        Escribir 'Has entrat al sistema';\n    SiNo\n        Escribir 'Error d''accés';\n    FinSi\nSiNo\n    Escribir 'Error d''accés';\nFinSi",
+    exp:'Les dues versions fan el mateix. Amb Y ho comprovem tot alhora: més curt i sense repetir res. Amb 2 Si niats primer mirem l\'usuari i, a dins, la contrasenya; funciona igual, però el missatge d\'error s\'ha d\'escriure dues vegades. Per això, quan totes dues condicions han de ser certes, el Y sol ser més net.' },
   { q:'Mostra la divisió de a entre b, però evita dividir per zero.',
     code:"Si b = 0 Entonces\n    Escribir 'No es pot dividir per zero';\nSiNo\n    Escribir a / b;\nFinSi",
     exp:'Comprovem el cas problemàtic (b = 0) primer. Així només dividim quan és segur fer-ho. Invertir la condició és més clar que escriure "b diferent de 0".' },
@@ -532,12 +572,12 @@ const E4 = [
   { ctx:'Demana un nombre enter i digues si és parell o senar.',
     code:"// Anàlisi\n// Entrada: numero (Entero)\n// Sortida: missatge (parell/senar)\n\nProceso ParellSenar\n    Definir numero Como Entero;\n    Escribir 'Escriu un nombre enter:';\n    Leer numero;\n    Si numero % 2 = 0 Entonces\n        Escribir 'És parell';\n    SiNo\n        Escribir 'És senar';\n    FinSi\nFinProceso",
     exp:'Un nombre és parell si el residu de dividir-lo entre 2 és 0 (numero % 2 = 0). Validació: amb 4 → parell; amb 7 → senar.' },
-  { ctx:'Demana un nombre i digues si és positiu, negatiu o zero.',
-    code:"// Anàlisi\n// Entrada: numero (Entero)\n// Sortida: positiu / negatiu / zero\n\nProceso Signe\n    Definir numero Como Entero;\n    Escribir 'Escriu un nombre:';\n    Leer numero;\n    Si numero > 0 Entonces\n        Escribir 'És positiu';\n    SiNo\n        Si numero < 0 Entonces\n            Escribir 'És negatiu';\n        SiNo\n            Escribir 'És zero';\n        FinSi\n    FinSi\nFinProceso",
-    exp:'Tres casos → Si encadenat. L\'ordre cobreix positiu, després negatiu i, per descart, zero.' },
-  { ctx:'Demana el número d\'un dia de la setmana (1 a 7) i escriu-ne el nom. Si el número no és vàlid, mostra un error.',
-    code:"// Anàlisi\n// Entrada: dia (Entero, 1..7)\n// Sortida: nom del dia o error\n\nProceso DiaSetmana\n    Definir dia Como Entero;\n    Escribir 'Número del dia (1-7):';\n    Leer dia;\n    Segun dia Hacer\n        1: Escribir 'Dilluns';\n        2: Escribir 'Dimarts';\n        3: Escribir 'Dimecres';\n        4: Escribir 'Dijous';\n        5: Escribir 'Divendres';\n        6: Escribir 'Dissabte';\n        7: Escribir 'Diumenge';\n        De Otro Modo:\n            Escribir 'ERROR: número incorrecte';\n    FinSegun\nFinProceso",
-    exp:'Valors exactes 1..7 → Según. El bloc De Otro Modo captura qualsevol número fora de rang.' }
+  { ctx:'Demana l\'edat d\'una persona i classifica-la en tres grups: menor (menys de 18), adult (de 18 a 64) o jubilat (65 o més).',
+    code:"// Anàlisi\n// Entrada: edat (Entero)\n// Sortida: menor / adult / jubilat\n\nProceso Edats\n    Definir edat Como Entero;\n    Escribir 'Quina edat tens?';\n    Leer edat;\n    Si edat < 18 Entonces\n        Escribir 'Menor';\n    SiNo\n        Si edat <= 64 Entonces\n            Escribir 'Adult';\n        SiNo\n            Escribir 'Jubilat';\n        FinSi\n    FinSi\nFinProceso",
+    exp:'Aquí els casos són RANGS (no valors exactes), així que cal Si encadenat i no Según. Amb només 2 Si niats cobrim els tres grups: primer els menors, després els adults i, per descart, els jubilats.' },
+  { ctx:'Demana un número (1, 2 o 3) que representa un semàfor —1 vermell, 2 groc, 3 verd— i escriu què cal fer. Fes-ho primer amb Según i, a sota, la mateixa lògica amb 2 Si.',
+    code:"// VERSIÓ 1: amb Según (valors exactes)\nProceso Semafor\n    Definir llum Como Entero;\n    Escribir 'Color del semàfor (1-3):';\n    Leer llum;\n    Segun llum Hacer\n        1: Escribir 'Vermell: para';\n        2: Escribir 'Groc: atenció';\n        3: Escribir 'Verd: passa';\n        De Otro Modo: Escribir 'Número incorrecte';\n    FinSegun\nFinProceso\n\n// VERSIÓ 2: la mateixa lògica amb 2 Si encadenats\nProceso Semafor2\n    Definir llum Como Entero;\n    Escribir 'Color del semàfor (1-3):';\n    Leer llum;\n    Si llum = 1 Entonces\n        Escribir 'Vermell: para';\n    SiNo\n        Si llum = 2 Entonces\n            Escribir 'Groc: atenció';\n        SiNo\n            Escribir 'Verd: passa';\n        FinSi\n    FinSi\nFinProceso",
+    exp:'Amb valors exactes (1, 2, 3) el Según és el més net. Però és equivalent a 2 Si encadenats: si no és 1 ni 2, es dóna per fet que és 3. Com més casos, més pesada es fa la versió amb Si; per això preferim Según quan són valors concrets.' }
 ];
 (function(){
   const c = document.getElementById('ex4-cont');
