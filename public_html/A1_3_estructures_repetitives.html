@@ -39,6 +39,7 @@
     .sec-title { font-family:'DM Serif Display',Georgia,serif; font-size:1.5rem; line-height:1.3; }
     .sec-sub { font-size:13px; color:var(--ink-3); margin-top:3px; }
     .lead { font-size:14px; color:var(--ink-2); margin-bottom:18px; line-height:1.6; }
+    .ov-h { font-family:'DM Serif Display',Georgia,serif; font-size:1.2rem; color:var(--accent); margin:26px 0 8px; line-height:1.3; }
     .lead code, p code, li code, td code { font-family:'JetBrains Mono',monospace; font-size:12px; background:var(--accent-bg); padding:1px 6px; border-radius:3px; color:var(--accent); }
     .ibox { border-radius:var(--r); padding:16px 20px; margin-bottom:20px; }
     .ibox-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.06em; margin-bottom:6px; }
@@ -221,15 +222,68 @@
       </div>
     </div>
 
-    <p class="lead">Tenim tres tipus de bucle. Es diferencien en dues coses: si <strong>saps per endavant quantes vegades</strong> repetiràs, i <strong>en quin moment</strong> el bucle mira si ha de parar:</p>
+    <h3 class="ov-h">La idea general</h3>
+    <p class="lead">Un bucle és quan li diem a algú (o a un robot) que <strong>repeteixi una cosa</strong>. Hi ha tres maneres de fer-ho, i la diferència és <strong>com sabem quan hem de parar</strong>.</p>
 
+    <h3 class="ov-h">1. PARA — «Fes-ho X vegades»</h3>
+    <p class="lead">Ja sabem des del principi quantes vegades ho farem.</p>
+    <div class="analogy">
+      <div class="analogy-emoji">🦘</div>
+      <div>
+        <div class="analogy-title">Exemple · «fes 5 salts»</div>
+        <div class="analogy-text">Tothom compta: 1, 2, 3, 4, 5… i para. No cal pensar res més, el número ja està decidit.</div>
+      </div>
+    </div>
+    <pre class="pseudo-out">Per a cada vegada de 1 a 5:
+    saltar</pre>
+    <div class="ibox green">
+      <div class="ibox-label">👉 Pregunta per a la classe</div>
+      <div class="ibox-text">«Si dic <em>pica de mans 3 vegades</em>, quantes vegades piques?» Sempre 3!</div>
+    </div>
+
+    <h3 class="ov-h">2. MENTRE — «Mira primer, i després fes»</h3>
+    <p class="lead">Abans de fer res, mirem una regla. Si es compleix, ho fem. Si no, no fem res.</p>
+    <div class="analogy">
+      <div class="analogy-emoji">🍪</div>
+      <div>
+        <div class="analogy-title">Exemple · «mentre tinguis gana, menja't una galeta»</div>
+        <div class="analogy-text">Si tens molta gana, en menges una, dues, tres… Però si quan arribes ja no tens gana, <strong>no te'n menges cap!</strong></div>
+      </div>
+    </div>
+    <pre class="pseudo-out">Mentre tingui gana:
+    menjar una galeta</pre>
+    <p class="lead">☔ <strong>Un altre:</strong> «Mentre plogui, porta el paraigua obert.» Si fa sol, no l'obres ni una vegada.</p>
+    <div class="ibox yellow">
+      <div class="ibox-label">👉 Clau</div>
+      <div class="ibox-text">Pot passar <strong>zero vegades</strong>.</div>
+    </div>
+
+    <h3 class="ov-h">3. REPETIR — «Fes primer, i després mira»</h3>
+    <p class="lead">Primer fem l'acció, i després mirem si hem de parar. Per això sempre es fa <strong>com a mínim un cop</strong>.</p>
+    <div class="analogy">
+      <div class="analogy-emoji">🎲</div>
+      <div>
+        <div class="analogy-title">Exemple · «tira el dau fins que surti un 6»</div>
+        <div class="analogy-text">No pots saber si surt un 6 si no tires el dau! Per tant, segur que tires <strong>almenys una vegada</strong>. Potser surt a la primera, o potser has de tirar 10 vegades.</div>
+      </div>
+    </div>
+    <pre class="pseudo-out">Repetir:
+    tirar el dau
+Fins que surti un 6</pre>
+    <p class="lead">🍲 <strong>Un altre:</strong> «Tasta la sopa fins que estigui bona de sal.» Sempre la tastes almenys un cop.</p>
+    <div class="ibox yellow">
+      <div class="ibox-label">👉 Clau</div>
+      <div class="ibox-text">Es fa <strong>una o més vegades</strong>, mai zero.</div>
+    </div>
+
+    <h3 class="ov-h">Resum per a la pissarra</h3>
     <div class="tbl-wrap">
       <table class="tbl">
-        <thead><tr><th>Bucle</th><th>Quan es fa servir</th><th>Quantes vegades es fa</th></tr></thead>
+        <thead><tr><th>Bucle</th><th>Pregunta màgica</th><th>Exemple</th><th>Vegades</th></tr></thead>
         <tbody>
-          <tr><td><code>Para</code></td><td>Quan saps el nombre exacte de voltes.</td><td>Les que tu diguis (ex.: 5 vegades).</td></tr>
-          <tr><td><code>Mientras</code></td><td>Mira la regla al principi. Si falla d'entrada, no fa res.</td><td>De 0 a moltes vegades.</td></tr>
-          <tr><td><code>Repetir</code></td><td>Fa l'acció i mira la regla al final. Sempre es fa un cop com a mínim.</td><td>D'1 a moltes vegades.</td></tr>
+          <tr><td><strong>Para</strong></td><td>Quantes vegades?</td><td>Fes 5 salts</td><td>Les que diguem</td></tr>
+          <tr><td><strong>Mentre</strong></td><td>Ho he de fer? (mira abans)</td><td>Menja galetes si tens gana</td><td>0 o més</td></tr>
+          <tr><td><strong>Repetir</strong></td><td>Ja puc parar? (mira després)</td><td>Tira el dau fins que surti un 6</td><td>1 o més</td></tr>
         </tbody>
       </table>
     </div>
