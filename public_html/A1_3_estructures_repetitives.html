@@ -52,6 +52,28 @@
     .ibox.yellow .ibox-label, .ibox.yellow .ibox-text { color:var(--yellow); }
     .ibox.red .ibox-label, .ibox.red .ibox-text { color:var(--red); }
     .ibox code { background:#ffffffaa; font-family:'JetBrains Mono',monospace; font-size:12px; padding:1px 6px; border-radius:3px; }
+    .analogy { display:flex; gap:14px; align-items:flex-start; background:var(--accent-bg); border:1px dashed var(--accent-bdr); border-radius:var(--r); padding:14px 18px; margin-bottom:20px; }
+    .analogy-emoji { font-size:26px; line-height:1.1; flex-shrink:0; }
+    .analogy-title { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--accent-mid); margin-bottom:4px; }
+    .analogy-text { font-size:14px; color:var(--ink-2); line-height:1.6; }
+    .analogy-text strong { color:var(--accent); }
+    .analogy-text code { background:#fff; font-family:'JetBrains Mono',monospace; font-size:12px; padding:1px 6px; border-radius:3px; color:var(--accent); }
+    /* DIAGRAMA DE RUTA DEL BUCLE (per a principiants) */
+    .loopflow { max-width:440px; margin:6px auto 22px; }
+    .lf-box { border-radius:var(--r-sm); padding:11px 16px; text-align:center; border:1.5px solid; }
+    .lf-tag { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; display:block; margin-bottom:3px; }
+    .lf-main { font-size:14px; font-weight:600; }
+    .lf-q { background:#f5f3ff; border-color:#ddd6fe; color:#6d28d9; }
+    .lf-q .lf-tag { color:#7c3aed; }
+    .lf-body { background:var(--green-bg); border-color:var(--green-bdr); color:var(--green); }
+    .lf-body .lf-tag { color:var(--green); }
+    .lf-down { text-align:center; font-size:18px; color:var(--ink-3); line-height:1; padding:4px 0; }
+    .lf-branch { display:flex; align-items:stretch; justify-content:center; gap:10px; padding:4px 0; flex-wrap:wrap; }
+    .lf-si { display:flex; align-items:center; gap:5px; font-size:13px; font-weight:700; color:var(--green); }
+    .lf-no { display:flex; align-items:center; gap:7px; font-size:12px; color:var(--ink-2); }
+    .lf-no b { color:var(--red); font-weight:700; }
+    .lf-no span { background:var(--red-bg); border:1px solid var(--red-bdr); color:var(--red); border-radius:var(--r-sm); padding:5px 11px; font-weight:600; }
+    .lf-back { background:var(--accent-bg); border:1px dashed var(--accent-bdr); color:var(--accent); border-radius:var(--r-sm); padding:8px 12px; font-size:13px; text-align:center; font-weight:600; margin-top:4px; }
     .demo { margin-bottom:22px; }
     .demo-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.09em; color:var(--ink-3); margin-bottom:8px; }
     .pseudo-out { font-family:'JetBrains Mono',monospace; font-size:13px; background:var(--code-bg); color:var(--code-text); padding:16px 20px; border-radius:var(--r-sm); line-height:1.95; white-space:pre-wrap; margin:0; overflow-x:auto; }
@@ -60,11 +82,18 @@
     .exp-text { font-size:13px; color:var(--ink-2); line-height:1.6; }
     .exp-text code { background:#fff; }
     .kw { color:#fbbf24; font-weight:500; } .var { color:#38bdf8; } .str { color:#4ade80; } .num { color:#f472b6; } .cmt { color:#64748b; }
+    .loop { color:#a78bfa; font-weight:600; }
+    .inloop { display:block; border-left:3px solid #a78bfa; background:rgba(167,139,250,.10); padding-left:9px; border-radius:0 3px 3px 0; }
     /* COMPARATIVA LOOPS */
     .cmp-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:20px; }
     .cmp { background:var(--card); border:1px solid var(--border); border-radius:var(--r-sm); padding:14px; }
     .cmp h4 { font-size:13px; font-family:'JetBrains Mono',monospace; color:var(--accent); margin-bottom:8px; }
     .cmp p { font-size:12px; color:var(--ink-2); line-height:1.5; }
+    .cmp-ex { margin-top:12px; border-top:1px dashed var(--border); padding-top:10px; }
+    .cmp-ex-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-3); margin-bottom:6px; }
+    .cmp pre.pseudo-out { font-size:11px; line-height:1.65; padding:10px 12px; }
+    .cmp-ex-out { font-size:11px; color:var(--ink-2); margin-top:7px; }
+    .cmp-ex-out strong { font-family:'JetBrains Mono',monospace; color:var(--accent); }
     @media (max-width:600px){ .cmp-grid { grid-template-columns:1fr; } }
     /* COMPARACIÓ DE CODI COSTAT A COSTAT */
     .code-cmp { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:14px 0 4px; }
@@ -150,9 +179,11 @@
       <div>
         <div class="obj-label">Objectiu · criteris 2.1 i 2.5</div>
         <div class="obj-text">
-          Automatitzar tasques repetitives amb bucles, triant l'estructura adequada en cada cas, i dominar les variables
-          que els acompanyen: <strong>comptadors</strong>, <strong>acumuladors</strong> i <strong>indicadors</strong>.
-          Validarem cada bucle executant-lo i comprovant que acaba i dóna el resultat esperat.
+          Aprendre a dir-li a l'ordinador «<strong>fes això moltes vegades</strong>» sense haver d'escriure-ho moltes
+          vegades. Coneixerem els tres tipus de bucle (<code>Mientras</code>, <code>Repetir</code> i <code>Para</code>)
+          i quan fer servir cadascun. També farem servir tres ajudants molt pràctics: el <strong>comptador</strong>,
+          l'<strong>acumulador</strong> i l'<strong>indicador</strong>. Al final provarem cada programa per veure que
+          funciona bé.
         </div>
       </div>
     </div>
@@ -190,21 +221,17 @@
       </div>
     </div>
 
-    <p class="lead">Tenim tres bucles. La diferència clau és <strong>quan</strong> es comprova la condició i si sabem per endavant <strong>quantes vegades</strong> repetirem:</p>
+    <p class="lead">Tenim tres tipus de bucle. Es diferencien en dues coses: si <strong>saps per endavant quantes vegades</strong> repetiràs, i <strong>en quin moment</strong> el bucle mira si ha de parar:</p>
 
-    <div class="cmp-grid">
-      <div class="cmp">
-        <h4>Mientras</h4>
-        <p>Comprova <strong>abans</strong>. Pot no executar-se cap vegada. Per a repeticions de <strong>nombre desconegut</strong>.</p>
-      </div>
-      <div class="cmp">
-        <h4>Repetir</h4>
-        <p>Comprova <strong>al final</strong>. S'executa <strong>com a mínim un cop</strong>. Nombre desconegut, però amb almenys una passada.</p>
-      </div>
-      <div class="cmp">
-        <h4>Para</h4>
-        <p>Repeticions de <strong>nombre conegut</strong>. Gestiona el comptatge automàticament.</p>
-      </div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Bucle</th><th>Quan es fa servir</th><th>Quantes vegades es fa</th></tr></thead>
+        <tbody>
+          <tr><td><code>Para</code></td><td>Quan saps el nombre exacte de voltes.</td><td>Les que tu diguis (ex.: 5 vegades).</td></tr>
+          <tr><td><code>Mientras</code></td><td>Mira la regla al principi. Si falla d'entrada, no fa res.</td><td>De 0 a moltes vegades.</td></tr>
+          <tr><td><code>Repetir</code></td><td>Fa l'acció i mira la regla al final. Sempre es fa un cop com a mínim.</td><td>D'1 a moltes vegades.</td></tr>
+        </tbody>
+      </table>
     </div>
 
     <!-- MODEL MENTAL SENZILL -->
@@ -279,9 +306,21 @@ Escribir 'Correcte!';"></pre>
         <p class="sec-sub">Repeteix mentre la condició sigui certa</p>
       </div>
     </div>
+    <div class="analogy">
+      <div class="analogy-emoji">🚪</div>
+      <div>
+        <div class="analogy-title">L'analogia · el guardià de la porta</div>
+        <div class="analogy-text">
+          És com la norma «<strong>mentre</strong> la tauleta estigui encesa, pots jugar». Es mira <strong>abans</strong>:
+          si la tauleta s'apaga, pares de jugar a l'instant. I si ja estava apagada des del principi, no comences ni a
+          jugar! Per això un <code>Mientras</code> es pot executar <strong>zero vegades</strong>.
+        </div>
+      </div>
+    </div>
     <p class="lead">
-      El <code>Mientras</code> avalua la condició <strong>abans</strong> d'entrar al bucle. Si és certa, executa el cos
-      i torna a comprovar; quan es fa falsa, surt. Si la primera vegada ja és falsa, el cos no s'executa ni una sola vegada.
+      El <code>Mientras</code> primer <strong>mira si es compleix una pregunta</strong>. Si la resposta és «sí», fa les
+      ordres de dins i torna a mirar. Quan la resposta passa a «no», s'atura. Com que mira <strong>abans</strong>, si la
+      resposta ja és «no» des del principi, no fa res de res.
     </p>
 
     <div class="ibox blue">
@@ -290,11 +329,11 @@ Escribir 'Correcte!';"></pre>
     </div>
 
     <div class="ibox yellow">
-      <div class="ibox-label">Operador nou: «diferent de»</div>
+      <div class="ibox-label">Un símbol nou: «diferent de»</div>
       <div class="ibox-text">
-        Per dir que dos valors <strong>no</strong> són iguals, PSeInt usa l'operador <code>&lt;&gt;</code>. Amplia la
-        taula d'operadors de comparació de l'A1.1: <code>a &lt;&gt; b</code> és cert quan <code>a</code> i <code>b</code>
-        són diferents. Molt útil per repetir «mentre encara no s'hagi encertat».
+        Per dir que dues coses <strong>no són iguals</strong>, en PSeInt escrivim <code>&lt;&gt;</code>. Per exemple,
+        <code>clau &lt;&gt; secret</code> vol dir «la clau <strong>no</strong> és igual al secret». Va molt bé per
+        repetir «mentre <strong>encara no</strong> ho hagi encertat».
       </div>
     </div>
 
@@ -315,10 +354,10 @@ FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          Demanem la clau <strong>una primera vegada</strong> abans del bucle (si no, la condició no tindria cap valor
-          a comparar). Mentre la clau sigui diferent del secret (<code>clau &lt;&gt; secret</code>), avisem i tornem a
-          demanar-la. Aquesta nova lectura <strong>modifica</strong> la variable de la condició: és el que evita el
-          bucle infinit. Quan l'usuari encerta, la condició es fa falsa i sortim.
+          Primer demanem la clau <strong>una vegada</strong> (si no, no tindríem res per comparar). Mentre la clau que
+          s'escriu <strong>no sigui</strong> el secret, l'ordinador avisa i la torna a demanar. Com que cada volta
+          <strong>tornem a llegir la clau</strong>, la cosa va canviant i el bucle pot acabar. Quan l'encertes, la
+          resposta passa a «no» i surt.
         </div>
       </div>
     </div>
@@ -333,10 +372,22 @@ FinProceso"></pre>
         <p class="sec-sub">Repeteix fins que la condició es compleixi</p>
       </div>
     </div>
+    <div class="analogy">
+      <div class="analogy-emoji">🥣</div>
+      <div>
+        <div class="analogy-title">L'analogia · la cullerada de sopa</div>
+        <div class="analogy-text">
+          És com menjar-te un plat de sopa: fas una cullerada i <strong>després</strong> mires el plat. És buit? No →
+          una altra cullerada. És buit? Sí → pares. Fixa't que, com a mínim, <strong>una cullerada</strong> te l'has
+          hagut de prendre per poder mirar si el plat era buit. Per això un <code>Repetir</code> sempre s'executa
+          <strong>almenys un cop</strong>.
+        </div>
+      </div>
+    </div>
     <p class="lead">
-      El <code>Repetir</code> executa el cos <strong>primer</strong> i comprova la condició <strong>al final</strong>.
-      Per això s'executa sempre <strong>com a mínim un cop</strong>. A més, funciona a l'inrevés del <code>Mientras</code>:
-      es repeteix <em>mentre la condició és falsa</em> i s'atura <em>quan es fa certa</em>.
+      El <code>Repetir</code> fa les ordres de dins <strong>primer</strong> i mira la pregunta <strong>al final</strong>.
+      Per això es fa <strong>sempre com a mínim un cop</strong>. Va al revés del <code>Mientras</code>: continua
+      <strong>mentre la resposta és «no»</strong> i para <strong>quan passa a «sí»</strong>.
     </p>
 
     <div class="ibox blue">
@@ -345,27 +396,21 @@ FinProceso"></pre>
     </div>
 
     <div class="demo">
-      <div class="demo-label">Exemple · un menú que es repeteix fins que tries «Sortir»</div>
-      <pre class="pseudo-out" data-code="Proceso MenuPrincipal
-    Definir opcio Como Entero;
+      <div class="demo-label">Exemple · demanar la contrasenya fins que sigui correcta</div>
+      <pre class="pseudo-out" data-code="Proceso Contrasenya
+    Definir clau Como Entero;
     Repetir
-        Escribir '--- MENÚ ---';
-        Escribir '1. Jugar';
-        Escribir '2. Opcions';
-        Escribir '3. Sortir';
-        Escribir 'Tria una opció:';
-        Leer opcio;
-    Hasta Que opcio = 3
-    Escribir 'Fins aviat!';
+        Escribir 'Escriu la contrasenya:';
+        Leer clau;
+    Hasta Que clau = 1234
+    Escribir 'Correcte! Has entrat.';
 FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          Un menú s'ha de mostrar sempre <strong>almenys un cop</strong> abans que l'usuari pugui triar res. Per això
-          el <code>Repetir</code> hi encaixa de manera natural: mostra les opcions, llegeix la tria i, si no és
-          «Sortir», torna a començar. Es repeteix fins que <code>opcio = 3</code> sigui cert. Amb un
-          <code>Mientras</code> hauríem d'escriure el menú <strong>dues vegades</strong> (un cop abans del bucle i un
-          altre a dins), i quedaria més embolicat.
+          La contrasenya s'ha de demanar <strong>sempre un cop com a mínim</strong>, així que el <code>Repetir</code> hi
+          va perfecte: la demana i, si no és la bona (1234), la torna a demanar. Para just quan l'encertes. Com que mira
+          la pregunta <strong>al final</strong>, sempre fa almenys una volta.
         </div>
       </div>
     </div>
@@ -373,9 +418,9 @@ FinProceso"></pre>
     <div class="ibox green">
       <div class="ibox-label">Mientras o Repetir? La diferència de veritat</div>
       <div class="ibox-text">
-        Amb la <strong>clau</strong> i amb el <strong>menú</strong> els dos bucles funcionen igual, perquè totes dues
-        coses s'han de fer <strong>com a mínim un cop</strong>. La diferència només es nota en <strong>un cas</strong>:
-        quan potser no cal repetir <strong>ni una sola vegada</strong>.
+        Amb la <strong>contrasenya</strong> els dos bucles funcionarien igual, perquè sempre s'ha de demanar
+        <strong>com a mínim un cop</strong>. La diferència només es nota en <strong>un cas</strong>: quan potser no cal
+        repetir <strong>ni una sola vegada</strong>.
         <br><br>
         Mira el <strong>mateix caixer</strong> resolt amb els dos bucles. La regla és «treu 50 € mentre el saldo sigui
         suficient» i arribem amb el compte a <strong>0 €</strong>:
@@ -423,10 +468,21 @@ Escribir 'Saldo: ', saldo;"></pre>
         <p class="sec-sub">Quan sabem quantes vegades repetirem</p>
       </div>
     </div>
+    <div class="analogy">
+      <div class="analogy-emoji">🏋️</div>
+      <div>
+        <div class="analogy-title">L'analogia · les abdominals</div>
+        <div class="analogy-text">
+          És com fer 10 abdominals: comences per la 1, en fas una, passes a la 2… i pares just quan arribes a la 10.
+          Saps <strong>des del principi</strong> quantes en faràs, i vas comptant sense haver-hi de pensar. Per això el
+          <code>Para</code> s'usa quan <strong>saps el nombre exacte</strong> de repeticions.
+        </div>
+      </div>
+    </div>
     <p class="lead">
-      Quan coneixem el <strong>nombre exacte</strong> de repeticions, el <code>Para</code> és la millor opció: gestiona
-      ell sol una variable de control que va d'un valor inicial a un de final, augmentant cada volta. Si no indiquem
-      <code>Con Paso</code>, augmenta d'1 en 1.
+      Quan <strong>saps quantes voltes</strong> vols fer, el <code>Para</code> és el millor. Té un <strong>número que
+      compta sol</strong>: comença en un valor, puja cada volta i s'atura quan arriba al final. Si no dius res més,
+      puja <strong>d'1 en 1</strong>. Amb <code>Con Paso</code> pots fer que pugi (o baixi) d'un altre salt.
     </p>
 
     <div class="ibox blue">
@@ -445,9 +501,9 @@ FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          La variable <code>i</code> comença valent 1. Cada volta s'escriu i després augmenta automàticament en 1;
-          el bucle s'atura quan <code>i</code> supera 10. Fixa't que <strong>no</strong> hem d'escriure
-          <code>i &lt;- i + 1</code> enlloc: el <code>Para</code> ho fa per nosaltres. Sortida: <code>1 2 3 4 5 6 7 8 9 10</code>.
+          La <code>i</code> comença valent 1. Cada volta s'escriu i tot seguit <strong>puja sola</strong>; el bucle
+          para quan la <code>i</code> passa de 10. Fixa't que <strong>no</strong> cal escriure enlloc
+          <code>i &lt;- i + 1</code>: el <code>Para</code> ho fa per tu. Surt: <code>1 2 3 4 5 6 7 8 9 10</code>.
         </div>
       </div>
     </div>
@@ -466,9 +522,9 @@ FinPara"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          Amb <code>Con Paso -1</code> la variable <strong>disminueix</strong> i comptem cap enrere (<code>10 9 8 … 1</code>).
-          Amb <code>Con Paso 2</code> avança de dos en dos i obtenim els parells (<code>2 4 6 8 10</code>). El pas és, doncs,
-          quant canvia la variable a cada volta.
+          Amb <code>Con Paso -1</code> el número <strong>baixa</strong> i comptem cap enrere (<code>10 9 8 … 1</code>).
+          Amb <code>Con Paso 2</code> va de dos en dos i surten els parells (<code>2 4 6 8 10</code>). El «pas» és,
+          doncs, <strong>quant salta</strong> el número a cada volta.
         </div>
       </div>
     </div>
@@ -484,74 +540,87 @@ FinPara"></pre>
       </div>
     </div>
     <p class="lead">
-      Els bucles gairebé sempre van acompanyats d'unes variables especials que recullen informació al llarg de les
-      repeticions. Dominar aquests tres patrons et permet resoldre la majoria de problemes amb bucles.
+      Dins dels bucles hi solen viure uns <strong>ajudants</strong> que van guardant informació mentre el bucle
+      repeteix. N'hi ha tres de molt útils. Si els entens, podràs resoldre gairebé qualsevol problema amb bucles.
     </p>
+
+    <div class="ibox green">
+      <div class="ibox-label">💡 Imagina-ho així</div>
+      <div class="ibox-text">
+        · 🔢 <strong>Comptador</strong> → com el <strong>clicker</strong> de comptar gent a la porta: cada cop que
+        passa una cosa, fas clic (+1).<br>
+        · 🐷 <strong>Acumulador</strong> → com una <strong>guardiola</strong>: cada volta hi tires monedes i es van
+        sumant.<br>
+        · 🚦 <strong>Indicador</strong> → com un <strong>interruptor</strong>: comença apagat i, si passa una cosa,
+        l'encens… i ja es queda encès.
+      </div>
+    </div>
 
     <div class="tbl-wrap">
       <table class="tbl">
-        <thead><tr><th>Patró</th><th>Per a què</th><th>S'inicialitza a…</th><th>Dins del bucle</th></tr></thead>
+        <thead><tr><th>Ajudant</th><th>Per a què serveix</th><th>Comença valent</th><th>A cada volta</th></tr></thead>
         <tbody>
-          <tr><td><strong>Comptador</strong></td><td>Comptar quants cops passa una cosa</td><td class="ex">0</td><td class="ex">cont &lt;- cont + 1</td></tr>
-          <tr><td><strong>Acumulador</strong></td><td>Anar sumant (o multiplicant) valors</td><td class="ex">0 (suma) / 1 (producte)</td><td class="ex">suma &lt;- suma + num</td></tr>
-          <tr><td><strong>Indicador</strong></td><td>Recordar si ha passat un fet (sí/no)</td><td class="ex">Falso</td><td class="ex">indicador &lt;- Verdadero</td></tr>
+          <tr><td><strong>Comptador</strong></td><td>Comptar quantes vegades passa una cosa</td><td class="ex">0</td><td class="ex">cont &lt;- cont + 1</td></tr>
+          <tr><td><strong>Acumulador</strong></td><td>Anar sumant valors (o multiplicant-los)</td><td class="ex">0 per sumar · 1 per multiplicar</td><td class="ex">suma &lt;- suma + num</td></tr>
+          <tr><td><strong>Indicador</strong></td><td>Recordar si una cosa ha passat (sí o no)</td><td class="ex">Falso</td><td class="ex">indicador &lt;- Verdadero</td></tr>
         </tbody>
       </table>
     </div>
 
     <div class="demo">
-      <div class="demo-label">Exemple · comptar i sumar els parells de 5 nombres</div>
-      <pre class="pseudo-out" data-code="Proceso ComptarSumarParells
-    Definir i, num, cont, suma Como Entero;
-    cont <- 0;       // comptador: quants parells
-    suma <- 0;       // acumulador: suma dels parells
+      <div class="demo-label">Exemple · comptar aprovats i sumar les notes de 5 alumnes</div>
+      <pre class="pseudo-out" data-code="Proceso Notes
+    Definir i, nota, aprovats, suma Como Entero;
+    aprovats <- 0;   // comptador: quants aprovats
+    suma <- 0;       // acumulador: suma de les notes
     Para i <- 1 Hasta 5 Hacer
-        Escribir Sin Saltar 'Digues un nombre:';
-        Leer num;
-        Si num % 2 = 0 Entonces
-            cont <- cont + 1;
-            suma <- suma + num;
+        Escribir 'Digues una nota:';
+        Leer nota;
+        suma <- suma + nota;
+        Si nota >= 5 Entonces
+            aprovats <- aprovats + 1;
         FinSi
     FinPara
-    Escribir 'Has introduït ', cont, ' nombres parells';
-    Escribir 'La seva suma és ', suma;
+    Escribir 'Aprovats: ', aprovats;
+    Escribir 'Suma de les notes: ', suma;
 FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          Abans del bucle, <code>cont</code> i <code>suma</code> es posen a 0. Dins, cada cop que el nombre és parell
-          (<code>num % 2 = 0</code>), el comptador puja en 1 i l'acumulador hi afegeix el nombre. En sortir del bucle,
-          les dues variables ja contenen el total. Aquest és el cor del patró: <strong>inicialitzar fora, actualitzar dins</strong>.
+          Abans de començar, <code>aprovats</code> i <code>suma</code> es posen a 0. Dins del bucle, la <code>suma</code>
+          hi afegeix <strong>sempre</strong> la nota (acumulador), i <code>aprovats</code> puja <strong>només</strong>
+          quan la nota és 5 o més (comptador). En acabar, ja tens els dos totals. El truc de sempre:
+          <strong>posar-ho a 0 abans de començar i anar-ho canviant dins</strong>.
         </div>
       </div>
     </div>
 
     <div class="demo">
-      <div class="demo-label">Exemple · indicador (s'ha introduït algun parell?)</div>
-      <pre class="pseudo-out" data-code="Proceso HiHaParell
+      <div class="demo-label">Exemple · indicador (s'ha escrit algun nombre negatiu?)</div>
+      <pre class="pseudo-out" data-code="Proceso HiHaNegatiu
     Definir i, num Como Entero;
     Definir trobat Como Logico;
     trobat <- Falso;          // encara no n'hem vist cap
     Para i <- 1 Hasta 5 Hacer
-        Escribir Sin Saltar 'Digues un nombre:';
+        Escribir 'Digues un nombre:';
         Leer num;
-        Si num % 2 = 0 Entonces
+        Si num < 0 Entonces
             trobat <- Verdadero;   // ja n'hi ha almenys un
         FinSi
     FinPara
     Si trobat Entonces
-        Escribir 'Has introduït algun nombre parell';
+        Escribir 'Has escrit algun nombre negatiu';
     SiNo
-        Escribir 'No has introduït cap nombre parell';
+        Escribir 'No has escrit cap nombre negatiu';
     FinSi
 FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          L'indicador <code>trobat</code> comença a <code>Falso</code> (suposem que no ha passat res). En trobar el
-          primer parell, passa a <code>Verdadero</code> i ja no torna enrere. Al final, una simple condició
-          (<code>Si trobat</code>) ens diu si el fet va arribar a passar. És la manera de «recordar» un succés sense
-          comptar-lo.
+          L'ajudant <code>trobat</code> comença a <code>Falso</code> (de moment no hem vist cap negatiu). Quan en trobem
+          un, el posem a <code>Verdadero</code> i ja no torna enrere, com un interruptor que s'encén. Al final, només
+          mirant <code>trobat</code> sabem si va passar. És la manera de <strong>recordar</strong> una cosa sense
+          comptar-la.
         </div>
       </div>
     </div>
@@ -559,44 +628,44 @@ FinProceso"></pre>
 
   <!-- EXERCICIS -->
   <div class="ex-block-head">
-    <h2 class="ex-block-title">Exercicis de demostració</h2>
-    <p class="ex-block-sub">Quatre nivells · del reconeixement a la codificació · criteris 2.1 i 2.5</p>
+    <h2 class="ex-block-title">Exercicis per practicar</h2>
+    <p class="ex-block-sub">Quatre reptes, de fàcil a difícil · criteris 2.1 i 2.5</p>
   </div>
   <div class="ex-block-body">
 
     <div class="exercise">
       <div class="ex-head"><div class="ex-num">1</div><div>
         <div class="ex-name">Quin bucle faries servir?</div>
-        <div class="ex-level">Nivell bàsic · reconeixement</div>
+        <div class="ex-level">Fàcil · triar</div>
       </div></div>
-      <p class="ex-intro">Per a cada situació, tria el bucle més adequat.</p>
+      <p class="ex-intro">Per a cada situació, tria el bucle que hi va millor.</p>
       <div id="ex1-cont"></div>
     </div>
 
     <div class="exercise">
       <div class="ex-head"><div class="ex-num">2</div><div>
-        <div class="ex-name">Què mostra el bucle?</div>
-        <div class="ex-level">Nivell mitjà · seguiment (traça)</div>
+        <div class="ex-name">Què escriu el bucle?</div>
+        <div class="ex-level">Mitjà · seguir el bucle pas a pas</div>
       </div></div>
-      <p class="ex-intro">Segueix l'execució de cada bucle i tria què s'escriu per pantalla.</p>
+      <p class="ex-intro">Segueix el bucle amb el dit, volta a volta, i tria què surt per pantalla.</p>
       <div id="ex2-cont"></div>
     </div>
 
     <div class="exercise">
       <div class="ex-head"><div class="ex-num">3</div><div>
         <div class="ex-name">Comptador, acumulador o indicador?</div>
-        <div class="ex-level">Nivell mitjà · patrons de variable</div>
+        <div class="ex-level">Mitjà · triar l'ajudant</div>
       </div></div>
-      <p class="ex-intro">Identifica quin patró de variable cal per resoldre cada problema.</p>
+      <p class="ex-intro">Per a cada problema, digues quin dels tres ajudants necessites.</p>
       <div id="ex3-cont"></div>
     </div>
 
     <div class="exercise">
       <div class="ex-head"><div class="ex-num">4</div><div>
-        <div class="ex-name">Programa complet</div>
-        <div class="ex-level">Nivell avançat · de l'anàlisi al codi</div>
+        <div class="ex-name">Programa sencer</div>
+        <div class="ex-level">Difícil · de la idea al codi</div>
       </div></div>
-      <p class="ex-intro">Escriu el programa PSeInt sencer per a cada enunciat. Després obre la solució per comparar.</p>
+      <p class="ex-intro">Prova d'escriure tu el programa PSeInt. Després obre la solució per comparar.</p>
       <div id="ex4-cont"></div>
     </div>
 
@@ -606,21 +675,46 @@ FinProceso"></pre>
 
 <script>
 /* ── Acoloridor de pseudocodi (escapa &, <, > ABANS de res; marcador sense dígits) ── */
+/* A més, marca les línies de DINS d'un bucle amb una barra del color del bucle (.inloop) */
 function colorPseudo(text) {
   text = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  return text.split('\n').map(function(line){
+  var depth = 0;
+  var pieces = text.split('\n').map(function(line){
+    var t = line.replace(/^\s+/,'');
+    var isOpener = /^(Mientras|Repetir|Para)\b/.test(t);
+    var isCloser = /^(FinMientras|FinPara|Hasta)\b/.test(t);
+    if (isCloser) depth = Math.max(0, depth - 1);
+    var body = depth > 0 && !isOpener && !isCloser;
+    if (isOpener) depth += 1;
     var idx = line.indexOf('//');
     var code = idx >= 0 ? line.slice(0, idx) : line;
     var comment = idx >= 0 ? line.slice(idx) : '';
     var strs = [];
     code = code.replace(/'(?:''|[^'])*'/g, function(m){ strs.push(m); return '\u0001'; });
-    code = code.replace(/\b(Proceso|FinProceso|Algoritmo|FinAlgoritmo|Definir|Como|Entero|Real|Numerico|Numero|Caracter|Texto|Cadena|Logico|Leer|Escribir|Sin|Saltar|Si|Entonces|SiNo|FinSi|Segun|FinSegun|Mientras|FinMientras|Repetir|Hasta|Que|Para|Con|Paso|Hacer|FinPara|Y|O|NO|mod)\b/g, "<span class='kw'>$1</span>");
+    code = code.replace(/\b(Mientras|FinMientras|Repetir|Hasta|Que|Para|Con|Paso|Hacer|FinPara)\b/g, "<span class='loop'>$1</span>");
+    code = code.replace(/\b(Proceso|FinProceso|Algoritmo|FinAlgoritmo|Definir|Como|Entero|Real|Numerico|Numero|Caracter|Texto|Cadena|Logico|Leer|Escribir|Sin|Saltar|Si|Entonces|SiNo|FinSi|Segun|FinSegun|Y|O|NO|mod)\b/g, "<span class='kw'>$1</span>");
     code = code.replace(/\b(Verdadero|Falso|PI)\b/g, "<span class='num'>$1</span>");
     code = code.replace(/\b(\d+\.?\d*)\b/g, "<span class='num'>$1</span>");
     var k = 0;
     code = code.replace(/\u0001/g, function(){ return "<span class='str'>" + strs[k++] + "</span>"; });
-    return code + (comment ? "<span class='cmt'>" + comment + "</span>" : '');
-  }).join('\n');
+    return { html: code + (comment ? "<span class='cmt'>" + comment + "</span>" : ''), body: body };
+  });
+  var segs = [], i = 0;
+  while (i < pieces.length) {
+    if (pieces[i].body) {
+      var run = [];
+      while (i < pieces.length && pieces[i].body) { run.push(pieces[i].html); i++; }
+      segs.push({ type:'block', html:"<span class='inloop'>" + run.join('\n') + "</span>" });
+    } else {
+      segs.push({ type:'line', html:pieces[i].html }); i++;
+    }
+  }
+  var out = '';
+  for (var j = 0; j < segs.length; j++) {
+    if (j > 0 && segs[j-1].type === 'line' && segs[j].type === 'line') out += '\n';
+    out += segs[j].html;
+  }
+  return out;
 }
 document.querySelectorAll('pre[data-code]').forEach(function(pre){
   pre.innerHTML = colorPseudo(pre.getAttribute('data-code'));
@@ -628,11 +722,11 @@ document.querySelectorAll('pre[data-code]').forEach(function(pre){
 
 /* ── Exercici 1 ── */
 const E1 = [
-  { t:'Escriure la taula de multiplicar del 7 (del 7×1 al 7×10).', opts:['Mientras','Repetir','Para'], ans:2, exp:'Sabem exactament que són 10 repeticions: el Para és el més net.' },
-  { t:'Demanar nombres fins que l\'usuari escrigui un 0.', opts:['Mientras','Repetir','Para'], ans:1, exp:'No sabem quants en posarà i cal demanar-ne almenys un: Repetir encaixa molt bé (també valdria Mientras amb una lectura prèvia).' },
-  { t:'Mostrar un menú una vegada i tornar-lo a mostrar mentre no es triï "Sortir".', opts:['Mientras','Repetir','Para'], ans:1, exp:'El menú s\'ha de veure com a mínim un cop: Repetir … Hasta Que opcio = sortir.' },
-  { t:'Retirar diners d\'un caixer mentre el saldo sigui suficient (pot ser que no ho sigui d\'entrada).', opts:['Mientras','Repetir','Para'], ans:0, exp:'Si d\'entrada el saldo no arriba, no s\'ha de fer res: cal comprovar abans, amb Mientras.' },
-  { t:'Sumar els 12 imports mensuals d\'estalvi d\'un any.', opts:['Mientras','Repetir','Para'], ans:2, exp:'Nombre conegut de voltes (12): Para amb un acumulador.' }
+  { t:'Escriure la taula del 7 (del 7×1 al 7×10).', opts:['Mientras','Repetir','Para'], ans:2, exp:'Saps que són 10 voltes exactes → Para.' },
+  { t:'Demanar nombres fins que s\'escrigui un 0.', opts:['Mientras','Repetir','Para'], ans:1, exp:'No saps quants en posaràs, però n\'has de demanar com a mínim un → Repetir.' },
+  { t:'Ensenyar un menú un cop i tornar-lo a ensenyar fins que es triï "Sortir".', opts:['Mientras','Repetir','Para'], ans:1, exp:'El menú s\'ha de veure com a mínim un cop → Repetir.' },
+  { t:'Treure diners d\'un caixer mentre hi hagi prou saldo (pot ser que no n\'hi hagi gens).', opts:['Mientras','Repetir','Para'], ans:0, exp:'Si no hi ha prou saldo, no s\'ha de fer res. Cal mirar abans → Mientras.' },
+  { t:'Sumar els 12 estalvis mensuals d\'un any.', opts:['Mientras','Repetir','Para'], ans:2, exp:'Saps que són 12 voltes → Para, amb una guardiola (acumulador).' }
 ];
 (function(){
   const c = document.getElementById('ex1-cont');
@@ -647,13 +741,13 @@ const E1 = [
 /* ── Exercici 2 ── */
 const E2 = [
   { code:"Definir i Como Entero;\nPara i <- 1 Hasta 4 Hacer\n    Escribir Sin Saltar i, ' ';\nFinPara",
-    opts:['1 2 3 4','1 2 3','0 1 2 3 4'], ans:0, exp:'i va d\'1 a 4 augmentant d\'1 en 1: escriu 1 2 3 4.' },
+    opts:['1 2 3 4','1 2 3','0 1 2 3 4'], ans:0, exp:'La i va d\'1 a 4 pujant d\'1 en 1: escriu 1 2 3 4.' },
   { code:"Definir i Como Entero;\nPara i <- 10 Hasta 2 Con Paso -2 Hacer\n    Escribir Sin Saltar i, ' ';\nFinPara",
-    opts:['10 8 6 4 2','2 4 6 8 10','10 9 8 ... 2'], ans:0, exp:'Comença a 10 i baixa de 2 en 2 fins a 2: 10 8 6 4 2.' },
+    opts:['10 8 6 4 2','2 4 6 8 10','10 9 8 ... 2'], ans:0, exp:'Comença a 10 i baixa de 2 en 2 fins al 2: 10 8 6 4 2.' },
   { code:"Definir n, cont Como Entero;\nn <- 8;\ncont <- 0;\nMientras n > 1 Hacer\n    n <- n / 2;\n    cont <- cont + 1;\nFinMientras\nEscribir cont;",
-    opts:['3','4','8'], ans:0, exp:'8→4 (cont=1), 4→2 (cont=2), 2→1 (cont=3). Quan n=1 la condició n>1 és falsa. Escriu 3.' },
+    opts:['3','4','8'], ans:0, exp:'8→4 (1 cop), 4→2 (2 cops), 2→1 (3 cops). Quan n val 1, para. Escriu 3.' },
   { code:"Definir x Como Entero;\nx <- 5;\nRepetir\n    Escribir Sin Saltar x, ' ';\n    x <- x - 1;\nHasta Que x = 2",
-    opts:['5 4 3','5 4 3 2','4 3 2'], ans:0, exp:'Escriu i baixa: 5 (x→4), 4 (x→3), 3 (x→2); quan x=2 la condició es compleix i s\'atura. Escriu 5 4 3.' }
+    opts:['5 4 3','5 4 3 2','4 3 2'], ans:0, exp:'Escriu i baixa: 5 (x→4), 4 (x→3), 3 (x→2). Quan x val 2, para. Escriu 5 4 3.' }
 ];
 (function(){
   const c = document.getElementById('ex2-cont');
@@ -676,11 +770,11 @@ function checkQ(grp,btn,i,choice){
 
 /* ── Exercici 3 ── */
 const E3 = [
-  { t:'Saber quants aprovats hi ha en una llista de notes.', ans:'Comptador', exp:'Comptes un succés (nota >= 5): comptador que comença a 0 i puja d\'1 en 1.' },
-  { t:'Calcular la suma total de la compra a partir dels preus de cada producte.', ans:'Acumulador', exp:'Vas sumant valors: acumulador inicialitzat a 0.' },
-  { t:'Saber si en una sèrie de nombres n\'hi ha hagut algun de negatiu.', ans:'Indicador', exp:'Només vols recordar si el fet ha passat (sí/no): indicador lògic que comença a Falso.' },
-  { t:'Multiplicar tots els nombres d\'una llista (el seu producte).', ans:'Acumulador', exp:'Acumules un producte: acumulador inicialitzat a 1 (no a 0, o el resultat seria sempre 0).' },
-  { t:'Comptar quantes vocals té una paraula.', ans:'Comptador', exp:'Comptes ocurrències d\'un succés: comptador a 0 que s\'incrementa.' }
+  { t:'Comptar quants gols marca un equip.', ans:'Comptador', exp:'Comptes quantes vegades passa una cosa → comptador.' },
+  { t:'Comptar quants aprovats hi ha en una classe.', ans:'Comptador', exp:'Tornes a comptar vegades → comptador, que puja d\'1 en 1.' },
+  { t:'Sumar el preu de tots els productes de la compra.', ans:'Acumulador', exp:'Vas sumant valors → acumulador (guardiola), que comença a 0.' },
+  { t:'Saber si ha sortit algun nombre negatiu.', ans:'Indicador', exp:'Només vols recordar sí o no → indicador, que comença a Falso.' },
+  { t:'Multiplicar tots els nombres d\'una llista.', ans:'Acumulador', exp:'Acumules, però multiplicant → acumulador que comença a 1 (no a 0).' }
 ];
 const E3OPTS = ['Comptador','Acumulador','Indicador'];
 (function(){
@@ -701,15 +795,15 @@ function checkE3(btn,i,choice){
 
 /* ── Exercici 4 ── */
 const E4 = [
-  { ctx:'Mostra la taula de multiplicar d\'un nombre que demanis per teclat (de l\'1 al 10).',
+  { ctx:'Ensenya la taula de multiplicar d\'un nombre que demanis per teclat (de l\'1 al 10).',
     code:"// Anàlisi\n// Entrada: n (Entero)\n// Sortida: les 10 línies de la taula\n\nProceso TaulaMultiplicar\n    Definir n, i Como Entero;\n    Escribir 'De quin nombre vols la taula?';\n    Leer n;\n    Para i <- 1 Hasta 10 Hacer\n        Escribir n, ' x ', i, ' = ', n * i;\n    FinPara\nFinProceso",
-    exp:'Nombre conegut de voltes (10) → Para. La variable i fa de multiplicador a cada línia.' },
-  { ctx:'Demana nombres fins que s\'introdueixi un 0 i mostra la suma i la mitjana de tots els introduïts (sense comptar el 0).',
+    exp:'Saps que són 10 voltes → Para. La i és el número pel qual multipliques a cada línia.' },
+  { ctx:'Demana nombres fins que s\'escrigui un 0 i mostra la suma i la mitjana de tots (sense comptar el 0).',
     code:"// Anàlisi\n// Entrades: num (fins a un 0)\n// Sortides: suma i mitjana\n\nProceso SumaMitjana\n    Definir num, suma, cont Como Entero;\n    Definir mitjana Como Real;\n    suma <- 0;\n    cont <- 0;\n    Escribir 'Escriu un nombre (0 per acabar):';\n    Leer num;\n    Mientras num <> 0 Hacer\n        suma <- suma + num;\n        cont <- cont + 1;\n        Escribir 'Escriu un nombre (0 per acabar):';\n        Leer num;\n    FinMientras\n    Si cont > 0 Entonces\n        mitjana <- suma / cont;\n        Escribir 'Suma: ', suma, ' - Mitjana: ', mitjana;\n    SiNo\n        Escribir 'No has introduït cap nombre';\n    FinSi\nFinProceso",
-    exp:'No sabem quants nombres vindran → Mientras amb lectura prèvia. Combinem acumulador (suma) i comptador (cont). El Si final evita dividir per zero.' },
+    exp:'No saps quants nombres vindran → Mientras (demanant-ne un abans). Fas servir una guardiola (suma) i un clicker (cont). El Si del final evita dividir per 0.' },
   { ctx:'Demana un nombre i digues si és primer (només divisible per 1 i per ell mateix).',
     code:"// Anàlisi\n// Entrada: n (Entero)\n// Sortida: és primer / no és primer\n\nProceso EsPrimer\n    Definir n, i, divisors Como Entero;\n    Escribir 'Escriu un nombre:';\n    Leer n;\n    divisors <- 0;\n    Para i <- 1 Hasta n Hacer\n        Si n % i = 0 Entonces\n            divisors <- divisors + 1;\n        FinSi\n    FinPara\n    Si divisors = 2 Entonces\n        Escribir 'És primer';\n    SiNo\n        Escribir 'No és primer';\n    FinSi\nFinProceso",
-    exp:'Fem servir un comptador de divisors. Si un nombre té exactament 2 divisors (l\'1 i ell mateix), és primer. Validació: 7 → primer; 8 → no.' }
+    exp:'Comptes quants divisors té el nombre. Si en té exactament 2 (l\'1 i ell mateix), és primer. Prova: 7 → sí; 8 → no.' }
 ];
 (function(){
   const c = document.getElementById('ex4-cont');
@@ -720,7 +814,11 @@ const E4 = [
   });
 })();
 
-function reveal(btn,id){ document.getElementById(id).classList.add('show'); btn.style.display='none'; }
+function reveal(btn,id){
+  var el = document.getElementById(id);
+  var obert = el.classList.toggle('show');
+  btn.innerHTML = obert ? '▼ Amagar codi PSeInt' : '▶ Veure codi PSeInt';
+}
 </script>
 </body>
 </html>
