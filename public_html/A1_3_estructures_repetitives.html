@@ -568,59 +568,66 @@ FinPara"></pre>
     </div>
 
     <div class="demo">
-      <div class="demo-label">Exemple · comptar aprovats i sumar les notes de 5 alumnes</div>
+      <div class="demo-label">Exemple · comptar quants exàmens hi ha i quants s'aproven</div>
       <pre class="pseudo-out" data-code="Proceso Notes
-    Definir i, nota, aprovats, suma Como Entero;
+    Definir i, nota, examens, aprovats Como Entero;
+    examens <- 0;    // comptador: quants exàmens
     aprovats <- 0;   // comptador: quants aprovats
-    suma <- 0;       // acumulador: suma de les notes
     Para i <- 1 Hasta 5 Hacer
         Escribir 'Digues una nota:';
         Leer nota;
-        suma <- suma + nota;
+        examens <- examens + 1;
         Si nota >= 5 Entonces
             aprovats <- aprovats + 1;
         FinSi
     FinPara
+    Escribir 'Exàmens: ', examens;
     Escribir 'Aprovats: ', aprovats;
-    Escribir 'Suma de les notes: ', suma;
 FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          Abans de començar, <code>aprovats</code> i <code>suma</code> es posen a 0. Dins del bucle, la <code>suma</code>
-          hi afegeix <strong>sempre</strong> la nota (acumulador), i <code>aprovats</code> puja <strong>només</strong>
-          quan la nota és 5 o més (comptador). En acabar, ja tens els dos totals. El truc de sempre:
-          <strong>posar-ho a 0 abans de començar i anar-ho canviant dins</strong>.
+          Abans de començar, <code>examens</code> i <code>aprovats</code> es posen a 0. Dins del bucle,
+          <code>examens</code> puja <strong>sempre</strong> (compta cada nota) i <code>aprovats</code> puja
+          <strong>només</strong> quan la nota és 5 o més. En acabar, saps <strong>quantes notes hi havia</strong> i
+          <strong>quantes s'han aprovat</strong>. Fixa't que <strong>tots dos són comptadors</strong>: no sumem les
+          notes, només comptem.
         </div>
       </div>
     </div>
 
     <div class="demo">
-      <div class="demo-label">Exemple · indicador (s'ha escrit algun nombre negatiu?)</div>
-      <pre class="pseudo-out" data-code="Proceso HiHaNegatiu
-    Definir i, num Como Entero;
-    Definir trobat Como Logico;
-    trobat <- Falso;          // encara no n'hem vist cap
-    Para i <- 1 Hasta 5 Hacer
-        Escribir 'Digues un nombre:';
-        Leer num;
-        Si num < 0 Entonces
-            trobat <- Verdadero;   // ja n'hi ha almenys un
+      <div class="demo-label">Exemple · endevinar un número secret</div>
+      <pre class="pseudo-out" data-code="Proceso EndevinaNumero
+    Definir secret, numero, intents Como Entero;
+    Definir encertat Como Logico;
+    secret <- 7;
+    intents <- 0;        // comptador: quants intents
+    encertat <- Falso;   // indicador: de moment no encertat
+    Repetir
+        Escribir 'Quin número penso? (1 al 10):';
+        Leer numero;
+        intents <- intents + 1;
+        Si numero = secret Entonces
+            encertat <- Verdadero;
+        SiNo
+            Si numero > secret Entonces
+                Escribir 'El meu és més petit.';
+            SiNo
+                Escribir 'El meu és més gran.';
+            FinSi
         FinSi
-    FinPara
-    Si trobat Entonces
-        Escribir 'Has escrit algun nombre negatiu';
-    SiNo
-        Escribir 'No has escrit cap nombre negatiu';
-    FinSi
+    Hasta Que encertat
+    Escribir 'Correcte! Ho has encertat en ', intents, ' intents.';
 FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          L'ajudant <code>trobat</code> comença a <code>Falso</code> (de moment no hem vist cap negatiu). Quan en trobem
-          un, el posem a <code>Verdadero</code> i ja no torna enrere, com un interruptor que s'encén. Al final, només
-          mirant <code>trobat</code> sabem si va passar. És la manera de <strong>recordar</strong> una cosa sense
-          comptar-la.
+          El programa amaga un número (el 7) i es <strong>repeteix fins que l'encertes</strong>. A cada tirada,
+          l'<strong>indicador</strong> <code>encertat</code> (que comença a <code>Falso</code>) només es posa a
+          <code>Verdadero</code> quan l'endevines: és el que fa parar el bucle. I el <strong>comptador</strong>
+          <code>intents</code> puja un cada tirada, així al final sap en quants intents ho has aconseguit. Si no
+          l'encertes, et diu si el número és més gran o més petit.
         </div>
       </div>
     </div>
