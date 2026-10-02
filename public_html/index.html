@@ -7,7 +7,56 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="estils.css">
+  <style>
+    /* ===== Estils incrustats (funcionen sense internet) ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#f7f5f0; --card:#ffffff; --ink:#1c1917; --ink-2:#57534e; --ink-3:#a8a29e;
+      --border:#e7e5e4; --accent:#9a3412; --accent-mid:#c2410c; --accent-bg:#fff7ed; --accent-bdr:#fed7aa;
+      --serif:'DM Serif Display', Georgia, 'Times New Roman', serif;
+      --sans:'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      --mono:'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+    }
+    body { font-family:var(--sans); background:var(--bg); color:var(--ink); line-height:1.6; font-size:16px; }
+    .merce-top { height:6px; background:linear-gradient(90deg, var(--accent), var(--accent-mid)); }
+
+    .site-head { background:var(--card); border-bottom:1px solid var(--border); }
+    .head-inner { max-width:1040px; margin:0 auto; padding:16px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+    .brand { display:flex; flex-direction:column; text-decoration:none; color:var(--ink); line-height:1.2; }
+    .brand-mark { font-family:var(--serif); font-size:1.35rem; }
+    .brand-sub { font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-3); }
+    .head-course { font-size:13px; color:var(--ink-2); font-weight:500; }
+
+    .hero { background:var(--card); border-bottom:1px solid var(--border); }
+    .hero-inner { max-width:1040px; margin:0 auto; padding:44px 24px 40px; }
+    .hero-eyebrow { font-size:12px; text-transform:uppercase; letter-spacing:.07em; color:var(--accent-mid); font-weight:600; margin-bottom:12px; }
+    .hero-eyebrow a:hover { text-decoration:underline !important; }
+    .hero-title { font-family:var(--serif); font-size:clamp(2rem,5vw,3rem); line-height:1.1; margin-bottom:14px; }
+    .hero-lead { font-size:17px; color:var(--ink-2); max-width:680px; }
+
+    .wrap { max-width:1040px; margin:0 auto; padding:0 24px; }
+
+    .aea { margin-top:52px; }
+    .aea-head { margin-bottom:24px; }
+    .aea-title { font-family:var(--serif); font-size:1.7rem; margin-bottom:8px; }
+    .aea-desc { font-size:15px; color:var(--ink-2); max-width:720px; }
+
+    .cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(270px,1fr)); gap:18px; }
+    .card { display:flex; flex-direction:column; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:22px; text-decoration:none; color:var(--ink); transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
+    .card:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(28,25,23,.08); border-color:var(--accent-bdr); }
+    .card-num { align-self:flex-start; font-family:var(--mono); font-size:12px; font-weight:700; color:#fff; background:var(--accent-mid); padding:3px 10px; border-radius:20px; margin-bottom:14px; }
+    .card-title { font-size:1.15rem; font-weight:600; margin-bottom:8px; line-height:1.25; }
+    .card-text { font-size:14px; color:var(--ink-2); flex-grow:1; margin-bottom:18px; }
+    .card-foot { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .crit { font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-3); }
+    .go { font-size:13px; font-weight:600; color:var(--accent-mid); white-space:nowrap; }
+    code { font-family:var(--mono); font-size:.88em; background:var(--accent-bg); color:var(--accent); padding:1px 5px; border-radius:4px; }
+
+    .site-foot { margin-top:64px; border-top:1px solid var(--border); background:var(--card); }
+    .foot-inner { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; padding:22px 24px; font-size:13px; color:var(--ink-3); }
+
+    @media (max-width:560px){ .hero-inner{padding:34px 20px;} .cards{grid-template-columns:1fr;} }
+  </style>
 </head>
 <body class="pagina-index">
 
@@ -63,18 +112,18 @@
           <span class="card-foot"><span class="crit">Criteri 1.3</span><span class="go">Obrir →</span></span>
         </a>
 
-        <a class="card" href="A3_resolucio_de_problemes.html">
+        <a class="card" href="A3_de_la_logica_al_pseudocodi.html">
           <span class="card-num">A3</span>
-          <h3 class="card-title">Resolució de problemes</h3>
-          <p class="card-text">Estratègies i raonament ordenat per resoldre problemes de lògica, validacions i control de flux.</p>
-          <span class="card-foot"><span class="crit">Criteri 1.5</span><span class="go">Obrir →</span></span>
-        </a>
-
-        <a class="card" href="A4_de_la_logica_al_pseudocodi.html">
-          <span class="card-num">A4</span>
           <h3 class="card-title">De la lògica al pseudocodi</h3>
           <p class="card-text">Traduir condicions lògiques a estructures <code>Si</code> i <code>Mientras</code> de PSeInt. El pont cap a la programació.</p>
           <span class="card-foot"><span class="crit">Criteris 1.1 · 1.5</span><span class="go">Obrir →</span></span>
+        </a>
+
+        <a class="card" href="A4_resolucio_de_problemes.html">
+          <span class="card-num">A4</span>
+          <h3 class="card-title">Resolució de problemes</h3>
+          <p class="card-text">Estratègies i raonament ordenat per resoldre problemes de lògica, validacions i control de flux.</p>
+          <span class="card-foot"><span class="crit">Criteri 1.5</span><span class="go">Obrir →</span></span>
         </a>
 
       </div>
@@ -84,72 +133,37 @@
     <section class="aea">
       <div class="aea-head">
         <h1 class="aea-title">AEA2 - Pseudocodi</h1>
-        <p class="aea-desc">Del raonament lògic a l'algorisme: variables, estructures de control, arrays i descomposició modular amb pseudocodi i PSeInt.</p>
+        <p class="aea-desc">Del raonament lògic a l'algorisme: anàlisi de problemes, estructures de control, arrays i descomposició modular amb pseudocodi i PSeInt.</p>
       </div>
 
       <div class="cards">
 
-        <a class="card" href="A0_del_problema_a_algoritme.html">
+        <a class="card" href="a0-del-problema-a-algoritme.html">
           <span class="card-num">A0</span>
           <h3 class="card-title">Del problema a l'algoritme</h3>
           <p class="card-text">Com analitza un programador un problema, estratègies de disseny descendent i els primers passos amb PSeInt.</p>
           <span class="card-foot"><span class="crit">Criteris 2.1 · 2.2 · 2.3</span><span class="go">Obrir →</span></span>
         </a>
 
-        <a class="card" href="A1_1_fonaments_sequencials.html">
-          <span class="card-num">A1.1</span>
-          <h3 class="card-title">Variables, dades i operacions</h3>
-          <p class="card-text">Estructura del programa, tipus de dades, literals, variables i operadors. La base de qualsevol algorisme seqüencial.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.1 · 2.5</span><span class="go">Obrir →</span></span>
+        <a class="card" href="a1-estructures-de-control.html">
+          <span class="card-num">A1</span>
+          <h3 class="card-title">Estructures de control</h3>
+          <p class="card-text">Variables i operacions, decisions (<code>Si</code>, <code>Según</code>) i bucles (<code>Mientras</code>, <code>Repetir</code>, <code>Para</code>), i com recórrer i cercar dades.</p>
+          <span class="card-foot"><span class="crit">Criteris 2.1 · 2.5</span><span class="go">4 activitats →</span></span>
         </a>
 
-        <a class="card" href="a1-2-estructures-alternatives.html">
-          <span class="card-num">A1.2</span>
-          <h3 class="card-title">Prendre decisions</h3>
-          <p class="card-text">Alternativa simple, doble i condicions encadenades amb <code>Si … SiNo … FinSi</code> per controlar el flux del programa.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.1 · 2.5</span><span class="go">Obrir →</span></span>
+        <a class="card" href="a2-arrays-i-matrius.html">
+          <span class="card-num">A2</span>
+          <h3 class="card-title">Arrays i matrius</h3>
+          <p class="card-text">Guardar moltes dades sota un sol nom: vectors d'una dimensió i matrius de files i columnes, i com recórrer-les amb bucles.</p>
+          <span class="card-foot"><span class="crit">Criteris 2.2 · 2.5</span><span class="go">2 activitats →</span></span>
         </a>
 
-        <a class="card" href="A1_3_estructures_repetitives.html">
-          <span class="card-num">A1.3</span>
-          <h3 class="card-title">Repetir sense repetir-se</h3>
-          <p class="card-text">Els tres bucles de PSeInt: <code>Mientras</code>, <code>Repetir … Hasta Que</code> i <code>Para</code>. Quan usar cada un i com evitar bucles infinits.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.1 · 2.5</span><span class="go">Obrir →</span></span>
-        </a>
-
-        <a class="card" href="A1_4_esquemes_iteratius.html">
-          <span class="card-num">A1.4</span>
-          <h3 class="card-title">Recórrer i cercar</h3>
-          <p class="card-text">Els dos esquemes iteratius fonamentals: el <strong>recorregut</strong>, que processa tots els elements, i la <strong>cerca</strong>, que s'atura en trobar-ne un.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.1 · 2.5</span><span class="go">Obrir →</span></span>
-        </a>
-
-        <a class="card" href="a2-1-vectors.html">
-          <span class="card-num">A2.1</span>
-          <h3 class="card-title">Moltes dades amb un sol nom</h3>
-          <p class="card-text">Els vectors: guardar una llista d'elements del mateix tipus i recórrer-los amb un bucle, amb índexs que comencen pel 0.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.2 · 2.5</span><span class="go">Obrir →</span></span>
-        </a>
-
-        <a class="card" href="a2-2-matrius.html">
-          <span class="card-num">A2.2</span>
-          <h3 class="card-title">Files i columnes</h3>
-          <p class="card-text">Les matrius: organitzar dades en una graella de files i columnes i recórrer-les amb dos bucles niats.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.2 · 2.5</span><span class="go">Obrir →</span></span>
-        </a>
-
-        <a class="card" href="a3-1-funcions-procediments.html">
-          <span class="card-num">A3.1</span>
-          <h3 class="card-title">Trossos de programa amb nom propi</h3>
-          <p class="card-text">Dividir el programa en peces reutilitzables: funcions que tornen un valor i procediments que fan una tasca.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.3 · 2.4</span><span class="go">Obrir →</span></span>
-        </a>
-
-        <a class="card" href="a3-2-descomposicio-modular.html">
-          <span class="card-num">A3.2</span>
-          <h3 class="card-title">Construir un programa amb peces</h3>
-          <p class="card-text">Repartir un problema en subrutines i muntar-les en un programa complet amb menú. Inclou una introducció a la recursivitat.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.3 · 2.4 · 2.5</span><span class="go">Obrir →</span></span>
+        <a class="card" href="a3-descomposicio-modular.html">
+          <span class="card-num">A3</span>
+          <h3 class="card-title">Descomposició modular</h3>
+          <p class="card-text">Dividir un programa en peces: funcions i procediments, disseny descendent i una introducció a la recursivitat.</p>
+          <span class="card-foot"><span class="crit">Criteris 2.3 · 2.4 · 2.5</span><span class="go">2 activitats →</span></span>
         </a>
 
       </div>
