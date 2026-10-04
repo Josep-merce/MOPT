@@ -44,6 +44,8 @@
     .cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(270px,1fr)); gap:18px; }
     .card { display:flex; flex-direction:column; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:22px; text-decoration:none; color:var(--ink); transition:transform .12s ease, box-shadow .12s ease, border-color .12s ease; }
     .card:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(28,25,23,.08); border-color:var(--accent-bdr); }
+    .card.disabled { opacity:.5; filter:grayscale(1); cursor:not-allowed; }
+    .card.disabled:hover { transform:none; box-shadow:none; border-color:var(--border); }
     .card-num { align-self:flex-start; font-family:var(--mono); font-size:12px; font-weight:700; color:#fff; background:var(--accent-mid); padding:3px 10px; border-radius:20px; margin-bottom:14px; }
     .card-title { font-size:1.15rem; font-weight:600; margin-bottom:8px; line-height:1.25; }
     .card-text { font-size:14px; color:var(--ink-2); flex-grow:1; margin-bottom:18px; }
@@ -112,19 +114,19 @@
           <span class="card-foot"><span class="crit">Criteri 1.3</span><span class="go">Obrir →</span></span>
         </a>
 
-        <a class="card" href="A3_de_la_logica_al_pseudocodi.html">
+        <div class="card disabled" aria-disabled="true">
           <span class="card-num">A3</span>
           <h3 class="card-title">De la lògica al pseudocodi</h3>
           <p class="card-text">Traduir condicions lògiques a estructures <code>Si</code> i <code>Mientras</code> de PSeInt. El pont cap a la programació.</p>
-          <span class="card-foot"><span class="crit">Criteris 1.1 · 1.5</span><span class="go">Obrir →</span></span>
-        </a>
+          <span class="card-foot"><span class="crit">Criteris 1.1 · 1.5</span><span class="go">No disponible</span></span>
+        </div>
 
-        <a class="card" href="A4_resolucio_de_problemes.html">
+        <div class="card disabled" aria-disabled="true">
           <span class="card-num">A4</span>
           <h3 class="card-title">Resolució de problemes</h3>
           <p class="card-text">Estratègies i raonament ordenat per resoldre problemes de lògica, validacions i control de flux.</p>
-          <span class="card-foot"><span class="crit">Criteri 1.5</span><span class="go">Obrir →</span></span>
-        </a>
+          <span class="card-foot"><span class="crit">Criteri 1.5</span><span class="go">No disponible</span></span>
+        </div>
 
       </div>
     </section>
@@ -152,19 +154,19 @@
           <span class="card-foot"><span class="crit">Criteris 2.1 · 2.5</span><span class="go">4 activitats →</span></span>
         </a>
 
-        <a class="card" href="a2-arrays-i-matrius.html">
+        <div class="card disabled" aria-disabled="true">
           <span class="card-num">A2</span>
           <h3 class="card-title">Arrays i matrius</h3>
           <p class="card-text">Guardar moltes dades sota un sol nom: vectors d'una dimensió i matrius de files i columnes, i com recórrer-les amb bucles.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.2 · 2.5</span><span class="go">2 activitats →</span></span>
-        </a>
+          <span class="card-foot"><span class="crit">Criteris 2.2 · 2.5</span><span class="go">No disponible</span></span>
+        </div>
 
-        <a class="card" href="a3-descomposicio-modular.html">
+        <div class="card disabled" aria-disabled="true">
           <span class="card-num">A3</span>
           <h3 class="card-title">Descomposició modular</h3>
           <p class="card-text">Dividir un programa en peces: funcions i procediments, disseny descendent i una introducció a la recursivitat.</p>
-          <span class="card-foot"><span class="crit">Criteris 2.3 · 2.4 · 2.5</span><span class="go">2 activitats →</span></span>
-        </a>
+          <span class="card-foot"><span class="crit">Criteris 2.3 · 2.4 · 2.5</span><span class="go">No disponible</span></span>
+        </div>
 
       </div>
     </section>
