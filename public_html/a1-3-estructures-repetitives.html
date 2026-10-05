@@ -85,6 +85,15 @@
     .kw { color:#fbbf24; font-weight:500; } .var { color:#38bdf8; } .str { color:#4ade80; } .num { color:#f472b6; } .cmt { color:#64748b; }
     .loop { color:#a78bfa; font-weight:600; }
     .inloop { display:block; border-left:3px solid #a78bfa; background:rgba(167,139,250,.10); padding-left:9px; border-radius:0 3px 3px 0; }
+    .inloop2 { display:block; border-left:3px solid #38bdf8; background:rgba(56,189,248,.13); padding-left:9px; border-radius:0 3px 3px 0; }
+    .insi { display:block; border-left:3px solid #fbbf24; background:rgba(251,191,36,.12); padding-left:9px; border-radius:0 3px 3px 0; }
+    .code-legend { display:flex; flex-wrap:wrap; gap:8px 18px; font-size:12px; color:var(--ink-2); margin:4px 0 14px; }
+    .code-legend span { display:inline-flex; align-items:center; gap:7px; }
+    .code-legend code { font-family:'JetBrains Mono',monospace; font-size:11.5px; }
+    .lg { display:inline-block; width:16px; height:14px; border-radius:0 3px 3px 0; border-left:3px solid; }
+    .lg-loop { border-color:#a78bfa; background:rgba(167,139,250,.25); }
+    .lg-loop2 { border-color:#38bdf8; background:rgba(56,189,248,.25); }
+    .lg-si { border-color:#fbbf24; background:rgba(251,191,36,.28); }
     /* COMPARATIVA LOOPS */
     .cmp-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-bottom:20px; }
     .cmp { background:var(--card); border:1px solid var(--border); border-radius:var(--r-sm); padding:14px; }
@@ -147,6 +156,7 @@
     .qi-fb.fail { display:block; background:var(--red-bg); color:var(--red); border:1px solid var(--red-bdr); }
     .ri { border:1px solid var(--border); border-radius:var(--r-sm); overflow:hidden; margin-bottom:12px; }
     .ri-q { padding:14px 18px; background:#fafaf9; }
+    .ri-title { font-family:'DM Serif Display',Georgia,serif; font-size:1.2rem; color:var(--accent); line-height:1.3; margin-bottom:10px; }
     .ri-q-text { font-size:14px; color:var(--ink); margin-bottom:4px; }
     .ri-q-text code { font-family:'JetBrains Mono',monospace; font-size:13px; background:var(--code-bg); color:var(--code-text); padding:2px 7px; border-radius:4px; }
     .ri-btn { display:inline-flex; align-items:center; gap:6px; margin-top:12px; padding:6px 15px; border:1.5px solid var(--accent-bdr); border-radius:var(--r-sm); background:var(--accent-bg); color:var(--accent); cursor:pointer; font-size:12px; font-family:'DM Sans',sans-serif; font-weight:600; transition:background .12s,color .12s,border-color .12s; }
@@ -222,131 +232,39 @@
       </div>
     </div>
 
-    <h3 class="ov-h">La idea general</h3>
-    <p class="lead">Un bucle és quan li diem a algú (o a un robot) que <strong>repeteixi una cosa</strong>. Hi ha tres maneres de fer-ho, i la diferència és <strong>com sabem quan hem de parar</strong>.</p>
+    <h3 class="ov-h">Tres maneres de repetir</h3>
+    <p class="lead">
+      Hi ha tres bucles, i tots repeteixen. L'única diferència és <strong>com saben quan han de parar</strong>.
+      Aquí els tens de costat; a les seccions següents els veurem un per un.
+    </p>
 
-    <h3 class="ov-h">1. PARA — «Fes-ho X vegades»</h3>
-    <p class="lead">Ja sabem des del principi quantes vegades ho farem.</p>
-    <div class="analogy">
-      <div class="analogy-emoji">🦘</div>
-      <div>
-        <div class="analogy-title">Exemple · «fes 5 salts»</div>
-        <div class="analogy-text">Tothom compta: 1, 2, 3, 4, 5… i para. No cal pensar res més, el número ja està decidit.</div>
-      </div>
-    </div>
-    <pre class="pseudo-out">Per a cada vegada de 1 a 5:
-    saltar</pre>
-    <div class="ibox green">
-      <div class="ibox-label">👉 Pregunta per a la classe</div>
-      <div class="ibox-text">«Si dic <em>pica de mans 3 vegades</em>, quantes vegades piques?» Sempre 3!</div>
-    </div>
-
-    <h3 class="ov-h">2. MIENTRAS — «Mira primer, i després fes»</h3>
-    <p class="lead">Abans de fer res, mirem una regla. Si es compleix, ho fem. Si no, no fem res.</p>
-    <div class="analogy">
-      <div class="analogy-emoji">🍪</div>
-      <div>
-        <div class="analogy-title">Exemple · «mentre tinguis gana, menja't una galeta»</div>
-        <div class="analogy-text">Si tens molta gana, en menges una, dues, tres… Però si quan arribes ja no tens gana, <strong>no te'n menges cap!</strong></div>
-      </div>
-    </div>
-    <pre class="pseudo-out">Mientras tingui gana:
-    menjar una galeta</pre>
-    <p class="lead">☔ <strong>Un altre:</strong> «Mientras plogui, porta el paraigua obert.» Si fa sol, no l'obres ni una vegada.</p>
-    <div class="ibox yellow">
-      <div class="ibox-label">👉 Clau</div>
-      <div class="ibox-text">Pot passar <strong>zero vegades</strong>.</div>
-    </div>
-
-    <h3 class="ov-h">3. REPETIR — «Fes primer, i després mira»</h3>
-    <p class="lead">Primer fem l'acció, i després mirem si hem de parar. Per això sempre es fa <strong>com a mínim un cop</strong>.</p>
-    <div class="analogy">
-      <div class="analogy-emoji">🎲</div>
-      <div>
-        <div class="analogy-title">Exemple · «tira el dau fins que surti un 6»</div>
-        <div class="analogy-text">No pots saber si surt un 6 si no tires el dau! Per tant, segur que tires <strong>almenys una vegada</strong>. Potser surt a la primera, o potser has de tirar 10 vegades.</div>
-      </div>
-    </div>
-    <pre class="pseudo-out">Repetir:
-    tirar el dau
-Fins que surti un 6</pre>
-    <p class="lead">🍲 <strong>Un altre:</strong> «Tasta la sopa fins que estigui bona de sal.» Sempre la tastes almenys un cop.</p>
-    <div class="ibox yellow">
-      <div class="ibox-label">👉 Clau</div>
-      <div class="ibox-text">Es fa <strong>una o més vegades</strong>, mai zero.</div>
-    </div>
-
-    <h3 class="ov-h">Resum per a la pissarra</h3>
-    <div class="tbl-wrap">
-      <table class="tbl">
-        <thead><tr><th>Bucle</th><th>Pregunta màgica</th><th>Exemple</th><th>Vegades</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Para</strong></td><td>Quantes vegades?</td><td>Fes 5 salts</td><td>Les que diguem</td></tr>
-          <tr><td><strong>Mientras</strong></td><td>Ho he de fer? (mira abans)</td><td>Menja galetes si tens gana</td><td>0 o més</td></tr>
-          <tr><td><strong>Repetir</strong></td><td>Ja puc parar? (mira després)</td><td>Tira el dau fins que surti un 6</td><td>1 o més</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- MODEL MENTAL SENZILL -->
-    <div class="ibox green">
-      <div class="ibox-label">💡 La pregunta que ho decideix tot</div>
-      <div class="ibox-text">
-        <strong>Saps quantes vegades ho has de repetir?</strong><br>
-        · <strong>Sí</strong> → fes servir <code>Para</code><br>
-        · <strong>No</strong> → fes servir <code>Mientras</code> (o <code>Repetir</code> si segur que ho fas com a mínim un cop)
-      </div>
-    </div>
-
-    <p class="lead">Un exemple ràpid de cadascun perquè ho vegis d'un cop d'ull:</p>
-
-    <div class="demo">
-      <div class="demo-label">Para · escriure els números de l'1 al 5 (sé que són 5 voltes)</div>
-      <pre class="pseudo-out" data-code="Para i <- 1 Hasta 5 Hacer
-    Escribir i;
-FinPara"></pre>
-      <div class="exp-box">
-        <div class="exp-label">Per què Para</div>
-        <div class="exp-text">
-          El bucle compta sol: comença a 1, puja d'1 en 1 i s'atura al 5. Tu no has de fer res més.
+    <div class="cmp-grid">
+      <div class="cmp">
+        <h4>Para</h4>
+        <p><strong>«Fes-ho X vegades»</strong><br>Saps des del principi quantes vegades repetiràs.</p>
+        <div class="cmp-ex">
+          <div class="cmp-ex-label">Com a la vida</div>
+          <p>🏋️ Fer 10 abdominals: comptes de l'1 al 10 i pares.</p>
+          <div class="cmp-ex-out">Vegades: <strong>les que diguem</strong></div>
         </div>
       </div>
-    </div>
-
-    <div class="demo">
-      <div class="demo-label">Mientras · demanar un nombre fins que s'escrigui un 0 (no sé quants en posarà)</div>
-      <pre class="pseudo-out" data-code="Leer numero;
-Mientras numero <> 0 Hacer
-    Escribir 'Has escrit: ', numero;
-    Leer numero;
-FinMientras"></pre>
-      <div class="exp-box">
-        <div class="exp-label">Per què Mientras</div>
-        <div class="exp-text">
-          Mira la condició al principi: si l'usuari posa un 0 de bon començament, el bucle no fa res.
+      <div class="cmp">
+        <h4>Mientras</h4>
+        <p><strong>«Mira primer, després fes»</strong><br>Abans de cada volta mira si s'ha de fer.</p>
+        <div class="cmp-ex">
+          <div class="cmp-ex-label">Com a la vida</div>
+          <p>🚪 Mentre la tauleta estigui encesa, pots jugar. Si ja és apagada, no jugues gens.</p>
+          <div class="cmp-ex-out">Vegades: <strong>0 o més</strong></div>
         </div>
       </div>
-    </div>
-
-    <div class="demo">
-      <div class="demo-label">Repetir · demanar una contrasenya fins que sigui correcta (l'he de demanar mínim un cop)</div>
-      <pre class="pseudo-out" data-code="Repetir
-    Leer clau;
-Hasta Que clau = 1234
-Escribir 'Correcte!';"></pre>
-      <div class="exp-box">
-        <div class="exp-label">Per què Repetir</div>
-        <div class="exp-text">
-          Sempre demana la clau almenys una vegada, perquè mira la condició al final.
+      <div class="cmp">
+        <h4>Repetir</h4>
+        <p><strong>«Fes primer, després mira»</strong><br>Fa la volta i al final mira si ha de parar.</p>
+        <div class="cmp-ex">
+          <div class="cmp-ex-label">Exemple · «tira el dau fins que surti un 6»</div>
+          <p>🎲 No pots saber si surt un 6 si no tires el dau! Per tant, segur que tires <strong>almenys una vegada</strong>. Potser surt a la primera, o potser has de tirar 10 vegades.</p>
+          <div class="cmp-ex-out">Vegades: <strong>1 o més</strong></div>
         </div>
-      </div>
-    </div>
-
-    <div class="ibox yellow">
-      <div class="ibox-label">La regla d'or</div>
-      <div class="ibox-text">
-        Dins de tot bucle hi ha d'haver <strong>alguna cosa que canviï</strong> (llegir un nombre nou, pujar un
-        comptador…). Si res no canvia, el bucle no s'atura mai.
       </div>
     </div>
   </section>
@@ -355,168 +273,6 @@ Escribir 'Correcte!';"></pre>
   <section class="section">
     <div class="sec-head">
       <span class="sec-num">2</span>
-      <div>
-        <h2 class="sec-title">Bucle <code>Mientras</code></h2>
-        <p class="sec-sub">Repeteix mentre la condició sigui certa</p>
-      </div>
-    </div>
-    <div class="analogy">
-      <div class="analogy-emoji">🚪</div>
-      <div>
-        <div class="analogy-title">L'analogia · el guardià de la porta</div>
-        <div class="analogy-text">
-          És com la norma «<strong>mentre</strong> la tauleta estigui encesa, pots jugar». Es mira <strong>abans</strong>:
-          si la tauleta s'apaga, pares de jugar a l'instant. I si ja estava apagada des del principi, no comences ni a
-          jugar! Per això un <code>Mientras</code> es pot executar <strong>zero vegades</strong>.
-        </div>
-      </div>
-    </div>
-    <p class="lead">
-      El <code>Mientras</code> primer <strong>mira si es compleix una pregunta</strong>. Si la resposta és «sí», fa les
-      ordres de dins i torna a mirar. Quan la resposta passa a «no», s'atura. Com que mira <strong>abans</strong>, si la
-      resposta ja és «no» des del principi, no fa res de res.
-    </p>
-
-    <div class="ibox blue">
-      <div class="ibox-label">Sintaxi</div>
-      <div class="ibox-text"><code>Mientras &lt;condició&gt; Hacer<br>&nbsp;&nbsp;&nbsp;&nbsp;instruccions;<br>FinMientras</code></div>
-    </div>
-
-    <div class="ibox yellow">
-      <div class="ibox-label">Un símbol nou: «diferent de»</div>
-      <div class="ibox-text">
-        Per dir que dues coses <strong>no són iguals</strong>, en PSeInt escrivim <code>&lt;&gt;</code>. Per exemple,
-        <code>clau &lt;&gt; secret</code> vol dir «la clau <strong>no</strong> és igual al secret». Va molt bé per
-        repetir «mentre <strong>encara no</strong> ho hagi encertat».
-      </div>
-    </div>
-
-    <div class="demo">
-      <div class="demo-label">Exemple · demanar la clau fins que sigui correcta</div>
-      <pre class="pseudo-out" data-code="Proceso Login
-    Definir secret, clau Como Cadena;
-    secret <- 'asdasd';
-    Escribir 'Digues la clau:';
-    Leer clau;
-    Mientras clau <> secret Hacer
-        Escribir 'Clau incorrecta!';
-        Escribir 'Digues la clau:';
-        Leer clau;
-    FinMientras
-    Escribir 'Benvingut/da!';
-FinProceso"></pre>
-      <div class="exp-box">
-        <div class="exp-label">Com funciona</div>
-        <div class="exp-text">
-          Primer demanem la clau <strong>una vegada</strong> (si no, no tindríem res per comparar). Mentre la clau que
-          s'escriu <strong>no sigui</strong> el secret, l'ordinador avisa i la torna a demanar. Com que cada volta
-          <strong>tornem a llegir la clau</strong>, la cosa va canviant i el bucle pot acabar. Quan l'encertes, la
-          resposta passa a «no» i surt.
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECCIÓ 3 -->
-  <section class="section">
-    <div class="sec-head">
-      <span class="sec-num">3</span>
-      <div>
-        <h2 class="sec-title">Bucle <code>Repetir … Hasta Que</code></h2>
-        <p class="sec-sub">Repeteix fins que la condició es compleixi</p>
-      </div>
-    </div>
-    <div class="analogy">
-      <div class="analogy-emoji">🥣</div>
-      <div>
-        <div class="analogy-title">L'analogia · la cullerada de sopa</div>
-        <div class="analogy-text">
-          És com menjar-te un plat de sopa: fas una cullerada i <strong>després</strong> mires el plat. És buit? No →
-          una altra cullerada. És buit? Sí → pares. Fixa't que, com a mínim, <strong>una cullerada</strong> te l'has
-          hagut de prendre per poder mirar si el plat era buit. Per això un <code>Repetir</code> sempre s'executa
-          <strong>almenys un cop</strong>.
-        </div>
-      </div>
-    </div>
-    <p class="lead">
-      El <code>Repetir</code> fa les ordres de dins <strong>primer</strong> i mira la pregunta <strong>al final</strong>.
-      Per això es fa <strong>sempre com a mínim un cop</strong>. Va al revés del <code>Mientras</code>: continua
-      <strong>mentre la resposta és «no»</strong> i para <strong>quan passa a «sí»</strong>.
-    </p>
-
-    <div class="ibox blue">
-      <div class="ibox-label">Sintaxi</div>
-      <div class="ibox-text"><code>Repetir<br>&nbsp;&nbsp;&nbsp;&nbsp;instruccions;<br>Hasta Que &lt;condició&gt;</code></div>
-    </div>
-
-    <div class="demo">
-      <div class="demo-label">Exemple · demanar la contrasenya fins que sigui correcta</div>
-      <pre class="pseudo-out" data-code="Proceso Contrasenya
-    Definir clau Como Entero;
-    Repetir
-        Escribir 'Escriu la contrasenya:';
-        Leer clau;
-    Hasta Que clau = 1234
-    Escribir 'Correcte! Has entrat.';
-FinProceso"></pre>
-      <div class="exp-box">
-        <div class="exp-label">Com funciona</div>
-        <div class="exp-text">
-          La contrasenya s'ha de demanar <strong>sempre un cop com a mínim</strong>, així que el <code>Repetir</code> hi
-          va perfecte: la demana i, si no és la bona (1234), la torna a demanar. Para just quan l'encertes. Com que mira
-          la pregunta <strong>al final</strong>, sempre fa almenys una volta.
-        </div>
-      </div>
-    </div>
-
-    <div class="ibox green">
-      <div class="ibox-label">Mientras o Repetir? La diferència de veritat</div>
-      <div class="ibox-text">
-        Amb la <strong>contrasenya</strong> els dos bucles funcionarien igual, perquè sempre s'ha de demanar
-        <strong>com a mínim un cop</strong>. La diferència només es nota en <strong>un cas</strong>: quan potser no cal
-        repetir <strong>ni una sola vegada</strong>.
-        <br><br>
-        Mira el <strong>mateix caixer</strong> resolt amb els dos bucles. La regla és «treu 50 € mentre el saldo sigui
-        suficient» i arribem amb el compte a <strong>0 €</strong>:
-      </div>
-
-      <div class="code-cmp">
-        <div class="code-cmp-col">
-          <div class="code-cmp-head ok">✔️ Amb Mientras</div>
-          <pre class="pseudo-out" data-code="saldo <- 0;
-Mientras saldo >= 50 Hacer
-    saldo <- saldo - 50;
-    Escribir 'Has tret 50 €';
-FinMientras
-Escribir 'Saldo: ', saldo;"></pre>
-          <div class="code-cmp-note ok">Mira primer: <strong>0 &gt;= 50</strong> és fals, així que no entra al bucle. No treu res i el saldo es queda a 0. Correcte.</div>
-        </div>
-        <div class="code-cmp-col">
-          <div class="code-cmp-head bad">✘ Amb Repetir</div>
-          <pre class="pseudo-out" data-code="saldo <- 0;
-Repetir
-    saldo <- saldo - 50;
-    Escribir 'Has tret 50 €';
-Hasta Que saldo < 50
-Escribir 'Saldo: ', saldo;"></pre>
-          <div class="code-cmp-note bad">Fa el cos primer: treu 50 € que no tens (el saldo queda a <strong>-50</strong>) i <em>després</em> comprova. Error!</div>
-        </div>
-      </div>
-
-      <div class="ibox-text">
-        Per això la regla és:
-        <br><strong>1)</strong> Si pot passar que <strong>no calgui fer-ho cap vegada</strong> → <code>Mientras</code>
-        (com el caixer amb 0 €).
-        <br><strong>2)</strong> Si <strong>sempre s'ha de fer almenys un cop</strong> (menús, demanar dades…) →
-        <code>Repetir</code>, que queda més net.
-      </div>
-    </div>
-  </section>
-
-  <!-- SECCIÓ 4 -->
-  <section class="section">
-    <div class="sec-head">
-      <span class="sec-num">4</span>
       <div>
         <h2 class="sec-title">Bucle <code>Para</code></h2>
         <p class="sec-sub">Quan sabem quantes vegades repetirem</p>
@@ -584,6 +340,147 @@ FinPara"></pre>
     </div>
   </section>
 
+  <!-- SECCIÓ 3 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">3</span>
+      <div>
+        <h2 class="sec-title">Bucle <code>Mientras</code></h2>
+        <p class="sec-sub">Repeteix mentre la condició sigui certa</p>
+      </div>
+    </div>
+    <div class="analogy">
+      <div class="analogy-emoji">🚪</div>
+      <div>
+        <div class="analogy-title">L'analogia · el guardià de la porta</div>
+        <div class="analogy-text">
+          És com la norma «<strong>mentre</strong> la tauleta estigui encesa, pots jugar». Es mira <strong>abans</strong>:
+          si la tauleta s'apaga, pares de jugar a l'instant. I si ja estava apagada des del principi, no comences ni a
+          jugar! Per això un <code>Mientras</code> es pot executar <strong>zero vegades</strong>.
+        </div>
+      </div>
+    </div>
+    <p class="lead">
+      El <code>Mientras</code> primer <strong>mira si es compleix una pregunta</strong>. Si la resposta és «sí», fa les
+      ordres de dins i torna a mirar. Quan la resposta passa a «no», s'atura. Com que mira <strong>abans</strong>, si la
+      resposta ja és «no» des del principi, no fa res de res.
+    </p>
+
+    <div class="ibox blue">
+      <div class="ibox-label">Sintaxi</div>
+      <div class="ibox-text"><code>Mientras &lt;condició&gt; Hacer<br>&nbsp;&nbsp;&nbsp;&nbsp;instruccions;<br>FinMientras</code></div>
+    </div>
+
+    <div class="ibox yellow">
+      <div class="ibox-label">Un símbol nou: «diferent de»</div>
+      <div class="ibox-text">
+        Per dir que dues coses <strong>no són iguals</strong>, en PSeInt escrivim <code>&lt;&gt;</code>. Per exemple,
+        <code>clau &lt;&gt; secret</code> vol dir «la clau <strong>no</strong> és igual al secret». Va molt bé per
+        repetir «mentre <strong>encara no</strong> ho hagi encertat».
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · demanar la clau fins que sigui correcta</div>
+      <pre class="pseudo-out" data-code="Proceso Login
+    Definir secret, clau Como Cadena;
+    secret <- 'asdasd';
+    Escribir 'Digues la clau:';
+    Leer clau;
+    Mientras clau <> secret Hacer
+        Escribir 'Clau incorrecta!';
+        Escribir 'Digues la clau:';
+        Leer clau;
+    FinMientras
+    Escribir 'Benvingut/da!';
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          Primer demanem la clau <strong>una vegada</strong> (si no, no tindríem res per comparar). Mentre la clau que
+          s'escriu <strong>no sigui</strong> el secret, l'ordinador avisa i la torna a demanar. Com que cada volta
+          <strong>tornem a llegir la clau</strong>, la cosa va canviant i el bucle pot acabar. Quan l'encertes, la
+          resposta passa a «no» i surt.
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · pot passar zero vegades</div>
+      <pre class="pseudo-out" data-code="Proceso FinsAZero
+    Definir numero Como Entero;
+    Escribir 'Escriu un nombre (0 per acabar):';
+    Leer numero;
+    Mientras numero <> 0 Hacer
+        Escribir 'Has escrit: ', numero;
+        Leer numero;
+    FinMientras
+    Escribir 'Fi!';
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          No sabem quants nombres escriurà l'usuari, per això no fem servir un <code>Para</code>. El
+          <code>Mientras</code> mira la condició <strong>abans</strong> d'entrar: si el primer nombre ja és un 0,
+          <strong>no fa cap volta</strong> i passa directament a escriure «Fi!».
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓ 4 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">4</span>
+      <div>
+        <h2 class="sec-title">Bucle <code>Repetir … Hasta Que</code></h2>
+        <p class="sec-sub">Repeteix fins que la condició es compleixi</p>
+      </div>
+    </div>
+    <div class="analogy">
+      <div class="analogy-emoji">🥣</div>
+      <div>
+        <div class="analogy-title">L'analogia · la cullerada de sopa</div>
+        <div class="analogy-text">
+          És com menjar-te un plat de sopa: fas una cullerada i <strong>després</strong> mires el plat. És buit? No →
+          una altra cullerada. És buit? Sí → pares. Fixa't que, com a mínim, <strong>una cullerada</strong> te l'has
+          hagut de prendre per poder mirar si el plat era buit. Per això un <code>Repetir</code> sempre s'executa
+          <strong>almenys un cop</strong>.
+        </div>
+      </div>
+    </div>
+    <p class="lead">
+      El <code>Repetir</code> fa les ordres de dins <strong>primer</strong> i mira la pregunta <strong>al final</strong>.
+      Per això es fa <strong>sempre com a mínim un cop</strong>. Va al revés del <code>Mientras</code>: continua
+      <strong>mentre la resposta és «no»</strong> i para <strong>quan passa a «sí»</strong>.
+    </p>
+
+    <div class="ibox blue">
+      <div class="ibox-label">Sintaxi</div>
+      <div class="ibox-text"><code>Repetir<br>&nbsp;&nbsp;&nbsp;&nbsp;instruccions;<br>Hasta Que &lt;condició&gt;</code></div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · demanar la contrasenya fins que sigui correcta</div>
+      <pre class="pseudo-out" data-code="Proceso Contrasenya
+    Definir clau Como Entero;
+    Repetir
+        Escribir 'Escriu la contrasenya:';
+        Leer clau;
+    Hasta Que clau = 1234
+    Escribir 'Correcte! Has entrat.';
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          La contrasenya s'ha de demanar <strong>sempre un cop com a mínim</strong>, així que el <code>Repetir</code> hi
+          va perfecte: la demana i, si no és la bona (1234), la torna a demanar. Para just quan l'encertes. Com que mira
+          la pregunta <strong>al final</strong>, sempre fa almenys una volta.
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- SECCIÓ 5 -->
   <section class="section">
     <div class="sec-head">
@@ -621,38 +518,168 @@ FinPara"></pre>
       </table>
     </div>
 
+    <div class="code-legend">
+      <span><i class="lg lg-loop"></i>Dins del bucle</span>
+      <span><i class="lg lg-si"></i>Dins d'un <code>Si</code> que és dins del bucle</span>
+    </div>
+
+    <h3 class="ov-h">🔢 Exemple de comptador · quants nombres grans?</h3>
     <div class="demo">
-      <div class="demo-label">Exemple · comptar quants exàmens hi ha i quants s'aproven</div>
-      <pre class="pseudo-out" data-code="Proceso Notes
-    Definir i, nota, examens, aprovats Como Entero;
-    examens <- 0;    // comptador: quants exàmens
-    aprovats <- 0;   // comptador: quants aprovats
-    Para i <- 1 Hasta 5 Hacer
-        Escribir 'Digues una nota:';
-        Leer nota;
-        examens <- examens + 1;
-        Si nota >= 5 Entonces
-            aprovats <- aprovats + 1;
+      <pre class="pseudo-out" data-code="Proceso ComptarGrans
+    Definir i, num, cont Como Entero;
+    cont <- 0;   // el clicker comença a 0
+    Para i <- 1 Hasta 3 Hacer
+        Leer num;
+        Si num > 10 Entonces
+            cont <- cont + 1;   // clic! +1
         FinSi
     FinPara
-    Escribir 'Exàmens: ', examens;
-    Escribir 'Aprovats: ', aprovats;
+    Escribir 'Més grans que 10: ', cont;
 FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          Abans de començar, <code>examens</code> i <code>aprovats</code> es posen a 0. Dins del bucle,
-          <code>examens</code> puja <strong>sempre</strong> (compta cada nota) i <code>aprovats</code> puja
-          <strong>només</strong> quan la nota és 5 o més. En acabar, saps <strong>quantes notes hi havia</strong> i
-          <strong>quantes s'han aprovat</strong>. Fixa't que <strong>tots dos són comptadors</strong>: no sumem les
-          notes, només comptem.
+          <code>cont</code> comença a 0 i, cada vegada que el nombre és més gran que 10, <strong>puja 1</strong>.
+          No guarda els nombres: només <strong>compta quantes vegades</strong> passa.
         </div>
       </div>
     </div>
 
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Volta</th><th>num</th><th>num &gt; 10?</th><th>cont</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td class="ex">5</td><td>No</td><td class="ex">0</td></tr>
+          <tr><td>2</td><td class="ex">20</td><td>Sí → +1</td><td class="ex">1</td></tr>
+          <tr><td>3</td><td class="ex">12</td><td>Sí → +1</td><td class="ex">2</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="ov-h">🐷 Exemple d'acumulador · sumar nombres</h3>
     <div class="demo">
-      <div class="demo-label">Exemple · endevinar un número secret</div>
-      <pre class="pseudo-out" data-code="Proceso EndevinaNumero
+      <pre class="pseudo-out" data-code="Proceso SumarNombres
+    Definir i, num, sum Como Entero;
+    sum <- 0;   // la guardiola comença buida
+    Para i <- 1 Hasta 3 Hacer
+        Leer num;
+        sum <- sum + num;   // hi afegim el nombre
+    FinPara
+    Escribir 'Total: ', sum;
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          <code>sum</code> comença a 0 i, a cada volta, <strong>s'hi suma el nombre llegit</strong>. Així va
+          creixent fins a tenir el total de tots els nombres.
+        </div>
+      </div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Volta</th><th>num</th><th>sum &lt;- sum + num</th><th>sum</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td class="ex">4</td><td class="ex">0 + 4</td><td class="ex">4</td></tr>
+          <tr><td>2</td><td class="ex">7</td><td class="ex">4 + 7</td><td class="ex">11</td></tr>
+          <tr><td>3</td><td class="ex">2</td><td class="ex">11 + 2</td><td class="ex">13</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="ov-h">🚦 Exemple d'indicador · hi ha algun suspès?</h3>
+    <div class="demo">
+      <pre class="pseudo-out" data-code="Proceso HiHaSuspes
+    Definir i, nota Como Entero;
+    Definir suspes Como Logico;
+    suspes <- Falso;   // interruptor apagat
+    Para i <- 1 Hasta 3 Hacer
+        Leer nota;
+        Si nota < 5 Entonces
+            suspes <- Verdadero;   // l'encenem
+        FinSi
+    FinPara
+    Escribir 'Hi ha algun suspès? ', suspes;
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          <code>suspes</code> comença a <code>Falso</code>. Si surt una nota per sota de 5, s'encén
+          (<code>Verdadero</code>) i <strong>ja no s'apaga mai més</strong>, encara que després vinguin notes bones.
+        </div>
+      </div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Volta</th><th>nota</th><th>nota &lt; 5?</th><th>suspes</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td class="ex">7</td><td>No</td><td class="ex">Falso</td></tr>
+          <tr><td>2</td><td class="ex">4</td><td>Sí → l'encenem</td><td class="ex">Verdadero</td></tr>
+          <tr><td>3</td><td class="ex">8</td><td>No</td><td class="ex">Verdadero</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ri">
+      <div class="ri-q">
+        <div class="ri-q-text">
+          <div class="ri-title">✏️ Enunciat · les notes de la classe (comptador + acumulador)</div>
+          Fes un programa que demani les <strong>5 notes</strong> d'un alumne, una darrere l'altra. Quan acabi, ha
+          d'escriure dues coses:<br>
+          · <strong>quantes notes estan aprovades</strong> (un 5 o més);<br>
+          · <strong>la nota mitjana</strong> de les 5.<br><br>
+          💡 <em>Pista:</em> per saber <strong>quantes</strong> n'hi ha d'aprovades necessites un
+          <strong>comptador</strong> (el clicker). Per calcular la mitjana primer has de <strong>sumar</strong> totes
+          les notes amb un <strong>acumulador</strong> (la guardiola) i, al final, dividir entre 5.
+        </div>
+        <button class="ri-btn" onclick="reveal(this,'S5a')">▶ Veure codi PSeInt</button>
+      </div>
+      <div class="ri-ans" id="S5a">
+        <div class="ri-ans-label">Solució PSeInt</div>
+        <pre class="pseudo-out" data-code="Proceso NotesClasse
+    Definir i, nota, aprovats, suma Como Entero;
+    Definir mitjana Como Real;
+    aprovats <- 0;   // comptador: comença a 0
+    suma <- 0;       // acumulador: comença a 0
+    Para i <- 1 Hasta 5 Hacer
+        Escribir 'Digues la nota ', i, ':';
+        Leer nota;
+        suma <- suma + nota;          // la guardiola: hi afegim la nota
+        Si nota >= 5 Entonces
+            aprovats <- aprovats + 1; // el clicker: +1 només si aprova
+        FinSi
+    FinPara
+    mitjana <- suma / 5;
+    Escribir 'Notes aprovades: ', aprovats;
+    Escribir 'Nota mitjana: ', mitjana;
+FinProceso"></pre>
+        <div class="ri-note">
+          Sabem que són 5 notes → <code>Para</code>. La <strong>suma</strong> (acumulador) creix a
+          <strong>cada</strong> volta amb el valor de la nota, en canvi <strong>aprovats</strong> (comptador) només
+          puja d'1 en 1 i <strong>només</strong> quan el <code>Si</code> es compleix. Prova amb 6, 3, 8, 5, 4:
+          aprovats = 3, suma = 26, mitjana = 5.2.
+        </div>
+      </div>
+    </div>
+
+    <div class="ri">
+      <div class="ri-q">
+        <div class="ri-q-text">
+          <div class="ri-title">✏️ Enunciat · endevina el número (comptador + indicador)</div>
+          L'ordinador <strong>pensa un número secret</strong>: el 7. Fes un joc que et demani números
+          <strong>fins que l'encertis</strong>. Cada vegada que falles, t'ha de dir si el número secret és
+          <strong>més gran</strong> o <strong>més petit</strong> que el que has dit. Quan l'encertis, ha d'escriure
+          <strong>en quants intents</strong> ho has aconseguit.<br><br>
+          💡 <em>Pista:</em> com a mínim has de tirar un cop, així que el bucle <code>Repetir</code> hi va molt bé.
+          Necessites un <strong>comptador</strong> per als intents i un <strong>indicador</strong> que recordi si ja
+          l'has encertat.
+        </div>
+        <button class="ri-btn" onclick="reveal(this,'S5b')">▶ Veure codi PSeInt</button>
+      </div>
+      <div class="ri-ans" id="S5b">
+        <div class="ri-ans-label">Solució PSeInt</div>
+        <pre class="pseudo-out" data-code="Proceso EndevinaNumero
     Definir secret, numero, intents Como Entero;
     Definir encertat Como Logico;
     secret <- 7;
@@ -674,15 +701,120 @@ FinProceso"></pre>
     Hasta Que encertat
     Escribir 'Correcte! Ho has encertat en ', intents, ' intents.';
 FinProceso"></pre>
+        <div class="ri-note">
+          L'<strong>indicador</strong> <code>encertat</code> comença a <code>Falso</code> i només es posa a
+          <code>Verdadero</code> quan l'endevines: és el que fa parar el bucle (<code>Hasta Que encertat</code>). El
+          <strong>comptador</strong> <code>intents</code> puja 1 a cada tirada. Dins del <code>SiNo</code> hi ha un
+          altre <code>Si</code> que decideix la pista: més gran o més petit.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓ 6 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">6</span>
+      <div>
+        <h2 class="sec-title">Bucles imbricats</h2>
+        <p class="sec-sub">Un bucle dins d'un altre: independents i dependents</p>
+      </div>
+    </div>
+    <div class="analogy">
+      <div class="analogy-emoji">🕰️</div>
+      <div>
+        <div class="analogy-title">L'analogia · el rellotge</div>
+        <div class="analogy-text">
+          Pensa en un rellotge: per <strong>cada hora</strong>, la busca dels minuts fa la <strong>volta
+          sencera</strong> (de 0 a 59). Només quan els minuts acaben la volta, l'hora avança una posició. Els bucles
+          imbricats funcionen igual: <strong>per cada volta del bucle de fora, el de dins fa totes les seves
+          voltes</strong>.
+        </div>
+      </div>
+    </div>
+    <p class="lead">
+      Un <strong>bucle imbricat</strong> (o niuat) és un bucle posat <strong>dins</strong> d'un altre. Hi ha dos tipus,
+      i la diferència depèn d'una sola pregunta: <strong>el bucle de dins fa sempre les mateixes voltes, o en fa més o
+      menys segons la volta del bucle de fora?</strong>
+    </p>
+
+    <div class="ibox blue">
+      <div class="ibox-label">Com distingir-los</div>
+      <div class="ibox-text">
+        Mira la línia del bucle de dins: <strong>hi apareix la variable del bucle de fora?</strong><br>
+        · <strong>No</strong> → són <strong>independents</strong>: el de dins fa sempre les mateixes voltes.<br>
+        · <strong>Sí</strong> → són <strong>dependents</strong>: el de dins fa un nombre de voltes diferent cada cop.
+      </div>
+    </div>
+
+    <div class="code-legend">
+      <span><i class="lg lg-loop"></i>Dins del bucle de fora</span>
+      <span><i class="lg lg-loop2"></i>Dins del bucle de dins</span>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · bucles independents: un rectangle d'asteriscs</div>
+      <pre class="pseudo-out" data-code="Proceso Rectangle
+    Definir fila, col Como Entero;
+    Para fila <- 1 Hasta 3 Hacer
+        Para col <- 1 Hasta 5 Hacer
+            Escribir Sin Saltar '* ';
+        FinPara
+        Escribir '';   // salt de línia en acabar la fila
+    FinPara
+FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          El programa amaga un número (el 7) i es <strong>repeteix fins que l'encertes</strong>. A cada tirada,
-          l'<strong>indicador</strong> <code>encertat</code> (que comença a <code>Falso</code>) només es posa a
-          <code>Verdadero</code> quan l'endevines: és el que fa parar el bucle. I el <strong>comptador</strong>
-          <code>intents</code> puja un cada tirada, així al final sap en quants intents ho has aconseguit. Si no
-          l'encertes, et diu si el número és més gran o més petit.
+          El bucle de fora (<code>fila</code>) fa 3 voltes, i a cada una el de dins (<code>col</code>) va
+          <strong>sempre de 1 a 5</strong>: escriu 5 asteriscs i salta de línia. Al bucle de dins
+          <strong>no li importa</strong> en quina fila estem, per això són <strong>independents</strong>. Surten 3
+          files de 5 asteriscs, és a dir, <strong>3 × 5 = 15</strong> asteriscs:
+          <br><code>* * * * *</code><br><code>* * * * *</code><br><code>* * * * *</code>
         </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · bucles dependents: un triangle d'asteriscs</div>
+      <pre class="pseudo-out" data-code="Proceso Triangle
+    Definir fila, col Como Entero;
+    Para fila <- 1 Hasta 4 Hacer
+        Para col <- 1 Hasta fila Hacer   // depèn de fila!
+            Escribir Sin Saltar '* ';
+        FinPara
+        Escribir '';
+    FinPara
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          Fixa't que l'únic canvi és <code>Hasta fila</code> en lloc d'un número fix. Ara el bucle de dins
+          <strong>depèn</strong> de la volta del de fora: a la fila 1 fa 1 volta, a la fila 2 en fa 2… Per això
+          són <strong>dependents</strong>. El dibuix creix com una escala i surten
+          <strong>1 + 2 + 3 + 4 = 10</strong> asteriscs (no 16):
+          <br><code>*</code><br><code>* *</code><br><code>* * *</code><br><code>* * * *</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>fila</th><th>Valors que pren col</th><th>Voltes del bucle de dins</th></tr></thead>
+        <tbody>
+          <tr><td class="ex">1</td><td class="ex">1</td><td>1</td></tr>
+          <tr><td class="ex">2</td><td class="ex">1, 2</td><td>2</td></tr>
+          <tr><td class="ex">3</td><td class="ex">1, 2, 3</td><td>3</td></tr>
+          <tr><td class="ex">4</td><td class="ex">1, 2, 3, 4</td><td>4</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ibox green">
+      <div class="ibox-label">💡 Resum</div>
+      <div class="ibox-text">
+        · <strong>Independents</strong> → forma de <strong>rectangle</strong>: voltes totals = voltes de fora × voltes de dins.<br>
+        · <strong>Dependents</strong> → forma de <strong>triangle o escala</strong>: el bucle de dins fa servir la variable del de fora i les voltes van canviant.
       </div>
     </div>
   </section>
@@ -736,17 +868,10 @@ FinProceso"></pre>
 
 <script>
 /* ── Acoloridor de pseudocodi (escapa &, <, > ABANS de res; marcador sense dígits) ── */
-/* A més, marca les línies de DINS d'un bucle amb una barra del color del bucle (.inloop) */
+/* A més, ombreja les línies de DINS d'un bucle (.inloop lila; bucle imbricat .inloop2 blau) i els Si que hi ha dins de bucles (.insi ambre) */
 function colorPseudo(text) {
   text = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  var depth = 0;
-  var pieces = text.split('\n').map(function(line){
-    var t = line.replace(/^\s+/,'');
-    var isOpener = /^(Mientras|Repetir|Para)\b/.test(t);
-    var isCloser = /^(FinMientras|FinPara|Hasta)\b/.test(t);
-    if (isCloser) depth = Math.max(0, depth - 1);
-    var body = depth > 0 && !isOpener && !isCloser;
-    if (isOpener) depth += 1;
+  function paint(line){
     var idx = line.indexOf('//');
     var code = idx >= 0 ? line.slice(0, idx) : line;
     var comment = idx >= 0 ? line.slice(idx) : '';
@@ -758,24 +883,47 @@ function colorPseudo(text) {
     code = code.replace(/\b(\d+\.?\d*)\b/g, "<span class='num'>$1</span>");
     var k = 0;
     code = code.replace(/\u0001/g, function(){ return "<span class='str'>" + strs[k++] + "</span>"; });
-    return { html: code + (comment ? "<span class='cmt'>" + comment + "</span>" : ''), body: body };
-  });
-  var segs = [], i = 0;
-  while (i < pieces.length) {
-    if (pieces[i].body) {
-      var run = [];
-      while (i < pieces.length && pieces[i].body) { run.push(pieces[i].html); i++; }
-      segs.push({ type:'block', html:"<span class='inloop'>" + run.join('\n') + "</span>" });
-    } else {
-      segs.push({ type:'line', html:pieces[i].html }); i++;
+    return code + (comment ? "<span class='cmt'>" + comment + "</span>" : '');
+  }
+  // Construïm un arbre de blocs: bucles (lila / blau si és imbricat) i Si dins de bucles (ambre)
+  var root = { kind:'root', cls:null, items:[] }, stack = [root];
+  function loopsOpen(){ return stack.filter(function(n){ return n.kind === 'loop'; }).length; }
+  text.split('\n').forEach(function(line){
+    var t = line.replace(/^\s+/, '');
+    var loopOpen  = /^(Mientras|Repetir|Para)\b/.test(t);
+    var loopClose = /^(FinMientras|FinPara|Hasta)\b/.test(t);
+    var siOpen    = /^(Si|Segun)\b/.test(t);
+    var siClose   = /^(FinSi|FinSegun)\b/.test(t);
+    if ((loopClose || siClose) && stack.length > 1) stack.pop();
+    var top = stack[stack.length - 1];
+    top.items.push({ line: paint(line) });
+    if (loopOpen) {
+      var d = loopsOpen();
+      var n = { kind:'loop', cls: d % 2 === 0 ? 'inloop' : 'inloop2', items:[] };
+      top.items.push(n); stack.push(n);
+    } else if (siOpen) {
+      var n2 = { kind:'si', cls: loopsOpen() > 0 ? 'insi' : null, items:[] };
+      top.items.push(n2); stack.push(n2);
     }
+  });
+  function segsOf(node){
+    var segs = [];
+    node.items.forEach(function(it){
+      if (it.line !== undefined) { segs.push({ type:'line', html: it.line }); return; }
+      if (it.cls) segs.push({ type:'block', html: "<span class='" + it.cls + "'>" + join(segsOf(it)) + "</span>" });
+      else segs = segs.concat(segsOf(it));
+    });
+    return segs;
   }
-  var out = '';
-  for (var j = 0; j < segs.length; j++) {
-    if (j > 0 && segs[j-1].type === 'line' && segs[j].type === 'line') out += '\n';
-    out += segs[j].html;
+  function join(segs){
+    var out = '';
+    for (var j = 0; j < segs.length; j++) {
+      if (j > 0 && segs[j-1].type === 'line' && segs[j].type === 'line') out += '\n';
+      out += segs[j].html;
+    }
+    return out;
   }
-  return out;
+  return join(segsOf(root));
 }
 document.querySelectorAll('pre[data-code]').forEach(function(pre){
   pre.innerHTML = colorPseudo(pre.getAttribute('data-code'));
@@ -864,7 +1012,13 @@ const E4 = [
     exp:'No saps quants nombres vindran → Mientras (demanant-ne un abans). Fas servir una guardiola (suma) i un clicker (cont). El Si del final evita dividir per 0.' },
   { ctx:'Demana un nombre i digues si és primer (només divisible per 1 i per ell mateix).',
     code:"// Anàlisi\n// Entrada: n (Entero)\n// Sortida: és primer / no és primer\n\nProceso EsPrimer\n    Definir n, i, divisors Como Entero;\n    Escribir 'Escriu un nombre:';\n    Leer n;\n    divisors <- 0;\n    Para i <- 1 Hasta n Hacer\n        Si n % i = 0 Entonces\n            divisors <- divisors + 1;\n        FinSi\n    FinPara\n    Si divisors = 2 Entonces\n        Escribir 'És primer';\n    SiNo\n        Escribir 'No és primer';\n    FinSi\nFinProceso",
-    exp:'Comptes quants divisors té el nombre. Si en té exactament 2 (l\'1 i ell mateix), és primer. Prova: 7 → sí; 8 → no.' }
+    exp:'Comptes quants divisors té el nombre. Si en té exactament 2 (l\'1 i ell mateix), és primer. Prova: 7 → sí; 8 → no.' },
+  { ctx:'<em>Bucles imbricats independents.</em> Demana un nombre <code>n</code> i dibuixa un quadrat de <code>n</code> files i <code>n</code> columnes fet amb el símbol <code>#</code>. Per exemple, amb n = 3 surten 3 files de <code># # #</code>.',
+    code:"// Anàlisi\n// Entrada: n (Entero)\n// Sortida: un quadrat de n x n símbols #\n\nProceso Quadrat\n    Definir n, fila, col Como Entero;\n    Escribir 'De quina mida vols el quadrat?';\n    Leer n;\n    Para fila <- 1 Hasta n Hacer\n        Para col <- 1 Hasta n Hacer\n            Escribir Sin Saltar '# ';\n        FinPara\n        Escribir '';\n    FinPara\nFinProceso",
+    exp:'El bucle de dins va sempre d\'1 a n: no fa servir la variable fila, per tant són <strong>independents</strong>. Totes les files són iguals i surten n × n símbols (amb n = 3, 9 símbols).' },
+  { ctx:'<em>Bucles imbricats dependents.</em> Escriu aquesta escala de números que va baixant:<br><code>1 2 3 4 5</code><br><code>1 2 3 4</code><br><code>1 2 3</code><br><code>1 2</code><br><code>1</code><br>Pista: la primera fila té 5 números i cada fila en té un menys.',
+    code:"// Anàlisi\n// Entrada: cap\n// Sortida: 5 files de números, cada una amb un número menys\n\nProceso EscalaBaixa\n    Definir fila, col Como Entero;\n    Para fila <- 5 Hasta 1 Con Paso -1 Hacer\n        Para col <- 1 Hasta fila Hacer\n            Escribir Sin Saltar col, ' ';\n        FinPara\n        Escribir '';\n    FinPara\nFinProceso",
+    exp:'El bucle de fora compta cap enrere (5, 4, 3, 2, 1) i el de dins va d\'1 fins a <code>fila</code>: depèn del de fora, per tant són <strong>dependents</strong>. Cada fila fa una volta menys: 5 + 4 + 3 + 2 + 1 = 15 números.' }
 ];
 (function(){
   const c = document.getElementById('ex4-cont');
