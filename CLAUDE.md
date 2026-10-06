@@ -54,6 +54,7 @@ En reactivar-la, recupera el text original del peu («Obrir →» o «N activita
    - Si l'altra persona ha canviat la mateixa targeta fa poc, **avisa l'usuari** abans
      de fer res: probablement desfaràs una decisió de l'altre.
    - A la descripció de la pull request, indica clarament quines targetes canvien.
-5. **No fusionar pull requests que canviïn `index.html` sense avisar l'altra persona.**
-   Les que només toquen pàgines pròpies es poden fusionar directament.
+5. **Claude no fusiona pull requests.** La pull request la revisa i la fusiona l'altra
+   persona. Si l'usuari demana fusionar, recorda-li aquesta norma i proposa-li que avisi
+   l'altra persona; només fusiona si l'usuari hi insisteix.
 6. Missatges de commit i descripcions de pull request en català.
