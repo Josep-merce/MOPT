@@ -122,8 +122,6 @@
     .ri-q-text code { font-family:'JetBrains Mono',monospace; font-size:13px; background:var(--code-bg); color:var(--code-text); padding:2px 7px; border-radius:4px; }
     .ri-btn { display:inline-flex; align-items:center; gap:6px; margin-top:12px; padding:6px 15px; border:1.5px solid var(--accent-bdr); border-radius:var(--r-sm); background:var(--accent-bg); color:var(--accent); cursor:pointer; font-size:12px; font-family:'DM Sans',sans-serif; font-weight:600; transition:background .12s,color .12s,border-color .12s; }
     .ri-btn:hover { background:var(--accent-mid); color:#fff; border-color:var(--accent-mid); }
-    .toggle-content { display:none; }
-    .toggle-content.show { display:block; margin-top:14px; }
     .ri-ans { display:none; padding:16px 18px; background:var(--accent-bg); border-top:1px solid var(--accent-bdr); }
     .ri-ans.show { display:block; }
     .ri-ans-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--accent-mid); margin-bottom:8px; }
@@ -341,39 +339,38 @@ FinProceso"></pre>
       </div>
     </div>
 
-    <div class="ibox red">
-      <div class="ibox-label">⚠️ Error freqüent: usar Para per a la cerca</div>
-      <div class="ibox-text">
-        El <code>Para</code> <strong>no permet sortir anticipadament</strong> del bucle en PSeInt estàndard.
-        Per a la cerca, cal usar <code>Mientras</code> amb condició doble, que sí que permet aturar-se
-        en qualsevol moment.
-      </div>
-    </div>
-
     <div class="demo">
-      <div class="demo-label">Exemple · trobar el primer nombre imparell i aturar-se</div>
+      <div class="demo-label">Exemple · trobar el primer nombre imparell entre 5 i aturar-se</div>
       <pre class="pseudo-out" data-code="Proceso PrimerImparell
-    Definir num Como Entero;
+    Definir i, n, num Como Entero;
     Definir trobat Como Logico;
+    n <- 5;
+    i <- 1;
     trobat <- Falso;
-    Mientras NO trobat Hacer
-        Escribir Sin Saltar 'Escriu un número: ';
+    Mientras i <= n Y NO trobat Hacer
+        Escribir Sin Saltar 'Escriu el número ', i, ': ';
         Leer num;
-        Si num mod 2 = 1 Entonces
+        Si num mod 2 <> 0 Entonces
             trobat <- Verdadero;
+        SiNo
+            i <- i + 1;
         FinSi
     FinMientras
-    Escribir 'Has introduït un número imparell, el número ', num;
+    Si trobat Entonces
+        Escribir 'El primer imparell és el ', num, ' (posició ', i, ').';
+    SiNo
+        Escribir 'Cap dels ', n, ' números és imparell.';
+    FinSi
 FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          L'indicador <code>trobat</code> comença a <code>Falso</code> i el bucle repeteix <strong>mentre no s'hagi
-          trobat</strong> (<code>Mientras NO trobat</code>). A cada volta demanem un número; si és imparell
-          (<code>num mod 2 = 1</code>, és a dir, que en dividir entre 2 doni resta 1), posem <code>trobat</code> a
-          <code>Verdadero</code> i, a la propera comprovació, el bucle <strong>s'atura</strong>. Com que <code>num</code>
-          conserva l'últim valor llegit, el mostrem al final. Aquí no cal comptar elements: el que decideix quan parar
-          és només l'indicador.
+          L'indicador <code>trobat</code> comença a <code>Falso</code> i el bucle repeteix <strong>mentre quedin
+          números i no s'hagi trobat</strong> (<code>Mientras i &lt;= n Y NO trobat</code>). A cada volta demanem un
+          número; si és imparell (<code>num mod 2 &lt;&gt; 0</code>), posem <code>trobat</code> a <code>Verdadero</code>
+          i, a la propera comprovació, el bucle <strong>s'atura</strong>; si no, avancem <code>i</code>. Si s'esgoten
+          els 5 números sense trobar-ne cap, surt per l'altra condició (<code>i &gt; n</code>). En sortir, l'indicador
+          ens diu quin dels dos casos ha passat: per això el <code>Si trobat</code> final.
         </div>
       </div>
     </div>
@@ -558,7 +555,7 @@ const E1 = [
   });
 })();
 
-/* ── Exercici 2 ── */
+/* ── Exercici 3 ── */
 const E2 = [
   { code:"Definir i, cont Como Entero;\ncont <- 0;\nPara i <- 1 Hasta 4 Hacer\n    cont <- cont + 1;\nFinPara\nEscribir cont;",
     opts:['3','4','5'], ans:1, exp:'El bucle fa 4 voltes (de l\'1 al 4) i el comptador puja 1 cada volta: cont = 4.' },
@@ -577,7 +574,7 @@ const E2 = [
   });
 })();
 
-/* Comprovació compartida E1/E2 */
+/* Comprovació compartida E0/E1/E2 */
 const DATA = { E0:E0, E1:E1, E2:E2 };
 function checkQ(grp,btn,i,choice){
   const d = DATA[grp][i], fb = document.getElementById(grp+'f'+i);
@@ -586,7 +583,7 @@ function checkQ(grp,btn,i,choice){
   else{ btn.classList.add('fail'); btns[d.ans].classList.add('ok'); fb.className='qi-fb fail'; fb.textContent='✗ Incorrecte. '+d.exp; }
 }
 
-/* ── Exercici 3 ── */
+/* ── Exercici 4 ── */
 const E3 = [
   { t:'Cerca del primer element major que 10 en una llista de n elements (variable de control: i, indicador: trobat).', ans:'i <= n Y NO trobat', opts:['i <= n Y NO trobat','i < n O trobat','i <= n O NO trobat'], exp:'Cal continuar mentre quedin elements I no s\'hagi trobat. Totes dues condicions han de ser certes alhora: Y.' },
   { t:'Cerca d\'un valor concret (clau) en una seqüència de n elements llegits per teclat.', ans:'i <= n Y num <> clau', opts:['i <= n Y num = clau','i <= n Y num <> clau','i < n O num = clau'], exp:'Continuem mentre quedin elements i el valor llegit no sigui la clau. Quan num = clau, la condició es fa falsa i sortim.' },
@@ -608,7 +605,7 @@ function checkE3(btn,i,choice){
   else{ btn.classList.add('fail'); btns.forEach(b=>{ if(b.textContent.trim().replace(/&lt;/g,'<').replace(/&gt;/g,'>')===d.ans) b.classList.add('ok'); }); fb.className='qi-fb fail'; fb.textContent='✗ Incorrecte. '+d.exp; }
 }
 
-/* ── Exercici 4 ── */
+/* ── Exercici 5 ── */
 const E4 = [
   { ctx:'Llegeix 8 nombres i calcula quants són múltiples de 3 i quina és la seva suma.',
     code:"// Anàlisi\n// Entrades: 8 nombres (Entero)\n// Sortides: comptador de múltiples de 3 i la seva suma\n\nProceso MultiplesDesTres\n    Definir i, num, cont Como Entero;\n    Definir suma Como Real;\n    cont <- 0;\n    suma <- 0;\n    Para i <- 1 Hasta 8 Hacer\n        Escribir Sin Saltar 'Nombre ', i, ': ';\n        Leer num;\n        Si num mod 3 = 0 Entonces\n            cont <- cont + 1;\n            suma <- suma + num;\n        FinSi\n    FinPara\n    Escribir 'Múltiples de 3: ', cont;\n    Escribir 'Suma: ', suma;\nFinProceso",
@@ -630,7 +627,6 @@ const E4 = [
 })();
 
 function reveal(btn,id){ document.getElementById(id).classList.add('show'); btn.style.display='none'; }
-function toggleBox(btn,id){ const el=document.getElementById(id); const show=el.classList.toggle('show'); btn.innerHTML = show ? '▼ Amagar la solució amb sentinella' : '▶ Mostrar la solució amb sentinella'; }
 </script>
 </body>
 </html>
