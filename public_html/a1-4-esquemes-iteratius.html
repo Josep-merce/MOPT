@@ -66,6 +66,18 @@
     .cmp h4 { font-size:13px; font-family:'JetBrains Mono',monospace; color:var(--accent); margin-bottom:8px; }
     .cmp p { font-size:12px; color:var(--ink-2); line-height:1.5; }
     @media (max-width:600px){ .cmp-grid { grid-template-columns:1fr; } }
+    /* IL·LUSTRACIÓ AMB LLISTA DE NÚMEROS */
+    .scheme-demo { display:flex; flex-direction:column; gap:14px; margin-bottom:22px; }
+    .scheme-row { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:16px 18px; }
+    .scheme-cap { font-size:13px; font-weight:600; color:var(--ink); margin-bottom:10px; }
+    .scheme-cap small { font-weight:400; color:var(--ink-3); }
+    .numrow { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:9px; }
+    .numcell { width:46px; height:46px; display:flex; align-items:center; justify-content:center; border-radius:var(--r-sm); font-family:'JetBrains Mono',monospace; font-size:15px; border:1.5px solid var(--border); background:var(--bg); color:var(--ink-3); }
+    .numcell.visit { border-color:var(--green-bdr); background:var(--green-bg); color:var(--green); }
+    .numcell.found { border-color:var(--accent-mid); background:var(--accent-mid); color:#fff; font-weight:700; }
+    .numcell.skip { border-style:dashed; color:var(--ink-3); opacity:.55; }
+    .scheme-note { font-size:12px; color:var(--ink-2); font-style:italic; }
+    .scheme-note b { font-style:normal; }
     /* TAULA */
     .tbl-wrap { background:var(--card); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; margin-bottom:20px; }
     .tbl { width:100%; border-collapse:collapse; font-size:14px; }
@@ -110,6 +122,8 @@
     .ri-q-text code { font-family:'JetBrains Mono',monospace; font-size:13px; background:var(--code-bg); color:var(--code-text); padding:2px 7px; border-radius:4px; }
     .ri-btn { display:inline-flex; align-items:center; gap:6px; margin-top:12px; padding:6px 15px; border:1.5px solid var(--accent-bdr); border-radius:var(--r-sm); background:var(--accent-bg); color:var(--accent); cursor:pointer; font-size:12px; font-family:'DM Sans',sans-serif; font-weight:600; transition:background .12s,color .12s,border-color .12s; }
     .ri-btn:hover { background:var(--accent-mid); color:#fff; border-color:var(--accent-mid); }
+    .toggle-content { display:none; }
+    .toggle-content.show { display:block; margin-top:14px; }
     .ri-ans { display:none; padding:16px 18px; background:var(--accent-bg); border-top:1px solid var(--accent-bdr); }
     .ri-ans.show { display:block; }
     .ri-ans-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--accent-mid); margin-bottom:8px; }
@@ -174,6 +188,35 @@
       </div>
     </div>
 
+    <p class="lead">Es veu millor amb una llista concreta. Agafem aquests 5 números i mirem com els tracta cada esquema:</p>
+
+    <div class="scheme-demo">
+      <div class="scheme-row">
+        <div class="scheme-cap">🔁 Recorregut &nbsp;<small>objectiu: sumar tots els números</small></div>
+        <div class="numrow">
+          <div class="numcell visit">8</div>
+          <div class="numcell visit">3</div>
+          <div class="numcell visit">5</div>
+          <div class="numcell visit">-2</div>
+          <div class="numcell visit">9</div>
+        </div>
+        <div class="scheme-note">Visita <b>els 5 elements</b>, sense saltar-se'n cap, i arriba fins al final → suma = <b>23</b>.</div>
+      </div>
+      <div class="scheme-row">
+        <div class="scheme-cap">🔎 Cerca &nbsp;<small>objectiu: trobar el primer número negatiu</small></div>
+        <div class="numrow">
+          <div class="numcell visit">8</div>
+          <div class="numcell visit">3</div>
+          <div class="numcell visit">5</div>
+          <div class="numcell found">-2</div>
+          <div class="numcell skip">9</div>
+        </div>
+        <div class="scheme-note">Mira 8, 3, 5… i en arribar al <b>-2</b> (posició 4) ja l'ha trobat: <b>s'atura</b> i no arriba a mirar el 9.</div>
+      </div>
+    </div>
+
+    <p class="lead">La mateixa llista, dos recorreguts diferents: el de dalt sempre fa 5 passos; el de baix en fa només els que calen. Aquesta és tota la diferència entre els dos esquemes.</p>
+
     <div class="tbl-wrap">
       <table class="tbl">
         <thead><tr><th>Característica</th><th>Recorregut</th><th>Cerca</th></tr></thead>
@@ -184,6 +227,16 @@
           <tr><td>Bucle habitual</td><td><code>Para</code> o <code>Mientras</code></td><td><code>Mientras</code> amb condició doble</td></tr>
         </tbody>
       </table>
+    </div>
+
+    <div class="ibox red">
+      <div class="ibox-label">⚠️ Error freqüent: usar <code>Para</code> per a la cerca</div>
+      <div class="ibox-text">
+        El <code>Para</code> <strong>no permet sortir anticipadament</strong> del bucle en PSeInt estàndard: sempre
+        completa totes les voltes. Per a la cerca, per tant, cal usar <code>Mientras</code> amb <strong>condició doble</strong>,
+        que sí que permet aturar-se en qualsevol moment (en trobar l'element). Per això el recorregut pot anar amb
+        <code>Para</code>, però la cerca gairebé sempre va amb <code>Mientras</code>.
+      </div>
     </div>
   </section>
 
@@ -217,7 +270,7 @@
     n <- 5;
     suma <- 0;          // acumulador: suma de totes les notes
     Para i <- 1 Hasta n Hacer
-        Escribir Sin Saltar 'Introdueix la nota de l_alumne ', i, ': ';
+        Escribir Sin Saltar 'Introdueix la nota de l''alumne ', i, ': ';
         Leer nota;
         suma <- suma + nota;
     FinPara
@@ -236,72 +289,32 @@ FinProceso"></pre>
     </div>
 
     <div class="demo">
-      <div class="demo-label">Exemple · comptar quants nombres d'una seqüència són positius</div>
-      <pre class="pseudo-out" data-code="Proceso ComptarPositius
+      <div class="demo-label">Exemple · comptar quants nombres d'una seqüència són imparells</div>
+      <pre class="pseudo-out" data-code="Proceso ComptarImparells
     Definir i, n, num, cont Como Entero;
     n <- 6;
-    cont <- 0;          // comptador: quants positius
+    cont <- 0;          // comptador: quants imparells
     Para i <- 1 Hasta n Hacer
         Escribir Sin Saltar 'Digues un nombre: ';
         Leer num;
-        Si num > 0 Entonces
+        Si num mod 2 <> 0 Entonces
             cont <- cont + 1;
         FinSi
     FinPara
-    Escribir 'Nombres positius introduïts: ', cont;
+    Escribir 'Nombres imparells introduïts: ', cont;
 FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
           El bucle recorre <strong>els 6 nombres sense excepció</strong>. Dins, el <code>Si</code> filtra quins ens
-          interessen, però el recorregut en si no s'altera: passem per tots. El comptador <code>cont</code> s'inicialitza
-          a 0 fora del bucle i s'actualitza a dins quan cal. Fixa't que no hi ha cap manera de sortir del bucle
-          abans que <code>i</code> arribi a 6: això és el que el distingeix de la cerca.
+          interessen: un nombre és <strong>imparell</strong> si la resta de dividir-lo entre 2 no és 0
+          (<code>num mod 2 &lt;&gt; 0</code>). El comptador <code>cont</code> s'inicialitza a 0 fora del bucle i puja a dins
+          cada cop que en troba un. Fixa't que no hi ha cap manera de sortir del bucle abans que <code>i</code> arribi a 6:
+          això és el que el distingeix de la cerca.
         </div>
       </div>
     </div>
 
-    <div class="ibox yellow">
-      <div class="ibox-label">Recorregut amb nombre desconegut d'elements</div>
-      <div class="ibox-text">
-        Quan no sabem quants elements hi haurà, fem servir <code>Mientras</code> en comptes de <code>Para</code>, amb
-        un <strong>valor de sentinel</strong> (un valor especial que indica el final, com el 0 o el -1). El patró
-        és exactament el mateix: processar tots els elements que arribin fins al sentinel.
-      </div>
-    </div>
-
-    <div class="demo">
-      <div class="demo-label">Exemple · sumar notes fins que s'introdueixi -1 (sentinel)</div>
-      <pre class="pseudo-out" data-code="Proceso SumarNotes
-    Definir nota, suma Como Real;
-    Definir cont Como Entero;
-    suma <- 0;
-    cont <- 0;
-    Escribir Sin Saltar 'Introdueix una nota (-1 per acabar): ';
-    Leer nota;
-    Mientras nota <> -1 Hacer
-        suma <- suma + nota;
-        cont <- cont + 1;
-        Escribir Sin Saltar 'Introdueix una nota (-1 per acabar): ';
-        Leer nota;
-    FinMientras
-    Si cont > 0 Entonces
-        Escribir 'Suma: ', suma, ' — Mitjana: ', suma / cont;
-    SiNo
-        Escribir 'No has introduït cap nota.';
-    FinSi
-FinProceso"></pre>
-      <div class="exp-box">
-        <div class="exp-label">Com funciona</div>
-        <div class="exp-text">
-          El valor sentinel <code>-1</code> senyala el final de la seqüència. Cal llegir la primera nota
-          <strong>abans</strong> del bucle perquè la condició del <code>Mientras</code> tingui alguna cosa a
-          comparar. Dins del bucle processem la nota vàlida i llegim la següent. Quan l'usuari entra <code>-1</code>,
-          la condició es fa falsa i sortim sense sumar-lo. El <code>Si cont > 0</code> final evita dividir per zero
-          si no s'ha introduït cap nota.
-        </div>
-      </div>
-    </div>
   </section>
 
   <!-- SECCIÓ 3 -->
@@ -338,72 +351,29 @@ FinProceso"></pre>
     </div>
 
     <div class="demo">
-      <div class="demo-label">Exemple · buscar si un nombre és a la llista</div>
-      <pre class="pseudo-out" data-code="Proceso CercaEnLlista
-    // Seqüència de 6 nombres introduïts per l'usuari
-    Definir i, n, num, buscat Como Entero;
+      <div class="demo-label">Exemple · trobar el primer nombre imparell i aturar-se</div>
+      <pre class="pseudo-out" data-code="Proceso PrimerImparell
+    Definir num Como Entero;
     Definir trobat Como Logico;
-    n <- 6;
     trobat <- Falso;
-    Escribir Sin Saltar 'Quin nombre vols cercar? ';
-    Leer buscat;
-    i <- 1;
-    Mientras i <= n Y NO trobat Hacer
-        Escribir Sin Saltar 'Element ', i, ': ';
+    Mientras NO trobat Hacer
+        Escribir Sin Saltar 'Escriu un número: ';
         Leer num;
-        Si num = buscat Entonces
+        Si num mod 2 = 1 Entonces
             trobat <- Verdadero;
         FinSi
-        i <- i + 1;
     FinMientras
-    Si trobat Entonces
-        Escribir 'El nombre ', buscat, ' és a la llista.';
-    SiNo
-        Escribir 'El nombre ', buscat, ' NO és a la llista.';
-    FinSi
+    Escribir 'Has introduït un número imparell, el número ', num;
 FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          L'indicador <code>trobat</code> comença a <code>Falso</code>. La condició <code>i &lt;= n Y NO trobat</code>
-          garanteix que el bucle s'atura si s'esgoten els elements <strong>o</strong> si es troba el nombre. En
-          trobar-lo, <code>trobat</code> passa a <code>Verdadero</code> i a la propera comprovació de la condició
-          el bucle s'atura. Fora del bucle, el valor de <code>trobat</code> ens diu el resultat final.
-          Cal incrementar <code>i</code> manualment perquè usem <code>Mientras</code> i no <code>Para</code>.
-        </div>
-      </div>
-    </div>
-
-    <div class="demo">
-      <div class="demo-label">Exemple · trobar el primer nombre negatiu d'una seqüència</div>
-      <pre class="pseudo-out" data-code="Proceso PrimerNegatiu
-    Definir i, n, num Como Entero;
-    Definir trobat Como Logico;
-    n <- 8;
-    trobat <- Falso;
-    i <- 1;
-    Mientras i <= n Y NO trobat Hacer
-        Escribir Sin Saltar 'Element ', i, ': ';
-        Leer num;
-        Si num < 0 Entonces
-            trobat <- Verdadero;
-        FinSi
-        i <- i + 1;
-    FinMientras
-    Si trobat Entonces
-        Escribir 'El primer negatiu és ', num, ' (posició ', i - 1, ').';
-    SiNo
-        Escribir 'No hi ha cap nombre negatiu.';
-    FinSi
-FinProceso"></pre>
-      <div class="exp-box">
-        <div class="exp-label">Com funciona</div>
-        <div class="exp-text">
-          En trobar el primer negatiu, <code>trobat</code> es posa a <code>Verdadero</code> i el bucle s'atura a
-          la propera iteració. La variable <code>num</code> conserva l'últim valor llegit, que és precisament el
-          negatiu trobat. La posició és <code>i - 1</code> perquè <code>i</code> ja s'ha incrementat abans de sortir.
-          Si no hi ha cap negatiu, el bucle arriba a <code>i &gt; n</code> i <code>trobat</code> segueix sent
-          <code>Falso</code>.
+          L'indicador <code>trobat</code> comença a <code>Falso</code> i el bucle repeteix <strong>mentre no s'hagi
+          trobat</strong> (<code>Mientras NO trobat</code>). A cada volta demanem un número; si és imparell
+          (<code>num mod 2 = 1</code>, és a dir, que en dividir entre 2 doni resta 1), posem <code>trobat</code> a
+          <code>Verdadero</code> i, a la propera comprovació, el bucle <strong>s'atura</strong>. Com que <code>num</code>
+          conserva l'últim valor llegit, el mostrem al final. Aquí no cal comptar elements: el que decideix quan parar
+          és només l'indicador.
         </div>
       </div>
     </div>
@@ -424,45 +394,56 @@ FinProceso"></pre>
     <div class="sec-head">
       <span class="sec-num">4</span>
       <div>
-        <h2 class="sec-title">Traça comparativa</h2>
-        <p class="sec-sub">Veure pas a pas la diferència entre recorregut i cerca</p>
+        <h2 class="sec-title">El sentinel</h2>
+        <p class="sec-sub">Un valor especial per marcar el final de les dades</p>
       </div>
     </div>
     <p class="lead">
-      Per consolidar la diferència, aquí tens la traça dels dos esquemes aplicats al mateix problema:
-      donat el vector <code>[3, -1, 7, 2]</code>, comptar els positius (recorregut) i trobar el primer
-      negatiu (cerca).
+      En programació, un <strong>sentinel</strong> (o valor sentinella) és un valor especial que serveix per indicar el
+      <strong>final d'una seqüència de dades</strong> o d'un bucle, especialment quan <strong>no sabem per endavant</strong>
+      quants elements hi haurà. El seu objectiu principal és actuar com un senyal de «stop» perquè el programa sàpiga que
+      ha de deixar de processar dades.
     </p>
 
-    <div class="demo">
-      <div class="demo-label">Traça · recorregut — comptar positius en [3, -1, 7, 2]</div>
-      <table class="trace">
-        <thead><tr><th>Volta (i)</th><th>num</th><th>num &gt; 0?</th><th>cont</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>3</td><td>Sí</td><td>1</td></tr>
-          <tr><td>2</td><td>-1</td><td>No</td><td>1</td></tr>
-          <tr><td>3</td><td>7</td><td>Sí</td><td>2</td></tr>
-          <tr><td>4</td><td>2</td><td>Sí</td><td>3</td></tr>
-        </tbody>
-      </table>
-      <div class="exp-box" style="margin-top:10px">
-        <div class="exp-label">Observació</div>
-        <div class="exp-text">El bucle completa les 4 voltes sense excepció. Resultat: 3 positius.</div>
+    <div class="ibox yellow">
+      <div class="ibox-label" style="font-size:17px; text-transform:none; letter-spacing:0; margin-bottom:8px;">❓ I si no sabem quantes dades hi haurà?</div>
+      <div class="ibox-text">
+        No podem escriure <code>Hasta 5</code> si no sabem quantes dades entrarà l'usuari (pot posar-ne 3, o 30…). La
+        solució és triar un <strong>sentinella</strong> —un valor que <strong>mai</strong> sigui una dada vàlida— i anar
+        llegint amb <code>Mientras</code> mentre no arribi.
       </div>
     </div>
 
     <div class="demo">
-      <div class="demo-label">Traça · cerca — primer negatiu en [3, -1, 7, 2]</div>
-      <table class="trace">
-        <thead><tr><th>Volta (i)</th><th>num</th><th>num &lt; 0?</th><th>trobat</th><th>Continua?</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>3</td><td>No</td><td>Falso</td><td>Sí</td></tr>
-          <tr><td>2</td><td>-1</td><td>Sí</td><td>Verdadero</td><td>No → s'atura</td></tr>
-        </tbody>
-      </table>
-      <div class="exp-box" style="margin-top:10px">
-        <div class="exp-label">Observació</div>
-        <div class="exp-text">El bucle s'atura a la volta 2 en trobar <code>-1</code>. Les voltes 3 i 4 no s'executen mai: és l'avantatge de la cerca.</div>
+      <div class="demo-label">Exemple · sumar notes fins a un sentinella (-1)</div>
+      <pre class="pseudo-out" data-code="Proceso SumarNotesSentinella
+    Definir nota, suma Como Real;
+    Definir cont Como Entero;
+    suma <- 0;
+    cont <- 0;
+    Escribir Sin Saltar 'Introdueix una nota (-1 per acabar): ';
+    Leer nota;
+    Mientras nota <> -1 Hacer
+        suma <- suma + nota;
+        cont <- cont + 1;
+        Escribir Sin Saltar 'Introdueix una nota (-1 per acabar): ';
+        Leer nota;
+    FinMientras
+    Si cont > 0 Entonces
+        Escribir 'Suma: ', suma, ' — Mitjana: ', suma / cont;
+    SiNo
+        Escribir 'No has introduït cap nota.';
+    FinSi
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          El valor sentinella <code>-1</code> senyala el final. Cal llegir la primera nota <strong>abans</strong> del
+          bucle perquè la condició del <code>Mientras</code> tingui alguna cosa a comparar. Dins, processem la nota i
+          llegim la següent. Quan l'usuari entra <code>-1</code>, la condició es fa falsa i sortim sense sumar-lo. El
+          <code>Si cont &gt; 0</code> final evita dividir per zero si no s'ha introduït cap nota. Tria un sentinella que
+          <strong>mai</strong> pugui ser una dada vàlida: com que les notes van de 0 a 10, el <code>-1</code> és perfecte.
+        </div>
       </div>
     </div>
   </section>
@@ -470,21 +451,30 @@ FinProceso"></pre>
   <!-- EXERCICIS -->
   <div class="ex-block-head">
     <h2 class="ex-block-title">Exercicis de demostració</h2>
-    <p class="ex-block-sub">Quatre nivells · del reconeixement a la codificació · criteris 2.1 i 2.5</p>
+    <p class="ex-block-sub">Cinc nivells · comencem fàcil i anem pujant · criteris 2.1 i 2.5</p>
   </div>
   <div class="ex-block-body">
 
     <div class="exercise">
       <div class="ex-head"><div class="ex-num">1</div><div>
+        <div class="ex-name">Repàs ràpid</div>
+        <div class="ex-level">Molt fàcil · per començar</div>
+      </div></div>
+      <p class="ex-intro">Abans de res, recordem les peces que fem servir als bucles. Fes clic a la resposta.</p>
+      <div id="ex0-cont"></div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-head"><div class="ex-num">2</div><div>
         <div class="ex-name">Recorregut o cerca?</div>
-        <div class="ex-level">Nivell bàsic · reconeixement</div>
+        <div class="ex-level">Fàcil · reconeixement</div>
       </div></div>
       <p class="ex-intro">Per a cada situació, tria quin esquema cal aplicar.</p>
       <div id="ex1-cont"></div>
     </div>
 
     <div class="exercise">
-      <div class="ex-head"><div class="ex-num">2</div><div>
+      <div class="ex-head"><div class="ex-num">3</div><div>
         <div class="ex-name">Què fa el bucle?</div>
         <div class="ex-level">Nivell mitjà · seguiment (traça)</div>
       </div></div>
@@ -493,7 +483,7 @@ FinProceso"></pre>
     </div>
 
     <div class="exercise">
-      <div class="ex-head"><div class="ex-num">3</div><div>
+      <div class="ex-head"><div class="ex-num">4</div><div>
         <div class="ex-name">Condició correcta</div>
         <div class="ex-level">Nivell mitjà · condicions de bucle</div>
       </div></div>
@@ -502,7 +492,7 @@ FinProceso"></pre>
     </div>
 
     <div class="exercise">
-      <div class="ex-head"><div class="ex-num">4</div><div>
+      <div class="ex-head"><div class="ex-num">5</div><div>
         <div class="ex-name">Programa complet</div>
         <div class="ex-level">Nivell avançat · de l'anàlisi al codi</div>
       </div></div>
@@ -537,12 +527,26 @@ document.querySelectorAll('pre[data-code]').forEach(function(pre){
 });
 
 /* ── Exercici 1 ── */
+const E0 = [
+  { t:'Un COMPTADOR, amb quin valor comença abans del bucle?', opts:['0','1'], ans:0, exp:'Comença a 0 i va pujant d\'un en un.' },
+  { t:'Un ACUMULADOR de suma, amb quin valor comença abans del bucle?', opts:['0','1'], ans:0, exp:'Comença a 0 perquè encara no hi hem sumat res.' },
+  { t:'Un INDICADOR (una bandera com trobat), de quin tipus és?', opts:['Entero','Logico','Real'], ans:1, exp:'Només val Verdadero o Falso: és de tipus Logico.' }
+];
+(function(){
+  const c = document.getElementById('ex0-cont');
+  E0.forEach((d,i)=>{
+    const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E0',this,${i},${j})">${o.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</button>`).join('');
+    const div = document.createElement('div'); div.className='qi';
+    div.innerHTML = `<div class="qi-text">${i+1}. ${d.t}</div><div class="qi-opts">${opts}</div><div class="qi-fb" id="E0f${i}"></div>`;
+    c.appendChild(div);
+  });
+})();
+
+/* ── Exercici 2 ── */
 const E1 = [
-  { t:'Mostrar tots els elements d\'una llista de 10 productes.', opts:['Recorregut','Cerca'], ans:0, exp:'Cal visitar tots els elements sense excepció: recorregut.' },
-  { t:'Comprovar si un usuari concret existeix en una llista de 50 noms.', opts:['Recorregut','Cerca'], ans:1, exp:'Volem trobar un element concret i podem aturar-nos en trobar-lo: cerca.' },
-  { t:'Calcular la suma de tots els imports d\'una factura.', opts:['Recorregut','Cerca'], ans:0, exp:'Hem de sumar tots els elements sense excepció: recorregut amb acumulador.' },
-  { t:'Trobar el primer error en una llista de resultats de tests.', opts:['Recorregut','Cerca'], ans:1, exp:'Busquem el primer element que compleix una condició i no cal continuar: cerca.' },
-  { t:'Comptar quants alumnes han tret més de 7 en un llistat de notes.', opts:['Recorregut','Cerca'], ans:0, exp:'Cal revisar totes les notes per no deixar-ne cap sense comptar: recorregut amb comptador.' }
+  { t:'Sumar TOTS els números d\'una llista.', opts:['Recorregut','Cerca'], ans:0, exp:'La paraula "tots" ho diu: cal visitar-los tots sense excepció. Recorregut.' },
+  { t:'Trobar el PRIMER número negatiu d\'una llista.', opts:['Recorregut','Cerca'], ans:1, exp:'En trobar el primer negatiu ja ens podem aturar: cerca.' },
+  { t:'Comptar quants números d\'una llista són parells.', opts:['Recorregut','Cerca'], ans:0, exp:'Encara que sembli una cerca, per comptar-los TOTS hem de mirar tota la llista: recorregut amb comptador.' }
 ];
 (function(){
   const c = document.getElementById('ex1-cont');
@@ -556,14 +560,12 @@ const E1 = [
 
 /* ── Exercici 2 ── */
 const E2 = [
-  { code:"Definir i, cont Como Entero;\ncont <- 0;\ni <- 1;\nMientras i <= 5 Hacer\n    Si i mod 2 <> 0 Entonces\n        cont <- cont + 1;\n    FinSi\n    i <- i + 1;\nFinMientras\nEscribir cont;",
-    opts:['2','3','5'], ans:1, exp:'Els imparells entre 1 i 5 són 1, 3 i 5: tres nombres. cont = 3.' },
-  { code:"Definir i, n Como Entero;\nDefinir trobat Como Logico;\nDefinir nums Como Entero;\nn <- 5;\ntrobat <- Falso;\ni <- 1;\n// Seqüència: 4 7 2 9 1\nMientras i <= n Y NO trobat Hacer\n    // Imagina que lleg el valor de la seqüència\n    Si i = 3 Entonces nums <- 2; SiNo Si i = 1 Entonces nums <- 4; SiNo Si i = 2 Entonces nums <- 7; SiNo Si i = 4 Entonces nums <- 9; SiNo nums <- 1; FinSi FinSi FinSi FinSi\n    Si nums < 5 Entonces\n        trobat <- Verdadero;\n    FinSi\n    i <- i + 1;\nFinMientras\nEscribir i - 1;",
-    opts:['1','3','5'], ans:0, exp:'El primer element menor que 5 és el 4, a la posició 1. El bucle s\'atura aquí i i-1 = 1.' },
-  { code:"Definir i Como Entero;\nDefinir suma Como Real;\nsuma <- 0;\nPara i <- 1 Hasta 4 Hacer\n    suma <- suma + i * i;\nFinPara\nEscribir suma;",
-    opts:['10','16','30'], ans:2, exp:'1²+2²+3²+4² = 1+4+9+16 = 30.' },
-  { code:"Definir i, n Como Entero;\nDefinir trobat Como Logico;\nn <- 4;\ntrobat <- Falso;\ni <- 1;\n// Seqüència: 3 6 9 12\nMientras i <= n Y NO trobat Hacer\n    Si (i * 3) mod 4 = 0 Entonces\n        trobat <- Verdadero;\n    FinSi\n    i <- i + 1;\nFinMientras\nSi trobat Entonces Escribir 'Sí'; SiNo Escribir 'No'; FinSi",
-    opts:['Sí','No','Error'], ans:0, exp:'3×4=12, que és divisible per 4: a la volta 4 trobat = Verdadero. Escriu Sí.' }
+  { code:"Definir i, cont Como Entero;\ncont <- 0;\nPara i <- 1 Hasta 4 Hacer\n    cont <- cont + 1;\nFinPara\nEscribir cont;",
+    opts:['3','4','5'], ans:1, exp:'El bucle fa 4 voltes (de l\'1 al 4) i el comptador puja 1 cada volta: cont = 4.' },
+  { code:"Definir i, suma Como Entero;\nsuma <- 0;\nPara i <- 1 Hasta 4 Hacer\n    suma <- suma + i;\nFinPara\nEscribir suma;",
+    opts:['4','10','24'], ans:1, exp:'L\'acumulador suma 1 + 2 + 3 + 4 = 10.' },
+  { code:"Definir i, cont Como Entero;\ncont <- 0;\nPara i <- 1 Hasta 6 Hacer\n    Si i mod 2 = 0 Entonces\n        cont <- cont + 1;\n    FinSi\nFinPara\nEscribir cont;",
+    opts:['2','3','6'], ans:1, exp:'Els parells de l\'1 al 6 són 2, 4 i 6: el comptador arriba a 3.' }
 ];
 (function(){
   const c = document.getElementById('ex2-cont');
@@ -576,7 +578,7 @@ const E2 = [
 })();
 
 /* Comprovació compartida E1/E2 */
-const DATA = { E1:E1, E2:E2 };
+const DATA = { E0:E0, E1:E1, E2:E2 };
 function checkQ(grp,btn,i,choice){
   const d = DATA[grp][i], fb = document.getElementById(grp+'f'+i);
   const btns = btn.closest('.qi-opts').querySelectorAll('.qi-btn'); btns.forEach(b=>b.disabled=true);
@@ -588,8 +590,7 @@ function checkQ(grp,btn,i,choice){
 const E3 = [
   { t:'Cerca del primer element major que 10 en una llista de n elements (variable de control: i, indicador: trobat).', ans:'i <= n Y NO trobat', opts:['i <= n Y NO trobat','i < n O trobat','i <= n O NO trobat'], exp:'Cal continuar mentre quedin elements I no s\'hagi trobat. Totes dues condicions han de ser certes alhora: Y.' },
   { t:'Cerca d\'un valor concret (clau) en una seqüència de n elements llegits per teclat.', ans:'i <= n Y num <> clau', opts:['i <= n Y num = clau','i <= n Y num <> clau','i < n O num = clau'], exp:'Continuem mentre quedin elements i el valor llegit no sigui la clau. Quan num = clau, la condició es fa falsa i sortim.' },
-  { t:'Cerca del primer nombre parell en una seqüència de n elements.', ans:'i <= n Y NO trobat', opts:['i <= n Y trobat','i > n O trobat','i <= n Y NO trobat'], exp:'L\'esquema habitual: continuar mentre i <= n i no s\'hagi trobat cap parell.' },
-  { t:'Volem saber si tots els elements d\'una llista de n nombres son positius (parada en trobar el primer no positiu).', ans:'i <= n Y NO trobatNegatiu', opts:['i <= n Y trobatNegatiu','i <= n Y NO trobatNegatiu','i < n O NO trobatNegatiu'], exp:'Cerquem el primer no positiu per poder aturar-nos. Continuem mentre no el trobem: NO trobatNegatiu.' }
+  { t:'Cerca del primer nombre parell en una seqüència de n elements.', ans:'i <= n Y NO trobat', opts:['i <= n Y trobat','i > n O trobat','i <= n Y NO trobat'], exp:'L\'esquema habitual: continuar mentre i <= n i no s\'hagi trobat cap parell.' }
 ];
 (function(){
   const c = document.getElementById('ex3-cont');
@@ -609,15 +610,15 @@ function checkE3(btn,i,choice){
 
 /* ── Exercici 4 ── */
 const E4 = [
-  { ctx:'Llegeix 8 nombres i calcula quants son múltiples de 3 i quina és la seva suma.',
+  { ctx:'Llegeix 8 nombres i calcula quants són múltiples de 3 i quina és la seva suma.',
     code:"// Anàlisi\n// Entrades: 8 nombres (Entero)\n// Sortides: comptador de múltiples de 3 i la seva suma\n\nProceso MultiplesDesTres\n    Definir i, num, cont Como Entero;\n    Definir suma Como Real;\n    cont <- 0;\n    suma <- 0;\n    Para i <- 1 Hasta 8 Hacer\n        Escribir Sin Saltar 'Nombre ', i, ': ';\n        Leer num;\n        Si num mod 3 = 0 Entonces\n            cont <- cont + 1;\n            suma <- suma + num;\n        FinSi\n    FinPara\n    Escribir 'Múltiples de 3: ', cont;\n    Escribir 'Suma: ', suma;\nFinProceso",
     exp:'Recorregut pur: el Para visita els 8 elements sense excepció. Dins, un Si filtra els múltiples de 3 i actualitza comptador i acumulador.' },
   { ctx:'Donada una seqüència de nombres introduïts fins a un 0 (sentinel), troba el primer negatiu i mostra en quina posició es troba.',
     code:"// Anàlisi\n// Entrades: seqüència de nombres, 0 com a sentinel\n// Sortida: posició del primer negatiu o missatge si no n'hi ha\n\nProceso PrimerNegatiu\n    Definir num, pos Como Entero;\n    Definir trobat Como Logico;\n    trobat <- Falso;\n    pos <- 0;\n    Escribir Sin Saltar 'Introdueix un nombre (0 per acabar): ';\n    Leer num;\n    Mientras num <> 0 Y NO trobat Hacer\n        pos <- pos + 1;\n        Si num < 0 Entonces\n            trobat <- Verdadero;\n        FinSi\n        Si NO trobat Entonces\n            Escribir Sin Saltar 'Introdueix un nombre (0 per acabar): ';\n            Leer num;\n        FinSi\n    FinMientras\n    Si trobat Entonces\n        Escribir 'Primer negatiu (', num, ') a la posició ', pos;\n    SiNo\n        Escribir 'No hi ha cap nombre negatiu.';\n    FinSi\nFinProceso",
     exp:'Cerca amb sentinel: la condició doble atura el bucle si s\'acaba la seqüència (num = 0) o si es troba el negatiu (trobat). La variable pos compta elements vàlids.' },
-  { ctx:'Llegeix una seqüència de 10 paraules i determina si alguna comença per vocal. Mostra la primera paraula trobada o un missatge si no n\'hi ha cap.',
-    code:"// Anàlisi\n// Entrada: 10 paraules (Cadena)\n// Sortida: primera paraula que comença per vocal o 'cap'\n\nProceso CercaVocal\n    Definir i, n Como Entero;\n    Definir paraula, primera Como Cadena;\n    Definir trobat Como Logico;\n    Definir inicial Como Caracter;\n    n <- 10;\n    trobat <- Falso;\n    i <- 1;\n    Mientras i <= n Y NO trobat Hacer\n        Escribir Sin Saltar 'Paraula ', i, ': ';\n        Leer paraula;\n        inicial <- Minusculas(SubCadena(paraula, 0, 0));\n        Si inicial = 'a' O inicial = 'e' O inicial = 'i' O inicial = 'o' O inicial = 'u' Entonces\n            trobat <- Verdadero;\n            primera <- paraula;\n        FinSi\n        i <- i + 1;\n    FinMientras\n    Si trobat Entonces\n        Escribir 'Primera paraula amb vocal inicial: ', primera;\n    SiNo\n        Escribir 'Cap paraula comença per vocal.';\n    FinSi\nFinProceso",
-    exp:'Cerca clàssica: condició doble (i <= n Y NO trobat). Usem SubCadena i Minusculas per extreure i normalitzar la primera lletra. En trobar-la, guardem la paraula a primera i aturem el bucle.' }
+  { ctx:'Llegeix 8 nombres i mostra el primer que és més gran que 100, indicant en quina posició està. Si cap no supera 100, mostra un avís.',
+    code:"// Anàlisi\n// Entrada: 8 nombres (Entero)\n// Sortida: primer nombre > 100 i la seva posició, o un avís\n\nProceso PrimerGran\n    Definir i, num, pos Como Entero;\n    Definir trobat Como Logico;\n    trobat <- Falso;\n    pos <- 0;\n    i <- 1;\n    Mientras i <= 8 Y NO trobat Hacer\n        Escribir Sin Saltar 'Nombre ', i, ': ';\n        Leer num;\n        Si num > 100 Entonces\n            trobat <- Verdadero;\n            pos <- i;\n        FinSi\n        i <- i + 1;\n    FinMientras\n    Si trobat Entonces\n        Escribir 'El primer més gran que 100 és ', num, ' (posició ', pos, ').';\n    SiNo\n        Escribir 'Cap nombre supera 100.';\n    FinSi\nFinProceso",
+    exp:'Cerca amb sortida anticipada i només números: recorrem fins a trobar el primer que supera 100 (trobat = Verdadero) o fins a esgotar els 8 nombres. La variable pos guarda la posició on l\'hem trobat.' }
 ];
 (function(){
   const c = document.getElementById('ex4-cont');
@@ -629,6 +630,7 @@ const E4 = [
 })();
 
 function reveal(btn,id){ document.getElementById(id).classList.add('show'); btn.style.display='none'; }
+function toggleBox(btn,id){ const el=document.getElementById(id); const show=el.classList.toggle('show'); btn.innerHTML = show ? '▼ Amagar la solució amb sentinella' : '▶ Mostrar la solució amb sentinella'; }
 </script>
 </body>
 </html>
