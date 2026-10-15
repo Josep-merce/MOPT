@@ -1215,10 +1215,10 @@ const E3 = [
 /* ══ E4 · simplifica codi ══ */
 const E4 = [
   {
-    messy: 'Si es_soci O (es_soci Y te_invitacio) Entonces\n    Escribir "Entra";\nFinSi',
-    clean: 'Si es_soci Entonces\n    Escribir "Entra";\nFinSi',
-    law: 'Absorció',
-    explain: 'Si ja ets soci, entres tinguis invitació o no. La part de la invitació sobra.'
+    messy: 'Si te_entrada Y (te_entrada O es_convidat) Entonces\n    Escribir "Pots passar";\nFinSi',
+    clean: 'Si te_entrada Entonces\n    Escribir "Pots passar";\nFinSi',
+    law: 'Absorció de la conjunció',
+    explain: 'Si tens entrada, el parèntesi (tens entrada o ets convidat) ja es compleix segur. El resultat només depèn de te_entrada: la part de ser convidat sobra.'
   },
   {
     messy: 'Si NO (NO logged_in) Entonces\n    Escribir "Benvingut";\nFinSi',
@@ -1229,7 +1229,7 @@ const E4 = [
   {
     messy: 'Si NO (edat_ok Y te_compte) Entonces\n    Escribir "Accés denegat";\nFinSi',
     clean: 'Si NO edat_ok O NO te_compte Entonces\n    Escribir "Accés denegat";\nFinSi',
-    law: 'De Morgan',
+    law: 'Llei de De Morgan per a la conjunció',
     explain: 'En negar una condició amb "i", la "i" es torna "o" i es nega cada part. Així queda més clar quan es denega l\'accés.'
   }
 ];
@@ -1245,7 +1245,7 @@ function reveal(btn, id) {
 function colorPseudo(text) {
   return text
     .replace(/\b(Si|SiNo|FinSi|Entonces|Escribir|Leer)\b/g, m => `<span class='kw'>${m}</span>`)
-    .replace(/\b(es_soci|te_invitacio|logged_in|edat_ok|te_compte)\b/g, m => `<span class='var'>${m}</span>`)
+    .replace(/\b(es_soci|te_invitacio|te_entrada|es_convidat|logged_in|edat_ok|te_compte)\b/g, m => `<span class='var'>${m}</span>`)
     .replace(/"([^"]+)"/g, (_, s) => `<span class='str'>"${s}"</span>`);
 }
 
