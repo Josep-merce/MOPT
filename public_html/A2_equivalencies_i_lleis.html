@@ -169,6 +169,18 @@
     .ri-ans-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--purple-2); margin-bottom: 8px; }
     .ri-note { font-size: 13px; color: var(--ink-2); margin-top: 10px; line-height: 1.55; }
     .pseudo-out { font-family: 'JetBrains Mono', monospace; font-size: 13px; background: var(--code-bg); color: var(--code-text); padding: 14px 18px; border-radius: var(--r-sm); line-height: 1.9; white-space: pre-wrap; }
+    .tgl { display: none; margin-top: 14px; }
+    .tgl.show { display: block; }
+    .eq-group { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 18px 20px; margin-bottom: 16px; }
+    .eq-group .ri-btn { margin-top: 0; }
+    .eq-title { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 12px; }
+    .eq-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .eq-table th { text-align: left; padding: 8px 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--purple); background: var(--purple-bg); border: 0.5px solid var(--purple-bdr); }
+    .eq-table td { padding: 8px 12px; border: 0.5px solid var(--border); vertical-align: middle; color: var(--ink-2); }
+    .eq-table td.eq { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--purple-2); white-space: nowrap; }
+    .eq-table td.eq .arr { font-family: 'DM Sans', system-ui, sans-serif; font-size: 16px; }
+    .eq-table tr:nth-child(even) td { background: #fafaf9; }
+    @media (max-width: 600px) { .eq-table td.eq { white-space: normal; } }
     .formula { font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--purple-2); font-weight: 500; }
 
     @media (max-width: 600px) { .analogy-grid { flex-direction: column; } }
@@ -176,6 +188,7 @@
       body { background: white; font-size: 14px; }
       .ri-ans { display: block !important; }
       .ri-btn { display: none; }
+      .tgl { display: block !important; }
     }
   </style>
 </head>
@@ -233,6 +246,29 @@
         si ja ets soci, entres, tinguis invitació o no. La part de la invitació <strong>sobra</strong>.
         Les lleis de la lògica serveixen per detectar aquestes coses i deixar la condició neta.
       </p>
+
+      <div style="margin-bottom:18px;">
+        <button class="ri-btn" style="margin-top:0;" onclick="reveal(this,'tt-motiv')">▶ Mostrar la taula de veritat</button>
+        <div class="tgl" id="tt-motiv">
+          <div class="tt-wrap">
+            <table class="tt">
+              <thead><tr>
+                <th class="h-var">es_soci</th><th class="h-var">te_invitacio</th>
+                <th class="h-mid">es_soci Y te_invitacio</th>
+                <th class="h-key">es_soci O (es_soci Y te_invitacio)</th>
+                <th class="h-key">es_soci</th>
+              </tr></thead>
+              <tbody>
+                <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+                <tr><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="v key">V</td><td class="v key">V</td></tr>
+                <tr><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+                <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V V F F</strong>: la condició llarga i <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">es_soci</code> sola diuen el mateix. Tant se val el valor de <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">te_invitacio</code>: el resultat només depèn de si ets soci.</p>
+        </div>
+      </div>
 
       <div class="reason-grid">
         <div class="reason-item">
@@ -626,6 +662,77 @@
         Totes dues et deixen <strong>reordenar lliurement</strong> abans d'aplicar les altres lleis.
       </div>
     </div>
+
+    <!-- TAULES D'EQUIVALÈNCIES -->
+    <p style="font-size:14px; color:var(--ink-2); margin:28px 0 20px; line-height:1.6;">
+      Aquí tens totes les equivalències recollides en tres taules, amb el <strong>nom oficial</strong> de cada una.
+      Són les que hauràs de citar a cada pas quan facis una demostració amb una cadena de lleis.
+      El símbol <span style="font-family:'JetBrains Mono',monospace;">≡</span> vol dir «és equivalent a».
+    </p>
+
+    <div class="eq-group">
+      <div class="eq-title">Equivalències d'ús més freqüent (1)</div>
+      <button class="ri-btn" onclick="reveal(this,'eq-t1')">▶ Mostrar la taula</button>
+      <div class="tgl" id="eq-t1">
+        <div class="tt-wrap">
+          <table class="eq-table">
+            <thead><tr><th>Equivalència</th><th>Nom</th></tr></thead>
+            <tbody>
+                <tr><td class="eq">p ∧ V ≡ p</td><td>Neutre de la conjunció</td></tr>
+                <tr><td class="eq">p ∨ F ≡ p</td><td>Neutre de la disjunció</td></tr>
+                <tr><td class="eq">p ∧ F ≡ F</td><td>Dominació de la conjunció</td></tr>
+                <tr><td class="eq">p ∨ V ≡ V</td><td>Dominació de la disjunció</td></tr>
+                <tr><td class="eq">p ∧ ¬p ≡ F</td><td>Inversa de la conjunció</td></tr>
+                <tr><td class="eq">p ∨ ¬p ≡ V</td><td>Inversa de la disjunció</td></tr>
+                <tr><td class="eq">p ∧ p ≡ p</td><td>Idempotència de la conjunció</td></tr>
+                <tr><td class="eq">p ∨ p ≡ p</td><td>Idempotència de la disjunció</td></tr>
+                <tr><td class="eq">p ∧ (p ∨ q) ≡ p</td><td>Absorció de la conjunció</td></tr>
+                <tr><td class="eq">p ∨ (p ∧ q) ≡ p</td><td>Absorció de la disjunció</td></tr>
+                <tr><td class="eq">¬¬p ≡ p</td><td>Doble negació</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="eq-group">
+      <div class="eq-title">Equivalències d'ús més freqüent (2)</div>
+      <button class="ri-btn" onclick="reveal(this,'eq-t2')">▶ Mostrar la taula</button>
+      <div class="tgl" id="eq-t2">
+        <div class="tt-wrap">
+          <table class="eq-table">
+            <thead><tr><th>Equivalència</th><th>Nom</th></tr></thead>
+            <tbody>
+                <tr><td class="eq">¬(p ∧ q) ≡ ¬p ∨ ¬q</td><td>Llei de De Morgan per a la conjunció</td></tr>
+                <tr><td class="eq">¬(p ∨ q) ≡ ¬p ∧ ¬q</td><td>Llei de De Morgan per a la disjunció</td></tr>
+                <tr><td class="eq">p ∧ q ≡ q ∧ p</td><td>Commutativitat de la conjunció</td></tr>
+                <tr><td class="eq">p ∨ q ≡ q ∨ p</td><td>Commutativitat de la disjunció</td></tr>
+                <tr><td class="eq">p ∧ (q ∧ r) ≡ (p ∧ q) ∧ r</td><td>Associativitat de la conjunció</td></tr>
+                <tr><td class="eq">p ∨ (q ∨ r) ≡ (p ∨ q) ∨ r</td><td>Associativitat de la disjunció</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="eq-group">
+      <div class="eq-title">Equivalències d'ús més freqüent (3)</div>
+      <button class="ri-btn" onclick="reveal(this,'eq-t3')">▶ Mostrar la taula</button>
+      <div class="tgl" id="eq-t3">
+        <div class="tt-wrap">
+          <table class="eq-table">
+            <thead><tr><th>Equivalència</th><th>Nom</th></tr></thead>
+            <tbody>
+                <tr><td class="eq">p ∧ (q ∨ r) ≡ (p ∧ q) ∨ (p ∧ r)</td><td>Distributivitat de la conjunció</td></tr>
+                <tr><td class="eq">p ∨ (q ∧ r) ≡ (p ∨ q) ∧ (p ∨ r)</td><td>Distributivitat de la disjunció</td></tr>
+                <tr><td class="eq">p <span class="arr">⇒</span> q ≡ ¬q <span class="arr">⇒</span> ¬p</td><td>Contraposició lògica</td></tr>
+                <tr><td class="eq">p <span class="arr">⇒</span> q ≡ ¬p ∨ q</td><td>Implicació material</td></tr>
+                <tr><td class="eq">p <span class="arr">⇔</span> q ≡ (p <span class="arr">⇒</span> q) ∧ (q <span class="arr">⇒</span> p)</td><td>Definició d'equivalència material</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ══════════ SECCIÓ 3: DEMOSTRAR EQUIVALÈNCIES ══════════ -->
@@ -895,7 +1002,12 @@ const E4 = [
 ];
 
 /* ══ HELPERS ══ */
-function reveal(btn, id) { document.getElementById(id).classList.add('show'); btn.style.display = 'none'; }
+function reveal(btn, id) {
+  const el = document.getElementById(id);
+  const show = el.classList.toggle('show');
+  if (!btn.dataset.lbl) btn.dataset.lbl = btn.textContent.replace(/^[▶▼]\s*(Mostrar|Amagar)\s*/, '');
+  btn.textContent = (show ? '▼ Amagar ' : '▶ Mostrar ') + btn.dataset.lbl;
+}
 
 function colorPseudo(text) {
   return text
@@ -935,7 +1047,7 @@ function checkE1(btn, i, choice) {
     div.innerHTML = `
       <div class="ri-q">
         <p class="ri-q-text">${i+1}. Aplica De Morgan a: <span class="formula">${d.expr}</span></p>
-        <button class="ri-btn" onclick="reveal(this,'e2a${i}')">▶ Veure solució</button>
+        <button class="ri-btn" onclick="reveal(this,'e2a${i}')">▶ Mostrar solució</button>
       </div>
       <div class="ri-ans" id="e2a${i}">
         <div class="ri-ans-label">Resultat</div>
@@ -958,7 +1070,7 @@ function checkE1(btn, i, choice) {
     div.innerHTML = `
       <div class="ri-q">
         <p class="ri-q-text">${i+1}. Simplifica: <span class="formula">${d.expr}</span></p>
-        <button class="ri-btn" onclick="reveal(this,'e3a${i}')">▶ Veure passos</button>
+        <button class="ri-btn" onclick="reveal(this,'e3a${i}')">▶ Mostrar passos</button>
       </div>
       <div class="ri-ans" id="e3a${i}">
         <div class="ri-ans-label">Cadena de lleis</div>
@@ -979,7 +1091,7 @@ function checkE1(btn, i, choice) {
       <div class="ri-q">
         <p class="ri-q-text" style="margin-bottom:8px;">${i+1}. Simplifica aquesta condició:</p>
         <pre class="pseudo-out">${colorPseudo(d.messy)}</pre>
-        <button class="ri-btn" onclick="reveal(this,'e4a${i}')">▶ Veure versió neta</button>
+        <button class="ri-btn" onclick="reveal(this,'e4a${i}')">▶ Mostrar versió neta</button>
       </div>
       <div class="ri-ans" id="e4a${i}">
         <div class="ri-ans-label">Versió simplificada · ${d.law}</div>
@@ -1029,7 +1141,7 @@ const E5 = [
     div.innerHTML = `
       <div class="ri-q">
         <p class="ri-q-text">${i+1}. Demostra: <span class="formula">${d.claim}</span></p>
-        <button class="ri-btn" onclick="reveal(this,'e5a${i}')">▶ Veure demostració</button>
+        <button class="ri-btn" onclick="reveal(this,'e5a${i}')">▶ Mostrar demostració</button>
       </div>
       <div class="ri-ans" id="e5a${i}">
         <div class="ri-ans-label">Demostració amb cadena de lleis</div>
