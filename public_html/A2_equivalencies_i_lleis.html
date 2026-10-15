@@ -114,6 +114,8 @@
     .law-eqs { display: flex; flex-direction: column; gap: 8px; }
     .law-eq { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
     .law-eq .law-sym { min-width: 270px; }
+    .law-line { padding-top: 4px; }
+    .law-line .law-eq { margin-bottom: 8px; }
     .law-eq-name { font-size: 13px; font-weight: 600; color: var(--ink-2); }
     .law-why { background: var(--blue-bg); border-radius: var(--r-sm); padding: 12px 16px; }
     .law-why-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--blue); margin-bottom: 5px; }
@@ -331,27 +333,95 @@
       «és equivalent a». Aquestes són les més útils:
     </p>
 
-    <!-- DOBLE NEGACIÓ -->
+    <!-- NEUTRE -->
     <div class="law-card">
-      <div class="law-head"><span class="law-name">Doble negació</span></div>
+      <div class="law-head"><span class="law-name">Neutre</span></div>
       <div class="law-part">
         <div class="law-part-label">Què diu (en cristià)</div>
-        <p class="law-part-text">Dos "no" seguits s'anul·len entre si, igual que els signes menys a mates (−(−5) = 5).</p>
+        <p class="law-part-text">Combinar una condició amb una cosa que <strong>no hi fa res</strong> la deixa igual. Amb una "i", el que no hi fa res és <strong>V</strong> (una cosa sempre certa); amb una "o", és <strong>F</strong> (una cosa sempre falsa).</p>
       </div>
-      <div class="law-part">
-        <div class="law-part-label">Exemple de cada dia</div>
-        <div class="law-example"><p>"<strong>No</strong> és veritat que <strong>no</strong> plou" &nbsp;=&nbsp; "Plou"</p></div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p ∧ V ≡ p</span><span class="law-eq-name">Neutre de la conjunció</span></div>
+        <div class="law-example">
+          <p>"Ets soci <strong>i</strong> avui és un dia de la setmana"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
+          <p>"Ets soci" <span style="font-size:13px; color:var(--ink-3);">(que avui sigui un dia de la setmana sempre és cert: no hi afegeix res)</span></p>
+        </div>
       </div>
-      <div class="law-part">
-        <div class="law-part-label">En símbols</div>
-        <div class="law-eqs">
-          <div class="law-eq"><span class="law-sym">¬¬p ≡ p</span><span class="law-eq-name">Doble negació</span></div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p ∨ F ≡ p</span><span class="law-eq-name">Neutre de la disjunció</span></div>
+        <div class="law-example">
+          <p>"Ets soci <strong>o</strong> tens 200 anys"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
+          <p>"Ets soci" <span style="font-size:13px; color:var(--ink-3);">(tenir 200 anys sempre és fals: no obre la porta a ningú)</span></p>
         </div>
       </div>
       <div class="law-part">
         <div class="law-why">
           <div class="law-why-label">⭐ Per a què et serveix</div>
-          <p class="law-why-text">Les dobles negacions confonen molt en el codi. Treure-les fa que la condició s'entengui a la primera.</p>
+          <p class="law-why-text">Quan en simplificar et queda <span style="font-family:'JetBrains Mono',monospace;">p ∧ V</span> o <span style="font-family:'JetBrains Mono',monospace;">p ∨ F</span>, pots treure la V o la F i quedar-te només amb p.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOMINACIÓ -->
+    <div class="law-card">
+      <div class="law-head"><span class="law-name">Dominació</span></div>
+      <div class="law-part">
+        <div class="law-part-label">Què diu (en cristià)</div>
+        <p class="law-part-text">Hi ha valors que <strong>s'imposen</strong> i decideixen el resultat sols: una "i" amb una cosa sempre falsa ja és falsa, i una "o" amb una cosa sempre certa ja és certa, miris el que miris.</p>
+      </div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p ∧ F ≡ F</span><span class="law-eq-name">Dominació de la conjunció</span></div>
+        <div class="law-example">
+          <p>"Ets soci <strong>i</strong> tens 200 anys"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és →</p>
+          <p>Sempre fals <span style="font-size:13px; color:var(--ink-3);">(ningú té 200 anys: no entra ningú)</span></p>
+        </div>
+      </div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p ∨ V ≡ V</span><span class="law-eq-name">Dominació de la disjunció</span></div>
+        <div class="law-example">
+          <p>"Ets soci <strong>o</strong> avui és un dia de la setmana"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és →</p>
+          <p>Sempre cert <span style="font-size:13px; color:var(--ink-3);">(la segona part sempre es compleix: entra tothom)</span></p>
+        </div>
+      </div>
+      <div class="law-part">
+        <div class="law-why">
+          <div class="law-why-label">⭐ Per a què et serveix</div>
+          <p class="law-why-text">Si veus una condició que inclou una part sempre falsa amb "i" o sempre certa amb "o", ja saps el resultat sense mirar la resta. Sovint és senyal d'un error al codi.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- INVERSA -->
+    <div class="law-card">
+      <div class="law-head"><span class="law-name">Inversa (complement)</span></div>
+      <div class="law-part">
+        <div class="law-part-label">Què diu (en cristià)</div>
+        <p class="law-part-text">Una cosa <strong>i el seu contrari</strong> alhora és impossible (sempre fals). Una cosa <strong>o el seu contrari</strong> sempre es compleix (sempre cert).</p>
+      </div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p ∧ ¬p ≡ F</span><span class="law-eq-name">Inversa de la conjunció</span></div>
+        <div class="law-example">
+          <p>"Ets major d'edat <strong>i no</strong> ets major d'edat"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és →</p>
+          <p>Sempre fals <span style="font-size:13px; color:var(--ink-3);">(impossible: no es pot ser i no ser alhora)</span></p>
+        </div>
+      </div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p ∨ ¬p ≡ V</span><span class="law-eq-name">Inversa de la disjunció</span></div>
+        <div class="law-example">
+          <p>"Ets major d'edat <strong>o no</strong> ets major d'edat"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és →</p>
+          <p>Sempre cert <span style="font-size:13px; color:var(--ink-3);">(o ho ets o no ho ets: sempre es compleix)</span></p>
+        </div>
+      </div>
+      <div class="law-part">
+        <div class="law-why">
+          <div class="law-why-label">⭐ Per a què et serveix</div>
+          <p class="law-why-text">Apareixen al final de moltes simplificacions: quan et queda <span style="font-family:'JetBrains Mono',monospace;">p ∨ ¬p</span> o <span style="font-family:'JetBrains Mono',monospace;">p ∧ ¬p</span>, la pots substituir per V o per F i continuar simplificant amb el neutre o la dominació.</p>
         </div>
       </div>
     </div>
@@ -361,23 +431,100 @@
       <div class="law-head"><span class="law-name">Idempotència</span></div>
       <div class="law-part">
         <div class="law-part-label">Què diu (en cristià)</div>
-        <p class="law-part-text">Si repeteixes la mateixa condició, en sobra una: repetir-la no aporta res de nou.</p>
+        <p class="law-part-text">Si repeteixes la mateixa condició, en sobra una: repetir-la no aporta res de nou, tant si està unida amb "i" com amb "o".</p>
       </div>
-      <div class="law-part">
-        <div class="law-part-label">Exemple de cada dia</div>
-        <div class="law-example"><p>"Has de ser soci <strong>i</strong> soci" &nbsp;=&nbsp; "Has de ser soci"</p></div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p ∧ p ≡ p</span><span class="law-eq-name">Idempotència de la conjunció</span></div>
+        <div class="law-example">
+          <p>"Has de ser soci <strong>i</strong> soci"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
+          <p>"Has de ser soci"</p>
+        </div>
       </div>
-      <div class="law-part">
-        <div class="law-part-label">En símbols</div>
-        <div class="law-eqs">
-          <div class="law-eq"><span class="law-sym">p ∧ p ≡ p</span><span class="law-eq-name">Idempotència de la conjunció</span></div>
-          <div class="law-eq"><span class="law-sym">p ∨ p ≡ p</span><span class="law-eq-name">Idempotència de la disjunció</span></div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p ∨ p ≡ p</span><span class="law-eq-name">Idempotència de la disjunció</span></div>
+        <div class="law-example">
+          <p>"Entres si ets soci <strong>o</strong> si ets soci"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
+          <p>"Entres si ets soci"</p>
         </div>
       </div>
       <div class="law-part">
         <div class="law-why">
           <div class="law-why-label">⭐ Per a què et serveix</div>
           <p class="law-why-text">De vegades, sense voler, escrivim la mateixa comprovació dues vegades. Aquesta llei la neteja.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABSORCIÓ -->
+    <div class="law-card">
+      <div class="law-head"><span class="law-name">Absorció</span></div>
+      <div class="law-part">
+        <div class="law-part-label">Què diu (en cristià)</div>
+        <p class="law-part-text">Tens una condició <strong>fàcil</strong> (p) i, al costat, una altra que ja la conté. La segona part sobra: queda "absorbida" per la primera i el resultat només depèn de p.</p>
+      </div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p ∧ (p ∨ q) ≡ p</span><span class="law-eq-name">Absorció de la conjunció</span></div>
+        <div class="law-example">
+          <p>"Ets soci <strong>i</strong> (ets soci <strong>o</strong> tens invitació)"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
+          <p>"Ets soci" <span style="font-size:13px; color:var(--ink-3);">(si ja ets soci, el parèntesi es compleix segur)</span></p>
+        </div>
+      </div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p ∨ (p ∧ q) ≡ p</span><span class="law-eq-name">Absorció de la disjunció</span></div>
+        <div class="law-example">
+          <p>"Entres si ets soci, <strong>o</strong> si ets soci <strong>i</strong> tens invitació"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
+          <p>"Entres si ets soci" <span style="font-size:13px; color:var(--ink-3);">(si ja ets soci, tant és la invitació)</span></p>
+        </div>
+      </div>
+      <div class="law-part">
+        <div class="law-part-label">La prova amb una taula de veritat</div>
+        <div class="tt-wrap">
+          <table class="tt">
+            <thead><tr>
+              <th class="h-var">p</th><th class="h-var">q</th>
+              <th class="h-mid">p∧q</th><th class="h-key">p∨(p∧q)</th><th class="h-key">p</th>
+            </tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V V F F</strong>: coincideixen. A més, el valor de <strong>q és igual</strong> — el resultat només depèn de p.</p>
+      </div>
+      <div class="law-part">
+        <div class="law-why">
+          <div class="law-why-label">⭐ Per a què et serveix</div>
+          <p class="law-why-text">Per eliminar parts d'una condició que mai canvien el resultat. És exactament el cas de la motivació del principi. La pista per reconèixer-la: quan veus <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">alguna_cosa ∨ (la_mateixa_cosa ∧ ...)</code>, la part del parèntesi sobra.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOBLE NEGACIÓ -->
+    <div class="law-card">
+      <div class="law-head"><span class="law-name">Doble negació</span></div>
+      <div class="law-part">
+        <div class="law-part-label">Què diu (en cristià)</div>
+        <p class="law-part-text">Dos "no" seguits s'anul·len entre si, igual que els signes menys a mates (−(−5) = 5).</p>
+      </div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">¬¬p ≡ p</span><span class="law-eq-name">Doble negació</span></div>
+        <div class="law-example">
+          <p>"<strong>No</strong> és veritat que <strong>no</strong> plou"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
+          <p>"Plou"</p>
+        </div>
+      </div>
+      <div class="law-part">
+        <div class="law-why">
+          <div class="law-why-label">⭐ Per a què et serveix</div>
+          <p class="law-why-text">Les dobles negacions confonen molt en el codi. Treure-les fa que la condició s'entengui a la primera.</p>
         </div>
       </div>
     </div>
@@ -389,19 +536,20 @@
         <div class="law-part-label">Què diu (en cristià)</div>
         <p class="law-part-text">Quan poses un "no" davant d'una condició amb <strong>i</strong> o <strong>o</strong>, passa una cosa curiosa: la "i" es torna "o" (i al revés), i el "no" entra a dins repartint-se a cada part.</p>
       </div>
-      <div class="law-part">
-        <div class="law-part-label">Exemple de cada dia</div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">¬(p ∧ q) ≡ ¬p ∨ ¬q</span><span class="law-eq-name">Llei de De Morgan per a la conjunció</span></div>
         <div class="law-example">
           <p>"<strong>No</strong> és veritat que tingui gana <strong>i</strong> son"</p>
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"<strong>No</strong> tinc gana <strong>o no</strong> tinc son"</p>
         </div>
       </div>
-      <div class="law-part">
-        <div class="law-part-label">En símbols</div>
-        <div class="law-eqs">
-          <div class="law-eq"><span class="law-sym">¬(p ∧ q) ≡ ¬p ∨ ¬q</span><span class="law-eq-name">Llei de De Morgan per a la conjunció</span></div>
-          <div class="law-eq"><span class="law-sym">¬(p ∨ q) ≡ ¬p ∧ ¬q</span><span class="law-eq-name">Llei de De Morgan per a la disjunció</span></div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">¬(p ∨ q) ≡ ¬p ∧ ¬q</span><span class="law-eq-name">Llei de De Morgan per a la disjunció</span></div>
+        <div class="law-example">
+          <p>"<strong>No</strong> és veritat que plogui <strong>o</strong> faci vent"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
+          <p>"<strong>No</strong> plou <strong>i no</strong> fa vent"</p>
         </div>
       </div>
       <div class="law-part">
@@ -431,77 +579,90 @@
       </div>
     </div>
 
-    <!-- ABSORCIÓ -->
+    <!-- COMMUTATIVITAT -->
     <div class="law-card">
-      <div class="law-head"><span class="law-name">Absorció</span></div>
+      <div class="law-head"><span class="law-name">Commutativitat</span></div>
       <div class="law-part">
         <div class="law-part-label">Què diu (en cristià)</div>
-        <p class="law-part-text">Tens una condició <strong>fàcil</strong> (p) i, al costat, una de <strong>més exigent</strong> que inclou la fàcil (p ∧ q). La part exigent sobra: si algú ja compleix la fàcil, no cal demanar-li res més. Queda "absorbida".</p>
+        <p class="law-part-text">L'ordre no importa: pots girar les dues parts d'una "i" o d'una "o" i diuen el mateix.</p>
       </div>
-      <div class="law-part">
-        <div class="law-part-label">Exemple de cada dia</div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p ∧ q ≡ q ∧ p</span><span class="law-eq-name">Commutativitat de la conjunció</span></div>
         <div class="law-example">
-          <p>"Entres si ets soci, <strong>o</strong> si ets soci <strong>i</strong> tens invitació"</p>
+          <p>"Cafè <strong>i</strong> sucre"</p>
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
-          <p>"Entres si ets soci" <span style="font-size:13px; color:var(--ink-3);">(si ja ets soci, tant és la invitació)</span></p>
+          <p>"Sucre <strong>i</strong> cafè"</p>
         </div>
       </div>
-      <div class="law-part">
-        <div class="law-part-label">La clau per entendre-ho</div>
-        <p class="law-part-text">La segona part, "ets soci <strong>i</strong> tens invitació", <strong>només pot ser certa si ja ets soci</strong>. Però si ja ets soci, la primera part ("ets soci") ja t'obre la porta tota sola. Per tant, la segona part <strong>mai deixa entrar ningú nou</strong>: tothom qui la compleix ja entrava per la primera. Per això es pot eliminar.</p>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">En símbols</div>
-        <div class="law-eqs">
-          <div class="law-eq"><span class="law-sym">p ∧ (p ∨ q) ≡ p</span><span class="law-eq-name">Absorció de la conjunció</span></div>
-          <div class="law-eq"><span class="law-sym">p ∨ (p ∧ q) ≡ p</span><span class="law-eq-name">Absorció de la disjunció</span></div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p ∨ q ≡ q ∨ p</span><span class="law-eq-name">Commutativitat de la disjunció</span></div>
+        <div class="law-example">
+          <p>"Pagues amb targeta <strong>o</strong> en efectiu"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
+          <p>"Pagues en efectiu <strong>o</strong> amb targeta"</p>
         </div>
-        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">L'exemple del soci és l'absorció de la disjunció. La de la conjunció funciona igual: "ets soci <strong>i</strong> (ets soci <strong>o</strong> tens invitació)" ≡ "ets soci", perquè si ja ets soci el parèntesi es compleix segur.</p>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">La prova amb una taula de veritat</div>
-        <div class="tt-wrap">
-          <table class="tt">
-            <thead><tr>
-              <th class="h-var">p</th><th class="h-var">q</th>
-              <th class="h-mid">p∧q</th><th class="h-key">p∨(p∧q)</th><th class="h-key">p</th>
-            </tr></thead>
-            <tbody>
-              <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
-              <tr><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="v key">V</td><td class="v key">V</td></tr>
-              <tr><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
-              <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V V F F</strong>: coincideixen. A més, el valor de <strong>q és igual</strong> — el resultat només depèn de p.</p>
       </div>
       <div class="law-part">
         <div class="law-why">
           <div class="law-why-label">⭐ Per a què et serveix</div>
-          <p class="law-why-text">Per eliminar parts d'una condició que mai canvien el resultat. És exactament el cas de la motivació del principi. La pista per reconèixer-la: quan veus <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">alguna_cosa ∨ (la_mateixa_cosa ∧ ...)</code>, la part del parèntesi sobra.</p>
+          <p class="law-why-text">Et deixa reordenar les parts d'una condició per posar juntes les que s'assemblen i poder aplicar-hi una altra llei.</p>
         </div>
       </div>
     </div>
 
-    <!-- DISTRIBUTIVA -->
+    <!-- ASSOCIATIVITAT -->
+    <div class="law-card">
+      <div class="law-head"><span class="law-name">Associativitat</span></div>
+      <div class="law-part">
+        <div class="law-part-label">Què diu (en cristià)</div>
+        <p class="law-part-text">En una cadena de la mateixa operació (totes "i" o totes "o"), els parèntesis no canvien res: pots agrupar com vulguis.</p>
+      </div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p ∧ (q ∧ r) ≡ (p ∧ q) ∧ r</span><span class="law-eq-name">Associativitat de la conjunció</span></div>
+        <div class="law-example">
+          <p>"Pa <strong>i</strong> (llet <strong>i</strong> ous)"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
+          <p>"(Pa <strong>i</strong> llet) <strong>i</strong> ous"</p>
+        </div>
+      </div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p ∨ (q ∨ r) ≡ (p ∨ q) ∨ r</span><span class="law-eq-name">Associativitat de la disjunció</span></div>
+        <div class="law-example">
+          <p>"Te <strong>o</strong> (cafè <strong>o</strong> suc)"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
+          <p>"(Te <strong>o</strong> cafè) <strong>o</strong> suc"</p>
+        </div>
+      </div>
+      <div class="law-part">
+        <div class="law-why">
+          <div class="law-why-label">⭐ Per a què et serveix</div>
+          <p class="law-why-text">Juntament amb la commutativitat, et deixa moure i agrupar lliurement les parts abans d'aplicar les altres lleis. Compte: només val si totes les operacions són iguals.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DISTRIBUTIVITAT -->
     <div class="law-card">
       <div class="law-head"><span class="law-name">Distributivitat</span></div>
       <div class="law-part">
         <div class="law-part-label">Què diu (en cristià)</div>
-        <p class="law-part-text">Funciona com treure o posar factor comú a mates. Pots "repartir" una condició dins d'un parèntesi, o treure-la a fora.</p>
+        <p class="law-part-text">Funciona com treure o posar factor comú a mates, on 2 × (3 + 4) = (2 × 3) + (2 × 4). Pots "repartir" una condició dins d'un parèntesi, o treure-la a fora. En lògica funciona en els dos sentits: la "i" es reparteix sobre la "o", i la "o" sobre la "i".</p>
       </div>
-      <div class="law-part">
-        <div class="law-part-label">Exemple (ho coneixes de mates)</div>
-        <div class="law-example"><p>2 × (3 + 4) &nbsp;=&nbsp; (2 × 3) + (2 × 4) &nbsp;&nbsp;<span style="font-size:13px; color:var(--ink-3);">→ el "2" es reparteix</span></p></div>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">En símbols</div>
-        <div class="law-eqs">
-          <div class="law-eq"><span class="law-sym">p ∧ (q ∨ r) ≡ (p ∧ q) ∨ (p ∧ r)</span><span class="law-eq-name">Distributivitat de la conjunció</span></div>
-          <div class="law-eq"><span class="law-sym">p ∨ (q ∧ r) ≡ (p ∨ q) ∧ (p ∨ r)</span><span class="law-eq-name">Distributivitat de la disjunció</span></div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p ∧ (q ∨ r) ≡ (p ∧ q) ∨ (p ∧ r)</span><span class="law-eq-name">Distributivitat de la conjunció</span></div>
+        <div class="law-example">
+          <p>"Ets soci <strong>i</strong> (tens invitació <strong>o</strong> pagues entrada)"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
+          <p>"(Ets soci <strong>i</strong> tens invitació) <strong>o</strong> (ets soci <strong>i</strong> pagues entrada)"</p>
         </div>
-        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">La "i" es reparteix sobre la "o", i també al revés. Això segon a mates no passa (2 + 3 × 4 no és (2 + 3) × (2 + 4)), però en lògica sí.</p>
+      </div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p ∨ (q ∧ r) ≡ (p ∨ q) ∧ (p ∨ r)</span><span class="law-eq-name">Distributivitat de la disjunció</span></div>
+        <div class="law-example">
+          <p>"Ets soci <strong>o</strong> (tens invitació <strong>i</strong> pagues entrada)"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
+          <p>"(Ets soci <strong>o</strong> tens invitació) <strong>i</strong> (ets soci <strong>o</strong> pagues entrada)"</p>
+        </div>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -511,74 +672,19 @@
       </div>
     </div>
 
-    <p style="font-size:14px; color:var(--ink-2); margin:28px 0 20px; line-height:1.6;">
-      I encara unes quantes més, que necessitaràs sobretot per a les <strong>demostracions</strong>
-      (sobre el condicional, el bicondicional i les constants V i F):
-    </p>
-
-    <!-- IMPLICACIÓ MATERIAL -->
-    <div class="law-card">
-      <div class="law-head"><span class="law-name">Implicació material</span></div>
-      <div class="law-part">
-        <div class="law-part-label">Què diu (en cristià)</div>
-        <p class="law-part-text">Un "si... llavors" (→) es pot reescriure com una "o". "Si passa p, llavors passa q" vol dir el mateix que "o no passa p, o passa q".</p>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">Exemple de cada dia</div>
-        <div class="law-example">
-          <p>"<strong>Si</strong> plou, <strong>llavors</strong> agafo el paraigua"</p>
-          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
-          <p>"<strong>O</strong> no plou, <strong>o</strong> agafo el paraigua"</p>
-        </div>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">En símbols</div>
-        <div class="law-eqs">
-          <div class="law-eq"><span class="law-sym">p → q ≡ ¬p ∨ q</span><span class="law-eq-name">Implicació material</span></div>
-        </div>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">La prova amb una taula de veritat</div>
-        <div class="tt-wrap">
-          <table class="tt">
-            <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-key">p→q</th><th class="h-mid">¬p</th><th class="h-key">¬p∨q</th></tr></thead>
-            <tbody>
-              <tr><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="f">F</td><td class="v key">V</td></tr>
-              <tr><td class="v">V</td><td class="f">F</td><td class="f key">F</td><td class="f">F</td><td class="f key">F</td></tr>
-              <tr><td class="f">F</td><td class="v">V</td><td class="v key">V</td><td class="v">V</td><td class="v key">V</td></tr>
-              <tr><td class="f">F</td><td class="f">F</td><td class="v key">V</td><td class="v">V</td><td class="v key">V</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V F V V</strong>: coincideixen.</p>
-      </div>
-      <div class="law-part">
-        <div class="law-why">
-          <div class="law-why-label">⭐ Per a què et serveix</div>
-          <p class="law-why-text">El condicional (→) és incòmode de transformar. Convertir-lo en una "o" et deixa aplicar-hi De Morgan i la resta de lleis. És el primer pas de moltíssimes demostracions.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- CONTRAPOSITIVA -->
+    <!-- CONTRAPOSICIÓ LÒGICA -->
     <div class="law-card">
       <div class="law-head"><span class="law-name">Contraposició lògica</span></div>
       <div class="law-part">
         <div class="law-part-label">Què diu (en cristià)</div>
         <p class="law-part-text">"Si p, llavors q" és el mateix que "si no q, llavors no p". Gires les dues parts de lloc i les negues totes dues.</p>
       </div>
-      <div class="law-part">
-        <div class="law-part-label">Exemple de cada dia</div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p → q ≡ ¬q → ¬p</span><span class="law-eq-name">Contraposició lògica</span></div>
         <div class="law-example">
           <p>"<strong>Si</strong> plou, <strong>llavors</strong> el terra es mulla"</p>
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"<strong>Si</strong> el terra <strong>no</strong> està mullat, <strong>llavors no</strong> plou"</p>
-        </div>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">En símbols</div>
-        <div class="law-eqs">
-          <div class="law-eq"><span class="law-sym">p → q ≡ ¬q → ¬p</span><span class="law-eq-name">Contraposició lògica</span></div>
         </div>
       </div>
       <div class="law-part">
@@ -604,128 +710,63 @@
       </div>
     </div>
 
-    <!-- DEFINICIÓ DEL BICONDICIONAL -->
+    <!-- IMPLICACIÓ MATERIAL -->
+    <div class="law-card">
+      <div class="law-head"><span class="law-name">Implicació material</span></div>
+      <div class="law-part">
+        <div class="law-part-label">Què diu (en cristià)</div>
+        <p class="law-part-text">Un "si... llavors" (→) es pot reescriure com una "o". "Si passa p, llavors passa q" vol dir el mateix que "o no passa p, o passa q".</p>
+      </div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p → q ≡ ¬p ∨ q</span><span class="law-eq-name">Implicació material</span></div>
+        <div class="law-example">
+          <p>"<strong>Si</strong> plou, <strong>llavors</strong> agafo el paraigua"</p>
+          <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
+          <p>"<strong>O</strong> no plou, <strong>o</strong> agafo el paraigua"</p>
+        </div>
+      </div>
+      <div class="law-part">
+        <div class="law-part-label">La prova amb una taula de veritat</div>
+        <div class="tt-wrap">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-key">p→q</th><th class="h-mid">¬p</th><th class="h-key">¬p∨q</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="f">F</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="f">F</td><td class="f key">F</td><td class="f">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="v key">V</td><td class="v">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="v key">V</td><td class="v">V</td><td class="v key">V</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V F V V</strong>: coincideixen.</p>
+      </div>
+      <div class="law-part">
+        <div class="law-why">
+          <div class="law-why-label">⭐ Per a què et serveix</div>
+          <p class="law-why-text">El condicional (→) és incòmode de transformar. Convertir-lo en una "o" et deixa aplicar-hi De Morgan i la resta de lleis. És el primer pas de moltíssimes demostracions.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- DEFINICIÓ D'EQUIVALÈNCIA MATERIAL -->
     <div class="law-card">
       <div class="law-head"><span class="law-name">Definició d'equivalència material</span></div>
       <div class="law-part">
         <div class="law-part-label">Què diu (en cristià)</div>
         <p class="law-part-text">El "si i només si" (↔), també anomenat <strong>bicondicional</strong>, és el condicional funcionant en les <strong>dues direccions</strong> alhora: p porta a q, i q porta a p.</p>
       </div>
-      <div class="law-part">
-        <div class="law-part-label">Exemple de cada dia</div>
+      <div class="law-part law-line">
+        <div class="law-eq"><span class="law-sym">p ↔ q ≡ (p → q) ∧ (q → p)</span><span class="law-eq-name">Definició d'equivalència material</span></div>
         <div class="law-example">
           <p>"Aproves <strong>si i només si</strong> tens un 5 o més"</p>
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">vol dir totes dues coses alhora →</p>
-          <p>"si aproves és que tens un 5" <strong>i</strong> "si tens un 5 és que aproves"</p>
-        </div>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">En símbols</div>
-        <div class="law-eqs">
-          <div class="law-eq"><span class="law-sym">p ↔ q ≡ (p → q) ∧ (q → p)</span><span class="law-eq-name">Definició d'equivalència material</span></div>
+          <p>"Si aproves és que tens un 5" <strong>i</strong> "si tens un 5 és que aproves"</p>
         </div>
       </div>
       <div class="law-part">
         <div class="law-why">
           <div class="law-why-label">⭐ Per a què et serveix</div>
           <p class="law-why-text">Et deixa partir un bicondicional en dos condicionals, que després pots transformar amb la implicació material. És el mateix que vas veure a l'A1: l'interruptor i la llum lligats en tots dos sentits.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- LLEIS AMB V I F -->
-    <div class="law-card">
-      <div class="law-head"><span class="law-name">Les lleis amb V (sempre cert) i F (sempre fals)</span></div>
-      <div class="law-part">
-        <div class="law-part-label">Què diuen (en cristià)</div>
-        <p class="law-part-text">A vegades, en simplificar, et queda una condició combinada amb <strong>V</strong> (una cosa que sempre és certa) o amb <strong>F</strong> (sempre falsa). El resultat és fàcil de preveure. Són tres parelles:</p>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">1 · Neutre — no canvia res</div>
-        <div class="law-example">
-          <div class="law-eqs">
-          <div class="law-eq"><span class="law-sym">p ∧ V ≡ p</span><span class="law-eq-name">Neutre de la conjunció</span></div>
-          <div class="law-eq"><span class="law-sym">p ∨ F ≡ p</span><span class="law-eq-name">Neutre de la disjunció</span></div>
-        </div>
-          <p style="font-size:13px; color:var(--ink-2); margin-top:10px;">Afegir amb una "i" una cosa que sempre passa no canvia res: "has de ser soci <strong>i</strong> (alguna cosa sempre certa)" = "has de ser soci".</p>
-        </div>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">2 · Dominació — s'imposa</div>
-        <div class="law-example">
-          <div class="law-eqs">
-          <div class="law-eq"><span class="law-sym">p ∧ F ≡ F</span><span class="law-eq-name">Dominació de la conjunció</span></div>
-          <div class="law-eq"><span class="law-sym">p ∨ V ≡ V</span><span class="law-eq-name">Dominació de la disjunció</span></div>
-        </div>
-          <p style="font-size:13px; color:var(--ink-2); margin-top:10px;">Una "i" amb una cosa sempre falsa ja és falsa. Una "o" amb una cosa sempre certa ja és certa, miris el que miris.</p>
-        </div>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">3 · Inversa (complement) — una cosa i el seu contrari</div>
-        <div class="law-example">
-          <div class="law-eqs">
-          <div class="law-eq"><span class="law-sym">p ∧ ¬p ≡ F</span><span class="law-eq-name">Inversa de la conjunció</span></div>
-          <div class="law-eq"><span class="law-sym">p ∨ ¬p ≡ V</span><span class="law-eq-name">Inversa de la disjunció</span></div>
-        </div>
-          <p style="font-size:13px; color:var(--ink-2); margin-top:10px;">"Ser major d'edat <strong>i</strong> no ser-ho alhora" és impossible (sempre fals). "Ser major d'edat <strong>o</strong> no ser-ho" sempre es compleix (sempre cert).</p>
-        </div>
-      </div>
-      <div class="law-part">
-        <div class="law-why">
-          <div class="law-why-label">⭐ Per a què et serveixen</div>
-          <p class="law-why-text">Apareixen al final de moltes simplificacions: quan et queda <span style="font-family:'JetBrains Mono',monospace;">p ∨ ¬p</span> o <span style="font-family:'JetBrains Mono',monospace;">p ∧ V</span>, aquestes lleis et deixen rematar i deixar la condició al mínim.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- COMMUTATIVITAT -->
-    <div class="law-card">
-      <div class="law-head"><span class="law-name">Commutativitat</span></div>
-      <div class="law-part">
-        <div class="law-part-label">Què diu (en cristià)</div>
-        <p class="law-part-text">L'ordre no importa: pots girar les dues parts d'una "i" o d'una "o" i diuen el mateix.</p>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">Exemple de cada dia</div>
-        <div class="law-example"><p>"Cafè <strong>i</strong> sucre" &nbsp;=&nbsp; "Sucre <strong>i</strong> cafè"</p></div>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">En símbols</div>
-        <div class="law-eqs">
-          <div class="law-eq"><span class="law-sym">p ∧ q ≡ q ∧ p</span><span class="law-eq-name">Commutativitat de la conjunció</span></div>
-          <div class="law-eq"><span class="law-sym">p ∨ q ≡ q ∨ p</span><span class="law-eq-name">Commutativitat de la disjunció</span></div>
-        </div>
-      </div>
-      <div class="law-part">
-        <div class="law-why">
-          <div class="law-why-label">⭐ Per a què et serveix</div>
-          <p class="law-why-text">Et deixa reordenar les parts d'una condició per posar juntes les que s'assemblen i poder aplicar-hi una altra llei.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- ASSOCIATIVITAT -->
-    <div class="law-card">
-      <div class="law-head"><span class="law-name">Associativitat</span></div>
-      <div class="law-part">
-        <div class="law-part-label">Què diu (en cristià)</div>
-        <p class="law-part-text">En una cadena de la mateixa operació (totes "i" o totes "o"), els parèntesis no canvien res: pots agrupar com vulguis.</p>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">Exemple de cada dia</div>
-        <div class="law-example"><p>"Pa <strong>i</strong> (llet <strong>i</strong> ous)" &nbsp;=&nbsp; "(Pa <strong>i</strong> llet) <strong>i</strong> ous"</p></div>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">En símbols</div>
-        <div class="law-eqs">
-          <div class="law-eq"><span class="law-sym">p ∧ (q ∧ r) ≡ (p ∧ q) ∧ r</span><span class="law-eq-name">Associativitat de la conjunció</span></div>
-          <div class="law-eq"><span class="law-sym">p ∨ (q ∨ r) ≡ (p ∨ q) ∨ r</span><span class="law-eq-name">Associativitat de la disjunció</span></div>
-        </div>
-      </div>
-      <div class="law-part">
-        <div class="law-why">
-          <div class="law-why-label">⭐ Per a què et serveix</div>
-          <p class="law-why-text">Juntament amb la commutativitat, et deixa moure i agrupar lliurement les parts abans d'aplicar les altres lleis. Compte: només val si totes les operacions són iguals.</p>
         </div>
       </div>
     </div>
