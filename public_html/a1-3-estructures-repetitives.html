@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="ca">
-<head>
-  <meta charset="UTF-8">
+<html lang="ca"><head></head><body><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A1.3 · Estructures repetitives — RA2 Pensament Computacional</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -171,8 +170,8 @@
       .ex-block-head { background:#1c1917 !important; -webkit-print-color-adjust:exact; }
     }
   </style>
-</head>
-<body>
+
+
 <div class="wrap">
 
   <!-- HEADER -->
@@ -304,7 +303,7 @@
       <div class="demo-label">Exemple · escriure de l'1 al 10</div>
       <pre class="pseudo-out" data-code="Proceso Comptar
     Definir i Como Entero;
-    Para i <- 1 Hasta 10 Hacer
+    Para i &lt;- 1 Hasta 10 Hacer
         Escribir Sin Saltar i, ' ';
     FinPara
 FinProceso"></pre>
@@ -321,12 +320,12 @@ FinProceso"></pre>
     <div class="demo">
       <div class="demo-label">Exemple · amb pas diferent d'1</div>
       <pre class="pseudo-out" data-code="// Descendent, de 10 a 1
-Para i <- 10 Hasta 1 Con Paso -1 Hacer
+Para i &lt;- 10 Hasta 1 Con Paso -1 Hacer
     Escribir Sin Saltar i, ' ';
 FinPara
 
 // Només els parells del 2 al 10
-Para i <- 2 Hasta 10 Con Paso 2 Hacer
+Para i &lt;- 2 Hasta 10 Con Paso 2 Hacer
     Escribir Sin Saltar i, ' ';
 FinPara"></pre>
       <div class="exp-box">
@@ -384,10 +383,10 @@ FinPara"></pre>
       <div class="demo-label">Exemple · demanar la clau fins que sigui correcta</div>
       <pre class="pseudo-out" data-code="Proceso Login
     Definir secret, clau Como Cadena;
-    secret <- 'asdasd';
+    secret &lt;- 'asdasd';
     Escribir 'Digues la clau:';
     Leer clau;
-    Mientras clau <> secret Hacer
+    Mientras clau &lt;&gt; secret Hacer
         Escribir 'Clau incorrecta!';
         Escribir 'Digues la clau:';
         Leer clau;
@@ -411,7 +410,7 @@ FinProceso"></pre>
     Definir numero Como Entero;
     Escribir 'Escriu un nombre (0 per acabar):';
     Leer numero;
-    Mientras numero <> 0 Hacer
+    Mientras numero &lt;&gt; 0 Hacer
         Escribir 'Has escrit: ', numero;
         Leer numero;
     FinMientras
@@ -527,11 +526,11 @@ FinProceso"></pre>
     <div class="demo">
       <pre class="pseudo-out" data-code="Proceso ComptarGrans
     Definir i, num, cont Como Entero;
-    cont <- 0;   // el clicker comença a 0
-    Para i <- 1 Hasta 3 Hacer
+    cont &lt;- 0;   // el clicker comença a 0
+    Para i &lt;- 1 Hasta 3 Hacer
         Leer num;
-        Si num > 10 Entonces
-            cont <- cont + 1;   // clic! +1
+        Si num &gt; 10 Entonces
+            cont &lt;- cont + 1;   // clic! +1
         FinSi
     FinPara
     Escribir 'Més grans que 10: ', cont;
@@ -560,10 +559,10 @@ FinProceso"></pre>
     <div class="demo">
       <pre class="pseudo-out" data-code="Proceso SumarNombres
     Definir i, num, sum Como Entero;
-    sum <- 0;   // la guardiola comença buida
-    Para i <- 1 Hasta 3 Hacer
+    sum &lt;- 0;   // la guardiola comença buida
+    Para i &lt;- 1 Hasta 3 Hacer
         Leer num;
-        sum <- sum + num;   // hi afegim el nombre
+        sum &lt;- sum + num;   // hi afegim el nombre
     FinPara
     Escribir 'Total: ', sum;
 FinProceso"></pre>
@@ -592,11 +591,11 @@ FinProceso"></pre>
       <pre class="pseudo-out" data-code="Proceso HiHaSuspes
     Definir i, nota Como Entero;
     Definir suspes Como Logico;
-    suspes <- Falso;   // interruptor apagat
-    Para i <- 1 Hasta 3 Hacer
+    suspes &lt;- Falso;   // interruptor apagat
+    Para i &lt;- 1 Hasta 3 Hacer
         Leer nota;
-        Si nota < 5 Entonces
-            suspes <- Verdadero;   // l'encenem
+        Si nota &lt; 5 Entonces
+            suspes &lt;- Verdadero;   // l'encenem
         FinSi
     FinPara
     Escribir 'Hi ha algun suspès? ', suspes;
@@ -633,24 +632,24 @@ FinProceso"></pre>
           <strong>comptador</strong> (el clicker). Per calcular la mitjana primer has de <strong>sumar</strong> totes
           les notes amb un <strong>acumulador</strong> (la guardiola) i, al final, dividir entre 5.
         </div>
-        <button class="ri-btn" onclick="reveal(this,'S5a')">▶ Veure codi PSeInt</button>
+        <button class="ri-btn" onclick="reveal(this,'S5a')">▶ Mostra la solució</button>
       </div>
       <div class="ri-ans" id="S5a">
         <div class="ri-ans-label">Solució PSeInt</div>
         <pre class="pseudo-out" data-code="Proceso NotesClasse
     Definir i, nota, aprovats, suma Como Entero;
     Definir mitjana Como Real;
-    aprovats <- 0;   // comptador: comença a 0
-    suma <- 0;       // acumulador: comença a 0
-    Para i <- 1 Hasta 5 Hacer
+    aprovats &lt;- 0;   // comptador: comença a 0
+    suma &lt;- 0;       // acumulador: comença a 0
+    Para i &lt;- 1 Hasta 5 Hacer
         Escribir 'Digues la nota ', i, ':';
         Leer nota;
-        suma <- suma + nota;          // la guardiola: hi afegim la nota
-        Si nota >= 5 Entonces
-            aprovats <- aprovats + 1; // el clicker: +1 només si aprova
+        suma &lt;- suma + nota;          // la guardiola: hi afegim la nota
+        Si nota &gt;= 5 Entonces
+            aprovats &lt;- aprovats + 1; // el clicker: +1 només si aprova
         FinSi
     FinPara
-    mitjana <- suma / 5;
+    mitjana &lt;- suma / 5;
     Escribir 'Notes aprovades: ', aprovats;
     Escribir 'Nota mitjana: ', mitjana;
 FinProceso"></pre>
@@ -675,24 +674,24 @@ FinProceso"></pre>
           Necessites un <strong>comptador</strong> per als intents i un <strong>indicador</strong> que recordi si ja
           l'has encertat.
         </div>
-        <button class="ri-btn" onclick="reveal(this,'S5b')">▶ Veure codi PSeInt</button>
+        <button class="ri-btn" onclick="reveal(this,'S5b')">▶ Mostra la solució</button>
       </div>
       <div class="ri-ans" id="S5b">
         <div class="ri-ans-label">Solució PSeInt</div>
         <pre class="pseudo-out" data-code="Proceso EndevinaNumero
     Definir secret, numero, intents Como Entero;
     Definir encertat Como Logico;
-    secret <- 7;
-    intents <- 0;        // comptador: quants intents
-    encertat <- Falso;   // indicador: de moment no encertat
+    secret &lt;- 7;
+    intents &lt;- 0;        // comptador: quants intents
+    encertat &lt;- Falso;   // indicador: de moment no encertat
     Repetir
         Escribir 'Quin número penso? (1 al 10):';
         Leer numero;
-        intents <- intents + 1;
+        intents &lt;- intents + 1;
         Si numero = secret Entonces
-            encertat <- Verdadero;
+            encertat &lt;- Verdadero;
         SiNo
-            Si numero > secret Entonces
+            Si numero &gt; secret Entonces
                 Escribir 'El meu és més petit.';
             SiNo
                 Escribir 'El meu és més gran.';
@@ -753,11 +752,35 @@ FinProceso"></pre>
     </div>
 
     <div class="demo">
+      <div class="demo-label">Exemple · bucles independents: nombre fix d'elements</div>
+      <pre class="pseudo-out" data-code="Proceso CaixesFixes
+    Definir caixa, i Como Entero;
+    Definir pes, suma Como Real;
+    Para caixa &lt;- 1 Hasta 2 Hacer
+        suma &lt;- 0;
+        Para i &lt;- 1 Hasta 3 Hacer
+            Leer pes;
+            suma &lt;- suma + pes;
+        FinPara
+        Escribir 'Pes de la caixa ', caixa, ': ', suma;
+    FinPara
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          Hi ha 2 caixes i <strong>cada caixa té sempre 3 peces</strong>: el bucle de dins fa
+          <strong>sempre 3 voltes</strong>, no depèn de la caixa. Per això són <strong>independents</strong>.
+          A cada caixa es posa <code>suma</code> a 0 i s'hi van acumulant els pesos de les 3 peces.
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
       <div class="demo-label">Exemple · bucles independents: un rectangle d'asteriscs</div>
       <pre class="pseudo-out" data-code="Proceso Rectangle
     Definir fila, col Como Entero;
-    Para fila <- 1 Hasta 3 Hacer
-        Para col <- 1 Hasta 5 Hacer
+    Para fila &lt;- 1 Hasta 3 Hacer
+        Para col &lt;- 1 Hasta 5 Hacer
             Escribir Sin Saltar '* ';
         FinPara
         Escribir '';   // salt de línia en acabar la fila
@@ -776,11 +799,38 @@ FinProceso"></pre>
     </div>
 
     <div class="demo">
+      <div class="demo-label">Exemple · bucles dependents: nombre variable d'elements</div>
+      <pre class="pseudo-out" data-code="Proceso CaixesVariables
+    Definir caixa, i, n Como Entero;
+    Definir pes, suma Como Real;
+    Para caixa &lt;- 1 Hasta 2 Hacer
+        Escribir 'Quantes peces té la caixa?';
+        Leer n;
+        suma &lt;- 0;
+        Para i &lt;- 1 Hasta n Hacer   // depèn de n!
+            Leer pes;
+            suma &lt;- suma + pes;
+        FinPara
+        Escribir 'Pes de la caixa ', caixa, ': ', suma;
+    FinPara
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          L'únic canvi: ara <strong>demanem quantes peces té cada caixa</strong> (<code>n</code>) i el bucle de dins
+          va <strong>fins a n</strong>. Com que cada caixa pot tenir un nombre diferent de peces, el de dins fa
+          <strong>un nombre de voltes diferent cada cop</strong> → són <strong>dependents</strong>.
+          És el mateix esquema de l'exercici 7 (doble bucle amb nombre variable d'elements).
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
       <div class="demo-label">Exemple · bucles dependents: un triangle d'asteriscs</div>
       <pre class="pseudo-out" data-code="Proceso Triangle
     Definir fila, col Como Entero;
-    Para fila <- 1 Hasta 4 Hacer
-        Para col <- 1 Hasta fila Hacer   // depèn de fila!
+    Para fila &lt;- 1 Hasta 4 Hacer
+        Para col &lt;- 1 Hasta fila Hacer   // depèn de fila!
             Escribir Sin Saltar '* ';
         FinPara
         Escribir '';
@@ -939,6 +989,7 @@ const E1 = [
 ];
 (function(){
   const c = document.getElementById('ex1-cont');
+  c.innerHTML='';
   E1.forEach((d,i)=>{
     const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E1',this,${i},${j})">${o}</button>`).join('');
     const div = document.createElement('div'); div.className='qi';
@@ -960,6 +1011,7 @@ const E2 = [
 ];
 (function(){
   const c = document.getElementById('ex2-cont');
+  c.innerHTML='';
   E2.forEach((d,i)=>{
     const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E2',this,${i},${j})">${o.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</button>`).join('');
     const div = document.createElement('div'); div.className='qi';
@@ -988,6 +1040,7 @@ const E3 = [
 const E3OPTS = ['Comptador','Acumulador','Indicador'];
 (function(){
   const c = document.getElementById('ex3-cont');
+  c.innerHTML='';
   E3.forEach((d,i)=>{
     const opts = E3OPTS.map(o=>`<button class="qi-btn" onclick="checkE3(this,${i},'${o}')">${o}</button>`).join('');
     const div = document.createElement('div'); div.className='qi';
@@ -1004,27 +1057,34 @@ function checkE3(btn,i,choice){
 
 /* ── Exercici 4 ── */
 const E4 = [
-  { ctx:'Ensenya la taula de multiplicar d\'un nombre que demanis per teclat (de l\'1 al 10).',
+  { ctx:'Ensenya la taula de multiplicar d\'un nombre que demanis per teclat. Mostra les 10 línies en format <code>n x i = resultat</code> (de l\'1 al 10).',
     code:"// Anàlisi\n// Entrada: n (Entero)\n// Sortida: les 10 línies de la taula\n\nProceso TaulaMultiplicar\n    Definir n, i Como Entero;\n    Escribir 'De quin nombre vols la taula?';\n    Leer n;\n    Para i <- 1 Hasta 10 Hacer\n        Escribir n, ' x ', i, ' = ', n * i;\n    FinPara\nFinProceso",
     exp:'Saps que són 10 voltes → Para. La i és el número pel qual multipliques a cada línia.' },
-  { ctx:'Demana nombres fins que s\'escrigui un 0 i mostra la suma i la mitjana de tots (sense comptar el 0).',
+  { ctx:'Demana nombres fins que s\'escrigui un 0. Mostra la suma i la mitjana de tots (sense comptar el 0); si no s\'ha escrit cap nombre, mostra un avís.',
     code:"// Anàlisi\n// Entrades: num (fins a un 0)\n// Sortides: suma i mitjana\n\nProceso SumaMitjana\n    Definir num, suma, cont Como Entero;\n    Definir mitjana Como Real;\n    suma <- 0;\n    cont <- 0;\n    Escribir 'Escriu un nombre (0 per acabar):';\n    Leer num;\n    Mientras num <> 0 Hacer\n        suma <- suma + num;\n        cont <- cont + 1;\n        Escribir 'Escriu un nombre (0 per acabar):';\n        Leer num;\n    FinMientras\n    Si cont > 0 Entonces\n        mitjana <- suma / cont;\n        Escribir 'Suma: ', suma, ' - Mitjana: ', mitjana;\n    SiNo\n        Escribir 'No has introduït cap nombre';\n    FinSi\nFinProceso",
     exp:'No saps quants nombres vindran → Mientras (demanant-ne un abans). Fas servir una guardiola (suma) i un clicker (cont). El Si del final evita dividir per 0.' },
-  { ctx:'Demana un nombre i digues si és primer (només divisible per 1 i per ell mateix).',
+  { ctx:'Demana un nombre i mostra si és primer (només divisible per 1 i per ell mateix): escriu "És primer" o "No és primer".',
     code:"// Anàlisi\n// Entrada: n (Entero)\n// Sortida: és primer / no és primer\n\nProceso EsPrimer\n    Definir n, i, divisors Como Entero;\n    Escribir 'Escriu un nombre:';\n    Leer n;\n    divisors <- 0;\n    Para i <- 1 Hasta n Hacer\n        Si n % i = 0 Entonces\n            divisors <- divisors + 1;\n        FinSi\n    FinPara\n    Si divisors = 2 Entonces\n        Escribir 'És primer';\n    SiNo\n        Escribir 'No és primer';\n    FinSi\nFinProceso",
     exp:'Comptes quants divisors té el nombre. Si en té exactament 2 (l\'1 i ell mateix), és primer. Prova: 7 → sí; 8 → no.' },
-  { ctx:'<em>Bucles imbricats independents.</em> Demana un nombre <code>n</code> i dibuixa un quadrat de <code>n</code> files i <code>n</code> columnes fet amb el símbol <code>#</code>. Per exemple, amb n = 3 surten 3 files de <code># # #</code>.',
+  { ctx:'<em>Bucles imbricats independents.</em> Demana un nombre <code>n</code> i mostra un quadrat de <code>n</code> files i <code>n</code> columnes fet amb el símbol <code>#</code>. Per exemple, amb n = 3 surten 3 files de <code># # #</code>.',
     code:"// Anàlisi\n// Entrada: n (Entero)\n// Sortida: un quadrat de n x n símbols #\n\nProceso Quadrat\n    Definir n, fila, col Como Entero;\n    Escribir 'De quina mida vols el quadrat?';\n    Leer n;\n    Para fila <- 1 Hasta n Hacer\n        Para col <- 1 Hasta n Hacer\n            Escribir Sin Saltar '# ';\n        FinPara\n        Escribir '';\n    FinPara\nFinProceso",
     exp:'El bucle de dins va sempre d\'1 a n: no fa servir la variable fila, per tant són <strong>independents</strong>. Totes les files són iguals i surten n × n símbols (amb n = 3, 9 símbols).' },
-  { ctx:'<em>Bucles imbricats dependents.</em> Escriu aquesta escala de números que va baixant:<br><code>1 2 3 4 5</code><br><code>1 2 3 4</code><br><code>1 2 3</code><br><code>1 2</code><br><code>1</code><br>Pista: la primera fila té 5 números i cada fila en té un menys.',
+  { ctx:'<em>Bucles imbricats dependents.</em> Escriu aquesta escala que va baixant:<br><code>1 2 3 4 5</code><br><code>1 2 3 4</code><br><code>1 2 3</code><br><code>1 2</code><br><code>1</code><br>La primera fila té 5 números i cada fila en té un menys.',
     code:"// Anàlisi\n// Entrada: cap\n// Sortida: 5 files de números, cada una amb un número menys\n\nProceso EscalaBaixa\n    Definir fila, col Como Entero;\n    Para fila <- 5 Hasta 1 Con Paso -1 Hacer\n        Para col <- 1 Hasta fila Hacer\n            Escribir Sin Saltar col, ' ';\n        FinPara\n        Escribir '';\n    FinPara\nFinProceso",
-    exp:'El bucle de fora compta cap enrere (5, 4, 3, 2, 1) i el de dins va d\'1 fins a <code>fila</code>: depèn del de fora, per tant són <strong>dependents</strong>. Cada fila fa una volta menys: 5 + 4 + 3 + 2 + 1 = 15 números.' }
+    exp:'El bucle de fora compta cap enrere (5, 4, 3, 2, 1) i el de dins va d\'1 fins a <code>fila</code>: depèn del de fora, per tant són <strong>dependents</strong>. Cada fila fa una volta menys: 5 + 4 + 3 + 2 + 1 = 15 números.' },
+  { ctx:'<strong>Percentatges dins d\'un bucle.</strong> A la caixa d\'una botiga es llegeixen els preus (sense IVA) dels productes fins que s\'escriu un 0. A cada producte se li afegeix l\'IVA del 21%. Mostra el total de la compra amb IVA.',
+    code:"// Anàlisi\n// Entrades: preu (fins a un 0)\n// Sortida: total de la compra amb IVA\n\nProceso CaixaBotiga\n    Definir preu, total Como Real;\n    total <- 0;\n    Escribir 'Preu del producte (0 per acabar):';\n    Leer preu;\n    Mientras preu <> 0 Hacer\n        total <- total + preu * 1.21;\n        Escribir 'Preu del producte (0 per acabar):';\n        Leer preu;\n    FinMientras\n    Escribir 'TOTAL amb IVA: ', total;\nFinProceso",
+    exp:'No saps quants productes vindran → Mientras amb sentinella (el 0). A cada volta afegeixes a l\'acumulador el preu ja amb IVA (preu × 1,21). Prova: 100 i 50 → 121 + 60,5 = 181,5.' },
+  { ctx:'<strong>Doble bucle · nombre variable.</strong> Demana quants equips hi ha. Per a cada equip, demana quants jugadors té i els punts de cada jugador. Mostra el total de punts de cada equip i, al final, el total de punts de tota la competició.',
+    code:"// Anàlisi\n// Entrades: numEquips; per cada equip: numJugadors i els punts\n// Sortides: total de punts de cada equip i total de la competició\n\nProceso PuntsCompeticio\n    Definir numEquips, numJugadors, i, j, punts Como Entero;\n    Definir totalEquip, totalGlobal Como Entero;\n    Escribir 'Quants equips hi ha?';\n    Leer numEquips;\n    totalGlobal <- 0;\n    Para i <- 1 Hasta numEquips Hacer\n        Escribir 'Quants jugadors té l''equip ', i, '?';\n        Leer numJugadors;\n        totalEquip <- 0;\n        Para j <- 1 Hasta numJugadors Hacer\n            Escribir 'Punts del jugador ', j, ':';\n            Leer punts;\n            totalEquip <- totalEquip + punts;\n            totalGlobal <- totalGlobal + punts;\n        FinPara\n        Escribir 'Total de punts de l''equip ', i, ': ', totalEquip;\n    FinPara\n    Escribir 'Total de punts de la competició: ', totalGlobal;\nFinProceso",
+    exp:'El doble bucle: el de fora recorre els equips i el de dins els jugadors de cada equip. totalEquip es reinicia a 0 a cada equip; totalGlobal acumula de tots. És el mateix esquema que surt a la prova, amb un altre context.' }
 ];
 (function(){
   const c = document.getElementById('ex4-cont');
+  c.innerHTML='';
   E4.forEach((d,i)=>{
     const div = document.createElement('div'); div.className='ri';
-    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><button class="ri-btn" onclick="reveal(this,'E4a${i}')">▶ Veure codi PSeInt</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
+    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><button class="ri-btn" onclick="reveal(this,'E4a${i}')">▶ Mostra la solució</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
     c.appendChild(div);
   });
 })();
@@ -1032,8 +1092,9 @@ const E4 = [
 function reveal(btn,id){
   var el = document.getElementById(id);
   var obert = el.classList.toggle('show');
-  btn.innerHTML = obert ? '▼ Amagar codi PSeInt' : '▶ Veure codi PSeInt';
+  btn.innerHTML = obert ? '▼ Amaga la solució' : '▶ Mostra la solució';
 }
 </script>
-</body>
-</html>
+
+
+</body></html>

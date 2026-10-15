@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="ca">
-<head>
-  <meta charset="UTF-8">
+<html lang="ca"><head></head><body><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A1.2 · Estructures alternatives — RA2 Pensament Computacional</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -113,8 +112,8 @@
       .ex-block-head { background:#1c1917 !important; -webkit-print-color-adjust:exact; }
     }
   </style>
-</head>
-<body>
+
+
 <div class="wrap">
 
   <!-- HEADER -->
@@ -192,7 +191,7 @@
     Definir edat Como Entero;
     Escribir 'Quina edat tens?';
     Leer edat;
-    Si edat >= 18 Entonces
+    Si edat &gt;= 18 Entonces
         Escribir 'Ets major d_edat';
     FinSi
     Escribir 'Fi del programa';
@@ -249,7 +248,7 @@ FinProceso"></pre>
     Definir edat Como Entero;
     Escribir 'Quina edat tens?';
     Leer edat;
-    Si edat >= 18 Entonces
+    Si edat &gt;= 18 Entonces
         Escribir 'Ets major d_edat';
     SiNo
         Escribir 'Ets menor d_edat';
@@ -302,10 +301,10 @@ FinProceso"></pre>
     Definir numero Como Entero;
     Escribir 'Escriu un nombre:';
     Leer numero;
-    Si numero > 0 Entonces
+    Si numero &gt; 0 Entonces
         Escribir 'És positiu';
     SiNo
-        Si numero < 0 Entonces
+        Si numero &lt; 0 Entonces
             Escribir 'És negatiu';
         SiNo
             Escribir 'És zero';
@@ -385,7 +384,7 @@ FinProceso"></pre>
     Definir nota Como Entero;
     Escribir 'Quina nota has tret?';
     Leer nota;
-    Si nota >= 1 Y nota <= 4 Entonces
+    Si nota &gt;= 1 Y nota &lt;= 4 Entonces
         Escribir 'Suspès';
     SiNo
         Si nota = 5 Entonces
@@ -508,6 +507,7 @@ const E1 = [
 ];
 (function(){
   const c = document.getElementById('ex1-cont');
+  c.innerHTML='';
   E1.forEach((d,i)=>{
     const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E1',this,${i},${j})">${o}</button>`).join('');
     const div = document.createElement('div'); div.className='qi';
@@ -529,6 +529,7 @@ const E2 = [
 ];
 (function(){
   const c = document.getElementById('ex2-cont');
+  c.innerHTML='';
   E2.forEach((d,i)=>{
     const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E2',this,${i},${j})">${o}</button>`).join('');
     const div = document.createElement('div'); div.className='qi';
@@ -560,35 +561,44 @@ const E3 = [
 ];
 (function(){
   const c = document.getElementById('ex3-cont');
+  c.innerHTML='';
   E3.forEach((d,i)=>{
     const div = document.createElement('div'); div.className='ri';
-    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.q}</div><button class="ri-btn" onclick="reveal(this,'E3a${i}')">▶ Veure solució</button></div><div class="ri-ans" id="E3a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
+    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.q}</div><button class="ri-btn" onclick="reveal(this,'E3a${i}')">▶ Mostra la solució</button></div><div class="ri-ans" id="E3a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
     c.appendChild(div);
   });
 })();
 
 /* ── Exercici 4 ── */
 const E4 = [
-  { ctx:'Demana un nombre enter i digues si és parell o senar.',
-    code:"// Anàlisi\n// Entrada: numero (Entero)\n// Sortida: missatge (parell/senar)\n\nProceso ParellSenar\n    Definir numero Como Entero;\n    Escribir 'Escriu un nombre enter:';\n    Leer numero;\n    Si numero % 2 = 0 Entonces\n        Escribir 'És parell';\n    SiNo\n        Escribir 'És senar';\n    FinSi\nFinProceso",
-    exp:'Un nombre és parell si el residu de dividir-lo entre 2 és 0 (numero % 2 = 0). Validació: amb 4 → parell; amb 7 → senar.' },
-  { ctx:'Demana l\'edat d\'una persona i classifica-la en tres grups: menor (menys de 18), adult (de 18 a 64) o jubilat (65 o més).',
-    code:"// Anàlisi\n// Entrada: edat (Entero)\n// Sortida: menor / adult / jubilat\n\nProceso Edats\n    Definir edat Como Entero;\n    Escribir 'Quina edat tens?';\n    Leer edat;\n    Si edat < 18 Entonces\n        Escribir 'Menor';\n    SiNo\n        Si edat <= 64 Entonces\n            Escribir 'Adult';\n        SiNo\n            Escribir 'Jubilat';\n        FinSi\n    FinSi\nFinProceso",
-    exp:'Aquí els casos són RANGS (no valors exactes), així que cal Si encadenat i no Según. Amb només 2 Si niats cobrim els tres grups: primer els menors, després els adults i, per descart, els jubilats.' },
-  { ctx:'Demana un número (1, 2 o 3) que representa un semàfor —1 vermell, 2 groc, 3 verd— i escriu què cal fer. Fes-ho primer amb Según i, a sota, la mateixa lògica amb 2 Si.',
+  { ctx:"Demana un nombre enter. Si és parell, mostra 'És parell'; si és senar, mostra 'És senar'.",
+    code:"// Anàlisi\n// Entrada: numero (Entero)\n// Sortida: 'És parell' o 'És senar'\n\nProceso ParellSenar\n    Definir numero Como Entero;\n    Escribir 'Escriu un nombre enter:';\n    Leer numero;\n    Si numero % 2 = 0 Entonces\n        Escribir 'És parell';\n    SiNo\n        Escribir 'És senar';\n    FinSi\nFinProceso",
+    exp:"Un nombre és parell si el residu de dividir-lo entre 2 és 0 (numero % 2 = 0). Validació: amb 4 → parell; amb 7 → senar." },
+  { ctx:"Demana l'edat d'una persona i mostra el grup: 'Menor' si té menys de 18, 'Adult' de 18 a 64, i 'Jubilat' de 65 o més.",
+    code:"// Anàlisi\n// Entrada: edat (Entero)\n// Sortida: 'Menor' / 'Adult' / 'Jubilat'\n\nProceso Edats\n    Definir edat Como Entero;\n    Escribir 'Quina edat tens?';\n    Leer edat;\n    Si edat < 18 Entonces\n        Escribir 'Menor';\n    SiNo\n        Si edat <= 64 Entonces\n            Escribir 'Adult';\n        SiNo\n            Escribir 'Jubilat';\n        FinSi\n    FinSi\nFinProceso",
+    exp:"Aquí els casos són RANGS (no valors exactes), així que cal Si encadenat i no Según. Amb només 2 Si niats cobrim els tres grups: primer els menors, després els adults i, per descart, els jubilats." },
+  { ctx:"Demana un número (1, 2 o 3) d'un semàfor i mostra què cal fer: 1 → 'Vermell: para', 2 → 'Groc: atenció', 3 → 'Verd: passa'; si no és cap d'aquests, mostra 'Número incorrecte'. Fes-ho primer amb Según i, a sota, amb 2 Si encadenats.",
     code:"// VERSIÓ 1: amb Según (valors exactes)\nProceso Semafor\n    Definir llum Como Entero;\n    Escribir 'Color del semàfor (1-3):';\n    Leer llum;\n    Segun llum Hacer\n        1: Escribir 'Vermell: para';\n        2: Escribir 'Groc: atenció';\n        3: Escribir 'Verd: passa';\n        De Otro Modo: Escribir 'Número incorrecte';\n    FinSegun\nFinProceso\n\n// VERSIÓ 2: la mateixa lògica amb 2 Si encadenats\nProceso Semafor2\n    Definir llum Como Entero;\n    Escribir 'Color del semàfor (1-3):';\n    Leer llum;\n    Si llum = 1 Entonces\n        Escribir 'Vermell: para';\n    SiNo\n        Si llum = 2 Entonces\n            Escribir 'Groc: atenció';\n        SiNo\n            Escribir 'Verd: passa';\n        FinSi\n    FinSi\nFinProceso",
-    exp:'Amb valors exactes (1, 2, 3) el Según és el més net. Però és equivalent a 2 Si encadenats: si no és 1 ni 2, es dóna per fet que és 3. Com més casos, més pesada es fa la versió amb Si; per això preferim Según quan són valors concrets.' }
+    exp:"Amb valors exactes (1, 2, 3) el Según és el més net. Però és equivalent a 2 Si encadenats: si no és 1 ni 2, es dóna per fet que és 3. Com més casos, més pesada es fa la versió amb Si; per això preferim Según quan són valors concrets." },
+  { ctx:"<strong>Percentatges · descompte.</strong> Demana el preu d'un producte i si el client és soci (1=sí, 0=no). Els socis tenen un 10% de descompte. Mostra el preu final a pagar.",
+    code:"// Anàlisi\n// Entrada: preu (Real), soci (0/1)\n// Sortida: preu final\n\nProceso Descompte\n    Definir preu, preuFinal Como Real;\n    Definir soci Como Entero;\n    Escribir 'Preu del producte:';\n    Leer preu;\n    Escribir 'Es soci? (1=Si, 0=No):';\n    Leer soci;\n    Si soci = 1 Entonces\n        preuFinal <- preu * 0.90;\n    SiNo\n        preuFinal <- preu;\n    FinSi\n    Escribir 'Preu final: ', preuFinal;\nFinProceso",
+    exp:"Un descompte del 10% deixa el 90% del preu: preu × 0,90. Si no és soci, es paga el preu sencer. Prova: 50 €, soci → 45 €; no soci → 50 €." },
+  { ctx:"<strong>Percentatges · IVA.</strong> Demana el preu base d'un producte (sense IVA) i el tipus d'IVA (1=general 21%, 2=reduït 10%). Mostra el preu final amb l'IVA aplicat.",
+    code:"// Anàlisi\n// Entrada: base (Real), tipus (1/2)\n// Sortida: preu amb IVA\n\nProceso PreuAmbIVA\n    Definir base, total Como Real;\n    Definir tipus Como Entero;\n    Escribir 'Preu base (sense IVA):';\n    Leer base;\n    Escribir 'Tipus IVA (1=general 21%, 2=reduit 10%):';\n    Leer tipus;\n    Segun tipus Hacer\n        1: total <- base * 1.21;\n        2: total <- base * 1.10;\n        De Otro Modo: Escribir 'Tipus IVA no valid';\n    FinSegun\n    Escribir 'Preu amb IVA: ', total;\nFinProceso",
+    exp:"Afegir l'IVA és augmentar el preu: general 21% → × 1,21; reduït 10% → × 1,10. Prova: base 100 €, general → 121 €; reduït → 110 €." }
 ];
 (function(){
   const c = document.getElementById('ex4-cont');
+  c.innerHTML='';
   E4.forEach((d,i)=>{
     const div = document.createElement('div'); div.className='ri';
-    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><button class="ri-btn" onclick="reveal(this,'E4a${i}')">▶ Veure codi PSeInt</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
+    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><button class="ri-btn" onclick="reveal(this,'E4a${i}')">▶ Mostra la solució</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
     c.appendChild(div);
   });
 })();
 
-function reveal(btn,id){ document.getElementById(id).classList.add('show'); btn.style.display='none'; }
+function reveal(btn,id){ var el=document.getElementById(id); var shown=el.classList.toggle('show'); btn.textContent = shown ? '▼ Amaga la solució' : '▶ Mostra la solució'; }
 </script>
-</body>
-</html>
+
+
+</body></html>

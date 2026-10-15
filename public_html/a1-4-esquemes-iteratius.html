@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="ca">
-<head>
-  <meta charset="UTF-8">
+<html lang="ca"><head></head><body><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A1.4 · Esquemes iteratius — RA2 Pensament Computacional</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -134,8 +133,8 @@
       .ex-block-head { background:#1c1917 !important; -webkit-print-color-adjust:exact; }
     }
   </style>
-</head>
-<body>
+
+
 <div class="wrap">
 
   <!-- HEADER -->
@@ -267,14 +266,14 @@
       <pre class="pseudo-out" data-code="Proceso NotaMitjana
     Definir i, n Como Entero;
     Definir nota, suma, mitjana Como Real;
-    n <- 5;
-    suma <- 0;          // acumulador: suma de totes les notes
-    Para i <- 1 Hasta n Hacer
+    n &lt;- 5;
+    suma &lt;- 0;          // acumulador: suma de totes les notes
+    Para i &lt;- 1 Hasta n Hacer
         Escribir Sin Saltar 'Introdueix la nota de l''alumne ', i, ': ';
         Leer nota;
-        suma <- suma + nota;
+        suma &lt;- suma + nota;
     FinPara
-    mitjana <- suma / n;
+    mitjana &lt;- suma / n;
     Escribir 'La nota mitjana és: ', mitjana;
 FinProceso"></pre>
       <div class="exp-box">
@@ -292,13 +291,13 @@ FinProceso"></pre>
       <div class="demo-label">Exemple · comptar quants nombres d'una seqüència són imparells</div>
       <pre class="pseudo-out" data-code="Proceso ComptarImparells
     Definir i, n, num, cont Como Entero;
-    n <- 6;
-    cont <- 0;          // comptador: quants imparells
-    Para i <- 1 Hasta n Hacer
+    n &lt;- 6;
+    cont &lt;- 0;          // comptador: quants imparells
+    Para i &lt;- 1 Hasta n Hacer
         Escribir Sin Saltar 'Digues un nombre: ';
         Leer num;
-        Si num mod 2 <> 0 Entonces
-            cont <- cont + 1;
+        Si num mod 2 &lt;&gt; 0 Entonces
+            cont &lt;- cont + 1;
         FinSi
     FinPara
     Escribir 'Nombres imparells introduïts: ', cont;
@@ -355,12 +354,12 @@ FinProceso"></pre>
       <pre class="pseudo-out" data-code="Proceso PrimerImparell
     Definir num Como Entero;
     Definir trobat Como Logico;
-    trobat <- Falso;
+    trobat &lt;- Falso;
     Mientras NO trobat Hacer
         Escribir Sin Saltar 'Escriu un número: ';
         Leer num;
         Si num mod 2 = 1 Entonces
-            trobat <- Verdadero;
+            trobat &lt;- Verdadero;
         FinSi
     FinMientras
     Escribir 'Has introduït un número imparell, el número ', num;
@@ -419,17 +418,17 @@ FinProceso"></pre>
       <pre class="pseudo-out" data-code="Proceso SumarNotesSentinella
     Definir nota, suma Como Real;
     Definir cont Como Entero;
-    suma <- 0;
-    cont <- 0;
+    suma &lt;- 0;
+    cont &lt;- 0;
     Escribir Sin Saltar 'Introdueix una nota (-1 per acabar): ';
     Leer nota;
-    Mientras nota <> -1 Hacer
-        suma <- suma + nota;
-        cont <- cont + 1;
+    Mientras nota &lt;&gt; -1 Hacer
+        suma &lt;- suma + nota;
+        cont &lt;- cont + 1;
         Escribir Sin Saltar 'Introdueix una nota (-1 per acabar): ';
         Leer nota;
     FinMientras
-    Si cont > 0 Entonces
+    Si cont &gt; 0 Entonces
         Escribir 'Suma: ', suma, ' — Mitjana: ', suma / cont;
     SiNo
         Escribir 'No has introduït cap nota.';
@@ -446,53 +445,42 @@ FinProceso"></pre>
         </div>
       </div>
     </div>
+    <div class="demo">
+      <div class="demo-label">Exemple · sentinella amb un límit (màxim 5 notes)</div>
+      <pre class="pseudo-out" data-code="Proceso NotesAmbLimit
+    Definir nota, cont Como Entero;
+    cont &lt;- 0;
+    Escribir Sin Saltar 'Nota (-1 per acabar): ';
+    Leer nota;
+    Mientras nota &lt;&gt; -1 Y cont &lt; 5 Hacer
+        cont &lt;- cont + 1;
+        Escribir Sin Saltar 'Nota (-1 per acabar): ';
+        Leer nota;
+    FinMientras
+    Escribir 'Has introduït ', cont, ' notes.';
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          Aquí combinem el sentinella amb un <strong>límit</strong>: el bucle continua mentre la nota no sigui
+          <code>-1</code> <strong>i</strong> encara no s'hagin introduït 5 notes (<code>nota &lt;&gt; -1 Y cont &lt; 5</code>).
+          Així s'atura per qualsevol de les dues raons, la que passi abans. Com que la nota es llegeix dins del
+          bucle, en arribar a 5 notes el bucle s'atura sense demanar-ne una sisena.
+        </div>
+      </div>
+    </div>
+
   </section>
 
   <!-- EXERCICIS -->
   <div class="ex-block-head">
     <h2 class="ex-block-title">Exercicis de demostració</h2>
-    <p class="ex-block-sub">Cinc nivells · comencem fàcil i anem pujant · criteris 2.1 i 2.5</p>
+    <p class="ex-block-sub">De l'anàlisi al codi · criteris 2.1 i 2.5</p>
   </div>
   <div class="ex-block-body">
 
     <div class="exercise">
       <div class="ex-head"><div class="ex-num">1</div><div>
-        <div class="ex-name">Repàs ràpid</div>
-        <div class="ex-level">Molt fàcil · per començar</div>
-      </div></div>
-      <p class="ex-intro">Abans de res, recordem les peces que fem servir als bucles. Fes clic a la resposta.</p>
-      <div id="ex0-cont"></div>
-    </div>
-
-    <div class="exercise">
-      <div class="ex-head"><div class="ex-num">2</div><div>
-        <div class="ex-name">Recorregut o cerca?</div>
-        <div class="ex-level">Fàcil · reconeixement</div>
-      </div></div>
-      <p class="ex-intro">Per a cada situació, tria quin esquema cal aplicar.</p>
-      <div id="ex1-cont"></div>
-    </div>
-
-    <div class="exercise">
-      <div class="ex-head"><div class="ex-num">3</div><div>
-        <div class="ex-name">Què fa el bucle?</div>
-        <div class="ex-level">Nivell mitjà · seguiment (traça)</div>
-      </div></div>
-      <p class="ex-intro">Segueix l'execució de cada fragment i tria la resposta correcta.</p>
-      <div id="ex2-cont"></div>
-    </div>
-
-    <div class="exercise">
-      <div class="ex-head"><div class="ex-num">4</div><div>
-        <div class="ex-name">Condició correcta</div>
-        <div class="ex-level">Nivell mitjà · condicions de bucle</div>
-      </div></div>
-      <p class="ex-intro">Tria la condició <code>Mientras</code> correcta per a cada esquema de cerca.</p>
-      <div id="ex3-cont"></div>
-    </div>
-
-    <div class="exercise">
-      <div class="ex-head"><div class="ex-num">5</div><div>
         <div class="ex-name">Programa complet</div>
         <div class="ex-level">Nivell avançat · de l'anàlisi al codi</div>
       </div></div>
@@ -527,136 +515,30 @@ document.querySelectorAll('pre[data-code]').forEach(function(pre){
 });
 
 /* ── Exercici 1 ── */
-const E0 = [
-  { t:'Un COMPTADOR, amb quin valor comença abans del bucle?', opts:['0','1'], ans:0, exp:'Comença a 0 i va pujant d\'un en un.' },
-  { t:'Un ACUMULADOR de suma, amb quin valor comença abans del bucle?', opts:['0','1'], ans:0, exp:'Comença a 0 perquè encara no hi hem sumat res.' },
-  { t:'Un INDICADOR (una bandera com trobat), de quin tipus és?', opts:['Entero','Logico','Real'], ans:1, exp:'Només val Verdadero o Falso: és de tipus Logico.' }
-];
-(function(){
-  const c = document.getElementById('ex0-cont');
-  E0.forEach((d,i)=>{
-    const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E0',this,${i},${j})">${o.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</button>`).join('');
-    const div = document.createElement('div'); div.className='qi';
-    div.innerHTML = `<div class="qi-text">${i+1}. ${d.t}</div><div class="qi-opts">${opts}</div><div class="qi-fb" id="E0f${i}"></div>`;
-    c.appendChild(div);
-  });
-})();
-
-/* ── Exercici 2 ── */
-const E1 = [
-  { t:'Sumar TOTS els números d\'una llista.', opts:['Recorregut','Cerca'], ans:0, exp:'La paraula "tots" ho diu: cal visitar-los tots sense excepció. Recorregut.' },
-  { t:'Trobar el PRIMER número negatiu d\'una llista.', opts:['Recorregut','Cerca'], ans:1, exp:'En trobar el primer negatiu ja ens podem aturar: cerca.' },
-  { t:'Comptar quants números d\'una llista són parells.', opts:['Recorregut','Cerca'], ans:0, exp:'Encara que sembli una cerca, per comptar-los TOTS hem de mirar tota la llista: recorregut amb comptador.' }
-];
-(function(){
-  const c = document.getElementById('ex1-cont');
-  E1.forEach((d,i)=>{
-    const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E1',this,${i},${j})">${o}</button>`).join('');
-    const div = document.createElement('div'); div.className='qi';
-    div.innerHTML = `<div class="qi-text">${i+1}. ${d.t}</div><div class="qi-opts">${opts}</div><div class="qi-fb" id="E1f${i}"></div>`;
-    c.appendChild(div);
-  });
-})();
-
-/* ── Exercici 2 ── */
-const E2 = [
-  { code:"Definir i, cont Como Entero;\ncont <- 0;\nPara i <- 1 Hasta 4 Hacer\n    cont <- cont + 1;\nFinPara\nEscribir cont;",
-    opts:['3','4','5'], ans:1, exp:'El bucle fa 4 voltes (de l\'1 al 4) i el comptador puja 1 cada volta: cont = 4.' },
-  { code:"Definir i, suma Como Entero;\nsuma <- 0;\nPara i <- 1 Hasta 4 Hacer\n    suma <- suma + i;\nFinPara\nEscribir suma;",
-    opts:['4','10','24'], ans:1, exp:'L\'acumulador suma 1 + 2 + 3 + 4 = 10.' },
-  { code:"Definir i, cont Como Entero;\ncont <- 0;\nPara i <- 1 Hasta 6 Hacer\n    Si i mod 2 = 0 Entonces\n        cont <- cont + 1;\n    FinSi\nFinPara\nEscribir cont;",
-    opts:['2','3','6'], ans:1, exp:'Els parells de l\'1 al 6 són 2, 4 i 6: el comptador arriba a 3.' }
-];
-(function(){
-  const c = document.getElementById('ex2-cont');
-  E2.forEach((d,i)=>{
-    const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E2',this,${i},${j})">${o.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</button>`).join('');
-    const div = document.createElement('div'); div.className='qi';
-    div.innerHTML = `<div class="qi-text">${i+1}. Què s'escriu per pantalla?</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="qi-opts">${opts}</div><div class="qi-fb" id="E2f${i}"></div>`;
-    c.appendChild(div);
-  });
-})();
-
-/* Comprovació compartida E1/E2 */
-const DATA = { E0:E0, E1:E1, E2:E2 };
-function checkQ(grp,btn,i,choice){
-  const d = DATA[grp][i], fb = document.getElementById(grp+'f'+i);
-  const btns = btn.closest('.qi-opts').querySelectorAll('.qi-btn'); btns.forEach(b=>b.disabled=true);
-  if(choice===d.ans){ btn.classList.add('ok'); fb.className='qi-fb ok'; fb.textContent='✓ Correcte! '+d.exp; }
-  else{ btn.classList.add('fail'); btns[d.ans].classList.add('ok'); fb.className='qi-fb fail'; fb.textContent='✗ Incorrecte. '+d.exp; }
-}
-
-/* ── Exercici 3 ── */
-const E3 = [
-  { t:'Cerca del primer element major que 10 en una llista de n elements (variable de control: i, indicador: trobat).', ans:'i <= n Y NO trobat', opts:['i <= n Y NO trobat','i < n O trobat','i <= n O NO trobat'], exp:'Cal continuar mentre quedin elements I no s\'hagi trobat. Totes dues condicions han de ser certes alhora: Y.' },
-  { t:'Cerca d\'un valor concret (clau) en una seqüència de n elements llegits per teclat.', ans:'i <= n Y num <> clau', opts:['i <= n Y num = clau','i <= n Y num <> clau','i < n O num = clau'], exp:'Continuem mentre quedin elements i el valor llegit no sigui la clau. Quan num = clau, la condició es fa falsa i sortim.' },
-  { t:'Cerca del primer nombre parell en una seqüència de n elements.', ans:'i <= n Y NO trobat', opts:['i <= n Y trobat','i > n O trobat','i <= n Y NO trobat'], exp:'L\'esquema habitual: continuar mentre i <= n i no s\'hagi trobat cap parell.' }
-];
-(function(){
-  const c = document.getElementById('ex3-cont');
-  E3.forEach((d,i)=>{
-    const opts = d.opts.map(o=>`<button class="qi-btn" onclick="checkE3(this,${i},'${o.replace(/'/g,"\\'")}')">${o.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</button>`).join('');
-    const div = document.createElement('div'); div.className='qi';
-    div.innerHTML = `<div class="qi-text">${i+1}. ${d.t}</div><div class="qi-opts">${opts}</div><div class="qi-fb" id="E3f${i}"></div>`;
-    c.appendChild(div);
-  });
-})();
-function checkE3(btn,i,choice){
-  const d = E3[i], fb = document.getElementById('E3f'+i);
-  const btns = btn.closest('.qi-opts').querySelectorAll('.qi-btn'); btns.forEach(b=>b.disabled=true);
-  if(choice===d.ans){ btn.classList.add('ok'); fb.className='qi-fb ok'; fb.textContent='✓ Correcte! '+d.exp; }
-  else{ btn.classList.add('fail'); btns.forEach(b=>{ if(b.textContent.trim().replace(/&lt;/g,'<').replace(/&gt;/g,'>')===d.ans) b.classList.add('ok'); }); fb.className='qi-fb fail'; fb.textContent='✗ Incorrecte. '+d.exp; }
-}
-
-/* ── Exercici 4 ── */
 const E4 = [
-  { ctx:'Llegeix 8 nombres i calcula quants són múltiples de 3 i quina és la seva suma.',
-    code:"// Anàlisi\n// Entrades: 8 nombres (Entero)\n// Sortides: comptador de múltiples de 3 i la seva suma\n\nProceso MultiplesDesTres\n    Definir i, num, cont Como Entero;\n    Definir suma Como Real;\n    cont <- 0;\n    suma <- 0;\n    Para i <- 1 Hasta 8 Hacer\n        Escribir Sin Saltar 'Nombre ', i, ': ';\n        Leer num;\n        Si num mod 3 = 0 Entonces\n            cont <- cont + 1;\n            suma <- suma + num;\n        FinSi\n    FinPara\n    Escribir 'Múltiples de 3: ', cont;\n    Escribir 'Suma: ', suma;\nFinProceso",
-    exp:'Recorregut pur: el Para visita els 8 elements sense excepció. Dins, un Si filtra els múltiples de 3 i actualitza comptador i acumulador.' },
-  { ctx:'Donada una seqüència de nombres introduïts fins a un 0 (sentinel), troba el primer negatiu i mostra en quina posició es troba.',
-    code:"// Anàlisi\n// Entrades: seqüència de nombres, 0 com a sentinel\n// Sortida: posició del primer negatiu o missatge si no n'hi ha\n\nProceso PrimerNegatiu\n    Definir num, pos Como Entero;\n    Definir trobat Como Logico;\n    trobat <- Falso;\n    pos <- 0;\n    Escribir Sin Saltar 'Introdueix un nombre (0 per acabar): ';\n    Leer num;\n    Mientras num <> 0 Y NO trobat Hacer\n        pos <- pos + 1;\n        Si num < 0 Entonces\n            trobat <- Verdadero;\n        FinSi\n        Si NO trobat Entonces\n            Escribir Sin Saltar 'Introdueix un nombre (0 per acabar): ';\n            Leer num;\n        FinSi\n    FinMientras\n    Si trobat Entonces\n        Escribir 'Primer negatiu (', num, ') a la posició ', pos;\n    SiNo\n        Escribir 'No hi ha cap nombre negatiu.';\n    FinSi\nFinProceso",
-    exp:'Cerca amb sentinel: la condició doble atura el bucle si s\'acaba la seqüència (num = 0) o si es troba el negatiu (trobat). La variable pos compta elements vàlids.' },
-  { ctx:'Busca el primer nombre més gran que 100 entre 8 nombres que demanis, indicant en quina posició està. Si cap no supera 100, mostra un avís.',
-    code:"// Anàlisi\n// Entrada: 8 nombres (Entero)\n// Sortida: primer nombre > 100 i la seva posició, o un avís\n\nProceso PrimerGran\n    Definir i, num, pos Como Entero;\n    Definir trobat Como Logico;\n    trobat <- Falso;\n    pos <- 0;\n    i <- 1;\n    Mientras i <= 8 Y NO trobat Hacer\n        Escribir Sin Saltar 'Nombre ', i, ': ';\n        Leer num;\n        Si num > 100 Entonces\n            trobat <- Verdadero;\n            pos <- i;\n        FinSi\n        i <- i + 1;\n    FinMientras\n    Si trobat Entonces\n        Escribir 'El primer més gran que 100 és ', num, ' (posició ', pos, ').';\n    SiNo\n        Escribir 'Cap nombre supera 100.';\n    FinSi\nFinProceso",
-    exp:'Cerca amb sortida anticipada i només números: recorrem fins a trobar el primer que supera 100 (trobat = Verdadero) o fins a esgotar els 8 nombres. La variable pos guarda la posició on l\'hem trobat.' },
-  { ctx:'Llegeix la nota de 5 alumnes i mostra quants han aprovat (nota de 5 o més).',
-    code:"// Anàlisi\n// Entrada: 5 notes (Real)\n// Sortida: quantes notes són 5 o més\n\nProceso ComptarAprovats\n    Definir i, aprovats Como Entero;\n    Definir nota Como Real;\n    aprovats <- 0;\n    Para i <- 1 Hasta 5 Hacer\n        Escribir Sin Saltar 'Nota ', i, ': ';\n        Leer nota;\n        Si nota >= 5 Entonces\n            aprovats <- aprovats + 1;\n        FinSi\n    FinPara\n    Escribir 'Alumnes aprovats: ', aprovats;\nFinProceso",
-    exp:'Recorregut pur amb comptador: el Para visita les 5 notes sense excepció. El comptador aprovats comença a 0 abans del bucle i, a dins, el Si només el fa pujar quan la nota és 5 o més.' },
-  { ctx:'Demana notes fins que l\'usuari escrigui -1 (sentinella), però accepta com a màxim 5 notes.',
-    code:"// Anàlisi\n// Entrada: notes fins a -1 (sentinella) o màxim 5\n// Sortida: quantes notes s'han introduït\n\nProceso NotesAmbLimit\n    Definir nota, cont Como Entero;\n    cont <- 0;\n    nota <- 0;          // valor inicial qualsevol, diferent de -1\n    Mientras nota <> -1 Y cont < 5 Hacer\n        Escribir Sin Saltar 'Nota (-1 per acabar): ';\n        Leer nota;\n        Si nota <> -1 Entonces\n            cont <- cont + 1;\n        FinSi\n    FinMientras\n    Escribir 'Has introduït ', cont, ' notes.';\nFinProceso",
-    exp:'Condició doble amb Y: continua mentre NO arribi el sentinella (nota <> -1) I encara no s\'hagi arribat al màxim (cont < 5). Llegim dins del bucle, i només comptem la nota si no és el sentinella. Així, en arribar a 5 notes el bucle s\'atura sense demanar-ne una sisena.' },
-  { ctx:'Demana un codi de producte (màxim 200). Si l\'usuari escriu -1 (sentinella), surt sense registrar-lo; si el codi és més gran que 200, se li torna a demanar.',
-    code:"// Anàlisi\n// Entrada: codi (màxim 200) o -1 (sentinella)\n// Sortida: codi registrat o missatge de sortida\n\nProceso CodiProducte\n    Definir codi Como Entero;\n    Escribir Sin Saltar 'Codi de producte (màxim 200, -1 per sortir): ';\n    Leer codi;\n    Mientras codi <> -1 Y codi > 200 Hacer\n        Escribir Sin Saltar 'Codi no vàlid, torna-ho a provar: ';\n        Leer codi;\n    FinMientras\n    Si codi <> -1 Entonces\n        Escribir 'Codi registrat: ', codi;\n    SiNo\n        Escribir 'Has sortit amb el sentinella.';\n    FinSi\nFinProceso",
-    exp:'Condició doble amb Y: continua demanant mentre el codi NO sigui el sentinella (codi <> -1) I sigui massa gran (codi > 200). Del bucle es surt per dues raons: o ha escrit -1 per sortir, o el codi ja és vàlid. Per saber quina ha estat, després del bucle mirem si codi <> -1.' },
-  { ctx:'L\'ordinador pensa un número secret. L\'usuari el va provant fins a encertar-lo, o pot escriure -1 per rendir-se. El programa ha de dir quants intents ha fet.',
-    code:"// Anàlisi\n// Entrada: intents fins a encertar el secret o fins a -1 (sentinella)\n// Sortida: si l'ha encertat o s'ha rendit, i quants intents\n\nProceso Endevinar\n    Definir num, secret, intents Como Entero;\n    secret <- 42;\n    intents <- 1;\n    Escribir Sin Saltar 'Endevina el número (-1 per rendir-te): ';\n    Leer num;\n    Mientras num <> secret Y num <> -1 Hacer\n        Escribir Sin Saltar 'No és correcte, torna-ho a provar (-1 per rendir-te): ';\n        Leer num;\n        intents <- intents + 1;\n    FinMientras\n    Si num = secret Entonces\n        Escribir 'Molt bé, has encertat! Has utilitzat ', intents, ' intents';\n    SiNo\n        Escribir 'T''has rendit després de ', intents - 1, ' intents. Era el ', secret;\n    FinSi\nFinProceso",
-    exp:'Condició doble amb Y: continua mentre el número sigui diferent del secret I diferent del sentinella (-1). Els intents comencen a 1 perquè la primera lectura ja és un intent. Si l\'usuari es rendeix, el -1 també s\'ha comptat com a lectura, per això mostrem intents - 1.' },
-  { ctx:'Llegeix la despesa de cada dia de la setmana (7 dies) i mostra el total gastat i la mitjana diària.',
-    code:"// Anàlisi\n// Entrada: 7 despeses (Real)\n// Sortides: total gastat i mitjana diària\n\nProceso DespesesSetmana\n    Definir i Como Entero;\n    Definir despesa, total Como Real;\n    total <- 0;\n    Para i <- 1 Hasta 7 Hacer\n        Escribir Sin Saltar 'Despesa del dia ', i, ': ';\n        Leer despesa;\n        total <- total + despesa;\n    FinPara\n    Escribir 'Total gastat: ', total;\n    Escribir 'Mitjana diària: ', total / 7;\nFinProceso",
-    exp:'Recorregut pur amb acumulador: el Para fa exactament 7 voltes (una per dia) i a cada volta suma la despesa a total, que comença a 0. Com que sabem que són 7 dies, la mitjana és total / 7 i no hi ha risc de dividir per zero.' },
-  { ctx:'Suma els preus d\'una compra fins que l\'usuari escrigui -1 (sentinella), però s\'atura abans si se superen els 100 euros de pressupost.',
-    code:"// Anàlisi\n// Entrada: preus fins a -1 (sentinella) o fins a superar 100\n// Sortida: total gastat\n\nProceso ComprarAmbPressupost\n    Definir preu, suma Como Real;\n    suma <- 0;\n    preu <- 0;\n    Mientras preu <> -1 Y suma <= 100 Hacer\n        Escribir Sin Saltar 'Preu (-1 per acabar): ';\n        Leer preu;\n        Si preu <> -1 Entonces\n            suma <- suma + preu;\n        FinSi\n    FinMientras\n    Escribir 'Total gastat: ', suma;\nFinProceso",
-    exp:'Condició doble amb Y: continua mentre NO arribi el sentinella (preu <> -1) I encara hi hagi pressupost (suma <= 100). Llegim dins del bucle i només sumem el preu si no és el sentinella. Així, si la suma supera 100, el bucle s\'atura sense demanar cap preu de més.' },
-  { ctx:'Demana un PIN de 4 xifres (entre 1000 i 9999). Si l\'usuari escriu el sentinella (0), el programa acaba sense registrar-lo; si el PIN té menys o més de 4 dígits, se li torna a demanar.',
-    code:"// Anàlisi\n// Entrada: pin (1000-9999) o 0 (sentinella)\n// Sortida: PIN registrat o missatge de sortida\n\nProceso DemanarPIN\n    Definir pin Como Entero;\n    Escribir Sin Saltar 'PIN de 4 xifres (0 per sortir): ';\n    Leer pin;\n    Mientras pin <> 0 Y (pin < 1000 O pin > 9999) Hacer\n        Escribir Sin Saltar 'PIN no vàlid, torna-ho a provar: ';\n        Leer pin;\n    FinMientras\n    Si pin <> 0 Entonces\n        Escribir 'PIN registrat: ', pin;\n    SiNo\n        Escribir 'Has sortit sense registrar cap PIN.';\n    FinSi\nFinProceso",
-    exp:'Triple condició: continua demanant mentre NO sigui el sentinella (pin <> 0) I el PIN sigui no vàlid, és a dir, massa curt (pin < 1000) O massa llarg (pin > 9999). Compte amb el parèntesi: la Y té prioritat sobre la O, i sense ell la condició significaria una altra cosa. Després del bucle, pin <> 0 ens diu si hem sortit amb un PIN vàlid o amb el sentinella.' }
+  { ctx: "Llegeix 8 nombres. Mostra quants són múltiples de 3 i la suma d'aquests múltiples.", code: "// Anàlisi\n// Entrades: 8 nombres (Entero)\n// Sortides: comptador de múltiples de 3 i la seva suma\n\nProceso MultiplesDesTres\n    Definir i, num, cont Como Entero;\n    Definir suma Como Real;\n    cont <- 0;\n    suma <- 0;\n    Para i <- 1 Hasta 8 Hacer\n        Escribir Sin Saltar 'Nombre ', i, ': ';\n        Leer num;\n        Si num mod 3 = 0 Entonces\n            cont <- cont + 1;\n            suma <- suma + num;\n        FinSi\n    FinPara\n    Escribir 'Múltiples de 3: ', cont;\n    Escribir 'Suma: ', suma;\nFinProceso", exp: "Recorregut pur: el Para visita els 8 elements sense excepció. Dins, un Si filtra els múltiples de 3 i actualitza comptador i acumulador." },
+  { ctx: "Demana 8 nombres. Mostra el primer que sigui més gran que 100 i la seva posició; si cap no supera 100, mostra 'Cap nombre supera 100'.", code: "// Anàlisi\n// Entrada: 8 nombres (Entero)\n// Sortida: primer nombre > 100 i la seva posició, o un avís\n\nProceso PrimerGran\n    Definir i, num, pos Como Entero;\n    Definir trobat Como Logico;\n    trobat <- Falso;\n    pos <- 0;\n    i <- 1;\n    Mientras i <= 8 Y NO trobat Hacer\n        Escribir Sin Saltar 'Nombre ', i, ': ';\n        Leer num;\n        Si num > 100 Entonces\n            trobat <- Verdadero;\n            pos <- i;\n        FinSi\n        i <- i + 1;\n    FinMientras\n    Si trobat Entonces\n        Escribir 'El primer més gran que 100 és ', num, ' (posició ', pos, ').';\n    SiNo\n        Escribir 'Cap nombre supera 100.';\n    FinSi\nFinProceso", exp: "Cerca amb sortida anticipada i només números: recorrem fins a trobar el primer que supera 100 (trobat = Verdadero) o fins a esgotar els 8 nombres. La variable pos guarda la posició on l'hem trobat." },
+  { ctx: "Demana un codi de producte (màxim 200); si és més gran, el torna a demanar. Si s'escriu -1 (sentinella), mostra 'Has sortit amb el sentinella'; si no, mostra 'Codi registrat: …'.", code: "// Anàlisi\n// Entrada: codi (màxim 200) o -1 (sentinella)\n// Sortida: codi registrat o missatge de sortida\n\nProceso CodiProducte\n    Definir codi Como Entero;\n    Escribir Sin Saltar 'Codi de producte (màxim 200, -1 per sortir): ';\n    Leer codi;\n    Mientras codi <> -1 Y codi > 200 Hacer\n        Escribir Sin Saltar 'Codi no vàlid, torna-ho a provar: ';\n        Leer codi;\n    FinMientras\n    Si codi <> -1 Entonces\n        Escribir 'Codi registrat: ', codi;\n    SiNo\n        Escribir 'Has sortit amb el sentinella.';\n    FinSi\nFinProceso", exp: "Condició doble amb Y: continua demanant mentre el codi NO sigui el sentinella (codi <> -1) I sigui massa gran (codi > 200). Del bucle es surt per dues raons: o ha escrit -1 per sortir, o el codi ja és vàlid. Per saber quina ha estat, després del bucle mirem si codi <> -1." },
+  { ctx: "L'usuari prova d'encertar un número secret, o escriu -1 per rendir-se. Si l'encerta, mostra quants intents ha fet; si es rendeix, mostra els intents fets i quin era el número.", code: "// Anàlisi\n// Entrada: intents fins a encertar el secret o fins a -1 (sentinella)\n// Sortida: si l'ha encertat o s'ha rendit, i quants intents\n\nProceso Endevinar\n    Definir num, secret, intents Como Entero;\n    secret <- 42;\n    intents <- 1;\n    Escribir Sin Saltar 'Endevina el número (-1 per rendir-te): ';\n    Leer num;\n    Mientras num <> secret Y num <> -1 Hacer\n        Escribir Sin Saltar 'No és correcte, torna-ho a provar (-1 per rendir-te): ';\n        Leer num;\n        intents <- intents + 1;\n    FinMientras\n    Si num = secret Entonces\n        Escribir 'Molt bé, has encertat! Has utilitzat ', intents, ' intents';\n    SiNo\n        Escribir 'T''has rendit després de ', intents - 1, ' intents. Era el ', secret;\n    FinSi\nFinProceso", exp: "Condició doble amb Y: continua mentre el número sigui diferent del secret I diferent del sentinella (-1). Els intents comencen a 1 perquè la primera lectura ja és un intent. Si l'usuari es rendeix, el -1 també s'ha comptat com a lectura, per això mostrem intents - 1." },
+  { ctx: "Llegeix la despesa de cada dia de la setmana (7 dies). Mostra el total gastat i la mitjana diària.", code: "// Anàlisi\n// Entrada: 7 despeses (Real)\n// Sortides: total gastat i mitjana diària\n\nProceso DespesesSetmana\n    Definir i Como Entero;\n    Definir despesa, total Como Real;\n    total <- 0;\n    Para i <- 1 Hasta 7 Hacer\n        Escribir Sin Saltar 'Despesa del dia ', i, ': ';\n        Leer despesa;\n        total <- total + despesa;\n    FinPara\n    Escribir 'Total gastat: ', total;\n    Escribir 'Mitjana diària: ', total / 7;\nFinProceso", exp: "Recorregut pur amb acumulador: el Para fa exactament 7 voltes (una per dia) i a cada volta suma la despesa a total, que comença a 0. Com que sabem que són 7 dies, la mitjana és total / 7 i no hi ha risc de dividir per zero." },
+  { ctx: "Suma els preus d'una compra fins que l'usuari escrigui -1 (sentinella), però s'atura abans si se superen els 100 € de pressupost. Mostra el total gastat.", code: "// Anàlisi\n// Entrada: preus fins a -1 (sentinella) o fins a superar 100\n// Sortida: total gastat\n\nProceso ComprarAmbPressupost\n    Definir preu, suma Como Real;\n    suma <- 0;\n    preu <- 0;\n    Mientras preu <> -1 Y suma <= 100 Hacer\n        Escribir Sin Saltar 'Preu (-1 per acabar): ';\n        Leer preu;\n        Si preu <> -1 Entonces\n            suma <- suma + preu;\n        FinSi\n    FinMientras\n    Escribir 'Total gastat: ', suma;\nFinProceso", exp: "Condició doble amb Y: continua mentre NO arribi el sentinella (preu <> -1) I encara hi hagi pressupost (suma <= 100). Llegim dins del bucle i només sumem el preu si no és el sentinella. Així, si la suma supera 100, el bucle s'atura sense demanar cap preu de més." },
+  { ctx: "Demana un PIN de 4 xifres (entre 1000 i 9999); si no té 4 dígits, el torna a demanar. Si s'escriu 0 (sentinella), mostra 'Has sortit sense registrar cap PIN'; si no, mostra 'PIN registrat: …'.", code: "// Anàlisi\n// Entrada: pin (1000-9999) o 0 (sentinella)\n// Sortida: PIN registrat o missatge de sortida\n\nProceso DemanarPIN\n    Definir pin Como Entero;\n    Escribir Sin Saltar 'PIN de 4 xifres (0 per sortir): ';\n    Leer pin;\n    Mientras pin <> 0 Y (pin < 1000 O pin > 9999) Hacer\n        Escribir Sin Saltar 'PIN no vàlid, torna-ho a provar: ';\n        Leer pin;\n    FinMientras\n    Si pin <> 0 Entonces\n        Escribir 'PIN registrat: ', pin;\n    SiNo\n        Escribir 'Has sortit sense registrar cap PIN.';\n    FinSi\nFinProceso", exp: "Triple condició: continua demanant mentre NO sigui el sentinella (pin <> 0) I el PIN sigui no vàlid, és a dir, massa curt (pin < 1000) O massa llarg (pin > 9999). Compte amb el parèntesi: la Y té prioritat sobre la O, i sense ell la condició significaria una altra cosa. Després del bucle, pin <> 0 ens diu si hem sortit amb un PIN vàlid o amb el sentinella." },
+  { ctx: "<strong>Seguiment d'extrem.</strong> D'una xarxa de sensors es llegeix, per a cada sensor, el codi i 3 mesures, fins que el codi és -1. Calcula la mitjana de les 3 mesures de cada sensor i, al final, mostra el codi del sensor amb millor qualitat (mitjana més baixa) i el del pitjor (mitjana més alta).", code: "// Analisi\n// Entrades: per cada sensor, codi i 3 mesures (fins a codi = -1)\n// Sortides: sensor amb millor i pitjor qualitat\n\nProceso SensorsQualitat\n    Definir codi, millorId, pitjorId Como Entero;\n    Definir m1, m2, m3, mitjana, millor, pitjor Como Real;\n    Definir teDades Como Logico;\n    teDades <- Falso;\n    Escribir 'Codi del sensor (-1 per acabar):';\n    Leer codi;\n    Mientras codi <> -1 Hacer\n        Escribir 'Mesura 1:';\n        Leer m1;\n        Escribir 'Mesura 2:';\n        Leer m2;\n        Escribir 'Mesura 3:';\n        Leer m3;\n        mitjana <- (m1 + m2 + m3) / 3;\n        Si (NO teDades) O (mitjana < millor) Entonces\n            millor <- mitjana;\n            millorId <- codi;\n        FinSi\n        Si (NO teDades) O (mitjana > pitjor) Entonces\n            pitjor <- mitjana;\n            pitjorId <- codi;\n        FinSi\n        teDades <- Verdadero;\n        Escribir 'Codi del sensor (-1 per acabar):';\n        Leer codi;\n    FinMientras\n    Si teDades Entonces\n        Escribir 'Millor qualitat (mes baixa): ', millorId;\n        Escribir 'Pitjor qualitat (mes alta): ', pitjorId;\n    SiNo\n        Escribir 'No shan introduit sensors';\n    FinSi\nFinProceso", exp: "És el mateix patró de la teoria, aplicat dues vegades: un indicador teDades i la condició (NO teDades) O (…) per guardar el millor (mitjana més baixa) i el pitjor (mitjana més alta). Sentinella -1. És l'esquema de \"sensors\" de la prova." },
+  { ctx: "<strong>Percentatge + seguiment d'extrem.</strong> Per a cada curs (fins que el codi és FI) es llegeix el codi, el nombre de matrícules noves i el de repetidors. Mostra, per a cada curs, el percentatge de repetidors i, al final, mostra el codi del curs amb el percentatge de repetidors més alt.", code: "// Analisi\n// Entrades: per cada curs, codi, matricules noves i repetidors (fins a codi = FI)\n// Sortides: % repetidors de cada curs i curs amb el % mes alt\n\nProceso Inscripcions\n    Definir codi, codiMax Como Cadena;\n    Definir noves, repetidors, total Como Entero;\n    Definir percent, maxPercent Como Real;\n    Definir hiHaMax Como Logico;\n    hiHaMax <- Falso;\n    Escribir 'Codi del curs (FI per acabar):';\n    Leer codi;\n    Mientras codi <> 'FI' Hacer\n        Escribir 'Matricules noves:';\n        Leer noves;\n        Escribir 'Repetidors:';\n        Leer repetidors;\n        total <- noves + repetidors;\n        Si total > 0 Entonces\n            percent <- repetidors * 100 / total;\n        SiNo\n            percent <- 0;\n        FinSi\n        Escribir 'Repetidors: ', percent, ' %';\n        Si (NO hiHaMax) O (percent > maxPercent) Entonces\n            maxPercent <- percent;\n            codiMax <- codi;\n            hiHaMax <- Verdadero;\n        FinSi\n        Escribir 'Codi del curs (FI per acabar):';\n        Leer codi;\n    FinMientras\n    Si hiHaMax Entonces\n        Escribir 'Curs amb mes repetidors: ', codiMax, ' (', maxPercent, ' %)';\n    SiNo\n        Escribir 'No shan registrat cursos';\n    FinSi\nFinProceso", exp: "El % de repetidors és part sobre total × 100 (repetidors*100/total). El seguiment de l'extrem amb l'indicador hiHaMax guarda el curs amb el % més alt. Sentinella de text: FI. És l'esquema de \"inscripcions\" de la prova." }
 ];
 (function(){
   const c = document.getElementById('ex4-cont');
+  c.innerHTML='';
   E4.forEach((d,i)=>{
     const div = document.createElement('div'); div.className='ri';
-    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><button class="ri-btn" onclick="reveal(this,'E4a${i}')">▶ Veure codi PSeInt</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
+    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><button class="ri-btn" onclick="reveal(this,'E4a${i}')">▶ Mostra la solució</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
     c.appendChild(div);
   });
 })();
 
-function reveal(btn,id){
-  const el=document.getElementById(id);
-  const show=el.classList.toggle('show');
-  if(!btn.dataset.lbl) btn.dataset.lbl=btn.textContent.replace(/^▶\s*/,'').replace(/^Veure\s*/,'');
-  btn.textContent=(show?'▼ Amagar ':'▶ Veure ')+btn.dataset.lbl;
-}
+function reveal(btn,id){ var el=document.getElementById(id); var show=el.classList.toggle('show'); btn.textContent = show ? '▼ Amaga la solució' : '▶ Mostra la solució'; }
 function toggleBox(btn,id){ const el=document.getElementById(id); const show=el.classList.toggle('show'); btn.innerHTML = show ? '▼ Amagar la solució amb sentinella' : '▶ Mostrar la solució amb sentinella'; }
 </script>
-</body>
-</html>
+
+
+</body></html>
