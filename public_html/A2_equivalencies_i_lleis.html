@@ -111,6 +111,10 @@
     .law-example { background: var(--bg); border-radius: var(--r-sm); padding: 12px 16px; }
     .law-example p { font-size: 14px; color: var(--ink); margin: 0; line-height: 1.5; }
     .law-sym { font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--purple-2); background: var(--purple-bg); padding: 10px 16px; border-radius: var(--r-sm); display: inline-block; }
+    .law-eqs { display: flex; flex-direction: column; gap: 8px; }
+    .law-eq { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .law-eq .law-sym { min-width: 270px; }
+    .law-eq-name { font-size: 13px; font-weight: 600; color: var(--ink-2); }
     .law-why { background: var(--blue-bg); border-radius: var(--r-sm); padding: 12px 16px; }
     .law-why-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--blue); margin-bottom: 5px; }
     .law-why-text { font-size: 13px; color: var(--blue); line-height: 1.55; margin: 0; }
@@ -322,7 +326,9 @@
     <p style="font-size:14px; color:var(--ink-2); margin-bottom:24px; line-height:1.6;">
       Cada llei té un nom una mica tècnic, però no t'espantis: el que importa és entendre
       <strong>què fa</strong> i <strong>per a què serveix</strong>. Per això cada una porta
-      un exemple de cada dia. Aquestes són les més útils:
+      un exemple de cada dia. Al costat de cada fórmula hi tens el <strong>nom oficial</strong> de l'equivalència,
+      que és el que hauràs de citar a les demostracions. El símbol <strong style="font-family:'JetBrains Mono',monospace;">≡</strong> vol dir
+      «és equivalent a». Aquestes són les més útils:
     </p>
 
     <!-- DOBLE NEGACIÓ -->
@@ -338,7 +344,9 @@
       </div>
       <div class="law-part">
         <div class="law-part-label">En símbols</div>
-        <div class="law-sym">¬¬p &nbsp;=&nbsp; p</div>
+        <div class="law-eqs">
+          <div class="law-eq"><span class="law-sym">¬¬p ≡ p</span><span class="law-eq-name">Doble negació</span></div>
+        </div>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -361,7 +369,10 @@
       </div>
       <div class="law-part">
         <div class="law-part-label">En símbols</div>
-        <div class="law-sym">p ∧ p = p &nbsp;&nbsp;·&nbsp;&nbsp; p ∨ p = p</div>
+        <div class="law-eqs">
+          <div class="law-eq"><span class="law-sym">p ∧ p ≡ p</span><span class="law-eq-name">Idempotència de la conjunció</span></div>
+          <div class="law-eq"><span class="law-sym">p ∨ p ≡ p</span><span class="law-eq-name">Idempotència de la disjunció</span></div>
+        </div>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -388,7 +399,10 @@
       </div>
       <div class="law-part">
         <div class="law-part-label">En símbols</div>
-        <div class="law-sym">¬(p ∧ q) = ¬p ∨ ¬q &nbsp;&nbsp;·&nbsp;&nbsp; ¬(p ∨ q) = ¬p ∧ ¬q</div>
+        <div class="law-eqs">
+          <div class="law-eq"><span class="law-sym">¬(p ∧ q) ≡ ¬p ∨ ¬q</span><span class="law-eq-name">Llei de De Morgan per a la conjunció</span></div>
+          <div class="law-eq"><span class="law-sym">¬(p ∨ q) ≡ ¬p ∧ ¬q</span><span class="law-eq-name">Llei de De Morgan per a la disjunció</span></div>
+        </div>
       </div>
       <div class="law-part">
         <div class="law-part-label">La prova amb una taula de veritat</div>
@@ -438,8 +452,11 @@
       </div>
       <div class="law-part">
         <div class="law-part-label">En símbols</div>
-        <div class="law-sym">p ∨ (p ∧ q) = p &nbsp;&nbsp;·&nbsp;&nbsp; p ∧ (p ∨ q) = p</div>
-        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">La primera és l'<strong>absorció de la disjunció</strong>; la segona, l'<strong>absorció de la conjunció</strong>. La segona funciona igual: "ets soci <strong>i</strong> (ets soci <strong>o</strong> tens invitació)" = "ets soci", perquè si ja ets soci el parèntesi es compleix segur.</p>
+        <div class="law-eqs">
+          <div class="law-eq"><span class="law-sym">p ∧ (p ∨ q) ≡ p</span><span class="law-eq-name">Absorció de la conjunció</span></div>
+          <div class="law-eq"><span class="law-sym">p ∨ (p ∧ q) ≡ p</span><span class="law-eq-name">Absorció de la disjunció</span></div>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">L'exemple del soci és l'absorció de la disjunció. La de la conjunció funciona igual: "ets soci <strong>i</strong> (ets soci <strong>o</strong> tens invitació)" ≡ "ets soci", perquè si ja ets soci el parèntesi es compleix segur.</p>
       </div>
       <div class="law-part">
         <div class="law-part-label">La prova amb una taula de veritat</div>
@@ -469,7 +486,7 @@
 
     <!-- DISTRIBUTIVA -->
     <div class="law-card">
-      <div class="law-head"><span class="law-name">Distributiva</span></div>
+      <div class="law-head"><span class="law-name">Distributivitat</span></div>
       <div class="law-part">
         <div class="law-part-label">Què diu (en cristià)</div>
         <p class="law-part-text">Funciona com treure o posar factor comú a mates. Pots "repartir" una condició dins d'un parèntesi, o treure-la a fora.</p>
@@ -480,10 +497,11 @@
       </div>
       <div class="law-part">
         <div class="law-part-label">En símbols</div>
-        <div class="law-sym">p ∧ (q ∨ r) = (p ∧ q) ∨ (p ∧ r)</div>
-        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 10px;"><strong>Distributivitat de la conjunció</strong>: la "i" es reparteix sobre la "o".</p>
-        <div class="law-sym">p ∨ (q ∧ r) = (p ∨ q) ∧ (p ∨ r)</div>
-        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;"><strong>Distributivitat de la disjunció</strong>: i també al revés, la "o" es reparteix sobre la "i". Això a mates no passa (2 + 3 × 4 no és (2 + 3) × (2 + 4)), però en lògica sí.</p>
+        <div class="law-eqs">
+          <div class="law-eq"><span class="law-sym">p ∧ (q ∨ r) ≡ (p ∧ q) ∨ (p ∧ r)</span><span class="law-eq-name">Distributivitat de la conjunció</span></div>
+          <div class="law-eq"><span class="law-sym">p ∨ (q ∧ r) ≡ (p ∨ q) ∧ (p ∨ r)</span><span class="law-eq-name">Distributivitat de la disjunció</span></div>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">La "i" es reparteix sobre la "o", i també al revés. Això segon a mates no passa (2 + 3 × 4 no és (2 + 3) × (2 + 4)), però en lògica sí.</p>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -515,7 +533,9 @@
       </div>
       <div class="law-part">
         <div class="law-part-label">En símbols</div>
-        <div class="law-sym">p → q &nbsp;=&nbsp; ¬p ∨ q</div>
+        <div class="law-eqs">
+          <div class="law-eq"><span class="law-sym">p → q ≡ ¬p ∨ q</span><span class="law-eq-name">Implicació material</span></div>
+        </div>
       </div>
       <div class="law-part">
         <div class="law-part-label">La prova amb una taula de veritat</div>
@@ -542,7 +562,7 @@
 
     <!-- CONTRAPOSITIVA -->
     <div class="law-card">
-      <div class="law-head"><span class="law-name">Contrapositiva</span></div>
+      <div class="law-head"><span class="law-name">Contraposició lògica</span></div>
       <div class="law-part">
         <div class="law-part-label">Què diu (en cristià)</div>
         <p class="law-part-text">"Si p, llavors q" és el mateix que "si no q, llavors no p". Gires les dues parts de lloc i les negues totes dues.</p>
@@ -557,7 +577,9 @@
       </div>
       <div class="law-part">
         <div class="law-part-label">En símbols</div>
-        <div class="law-sym">p → q &nbsp;=&nbsp; ¬q → ¬p</div>
+        <div class="law-eqs">
+          <div class="law-eq"><span class="law-sym">p → q ≡ ¬q → ¬p</span><span class="law-eq-name">Contraposició lògica</span></div>
+        </div>
       </div>
       <div class="law-part">
         <div class="law-part-label">La prova amb una taula de veritat</div>
@@ -584,10 +606,10 @@
 
     <!-- DEFINICIÓ DEL BICONDICIONAL -->
     <div class="law-card">
-      <div class="law-head"><span class="law-name">Definició del bicondicional</span></div>
+      <div class="law-head"><span class="law-name">Definició d'equivalència material</span></div>
       <div class="law-part">
         <div class="law-part-label">Què diu (en cristià)</div>
-        <p class="law-part-text">El "si i només si" (↔) és el condicional funcionant en les <strong>dues direccions</strong> alhora: p porta a q, i q porta a p.</p>
+        <p class="law-part-text">El "si i només si" (↔), també anomenat <strong>bicondicional</strong>, és el condicional funcionant en les <strong>dues direccions</strong> alhora: p porta a q, i q porta a p.</p>
       </div>
       <div class="law-part">
         <div class="law-part-label">Exemple de cada dia</div>
@@ -599,7 +621,9 @@
       </div>
       <div class="law-part">
         <div class="law-part-label">En símbols</div>
-        <div class="law-sym">p ↔ q &nbsp;=&nbsp; (p → q) ∧ (q → p)</div>
+        <div class="law-eqs">
+          <div class="law-eq"><span class="law-sym">p ↔ q ≡ (p → q) ∧ (q → p)</span><span class="law-eq-name">Definició d'equivalència material</span></div>
+        </div>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -619,22 +643,31 @@
       <div class="law-part">
         <div class="law-part-label">1 · Neutre — no canvia res</div>
         <div class="law-example">
-          <p><span style="font-family:'JetBrains Mono',monospace;">p ∧ V = p</span> &nbsp;&nbsp;i&nbsp;&nbsp; <span style="font-family:'JetBrains Mono',monospace;">p ∨ F = p</span></p>
-          <p style="font-size:13px; color:var(--ink-2); margin-top:6px;">Afegir amb una "i" una cosa que sempre passa no canvia res: "has de ser soci <strong>i</strong> (alguna cosa sempre certa)" = "has de ser soci".</p>
+          <div class="law-eqs">
+          <div class="law-eq"><span class="law-sym">p ∧ V ≡ p</span><span class="law-eq-name">Neutre de la conjunció</span></div>
+          <div class="law-eq"><span class="law-sym">p ∨ F ≡ p</span><span class="law-eq-name">Neutre de la disjunció</span></div>
+        </div>
+          <p style="font-size:13px; color:var(--ink-2); margin-top:10px;">Afegir amb una "i" una cosa que sempre passa no canvia res: "has de ser soci <strong>i</strong> (alguna cosa sempre certa)" = "has de ser soci".</p>
         </div>
       </div>
       <div class="law-part">
         <div class="law-part-label">2 · Dominació — s'imposa</div>
         <div class="law-example">
-          <p><span style="font-family:'JetBrains Mono',monospace;">p ∨ V = V</span> &nbsp;&nbsp;i&nbsp;&nbsp; <span style="font-family:'JetBrains Mono',monospace;">p ∧ F = F</span></p>
-          <p style="font-size:13px; color:var(--ink-2); margin-top:6px;">Una "o" amb una cosa sempre certa ja és certa, miris el que miris. Una "i" amb una cosa sempre falsa ja és falsa.</p>
+          <div class="law-eqs">
+          <div class="law-eq"><span class="law-sym">p ∧ F ≡ F</span><span class="law-eq-name">Dominació de la conjunció</span></div>
+          <div class="law-eq"><span class="law-sym">p ∨ V ≡ V</span><span class="law-eq-name">Dominació de la disjunció</span></div>
+        </div>
+          <p style="font-size:13px; color:var(--ink-2); margin-top:10px;">Una "i" amb una cosa sempre falsa ja és falsa. Una "o" amb una cosa sempre certa ja és certa, miris el que miris.</p>
         </div>
       </div>
       <div class="law-part">
         <div class="law-part-label">3 · Inversa (complement) — una cosa i el seu contrari</div>
         <div class="law-example">
-          <p><span style="font-family:'JetBrains Mono',monospace;">p ∧ ¬p = F</span> &nbsp;&nbsp;i&nbsp;&nbsp; <span style="font-family:'JetBrains Mono',monospace;">p ∨ ¬p = V</span></p>
-          <p style="font-size:13px; color:var(--ink-2); margin-top:6px;">"Ser major d'edat <strong>i</strong> no ser-ho alhora" és impossible (sempre fals). "Ser major d'edat <strong>o</strong> no ser-ho" sempre es compleix (sempre cert).</p>
+          <div class="law-eqs">
+          <div class="law-eq"><span class="law-sym">p ∧ ¬p ≡ F</span><span class="law-eq-name">Inversa de la conjunció</span></div>
+          <div class="law-eq"><span class="law-sym">p ∨ ¬p ≡ V</span><span class="law-eq-name">Inversa de la disjunció</span></div>
+        </div>
+          <p style="font-size:13px; color:var(--ink-2); margin-top:10px;">"Ser major d'edat <strong>i</strong> no ser-ho alhora" és impossible (sempre fals). "Ser major d'edat <strong>o</strong> no ser-ho" sempre es compleix (sempre cert).</p>
         </div>
       </div>
       <div class="law-part">
@@ -645,15 +678,55 @@
       </div>
     </div>
 
-    <!-- ÒBVIES -->
-    <div class="ibox purple">
-      <div class="ibox-label">I dues més que són de sentit comú</div>
-      <div class="ibox-text">
-        <strong>Commutativa:</strong> l'ordre no importa. "Cafè i sucre" és el mateix que "sucre i cafè"
-        (<code style="font-family:'JetBrains Mono',monospace;font-size:12px;">p ∧ q = q ∧ p</code> &nbsp;i&nbsp; <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">p ∨ q = q ∨ p</code>).<br>
-        <strong>Associativa:</strong> en una cadena de la mateixa operació, els parèntesis no canvien res
-        (<code style="font-family:'JetBrains Mono',monospace;font-size:12px;">p ∧ (q ∧ r) = (p ∧ q) ∧ r</code> &nbsp;i&nbsp; <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">p ∨ (q ∨ r) = (p ∨ q) ∨ r</code>).<br>
-        Totes dues et deixen <strong>reordenar lliurement</strong> abans d'aplicar les altres lleis.
+    <!-- COMMUTATIVITAT -->
+    <div class="law-card">
+      <div class="law-head"><span class="law-name">Commutativitat</span></div>
+      <div class="law-part">
+        <div class="law-part-label">Què diu (en cristià)</div>
+        <p class="law-part-text">L'ordre no importa: pots girar les dues parts d'una "i" o d'una "o" i diuen el mateix.</p>
+      </div>
+      <div class="law-part">
+        <div class="law-part-label">Exemple de cada dia</div>
+        <div class="law-example"><p>"Cafè <strong>i</strong> sucre" &nbsp;=&nbsp; "Sucre <strong>i</strong> cafè"</p></div>
+      </div>
+      <div class="law-part">
+        <div class="law-part-label">En símbols</div>
+        <div class="law-eqs">
+          <div class="law-eq"><span class="law-sym">p ∧ q ≡ q ∧ p</span><span class="law-eq-name">Commutativitat de la conjunció</span></div>
+          <div class="law-eq"><span class="law-sym">p ∨ q ≡ q ∨ p</span><span class="law-eq-name">Commutativitat de la disjunció</span></div>
+        </div>
+      </div>
+      <div class="law-part">
+        <div class="law-why">
+          <div class="law-why-label">⭐ Per a què et serveix</div>
+          <p class="law-why-text">Et deixa reordenar les parts d'una condició per posar juntes les que s'assemblen i poder aplicar-hi una altra llei.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ASSOCIATIVITAT -->
+    <div class="law-card">
+      <div class="law-head"><span class="law-name">Associativitat</span></div>
+      <div class="law-part">
+        <div class="law-part-label">Què diu (en cristià)</div>
+        <p class="law-part-text">En una cadena de la mateixa operació (totes "i" o totes "o"), els parèntesis no canvien res: pots agrupar com vulguis.</p>
+      </div>
+      <div class="law-part">
+        <div class="law-part-label">Exemple de cada dia</div>
+        <div class="law-example"><p>"Pa <strong>i</strong> (llet <strong>i</strong> ous)" &nbsp;=&nbsp; "(Pa <strong>i</strong> llet) <strong>i</strong> ous"</p></div>
+      </div>
+      <div class="law-part">
+        <div class="law-part-label">En símbols</div>
+        <div class="law-eqs">
+          <div class="law-eq"><span class="law-sym">p ∧ (q ∧ r) ≡ (p ∧ q) ∧ r</span><span class="law-eq-name">Associativitat de la conjunció</span></div>
+          <div class="law-eq"><span class="law-sym">p ∨ (q ∨ r) ≡ (p ∨ q) ∨ r</span><span class="law-eq-name">Associativitat de la disjunció</span></div>
+        </div>
+      </div>
+      <div class="law-part">
+        <div class="law-why">
+          <div class="law-why-label">⭐ Per a què et serveix</div>
+          <p class="law-why-text">Juntament amb la commutativitat, et deixa moure i agrupar lliurement les parts abans d'aplicar les altres lleis. Compte: només val si totes les operacions són iguals.</p>
+        </div>
       </div>
     </div>
 
@@ -818,7 +891,7 @@ const E1 = [
   },
   {
     transf: '¬(p ∧ q)  →  ¬p ∨ ¬q',
-    opts: ['Distributiva', 'De Morgan', 'Absorció'],
+    opts: ['Distributivitat', 'De Morgan', 'Absorció'],
     ans: 'De Morgan',
     explain: 'El "no" entra, i la "i" es converteix en "o". Això és De Morgan.'
   },
@@ -830,7 +903,7 @@ const E1 = [
   },
   {
     transf: 'p → q  →  ¬p ∨ q',
-    opts: ['Implicació material', 'De Morgan', 'Contrapositiva'],
+    opts: ['Implicació material', 'De Morgan', 'Contraposició lògica'],
     ans: 'Implicació material',
     explain: 'El condicional es reescriu com una "o": "si p llavors q" = "o no p, o q".'
   },
@@ -1043,7 +1116,7 @@ const E5 = [
     claim: '(p ∨ q) ∧ (p ∨ ¬q) ≡ p',
     steps: [
       ['(p ∨ q) ∧ (p ∨ ¬q)', null],
-      ['p ∨ (q ∧ ¬q)', 'Distributiva', 'Les dues parts comparteixen la p: la traiem com a factor comú, igual que a les fraccions.'],
+      ['p ∨ (q ∧ ¬q)', 'Distributivitat', 'Les dues parts comparteixen la p: la traiem com a factor comú, igual que a les fraccions.'],
       ['p ∨ F', 'Inversa (complement)', 'q ∧ ¬q és impossible: una cosa i el seu contrari alhora sempre és F.'],
       ['p', 'Neutre', 'Una "o" amb F no afegeix res: p ∨ F = p.']
     ],
