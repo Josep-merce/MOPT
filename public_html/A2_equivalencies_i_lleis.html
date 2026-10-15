@@ -347,6 +347,16 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"Ets soci" <span style="font-size:13px; color:var(--ink-3);">(que avui sigui un dia de la setmana sempre és cert: no hi afegeix res)</span></p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-mid">V</th><th class="h-key">p∧V</th><th class="h-key">p</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="f key">F</td><td class="f key">F</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V F</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part law-line">
         <div class="law-eq"><span class="law-sym">p ∨ F ≡ p</span><span class="law-eq-name">Neutre de la disjunció</span></div>
@@ -355,6 +365,16 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"Ets soci" <span style="font-size:13px; color:var(--ink-3);">(tenir 200 anys sempre és fals: no obre la porta a ningú)</span></p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-mid">F</th><th class="h-key">p∨F</th><th class="h-key">p</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="f">F</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V F</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -378,6 +398,16 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és →</p>
           <p>Sempre fals <span style="font-size:13px; color:var(--ink-3);">(ningú té 200 anys: no entra ningú)</span></p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-key">p∧F</th><th class="h-key">F</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>F F</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part law-line">
         <div class="law-eq"><span class="law-sym">p ∨ V ≡ V</span><span class="law-eq-name">Dominació de la disjunció</span></div>
@@ -386,6 +416,16 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és →</p>
           <p>Sempre cert <span style="font-size:13px; color:var(--ink-3);">(la segona part sempre es compleix: entra tothom)</span></p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-key">p∨V</th><th class="h-key">V</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="v key">V</td><td class="v key">V</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V V</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -409,6 +449,16 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és →</p>
           <p>Sempre fals <span style="font-size:13px; color:var(--ink-3);">(impossible: no es pot ser i no ser alhora)</span></p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-mid">¬p</th><th class="h-key">p∧¬p</th><th class="h-key">F</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="f key">F</td><td class="f key">F</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>F F</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part law-line">
         <div class="law-eq"><span class="law-sym">p ∨ ¬p ≡ V</span><span class="law-eq-name">Inversa de la disjunció</span></div>
@@ -417,6 +467,16 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és →</p>
           <p>Sempre cert <span style="font-size:13px; color:var(--ink-3);">(o ho ets o no ho ets: sempre es compleix)</span></p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-mid">¬p</th><th class="h-key">p∨¬p</th><th class="h-key">V</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="f">F</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V V</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -440,6 +500,16 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"Has de ser soci"</p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-key">p∧p</th><th class="h-key">p</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V F</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part law-line">
         <div class="law-eq"><span class="law-sym">p ∨ p ≡ p</span><span class="law-eq-name">Idempotència de la disjunció</span></div>
@@ -448,6 +518,16 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"Entres si ets soci"</p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-key">p∨p</th><th class="h-key">p</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V F</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -471,6 +551,18 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"Ets soci" <span style="font-size:13px; color:var(--ink-3);">(si ja ets soci, el parèntesi es compleix segur)</span></p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-mid">p∨q</th><th class="h-key">p∧(p∨q)</th><th class="h-key">p</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V V F F</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part law-line">
         <div class="law-eq"><span class="law-sym">p ∨ (p ∧ q) ≡ p</span><span class="law-eq-name">Absorció de la disjunció</span></div>
@@ -479,15 +571,9 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"Entres si ets soci" <span style="font-size:13px; color:var(--ink-3);">(si ja ets soci, tant és la invitació)</span></p>
         </div>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">La prova amb una taula de veritat</div>
-        <div class="tt-wrap">
+        <div class="tt-wrap" style="margin-top:10px;">
           <table class="tt">
-            <thead><tr>
-              <th class="h-var">p</th><th class="h-var">q</th>
-              <th class="h-mid">p∧q</th><th class="h-key">p∨(p∧q)</th><th class="h-key">p</th>
-            </tr></thead>
+            <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-mid">p∧q</th><th class="h-key">p∨(p∧q)</th><th class="h-key">p</th></tr></thead>
             <tbody>
               <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
               <tr><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="v key">V</td><td class="v key">V</td></tr>
@@ -496,7 +582,7 @@
             </tbody>
           </table>
         </div>
-        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V V F F</strong>: coincideixen. A més, el valor de <strong>q és igual</strong> — el resultat només depèn de p.</p>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V V F F</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -520,6 +606,16 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"Plou"</p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-mid">¬p</th><th class="h-key">¬¬p</th><th class="h-key">p</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="f">F</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="f key">F</td><td class="f key">F</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V F</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -543,6 +639,18 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"<strong>No</strong> tinc gana <strong>o no</strong> tinc son"</p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-mid">p∧q</th><th class="h-mid">¬p</th><th class="h-mid">¬q</th><th class="h-key">¬(p∧q)</th><th class="h-key">¬p∨¬q</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>F V V V</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part law-line">
         <div class="law-eq"><span class="law-sym">¬(p ∨ q) ≡ ¬p ∧ ¬q</span><span class="law-eq-name">Llei de De Morgan per a la disjunció</span></div>
@@ -551,25 +659,18 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"<strong>No</strong> plou <strong>i no</strong> fa vent"</p>
         </div>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">La prova amb una taula de veritat</div>
-        <div class="tt-wrap">
+        <div class="tt-wrap" style="margin-top:10px;">
           <table class="tt">
-            <thead><tr>
-              <th class="h-var">p</th><th class="h-var">q</th>
-              <th class="h-mid">p∧q</th><th class="h-key">¬(p∧q)</th>
-              <th class="h-mid">¬p</th><th class="h-mid">¬q</th><th class="h-key">¬p∨¬q</th>
-            </tr></thead>
+            <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-mid">p∨q</th><th class="h-mid">¬p</th><th class="h-mid">¬q</th><th class="h-key">¬(p∨q)</th><th class="h-key">¬p∧¬q</th></tr></thead>
             <tbody>
-              <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="f key">F</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td></tr>
-              <tr><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="v key">V</td><td class="f">F</td><td class="v">V</td><td class="v key">V</td></tr>
-              <tr><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="v key">V</td><td class="v">V</td><td class="f">F</td><td class="v key">V</td></tr>
-              <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="v key">V</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
             </tbody>
           </table>
         </div>
-        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>F V V V</strong>: coincideixen, així que les expressions són equivalents.</p>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>F F F V</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -593,6 +694,18 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"Sucre <strong>i</strong> cafè"</p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-key">p∧q</th><th class="h-key">q∧p</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V F F F</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part law-line">
         <div class="law-eq"><span class="law-sym">p ∨ q ≡ q ∨ p</span><span class="law-eq-name">Commutativitat de la disjunció</span></div>
@@ -601,6 +714,18 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"Pagues en efectiu <strong>o</strong> amb targeta"</p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-key">p∨q</th><th class="h-key">q∨p</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="f">F</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V V V F</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -624,6 +749,22 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"(Pa <strong>i</strong> llet) <strong>i</strong> ous"</p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-var">r</th><th class="h-mid">q∧r</th><th class="h-mid">p∧q</th><th class="h-key">p∧(q∧r)</th><th class="h-key">(p∧q)∧r</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V F F F F F F F</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part law-line">
         <div class="law-eq"><span class="law-sym">p ∨ (q ∨ r) ≡ (p ∨ q) ∨ r</span><span class="law-eq-name">Associativitat de la disjunció</span></div>
@@ -632,6 +773,22 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"(Te <strong>o</strong> cafè) <strong>o</strong> suc"</p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-var">r</th><th class="h-mid">q∨r</th><th class="h-mid">p∨q</th><th class="h-key">p∨(q∨r)</th><th class="h-key">(p∨q)∨r</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V V V V V V V F</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -655,6 +812,22 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"(Ets soci <strong>i</strong> tens invitació) <strong>o</strong> (ets soci <strong>i</strong> pagues entrada)"</p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-var">r</th><th class="h-mid">q∨r</th><th class="h-mid">p∧q</th><th class="h-mid">p∧r</th><th class="h-key">p∧(q∨r)</th><th class="h-key">(p∧q)∨(p∧r)</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V V V F F F F F</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part law-line">
         <div class="law-eq"><span class="law-sym">p ∨ (q ∧ r) ≡ (p ∨ q) ∧ (p ∨ r)</span><span class="law-eq-name">Distributivitat de la disjunció</span></div>
@@ -663,6 +836,22 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"(Ets soci <strong>o</strong> tens invitació) <strong>i</strong> (ets soci <strong>o</strong> pagues entrada)"</p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-var">r</th><th class="h-mid">q∧r</th><th class="h-mid">p∨q</th><th class="h-mid">p∨r</th><th class="h-key">p∨(q∧r)</th><th class="h-key">(p∨q)∧(p∨r)</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V V V V V F F F</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -686,10 +875,7 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"<strong>Si</strong> el terra <strong>no</strong> està mullat, <strong>llavors no</strong> plou"</p>
         </div>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">La prova amb una taula de veritat</div>
-        <div class="tt-wrap">
+        <div class="tt-wrap" style="margin-top:10px;">
           <table class="tt">
             <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-mid">¬p</th><th class="h-mid">¬q</th><th class="h-key">p→q</th><th class="h-key">¬q→¬p</th></tr></thead>
             <tbody>
@@ -700,7 +886,7 @@
             </tbody>
           </table>
         </div>
-        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles tornen a coincidir (<strong>V F V V</strong>).</p>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V F V V</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -724,21 +910,18 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">és el mateix que →</p>
           <p>"<strong>O</strong> no plou, <strong>o</strong> agafo el paraigua"</p>
         </div>
-      </div>
-      <div class="law-part">
-        <div class="law-part-label">La prova amb una taula de veritat</div>
-        <div class="tt-wrap">
+        <div class="tt-wrap" style="margin-top:10px;">
           <table class="tt">
-            <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-key">p→q</th><th class="h-mid">¬p</th><th class="h-key">¬p∨q</th></tr></thead>
+            <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-mid">¬p</th><th class="h-key">p→q</th><th class="h-key">¬p∨q</th></tr></thead>
             <tbody>
-              <tr><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="f">F</td><td class="v key">V</td></tr>
-              <tr><td class="v">V</td><td class="f">F</td><td class="f key">F</td><td class="f">F</td><td class="f key">F</td></tr>
-              <tr><td class="f">F</td><td class="v">V</td><td class="v key">V</td><td class="v">V</td><td class="v key">V</td></tr>
-              <tr><td class="f">F</td><td class="f">F</td><td class="v key">V</td><td class="v">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
             </tbody>
           </table>
         </div>
-        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V F V V</strong>: coincideixen.</p>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V F V V</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -762,6 +945,18 @@
           <p style="font-size:13px; color:var(--ink-3); margin:6px 0;">vol dir totes dues coses alhora →</p>
           <p>"Si aproves és que tens un 5" <strong>i</strong> "si tens un 5 és que aproves"</p>
         </div>
+        <div class="tt-wrap" style="margin-top:10px;">
+          <table class="tt">
+            <thead><tr><th class="h-var">p</th><th class="h-var">q</th><th class="h-mid">p→q</th><th class="h-mid">q→p</th><th class="h-key">p↔q</th><th class="h-key">(p→q)∧(q→p)</th></tr></thead>
+            <tbody>
+              <tr><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+              <tr><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="f key">F</td><td class="f key">F</td></tr>
+              <tr><td class="f">F</td><td class="f">F</td><td class="v">V</td><td class="v">V</td><td class="v key">V</td><td class="v key">V</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">Les dues columnes liles donen <strong>V F F V</strong>: coincideixen fila per fila, així que són equivalents.</p>
       </div>
       <div class="law-part">
         <div class="law-why">
