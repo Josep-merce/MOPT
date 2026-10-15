@@ -171,16 +171,6 @@
     .pseudo-out { font-family: 'JetBrains Mono', monospace; font-size: 13px; background: var(--code-bg); color: var(--code-text); padding: 14px 18px; border-radius: var(--r-sm); line-height: 1.9; white-space: pre-wrap; }
     .tgl { display: none; margin-top: 14px; }
     .tgl.show { display: block; }
-    .eq-group { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 18px 20px; margin-bottom: 16px; }
-    .eq-group .ri-btn { margin-top: 0; }
-    .eq-title { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 12px; }
-    .eq-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-    .eq-table th { text-align: left; padding: 8px 12px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--purple); background: var(--purple-bg); border: 0.5px solid var(--purple-bdr); }
-    .eq-table td { padding: 8px 12px; border: 0.5px solid var(--border); vertical-align: middle; color: var(--ink-2); }
-    .eq-table td.eq { font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--purple-2); white-space: nowrap; }
-    .eq-table td.eq .arr { font-family: 'DM Sans', system-ui, sans-serif; font-size: 16px; }
-    .eq-table tr:nth-child(even) td { background: #fafaf9; }
-    @media (max-width: 600px) { .eq-table td.eq { white-space: normal; } }
     .formula { font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--purple-2); font-weight: 500; }
 
     @media (max-width: 600px) { .analogy-grid { flex-direction: column; } }
@@ -448,7 +438,8 @@
       </div>
       <div class="law-part">
         <div class="law-part-label">En símbols</div>
-        <div class="law-sym">p ∨ (p ∧ q) = p</div>
+        <div class="law-sym">p ∨ (p ∧ q) = p &nbsp;&nbsp;·&nbsp;&nbsp; p ∧ (p ∨ q) = p</div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;">La primera és l'<strong>absorció de la disjunció</strong>; la segona, l'<strong>absorció de la conjunció</strong>. La segona funciona igual: "ets soci <strong>i</strong> (ets soci <strong>o</strong> tens invitació)" = "ets soci", perquè si ja ets soci el parèntesi es compleix segur.</p>
       </div>
       <div class="law-part">
         <div class="law-part-label">La prova amb una taula de veritat</div>
@@ -490,6 +481,9 @@
       <div class="law-part">
         <div class="law-part-label">En símbols</div>
         <div class="law-sym">p ∧ (q ∨ r) = (p ∧ q) ∨ (p ∧ r)</div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 10px;"><strong>Distributivitat de la conjunció</strong>: la "i" es reparteix sobre la "o".</p>
+        <div class="law-sym">p ∨ (q ∧ r) = (p ∨ q) ∧ (p ∨ r)</div>
+        <p style="font-size:12px; color:var(--ink-3); margin:8px 0 0;"><strong>Distributivitat de la disjunció</strong>: i també al revés, la "o" es reparteix sobre la "i". Això a mates no passa (2 + 3 × 4 no és (2 + 3) × (2 + 4)), però en lògica sí.</p>
       </div>
       <div class="law-part">
         <div class="law-why">
@@ -656,83 +650,13 @@
       <div class="ibox-label">I dues més que són de sentit comú</div>
       <div class="ibox-text">
         <strong>Commutativa:</strong> l'ordre no importa. "Cafè i sucre" és el mateix que "sucre i cafè"
-        (<code style="font-family:'JetBrains Mono',monospace;font-size:12px;">p ∧ q = q ∧ p</code>).<br>
+        (<code style="font-family:'JetBrains Mono',monospace;font-size:12px;">p ∧ q = q ∧ p</code> &nbsp;i&nbsp; <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">p ∨ q = q ∨ p</code>).<br>
         <strong>Associativa:</strong> en una cadena de la mateixa operació, els parèntesis no canvien res
-        (<code style="font-family:'JetBrains Mono',monospace;font-size:12px;">(p ∧ q) ∧ r = p ∧ (q ∧ r)</code>).<br>
+        (<code style="font-family:'JetBrains Mono',monospace;font-size:12px;">p ∧ (q ∧ r) = (p ∧ q) ∧ r</code> &nbsp;i&nbsp; <code style="font-family:'JetBrains Mono',monospace;font-size:12px;">p ∨ (q ∨ r) = (p ∨ q) ∨ r</code>).<br>
         Totes dues et deixen <strong>reordenar lliurement</strong> abans d'aplicar les altres lleis.
       </div>
     </div>
 
-    <!-- TAULES D'EQUIVALÈNCIES -->
-    <p style="font-size:14px; color:var(--ink-2); margin:28px 0 20px; line-height:1.6;">
-      Aquí tens totes les equivalències recollides en tres taules, amb el <strong>nom oficial</strong> de cada una.
-      Són les que hauràs de citar a cada pas quan facis una demostració amb una cadena de lleis.
-      El símbol <span style="font-family:'JetBrains Mono',monospace;">≡</span> vol dir «és equivalent a».
-    </p>
-
-    <div class="eq-group">
-      <div class="eq-title">Equivalències d'ús més freqüent (1)</div>
-      <button class="ri-btn" onclick="reveal(this,'eq-t1')">▶ Mostrar la taula</button>
-      <div class="tgl" id="eq-t1">
-        <div class="tt-wrap">
-          <table class="eq-table">
-            <thead><tr><th>Equivalència</th><th>Nom</th></tr></thead>
-            <tbody>
-                <tr><td class="eq">p ∧ V ≡ p</td><td>Neutre de la conjunció</td></tr>
-                <tr><td class="eq">p ∨ F ≡ p</td><td>Neutre de la disjunció</td></tr>
-                <tr><td class="eq">p ∧ F ≡ F</td><td>Dominació de la conjunció</td></tr>
-                <tr><td class="eq">p ∨ V ≡ V</td><td>Dominació de la disjunció</td></tr>
-                <tr><td class="eq">p ∧ ¬p ≡ F</td><td>Inversa de la conjunció</td></tr>
-                <tr><td class="eq">p ∨ ¬p ≡ V</td><td>Inversa de la disjunció</td></tr>
-                <tr><td class="eq">p ∧ p ≡ p</td><td>Idempotència de la conjunció</td></tr>
-                <tr><td class="eq">p ∨ p ≡ p</td><td>Idempotència de la disjunció</td></tr>
-                <tr><td class="eq">p ∧ (p ∨ q) ≡ p</td><td>Absorció de la conjunció</td></tr>
-                <tr><td class="eq">p ∨ (p ∧ q) ≡ p</td><td>Absorció de la disjunció</td></tr>
-                <tr><td class="eq">¬¬p ≡ p</td><td>Doble negació</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="eq-group">
-      <div class="eq-title">Equivalències d'ús més freqüent (2)</div>
-      <button class="ri-btn" onclick="reveal(this,'eq-t2')">▶ Mostrar la taula</button>
-      <div class="tgl" id="eq-t2">
-        <div class="tt-wrap">
-          <table class="eq-table">
-            <thead><tr><th>Equivalència</th><th>Nom</th></tr></thead>
-            <tbody>
-                <tr><td class="eq">¬(p ∧ q) ≡ ¬p ∨ ¬q</td><td>Llei de De Morgan per a la conjunció</td></tr>
-                <tr><td class="eq">¬(p ∨ q) ≡ ¬p ∧ ¬q</td><td>Llei de De Morgan per a la disjunció</td></tr>
-                <tr><td class="eq">p ∧ q ≡ q ∧ p</td><td>Commutativitat de la conjunció</td></tr>
-                <tr><td class="eq">p ∨ q ≡ q ∨ p</td><td>Commutativitat de la disjunció</td></tr>
-                <tr><td class="eq">p ∧ (q ∧ r) ≡ (p ∧ q) ∧ r</td><td>Associativitat de la conjunció</td></tr>
-                <tr><td class="eq">p ∨ (q ∨ r) ≡ (p ∨ q) ∨ r</td><td>Associativitat de la disjunció</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="eq-group">
-      <div class="eq-title">Equivalències d'ús més freqüent (3)</div>
-      <button class="ri-btn" onclick="reveal(this,'eq-t3')">▶ Mostrar la taula</button>
-      <div class="tgl" id="eq-t3">
-        <div class="tt-wrap">
-          <table class="eq-table">
-            <thead><tr><th>Equivalència</th><th>Nom</th></tr></thead>
-            <tbody>
-                <tr><td class="eq">p ∧ (q ∨ r) ≡ (p ∧ q) ∨ (p ∧ r)</td><td>Distributivitat de la conjunció</td></tr>
-                <tr><td class="eq">p ∨ (q ∧ r) ≡ (p ∨ q) ∧ (p ∨ r)</td><td>Distributivitat de la disjunció</td></tr>
-                <tr><td class="eq">p <span class="arr">⇒</span> q ≡ ¬q <span class="arr">⇒</span> ¬p</td><td>Contraposició lògica</td></tr>
-                <tr><td class="eq">p <span class="arr">⇒</span> q ≡ ¬p ∨ q</td><td>Implicació material</td></tr>
-                <tr><td class="eq">p <span class="arr">⇔</span> q ≡ (p <span class="arr">⇒</span> q) ∧ (q <span class="arr">⇒</span> p)</td><td>Definició d'equivalència material</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
   </section>
 
   <!-- ══════════ SECCIÓ 3: DEMOSTRAR EQUIVALÈNCIES ══════════ -->
