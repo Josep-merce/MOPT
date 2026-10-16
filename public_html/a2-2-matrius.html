@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="ca">
-<head>
-  <meta charset="UTF-8">
+<html lang="ca"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A2.2 · Matrius — RA2 Pensament Computacional</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -125,7 +124,7 @@
       <span class="badge b-act">A2.2</span>
       <span class="badge b-new">Matrius</span>
     </div>
-    <h1 class="page-title">Files i columnes</h1>
+    <h1 class="page-title">Matrius (Files i columnes)</h1>
     <p class="page-sub">Quan una llista no n'hi ha prou: organitzar les dades en una graella de files i columnes amb una matriu.</p>
     <div class="obj-box">
       <div class="obj-icon">🎯</div>
@@ -163,11 +162,11 @@
     <div class="matviz-wrap">
       <div class="matviz-name">taula[3,4] — 3 files × 4 columnes</div>
       <table class="matviz">
-        <tr><td class="corner"></td><th>col 0</th><th>col 1</th><th>col 2</th><th>col 3</th></tr>
+        <tbody><tr><td class="corner"></td><th>col 0</th><th>col 1</th><th>col 2</th><th>col 3</th></tr>
         <tr><td class="rowhead">fila 0</td><td>7</td><td>5</td><td>8</td><td>6</td></tr>
         <tr><td class="rowhead">fila 1</td><td>4</td><td>9</td><td class="hl">3</td><td>5</td></tr>
         <tr><td class="rowhead">fila 2</td><td>6</td><td>7</td><td>8</td><td>9</td></tr>
-      </table>
+      </tbody></table>
       <div class="matviz-cap">La casella marcada és <code>taula[1,2]</code>: fila 1, columna 2 → val 3.</div>
     </div>
 
@@ -204,8 +203,8 @@
       <div class="demo-label">Exemple · guardar i mostrar una casella</div>
       <pre class="pseudo-out" data-code="Definir taula Como Entero;
 Dimension taula[3,4];      // 3 files x 4 columnes = 12 caselles
-taula[0,1] <- 10;          // fila 0, columna 1
-taula[1,2] <- 3;           // fila 1, columna 2
+taula[0,1] &lt;- 10;          // fila 0, columna 1
+taula[1,2] &lt;- 3;           // fila 1, columna 2
 Escribir taula[0,1];       // mostra 10
 Escribir taula[1,2];       // mostra 3"></pre>
       <div class="exp-box">
@@ -251,8 +250,8 @@ Escribir taula[1,2];       // mostra 3"></pre>
     Definir taula Como Entero;
     Dimension taula[2,3];      // 2 files x 3 columnes
 
-    Para fila <- 0 Hasta 1 Hacer
-        Para columna <- 0 Hasta 2 Hacer
+    Para fila &lt;- 0 Hasta 1 Hacer
+        Para columna &lt;- 0 Hasta 2 Hacer
             Escribir 'Valor de la fila ', fila, ' columna ', columna, ':';
             Leer taula[fila,columna];
         FinPara
@@ -306,25 +305,25 @@ FinProceso"></pre>
     Dimension taula[2,3];
 
     // Omplim la matriu
-    Para fila <- 0 Hasta 1 Hacer
-        Para columna <- 0 Hasta 2 Hacer
+    Para fila &lt;- 0 Hasta 1 Hacer
+        Para columna &lt;- 0 Hasta 2 Hacer
             Escribir 'Valor [', fila, ',', columna, ']:';
             Leer taula[fila,columna];
         FinPara
     FinPara
 
     // Sumem tots els elements amb un acumulador
-    suma <- 0;
-    Para fila <- 0 Hasta 1 Hacer
-        Para columna <- 0 Hasta 2 Hacer
-            suma <- suma + taula[fila,columna];
+    suma &lt;- 0;
+    Para fila &lt;- 0 Hasta 1 Hacer
+        Para columna &lt;- 0 Hasta 2 Hacer
+            suma &lt;- suma + taula[fila,columna];
         FinPara
     FinPara
 
     // Mostrem la matriu com una graella
     Escribir 'La matriu és:';
-    Para fila <- 0 Hasta 1 Hacer
-        Para columna <- 0 Hasta 2 Hacer
+    Para fila &lt;- 0 Hasta 1 Hacer
+        Para columna &lt;- 0 Hasta 2 Hacer
             Escribir Sin Saltar taula[fila,columna], ' ';
         FinPara
         Escribir '';
@@ -385,6 +384,197 @@ FinProceso"></pre>
       </div></div>
       <p class="ex-intro">Escriu el programa PSeInt sencer per a cada enunciat. Després obre la solució per comparar.</p>
       <div id="ex4-cont"></div>
+      <div class="ri">
+        <div class="ri-q">
+          <div class="ri-q-text"><strong>3.</strong> <strong>Consum d'aigua</strong> (litres) de 3 habitatges durant 4 setmanes, en una matriu <code>[3,4]</code> (files = habitatges, columnes = setmanes). Omple-la i mostra, per a cada <strong>habitatge (fila)</strong>, el total i la mitjana setmanal.</div>
+          <div class="demo-label" style="margin-top:12px;">El programa ha de mostrar (exemple d'execució)</div>
+          <pre class="pseudo-out" style="margin:6px 0 4px;">Consum habitatge 1 setmana 1:
+&gt; 120
+... (fins a omplir les 12 caselles) ...
+Habitatge 1: total 450 L, mitjana 112.5 L/setmana
+Habitatge 2: total 360 L, mitjana 90 L/setmana
+Habitatge 3: total 580 L, mitjana 145 L/setmana</pre>
+          <button class="ri-btn" onclick="toggle(this,'sol-prova-m1')">▶ Mostrar solució</button>
+        </div>
+        <div class="ri-ans" id="sol-prova-m1">
+          <div class="ri-ans-label">Solució · PSeInt</div>
+          <pre class="pseudo-out" data-code="Proceso ConsumAigua
+    Definir fila, col Como Entero;
+    Definir consum Como Real;
+    Dimension consum[3, 4];
+    Definir totalFila, mitjanaFila Como Real;
+
+    // Càrrega de tota la matriu
+    Para fila &lt;- 0 Hasta 2 Hacer
+        Para col &lt;- 0 Hasta 3 Hacer
+            Escribir 'Consum habitatge ', fila + 1, ' setmana ', col + 1, ':';
+            Leer consum[fila, col];
+        FinPara
+    FinPara
+
+    // Total i mitjana PER FILA
+    Para fila &lt;- 0 Hasta 2 Hacer
+        totalFila &lt;- 0;                  // es reinicia a cada habitatge!
+        Para col &lt;- 0 Hasta 3 Hacer
+            totalFila &lt;- totalFila + consum[fila, col];
+        FinPara
+        mitjanaFila &lt;- totalFila / 4;
+        Escribir 'Habitatge ', fila + 1, ': total ', totalFila, ' L, mitjana ', mitjanaFila, ' L/setmana';
+    FinPara
+FinProceso"></pre>
+          <div class="ri-note">El detall que més falla: <code>totalFila &lt;- 0</code> ha d'anar <strong>dins</strong> del bucle de files, perquè cada habitatge comenci de zero. Un recorregut per omplir i un altre per calcular.</div>
+        </div>
+      </div>
+      <div class="ri">
+        <div class="ri-q">
+          <div class="ri-q-text"><strong>4.</strong> 4 cafeteries anoten els <strong>cafès venuts</strong> en 3 franges (matí, tarda, nit), en una matriu <code>[4,3]</code>. Suma, per a cada <strong>franja (columna)</strong>, el total de totes les cafeteries i indica quina franja ha venut més.</div>
+          <div class="demo-label" style="margin-top:12px;">El programa ha de mostrar (exemple d'execució)</div>
+          <pre class="pseudo-out" style="margin:6px 0 4px;">Cafès cafeteria 1 franja 1:
+&gt; 50
+... (fins a omplir les 12 caselles) ...
+Total franja 1: 205 cafès
+Total franja 2: 325 cafès
+Total franja 3: 90 cafès
+La franja 2 és la que ha venut més (325 cafès).</pre>
+          <button class="ri-btn" onclick="toggle(this,'sol-prova-m2')">▶ Mostrar solució</button>
+        </div>
+        <div class="ri-ans" id="sol-prova-m2">
+          <div class="ri-ans-label">Solució · PSeInt</div>
+          <pre class="pseudo-out" data-code="Proceso CafeteriesFranges
+    Definir fila, col Como Entero;
+    Definir vendes Como Entero;
+    Dimension vendes[4, 3];
+    Definir totalFranja, maxFranja, millorFranja Como Entero;
+
+    // Càrrega
+    Para fila &lt;- 0 Hasta 3 Hacer
+        Para col &lt;- 0 Hasta 2 Hacer
+            Escribir 'Cafès cafeteria ', fila + 1, ' franja ', col + 1, ':';
+            Leer vendes[fila, col];
+        FinPara
+    FinPara
+
+    // Suma PER COLUMNA: el bucle extern és el de columnes
+    maxFranja &lt;- -1;
+    millorFranja &lt;- 0;
+    Para col &lt;- 0 Hasta 2 Hacer
+        totalFranja &lt;- 0;
+        Para fila &lt;- 0 Hasta 3 Hacer        // fixem la columna, recorrem les files
+            totalFranja &lt;- totalFranja + vendes[fila, col];
+        FinPara
+        Escribir 'Total franja ', col + 1, ': ', totalFranja, ' cafès';
+        Si totalFranja &gt; maxFranja Entonces
+            maxFranja &lt;- totalFranja;
+            millorFranja &lt;- col;
+        FinSi
+    FinPara
+
+    Escribir 'La franja ', millorFranja + 1, ' és la que ha venut més (', maxFranja, ' cafès).';
+FinProceso"></pre>
+          <div class="ri-note">Per sumar per columnes s'<strong>inverteixen</strong> els bucles: el de fora recorre les columnes i el de dins les files. Alhora apliquem el patró de <strong>màxim</strong> sobre els totals.</div>
+        </div>
+      </div>
+      <div class="ri">
+        <div class="ri-q">
+          <div class="ri-q-text"><strong>5.</strong> 3 sensors fan 4 lectures de temperatura al dia, en una matriu <code>[3,4]</code>. Demana una temperatura d'<strong>alarma</strong> i compta quantes <strong>lectures (cel·les)</strong> la superen.</div>
+          <div class="demo-label" style="margin-top:12px;">El programa ha de mostrar (exemple d'execució)</div>
+          <pre class="pseudo-out" style="margin:6px 0 4px;">Sensor 1 lectura 1:
+&gt; 21
+... (fins a omplir les 12 caselles) ...
+Quina és la temperatura d alarma?
+&gt; 30
+Hi ha 3 lectures per sobre de 30 ºC.</pre>
+          <button class="ri-btn" onclick="toggle(this,'sol-prova-m3')">▶ Mostrar solució</button>
+        </div>
+        <div class="ri-ans" id="sol-prova-m3">
+          <div class="ri-ans-label">Solució · PSeInt</div>
+          <pre class="pseudo-out" data-code="Proceso SensorsAlarma
+    Definir fila, col Como Entero;
+    Definir lectures Como Real;
+    Dimension lectures[3, 4];
+    Definir alarma Como Real;
+    Definir comptador Como Entero;
+
+    Para fila &lt;- 0 Hasta 2 Hacer
+        Para col &lt;- 0 Hasta 3 Hacer
+            Escribir 'Sensor ', fila + 1, ' lectura ', col + 1, ':';
+            Leer lectures[fila, col];
+        FinPara
+    FinPara
+
+    Escribir 'Quina és la temperatura d alarma?';
+    Leer alarma;
+
+    comptador &lt;- 0;
+    Para fila &lt;- 0 Hasta 2 Hacer
+        Para col &lt;- 0 Hasta 3 Hacer
+            Si lectures[fila, col] &gt; alarma Entonces
+                comptador &lt;- comptador + 1;
+            FinSi
+        FinPara
+    FinPara
+
+    Escribir 'Hi ha ', comptador, ' lectures per sobre de ', alarma, ' ºC.';
+FinProceso"></pre>
+          <div class="ri-note">El <strong>comptador</strong> es posa a 0 una sola vegada (abans dels bucles) perquè compta sobre <em>tota</em> la matriu. Dins dels dos bucles niats, la condició decideix si sumem 1.</div>
+        </div>
+      </div>
+      <div class="ri">
+        <div class="ri-q">
+          <div class="ri-q-text"><strong>6.</strong> De 4 monitors d'un gimnàs es guarda el <strong>nom</strong> (vector) i les <strong>hores</strong> de dilluns a divendres (matriu <code>[4,5]</code>). Mostra el total d'hores de cada monitor i qui n'ha fet <strong>més</strong>.</div>
+          <div class="demo-label" style="margin-top:12px;">El programa ha de mostrar (exemple d'execució)</div>
+          <pre class="pseudo-out" style="margin:6px 0 4px;">Nom del monitor 1:
+&gt; Laia
+  Hores de Laia el dia 1:
+&gt; 6
+... (fins a omplir noms i les 20 caselles) ...
+Laia: 27 hores
+Oriol: 36 hores
+Berta: 25 hores
+Nil: 37 hores
+El monitor amb més hores és Nil amb 37 hores.</pre>
+          <button class="ri-btn" onclick="toggle(this,'sol-prova-m4')">▶ Mostrar solució</button>
+        </div>
+        <div class="ri-ans" id="sol-prova-m4">
+          <div class="ri-ans-label">Solució · PSeInt</div>
+          <pre class="pseudo-out" data-code="Proceso GimnasMonitors
+    Definir mon, dia Como Entero;
+    Definir noms Como Caracter;
+    Dimension noms[4];
+    Definir hores Como Entero;
+    Dimension hores[4, 5];
+    Definir totalMon, maxHores, posMax Como Entero;
+
+    // El vector de noms va en paral·lel a les files de la matriu
+    Para mon &lt;- 0 Hasta 3 Hacer
+        Escribir 'Nom del monitor ', mon + 1, ':';
+        Leer noms[mon];
+        Para dia &lt;- 0 Hasta 4 Hacer
+            Escribir '  Hores de ', noms[mon], ' el dia ', dia + 1, ':';
+            Leer hores[mon, dia];
+        FinPara
+    FinPara
+
+    // Total per fila (monitor) + màxim amb posició
+    maxHores &lt;- -1;
+    posMax &lt;- 0;
+    Para mon &lt;- 0 Hasta 3 Hacer
+        totalMon &lt;- 0;
+        Para dia &lt;- 0 Hasta 4 Hacer
+            totalMon &lt;- totalMon + hores[mon, dia];
+        FinPara
+        Escribir noms[mon], ': ', totalMon, ' hores';
+        Si totalMon &gt; maxHores Entonces
+            maxHores &lt;- totalMon;
+            posMax &lt;- mon;
+        FinSi
+    FinPara
+
+    Escribir 'El monitor amb més hores és ', noms[posMax], ' amb ', maxHores, ' hores.';
+FinProceso"></pre>
+          <div class="ri-note">La fila <code>mon</code> correspon al monitor <code>noms[mon]</code>. Sumem per fila i guardem la <strong>posició</strong> del total més alt (<code>posMax</code>) per recuperar-ne el nom amb <code>noms[posMax]</code>.</div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -421,7 +611,7 @@ const E1 = [
   { t:'En una <code>taula[3,4]</code>, quina d\'aquestes caselles NO existeix?', opts:['taula[2,3]','taula[0,0]','taula[3,0]'], ans:2, exp:'Les files vàlides són 0,1,2. La fila 3 no existeix: error.' }
 ];
 (function(){
-  const c = document.getElementById('ex1-cont');
+  const c = document.getElementById('ex1-cont'); c.innerHTML='';
   E1.forEach((d,i)=>{
     const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E1',this,${i},${j})">${o.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</button>`).join('');
     const div = document.createElement('div'); div.className='qi';
@@ -440,7 +630,7 @@ const E2 = [
     opts:['1 2 (salt) 3 4','1 2 3 4 (tot junt)','1 3 (salt) 2 4'], ans:0, exp:'L\'Escribir buit després de cada fila fa el salt de línia: primera fila 1 2, segona fila 3 4.' }
 ];
 (function(){
-  const c = document.getElementById('ex2-cont');
+  const c = document.getElementById('ex2-cont'); c.innerHTML='';
   E2.forEach((d,i)=>{
     const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E2',this,${i},${j})">${o}</button>`).join('');
     const div = document.createElement('div'); div.className='qi';
@@ -467,7 +657,7 @@ const E3 = [
 ];
 const E3OPTS = ['Dos bucles (recorregut)','Dos bucles + acumulador','Dos bucles + condició','Dos bucles + comptador'];
 (function(){
-  const c = document.getElementById('ex3-cont');
+  const c = document.getElementById('ex3-cont'); c.innerHTML='';
   E3.forEach((d,i)=>{
     const opts = E3OPTS.map(o=>`<button class="qi-btn" onclick="checkE3(this,${i},'${o}')">${o}</button>`).join('');
     const div = document.createElement('div'); div.className='qi';
@@ -492,7 +682,7 @@ const E4 = [
     exp:'La diagonal són les caselles on la fila i la columna coincideixen (fila = columna). Per mostrar la graella, Escribir Sin Saltar dins i un Escribir buit en acabar cada fila.' }
 ];
 (function(){
-  const c = document.getElementById('ex4-cont');
+  const c = document.getElementById('ex4-cont'); c.innerHTML='';
   E4.forEach((d,i)=>{
     const div = document.createElement('div'); div.className='ri';
     div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><button class="ri-btn" onclick="reveal(this,'E4a${i}')">▶ Veure codi PSeInt</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
@@ -500,7 +690,11 @@ const E4 = [
   });
 })();
 
-function reveal(btn,id){ document.getElementById(id).classList.add('show'); btn.style.display='none'; }
+function reveal(btn,id){ var el=document.getElementById(id); var open=el.classList.toggle('show'); btn.innerHTML = open ? '&#9660; Amagar codi' : '&#9654; Veure codi PSeInt'; }
+
+/* Botó mostrar / amagar (exercicis cap a la prova) */
+function toggle(btn,id){ var el=document.getElementById(id); var open=el.classList.toggle('show'); btn.innerHTML = open ? '&#9660; Amagar solució' : '&#9654; Mostrar solució'; }
 </script>
-</body>
-</html>
+
+
+</body></html>
