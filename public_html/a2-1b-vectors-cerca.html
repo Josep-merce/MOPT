@@ -272,6 +272,61 @@ FinProceso"></pre>
       </div>
     </div>
 
+    <div class="demo">
+      <div class="demo-label">El mateix exemple · sense booleans (amb una variable de posició)</div>
+      <pre class="pseudo-out" data-code="Proceso CercaNotaSenseLogic
+    Definir i, buscada, pos Como Entero;
+    Definir notes Como Entero;
+    Dimension notes[5];
+
+    // 1) Omplim el vector (recorregut)
+    Para i &lt;- 0 Hasta 4 Hacer
+        Escribir 'Escriu la nota ', i + 1, ':';
+        Leer notes[i];
+    FinPara
+
+    Escribir 'Quina nota vols cercar?';
+    Leer buscada;
+
+    // 2) Cerca: pos = -1 vol dir «encara no l'he trobada»
+    pos &lt;- -1;
+    i &lt;- 0;
+    Mientras i &lt; 5 Y pos = -1 Hacer
+        Si notes[i] = buscada Entonces
+            pos &lt;- i;          // guardem on l'hem trobada
+        FinSi
+        i &lt;- i + 1;
+    FinMientras
+
+    // 3) Després del bucle, pos ens diu què ha passat
+    Si pos &lt;&gt; -1 Entonces
+        Escribir 'La nota ', buscada, ' és a la posició ', pos + 1;
+    SiNo
+        Escribir 'La nota ', buscada, ' no hi és.';
+    FinSi
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          En lloc d'una variable <code>Logico</code>, fem servir un enter <code>pos</code> que fa la mateixa feina.
+          Comença valent <code>-1</code>, un valor que <strong>mai</strong> pot ser una posició (les caselles van del 0
+          al 4), i vol dir «encara no l'he trobada». Quan la trobem, hi guardem la posició (<code>pos &lt;- i</code>) i la
+          condició <code>pos = -1</code> deixa de complir-se: el bucle s'atura. Aquí <code>i</code> avança sempre, i
+          per això la posició bona és <code>pos</code>, no <code>i</code>. Al final, <code>pos &lt;&gt; -1</code> vol dir
+          que l'hem trobada.
+        </div>
+      </div>
+    </div>
+
+    <div class="ibox yellow">
+      <div class="ibox-label">Amb booleà o sense?</div>
+      <div class="ibox-text">
+        Les dues versions fan exactament el mateix i les pots fer servir indistintament. Amb <code>trobat</code> el codi
+        es llegeix com una frase («mentre no l'hagis trobat»); amb <code>pos</code> t'estalvies una variable, perquè
+        la mateixa dada et diu <strong>si</strong> l'has trobada i <strong>on</strong>.
+      </div>
+    </div>
+
     <div class="ibox red">
       <div class="ibox-label">⚠️ Compte amb la condició</div>
       <div class="ibox-text">
