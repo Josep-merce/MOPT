@@ -241,6 +241,54 @@ FinMientras</code></div>
     </div>
 
     <div class="demo">
+      <div class="demo-label">Exemple curt · a quina posició és el 17?</div>
+      <pre class="pseudo-out" data-code="Proceso OnEsEl17
+    Definir i, pos Como Entero;
+    Definir edats Como Entero;
+    Dimension edats[4];
+    edats[0] &lt;- 15;
+    edats[1] &lt;- 22;
+    edats[2] &lt;- 17;
+    edats[3] &lt;- 30;
+
+    pos &lt;- -1;
+    i &lt;- 0;
+    Mientras i &lt; 4 Y pos = -1 Hacer
+        Si edats[i] = 17 Entonces
+            pos &lt;- i;
+        FinSi
+        i &lt;- i + 1;
+    FinMientras
+
+    Si pos &lt;&gt; -1 Entonces
+        Escribir 'El 17 és a la casella ', pos;
+    SiNo
+        Escribir 'El 17 no hi és';
+    FinSi
+FinProceso"></pre>
+      <div style="overflow-x:auto; margin-top:10px;">
+        <table class="trace" style="margin-top:0;">
+          <thead><tr><th>Volta</th><th>i</th><th>edats[i]</th><th>edats[i] = 17?</th><th>pos</th><th>Continua?</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>0</td><td>15</td><td>No</td><td>-1</td><td>Sí (pos encara és -1)</td></tr>
+            <tr><td>2</td><td>1</td><td>22</td><td>No</td><td>-1</td><td>Sí</td></tr>
+            <tr><td>3</td><td>2</td><td>17</td><td>Sí → pos &lt;- 2</td><td>2</td><td>No (pos ja no és -1)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="demo-label" style="margin-top:14px;">Per pantalla surt</div>
+      <pre class="pseudo-out">El 17 és a la casella 2</pre>
+      <div class="exp-box">
+        <div class="exp-label">En poques paraules</div>
+        <div class="exp-text">
+          <code>pos</code> fa dues feines alhora: mentre val <code>-1</code> el bucle continua buscant, i quan troba el 17
+          s'hi guarda la casella (2) i el bucle para. La casella 3 (el 30) ja no es mira. Si el vector no tingués cap
+          17, <code>pos</code> continuaria valent <code>-1</code> i sortiria «El 17 no hi és».
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
       <div class="demo-label">Exemple · és a la llista? i a quina posició?</div>
       <pre class="pseudo-out" data-code="Proceso CercaNota
     Definir i, buscada Como Entero;
