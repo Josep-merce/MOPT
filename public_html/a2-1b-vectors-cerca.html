@@ -201,20 +201,38 @@
       <span class="sec-num">2</span>
       <div>
         <h2 class="sec-title">L'esquema de cerca en un vector</h2>
-        <p class="sec-sub"><code>Mientras</code> amb condició doble i un indicador</p>
+        <p class="sec-sub"><code>Mientras</code> amb condició doble: sense booleà i amb booleà</p>
       </div>
     </div>
     <p class="lead">
       Per poder aturar-nos fem servir un <code>Mientras</code> (no un <code>Para</code>) amb una <strong>condició doble</strong>:
       continuem mentre <strong>queden caselles</strong> (<code>i &lt; n</code>) <strong>i</strong> encara
-      <strong>no l'hem trobat</strong> (<code>NO trobat</code>). L'índex <code>i</code> l'hem de posar a 0 abans del bucle
-      i fer-lo avançar nosaltres.
+      <strong>no l'hem trobat</strong>. L'índex <code>i</code> l'hem de posar a 0 abans del bucle i fer-lo avançar nosaltres.
     </p>
 
     <p class="lead">Hi ha dues maneres d'escriure-ho. Totes dues guarden primer el número que volem trobar a la variable <code>buscat</code>:</p>
 
     <div class="ibox blue">
-      <div class="ibox-label">Esquema 1 · amb booleà (indicador <code>trobat</code>)</div>
+      <div class="ibox-label">Esquema 1 · sense booleà (variable de posició <code>pos</code>)</div>
+      <div class="ibox-text"><code style="display:block; white-space:pre; overflow-x:auto; padding:10px 14px; line-height:1.8;">buscat &lt;- 17;            // el número que volem trobar
+pos &lt;- -1;
+i &lt;- 0;
+Mientras i &lt; n Y pos = -1 Hacer
+    Si v[i] = buscat Entonces
+        pos &lt;- i;
+    FinSi
+    i &lt;- i + 1;
+FinMientras
+
+Si pos &lt;&gt; -1 Entonces
+    Escribir 'El ', buscat, ' és a la casella ', pos;
+SiNo
+    Escribir 'El ', buscat, ' no hi és';
+FinSi</code></div>
+    </div>
+
+    <div class="ibox blue">
+      <div class="ibox-label">Esquema 2 · amb booleà (indicador <code>trobat</code>)</div>
       <div class="ibox-text"><code style="display:block; white-space:pre; overflow-x:auto; padding:10px 14px; line-height:1.8;">buscat &lt;- 17;            // el número que volem trobar
 trobat &lt;- Falso;
 i &lt;- 0;
@@ -233,27 +251,61 @@ SiNo
 FinSi</code></div>
     </div>
 
-    <div class="ibox blue">
-      <div class="ibox-label">Esquema 2 · sense booleà (variable de posició <code>pos</code>)</div>
-      <div class="ibox-text"><code style="display:block; white-space:pre; overflow-x:auto; padding:10px 14px; line-height:1.8;">buscat &lt;- 17;            // el número que volem trobar
-pos &lt;- -1;
-i &lt;- 0;
-Mientras i &lt; n Y pos = -1 Hacer
-    Si v[i] = buscat Entonces
-        pos &lt;- i;
-    FinSi
-    i &lt;- i + 1;
-FinMientras
+    <div class="demo">
+      <div class="demo-label">Exemple curt · esquema 1 (sense booleà)</div>
+      <pre class="pseudo-out" data-code="Proceso OnEsElNumeroSenseBoolea
+    Definir i, pos, buscat Como Entero;
+    Definir edats Como Entero;
+    Dimension edats[4];
+    edats[0] &lt;- 15;
+    edats[1] &lt;- 22;
+    edats[2] &lt;- 17;
+    edats[3] &lt;- 30;
 
-Si pos &lt;&gt; -1 Entonces
-    Escribir 'El ', buscat, ' és a la casella ', pos;
-SiNo
-    Escribir 'El ', buscat, ' no hi és';
-FinSi</code></div>
+    buscat &lt;- 17;            // el número que volem trobar
+
+    pos &lt;- -1;
+    i &lt;- 0;
+    Mientras i &lt; 4 Y pos = -1 Hacer
+        Si edats[i] = buscat Entonces
+            pos &lt;- i;
+        FinSi
+        i &lt;- i + 1;
+    FinMientras
+
+    Si pos &lt;&gt; -1 Entonces
+        Escribir 'El ', buscat, ' és a la casella ', pos;
+    SiNo
+        Escribir 'El ', buscat, ' no hi és';
+    FinSi
+FinProceso"></pre>
+      <div style="overflow-x:auto; margin-top:10px;">
+        <table class="trace" style="margin-top:0;">
+          <thead><tr><th>Volta</th><th>i</th><th>edats[i]</th><th>edats[i] = buscat?</th><th>Què fa</th><th>pos</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>0</td><td>15</td><td>No</td><td>i &lt;- 1</td><td>-1</td></tr>
+            <tr><td>2</td><td>1</td><td>22</td><td>No</td><td>i &lt;- 2</td><td>-1</td></tr>
+            <tr><td>3</td><td>2</td><td>17</td><td>Sí</td><td>pos &lt;- 2 · i &lt;- 3</td><td>2 → para</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="demo-label" style="margin-top:14px;">Per pantalla surt</div>
+      <pre class="pseudo-out">El 17 és a la casella 2</pre>
+      <div class="exp-box">
+        <div class="exp-label">Explicació</div>
+        <div class="exp-text">
+          <code>pos</code> fa dues feines alhora. Mentre val
+          <code>-1</code> (cap casella té aquesta posició) vol dir «encara no l'he trobat» i el bucle continua. Quan
+          <code>edats[i]</code> és igual a <code>buscat</code>, hi guardem la casella (<code>pos &lt;- 2</code>) i el bucle
+          para. En aquest esquema <code>i</code> avança <strong>sempre</strong> (en sortir val 3), per això la posició bona
+          és <code>pos</code>. Si no hi hagués cap 17, <code>pos</code> continuaria valent <code>-1</code> i sortiria
+          «El 17 no hi és».
+        </div>
+      </div>
     </div>
 
     <div class="demo">
-      <div class="demo-label">Exemple curt · esquema 1 (amb booleà)</div>
+      <div class="demo-label">Exemple curt · esquema 2 (amb booleà)</div>
       <pre class="pseudo-out" data-code="Proceso OnEsElNumeroAmbBoolea
     Definir i, buscat Como Entero;
     Definir trobat Como Logico;
@@ -297,64 +349,11 @@ FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Explicació</div>
         <div class="exp-text">
-          <code>trobat</code> comença a <code>Falso</code> i el bucle continua mentre no l'hàgim trobat. A cada volta
+          Ara, en lloc de <code>pos</code>, fem servir una variable <code>Logico</code>: <code>trobat</code> comença a <code>Falso</code> i el bucle continua mentre no l'hàgim trobat. A cada volta
           comparem <code>edats[i]</code> amb <code>buscat</code>: si no és igual, passem a la casella següent
           (<code>i &lt;- i + 1</code>); quan és igual, posem <code>trobat</code> a <code>Verdadero</code> i el bucle para.
           Com que <code>i</code> <strong>no</strong> avança a la volta on el trobem, en sortir val 2: la casella on és.
           El 30 ja no es mira.
-        </div>
-      </div>
-    </div>
-
-    <div class="demo">
-      <div class="demo-label">Exemple curt · esquema 2 (sense booleà)</div>
-      <pre class="pseudo-out" data-code="Proceso OnEsElNumeroSenseBoolea
-    Definir i, pos, buscat Como Entero;
-    Definir edats Como Entero;
-    Dimension edats[4];
-    edats[0] &lt;- 15;
-    edats[1] &lt;- 22;
-    edats[2] &lt;- 17;
-    edats[3] &lt;- 30;
-
-    buscat &lt;- 17;            // el número que volem trobar
-
-    pos &lt;- -1;
-    i &lt;- 0;
-    Mientras i &lt; 4 Y pos = -1 Hacer
-        Si edats[i] = buscat Entonces
-            pos &lt;- i;
-        FinSi
-        i &lt;- i + 1;
-    FinMientras
-
-    Si pos &lt;&gt; -1 Entonces
-        Escribir 'El ', buscat, ' és a la casella ', pos;
-    SiNo
-        Escribir 'El ', buscat, ' no hi és';
-    FinSi
-FinProceso"></pre>
-      <div style="overflow-x:auto; margin-top:10px;">
-        <table class="trace" style="margin-top:0;">
-          <thead><tr><th>Volta</th><th>i</th><th>edats[i]</th><th>edats[i] = buscat?</th><th>Què fa</th><th>pos</th></tr></thead>
-          <tbody>
-            <tr><td>1</td><td>0</td><td>15</td><td>No</td><td>i &lt;- 1</td><td>-1</td></tr>
-            <tr><td>2</td><td>1</td><td>22</td><td>No</td><td>i &lt;- 2</td><td>-1</td></tr>
-            <tr><td>3</td><td>2</td><td>17</td><td>Sí</td><td>pos &lt;- 2 · i &lt;- 3</td><td>2 → para</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="demo-label" style="margin-top:14px;">Per pantalla surt</div>
-      <pre class="pseudo-out">El 17 és a la casella 2</pre>
-      <div class="exp-box">
-        <div class="exp-label">Explicació</div>
-        <div class="exp-text">
-          Aquí no hi ha cap variable <code>Logico</code>: <code>pos</code> fa dues feines alhora. Mentre val
-          <code>-1</code> (cap casella té aquesta posició) vol dir «encara no l'he trobat» i el bucle continua. Quan
-          <code>edats[i]</code> és igual a <code>buscat</code>, hi guardem la casella (<code>pos &lt;- 2</code>) i el bucle
-          para. En aquest esquema <code>i</code> avança <strong>sempre</strong> (en sortir val 3), per això la posició bona
-          és <code>pos</code>. Si no hi hagués cap 17, <code>pos</code> continuaria valent <code>-1</code> i sortiria
-          «El 17 no hi és».
         </div>
       </div>
     </div>
@@ -369,7 +368,52 @@ FinProceso"></pre>
     </div>
 
     <div class="demo">
-      <div class="demo-label">Exemple · és a la llista? i a quina posició?</div>
+      <div class="demo-label">Exemple · és a la llista? i a quina posició? (sense booleà)</div>
+      <pre class="pseudo-out" data-code="Proceso CercaNotaSenseLogic
+    Definir i, buscada, pos Como Entero;
+    Definir notes Como Entero;
+    Dimension notes[5];
+
+    // 1) Omplim el vector (recorregut)
+    Para i &lt;- 0 Hasta 4 Hacer
+        Escribir 'Escriu la nota ', i + 1, ':';
+        Leer notes[i];
+    FinPara
+
+    Escribir 'Quina nota vols cercar?';
+    Leer buscada;
+
+    // 2) Cerca: pos = -1 vol dir «encara no l'he trobada»
+    pos &lt;- -1;
+    i &lt;- 0;
+    Mientras i &lt; 5 Y pos = -1 Hacer
+        Si notes[i] = buscada Entonces
+            pos &lt;- i;          // guardem on l'hem trobada
+        FinSi
+        i &lt;- i + 1;
+    FinMientras
+
+    // 3) Després del bucle, pos ens diu què ha passat
+    Si pos &lt;&gt; -1 Entonces
+        Escribir 'La nota ', buscada, ' és a la posició ', pos + 1;
+    SiNo
+        Escribir 'La nota ', buscada, ' no hi és.';
+    FinSi
+FinProceso"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          Fem servir un enter <code>pos</code> que comença valent <code>-1</code>, un valor que <strong>mai</strong> pot ser una posició (les caselles van del 0
+          al 4), que vol dir «encara no l'he trobada». Quan la trobem, hi guardem la posició (<code>pos &lt;- i</code>) i la
+          condició <code>pos = -1</code> deixa de complir-se: el bucle s'atura. Aquí <code>i</code> avança sempre, i
+          per això la posició bona és <code>pos</code>, no <code>i</code>. Al final, <code>pos &lt;&gt; -1</code> vol dir
+          que l'hem trobada.
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">El mateix exemple · amb booleà (indicador <code>trobat</code>)</div>
       <pre class="pseudo-out" data-code="Proceso CercaNota
     Definir i, buscada Como Entero;
     Definir notes Como Entero;
@@ -406,7 +450,7 @@ FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          <code>trobat</code> comença a <code>Falso</code> i <code>i</code> a 0. A cada volta mirem
+          Ara la mateixa cerca amb una variable <code>Logico</code>: <code>trobat</code> comença a <code>Falso</code> i <code>i</code> a 0. A cada volta mirem
           <code>notes[i]</code>: si és la que busquem, posem <code>trobat</code> a <code>Verdadero</code> i el bucle
           s'atura a la propera comprovació; si no, passem a la casella següent. Fixa't que <code>i</code> només avança
           quan <strong>no</strong> l'hem trobat: així, en sortir, <code>i</code> és justament la <strong>posició</strong>
@@ -416,58 +460,12 @@ FinProceso"></pre>
       </div>
     </div>
 
-    <div class="demo">
-      <div class="demo-label">El mateix exemple · sense booleans (amb una variable de posició)</div>
-      <pre class="pseudo-out" data-code="Proceso CercaNotaSenseLogic
-    Definir i, buscada, pos Como Entero;
-    Definir notes Como Entero;
-    Dimension notes[5];
-
-    // 1) Omplim el vector (recorregut)
-    Para i &lt;- 0 Hasta 4 Hacer
-        Escribir 'Escriu la nota ', i + 1, ':';
-        Leer notes[i];
-    FinPara
-
-    Escribir 'Quina nota vols cercar?';
-    Leer buscada;
-
-    // 2) Cerca: pos = -1 vol dir «encara no l'he trobada»
-    pos &lt;- -1;
-    i &lt;- 0;
-    Mientras i &lt; 5 Y pos = -1 Hacer
-        Si notes[i] = buscada Entonces
-            pos &lt;- i;          // guardem on l'hem trobada
-        FinSi
-        i &lt;- i + 1;
-    FinMientras
-
-    // 3) Després del bucle, pos ens diu què ha passat
-    Si pos &lt;&gt; -1 Entonces
-        Escribir 'La nota ', buscada, ' és a la posició ', pos + 1;
-    SiNo
-        Escribir 'La nota ', buscada, ' no hi és.';
-    FinSi
-FinProceso"></pre>
-      <div class="exp-box">
-        <div class="exp-label">Com funciona</div>
-        <div class="exp-text">
-          En lloc d'una variable <code>Logico</code>, fem servir un enter <code>pos</code> que fa la mateixa feina.
-          Comença valent <code>-1</code>, un valor que <strong>mai</strong> pot ser una posició (les caselles van del 0
-          al 4), i vol dir «encara no l'he trobada». Quan la trobem, hi guardem la posició (<code>pos &lt;- i</code>) i la
-          condició <code>pos = -1</code> deixa de complir-se: el bucle s'atura. Aquí <code>i</code> avança sempre, i
-          per això la posició bona és <code>pos</code>, no <code>i</code>. Al final, <code>pos &lt;&gt; -1</code> vol dir
-          que l'hem trobada.
-        </div>
-      </div>
-    </div>
-
     <div class="ibox yellow">
       <div class="ibox-label">Amb booleà o sense?</div>
       <div class="ibox-text">
-        Les dues versions fan exactament el mateix i les pots fer servir indistintament. Amb <code>trobat</code> el codi
-        es llegeix com una frase («mentre no l'hagis trobat»); amb <code>pos</code> t'estalvies una variable, perquè
-        la mateixa dada et diu <strong>si</strong> l'has trobada i <strong>on</strong>.
+        Les dues versions fan exactament el mateix i les pots fer servir indistintament. Amb <code>pos</code> t'estalvies una
+        variable, perquè la mateixa dada et diu <strong>si</strong> l'has trobada i <strong>on</strong>; amb <code>trobat</code>
+        el codi es llegeix com una frase («mentre no l'hagis trobat»).
       </div>
     </div>
 
@@ -1124,9 +1122,11 @@ function checkQ(grp,btn,i,choice){
 /* ── Exercici 4 ── */
 const E4 = [
   { ctx:'Demana 6 nombres enters i guarda\'ls en un vector. Després demana un nombre i digues si és dins del vector i a quina posició.',
+    out:"Nombre 1:\n> 4\nNombre 2:\n> 9\nNombre 3:\n> 15\nNombre 4:\n> 7\nNombre 5:\n> 9\nNombre 6:\n> 2\nQuin nombre vols cercar?\n> 7\n7 és a la posició 4\n\n--- i si el nombre no hi és ---\nQuin nombre vols cercar?\n> 10\n10 no és al vector.",
     code:"// Anàlisi\n// Entrades: 6 enters dins d'un vector i un nombre a cercar\n// Sortida: posició del nombre o avís si no hi és\n\nProceso CercaNombre\n    Definir i, buscat Como Entero;\n    Definir nums Como Entero;\n    Dimension nums[6];\n    Definir trobat Como Logico;\n    Para i <- 0 Hasta 5 Hacer\n        Escribir 'Nombre ', i + 1, ':';\n        Leer nums[i];\n    FinPara\n    Escribir 'Quin nombre vols cercar?';\n    Leer buscat;\n    trobat <- Falso;\n    i <- 0;\n    Mientras i < 6 Y NO trobat Hacer\n        Si nums[i] = buscat Entonces\n            trobat <- Verdadero;\n        SiNo\n            i <- i + 1;\n        FinSi\n    FinMientras\n    Si trobat Entonces\n        Escribir buscat, ' és a la posició ', i + 1;\n    SiNo\n        Escribir buscat, ' no és al vector.';\n    FinSi\nFinProceso",
     exp:'Primer un recorregut amb Para per omplir el vector; després la cerca amb Mientras i l\'indicador trobat. Mostrem i + 1 perquè la persona compti les posicions des de l\'1.' },
   { ctx:'Demana els punts que ha fet un jugador en 8 partides. Mostra en quina partida ha fet per primer cop 20 punts o més; si no ho ha aconseguit mai, mostra-ho.',
+    out:"Punts de la partida 1:\n> 12\nPunts de la partida 2:\n> 18\nPunts de la partida 3:\n> 25\nPunts de la partida 4:\n> 9\nPunts de la partida 5:\n> 30\nPunts de la partida 6:\n> 14\nPunts de la partida 7:\n> 22\nPunts de la partida 8:\n> 8\nHa arribat a 20 punts per primer cop a la partida 3 (25 punts).\n\n--- si no hi arriba mai ---\nNo ha arribat mai a 20 punts.",
     code:"// Anàlisi\n// Entrada: punts de 8 partides dins d'un vector\n// Sortida: primera partida amb 20 punts o més, o avís\n\nProceso PrimeraPartida20\n    Definir i Como Entero;\n    Definir punts Como Entero;\n    Dimension punts[8];\n    Definir trobat Como Logico;\n    Para i <- 0 Hasta 7 Hacer\n        Escribir 'Punts de la partida ', i + 1, ':';\n        Leer punts[i];\n    FinPara\n    trobat <- Falso;\n    i <- 0;\n    Mientras i < 8 Y NO trobat Hacer\n        Si punts[i] >= 20 Entonces\n            trobat <- Verdadero;\n        SiNo\n            i <- i + 1;\n        FinSi\n    FinMientras\n    Si trobat Entonces\n        Escribir 'Ha arribat a 20 punts per primer cop a la partida ', i + 1, ' (', punts[i], ' punts).';\n    SiNo\n        Escribir 'No ha arribat mai a 20 punts.';\n    FinSi\nFinProceso",
     exp:'Cerca per condició: no busquem un valor exacte sinó el primer que compleix punts[i] >= 20. En trobar-lo parem, així que és la PRIMERA partida, no la de més punts.' }
 ];
@@ -1134,7 +1134,7 @@ const E4 = [
   const c = document.getElementById('ex4-cont'); c.innerHTML='';
   E4.forEach((d,i)=>{
     const div = document.createElement('div'); div.className='ri';
-    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><button class="ri-btn" onclick="toggle(this,'E4a${i}')">▶ Mostrar solució</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">Solució · PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
+    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><div class="demo-label" style="margin-top:12px;">El programa ha de mostrar (exemple d'execució)</div><pre class="pseudo-out" style="margin:6px 0 4px;">${d.out.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</pre><button class="ri-btn" onclick="toggle(this,'E4a${i}')">▶ Mostrar solució</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">Solució · PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
     c.appendChild(div);
   });
 })();
