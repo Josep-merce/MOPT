@@ -224,6 +224,22 @@ Mientras i &lt; n Y NO trobat Hacer
 FinMientras</code></div>
     </div>
 
+    <div class="ibox blue">
+      <div class="ibox-label">Sintaxi sense booleans (amb una variable de posició)</div>
+      <div class="ibox-text"><code style="display:block; white-space:pre; overflow-x:auto; padding:10px 14px; line-height:1.8;">pos &lt;- -1;
+i &lt;- 0;
+Mientras i &lt; n Y pos = -1 Hacer
+    Si v[i] = buscat Entonces
+        pos &lt;- i;
+    FinSi
+    i &lt;- i + 1;
+FinMientras</code></div>
+      <div class="ibox-text" style="margin-top:10px;">
+        <code>pos = -1</code> vol dir «encara no l'he trobat» (cap casella té la posició -1). En trobar-lo, <code>pos</code>
+        guarda la posició i el bucle s'atura. Al final, <code>pos &lt;&gt; -1</code> vol dir que l'hem trobat i on és.
+      </div>
+    </div>
+
     <div class="demo">
       <div class="demo-label">Exemple · és a la llista? i a quina posició?</div>
       <pre class="pseudo-out" data-code="Proceso CercaNota
