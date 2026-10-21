@@ -577,27 +577,80 @@ FinProceso"></pre>
 
     <div class="demo">
       <div class="demo-label">Exemple · vectors paral·lels: buscar un alumne i mostrar-ne la nota</div>
-      <pre class="pseudo-out" data-code="// noms[i] i notes[i] són del mateix alumne
-trobat &lt;- Falso;
-i &lt;- 0;
-Mientras i &lt; nAlumnes Y NO trobat Hacer
-    Si noms[i] = nomCercat Entonces    // busquem en un vector…
-        trobat &lt;- Verdadero;
-    SiNo
-        i &lt;- i + 1;
-    FinSi
-FinMientras
+      <pre class="pseudo-out" data-code="Proceso NotaAlumne
+    Definir nAlumnes, i Como Entero;
+    Definir noms Como Caracter;
+    Dimension noms[30];
+    Definir notes Como Real;
+    Dimension notes[30];
+    Definir nomCercat Como Caracter;
+    Definir trobat Como Logico;
 
-Si trobat Entonces
-    Escribir nomCercat, ' té un ', notes[i];   // …i fem servir l'altre
-SiNo
-    Escribir nomCercat, ' no és a la llista.';
-FinSi"></pre>
+    // Validació de la mida lògica (entre 1 i 30)
+    Repetir
+        Escribir 'Quants alumnes hi ha? (1-30):';
+        Leer nAlumnes;
+    Hasta Que nAlumnes &gt;= 1 Y nAlumnes &lt;= 30;
+
+    // Omplim els dos vectors: noms[i] i notes[i] són del mateix alumne
+    Para i &lt;- 0 Hasta nAlumnes - 1 Hacer
+        Escribir 'Alumne ', i + 1, ' (nom):';
+        Leer noms[i];
+        Escribir 'Nota de ', noms[i], ':';
+        Leer notes[i];
+    FinPara
+
+    Escribir 'De quin alumne vols la nota?';
+    Leer nomCercat;
+
+    // Cerca en el vector de noms…
+    trobat &lt;- Falso;
+    i &lt;- 0;
+    Mientras i &lt; nAlumnes Y NO trobat Hacer
+        Si noms[i] = nomCercat Entonces
+            trobat &lt;- Verdadero;
+        SiNo
+            i &lt;- i + 1;
+        FinSi
+    FinMientras
+
+    // …i fem servir la posició i per llegir l'altre vector
+    Si trobat Entonces
+        Escribir nomCercat, ' té un ', notes[i];
+    SiNo
+        Escribir nomCercat, ' no és a la llista.';
+    FinSi
+FinProceso"></pre>
+      <div class="demo-label" style="margin-top:14px;">Per pantalla surt (exemple d'execució)</div>
+      <pre class="pseudo-out">Quants alumnes hi ha? (1-30):
+&gt; 3
+Alumne 1 (nom):
+&gt; Aina
+Nota de Aina:
+&gt; 7.5
+Alumne 2 (nom):
+&gt; Marc
+Nota de Marc:
+&gt; 4
+Alumne 3 (nom):
+&gt; Clara
+Nota de Clara:
+&gt; 9
+De quin alumne vols la nota?
+&gt; Marc
+Marc té un 4
+
+--- i si el nom no hi és ---
+De quin alumne vols la nota?
+&gt; Pol
+Pol no és a la llista.</pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          Busquem el nom dins de <code>noms</code> i, quan el trobem, la posició <code>i</code> ens serveix per anar a
-          buscar la dada que hi correspon a l'altre vector: <code>notes[i]</code>. És la mateixa idea de la
+          Els dos vectors es declaren amb la mateixa mida (30) i s'omplen amb el mateix índex, per això
+          <code>noms[i]</code> i <code>notes[i]</code> són sempre del mateix alumne. Busquem el nom dins de <code>noms</code>
+          i, quan el trobem, la posició <code>i</code> ens serveix per anar a buscar la dada que hi correspon a l'altre
+          vector: <code>notes[i]</code>. És la mateixa idea de la
           <code>posMax</code> de l'A2.1a, però aplicada a una cerca.
         </div>
       </div>
