@@ -241,9 +241,9 @@ FinMientras</code></div>
     </div>
 
     <div class="demo">
-      <div class="demo-label">Exemple curt · a quina posició és el 17?</div>
-      <pre class="pseudo-out" data-code="Proceso OnEsEl17
-    Definir i, pos Como Entero;
+      <div class="demo-label">Exemple curt · a quina posició és el número buscat?</div>
+      <pre class="pseudo-out" data-code="Proceso OnEsElNumero
+    Definir i, pos, buscat Como Entero;
     Definir edats Como Entero;
     Dimension edats[4];
     edats[0] &lt;- 15;
@@ -251,24 +251,26 @@ FinMientras</code></div>
     edats[2] &lt;- 17;
     edats[3] &lt;- 30;
 
+    buscat &lt;- 17;            // el número que volem trobar
+
     pos &lt;- -1;
     i &lt;- 0;
     Mientras i &lt; 4 Y pos = -1 Hacer
-        Si edats[i] = 17 Entonces
+        Si edats[i] = buscat Entonces
             pos &lt;- i;
         FinSi
         i &lt;- i + 1;
     FinMientras
 
     Si pos &lt;&gt; -1 Entonces
-        Escribir 'El 17 és a la casella ', pos;
+        Escribir 'El ', buscat, ' és a la casella ', pos;
     SiNo
-        Escribir 'El 17 no hi és';
+        Escribir 'El ', buscat, ' no hi és';
     FinSi
 FinProceso"></pre>
       <div style="overflow-x:auto; margin-top:10px;">
         <table class="trace" style="margin-top:0;">
-          <thead><tr><th>Volta</th><th>i</th><th>edats[i]</th><th>edats[i] = 17?</th><th>pos</th><th>Continua?</th></tr></thead>
+          <thead><tr><th>Volta</th><th>i</th><th>edats[i]</th><th>edats[i] = buscat?</th><th>pos</th><th>Continua?</th></tr></thead>
           <tbody>
             <tr><td>1</td><td>0</td><td>15</td><td>No</td><td>-1</td><td>Sí (pos encara és -1)</td></tr>
             <tr><td>2</td><td>1</td><td>22</td><td>No</td><td>-1</td><td>Sí</td></tr>
@@ -281,9 +283,11 @@ FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">En poques paraules</div>
         <div class="exp-text">
-          <code>pos</code> fa dues feines alhora: mentre val <code>-1</code> el bucle continua buscant, i quan troba el 17
-          s'hi guarda la casella (2) i el bucle para. La casella 3 (el 30) ja no es mira. Si el vector no tingués cap
-          17, <code>pos</code> continuaria valent <code>-1</code> i sortiria «El 17 no hi és».
+          El número que busquem és a la variable <code>buscat</code> (aquí val 17). Així, per buscar-ne un altre només cal
+          canviar <code>buscat &lt;- 17</code>, o fer <code>Leer buscat</code> perquè l'escrigui l'usuari: la resta del
+          programa no canvia. <code>pos</code> fa dues feines alhora: mentre val <code>-1</code> el bucle continua buscant,
+          i quan troba el número s'hi guarda la casella (2) i el bucle para. La casella 3 (el 30) ja no es mira. Si el
+          vector no tingués cap 17, <code>pos</code> continuaria valent <code>-1</code> i sortiria «El 17 no hi és».
         </div>
       </div>
     </div>
