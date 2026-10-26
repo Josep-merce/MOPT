@@ -251,12 +251,38 @@ SiNo
 FinSi</code></div>
     </div>
 
+    <div class="ibox yellow">
+      <div class="ibox-label">Constants: valors que no canvien</div>
+      <div class="ibox-text">
+        En els programes d'aquesta pàgina, les mides dels vectors i els valors fixos (quantes notes hi ha, el màxim
+        d'alumnes, la urgència mínima…) es guarden en <strong>constants</strong>. Una constant és un valor que
+        s'<strong>assigna una sola vegada</strong> al principi i <strong>no es torna a canviar</strong> durant el programa.
+        PSeInt la declara igual que una variable; per conveni, el nom s'escriu en <strong>MAJÚSCULES</strong> per
+        distingir-la de les variables normals:
+        <code style="display:block; white-space:pre; overflow-x:auto; padding:10px 14px; line-height:1.8; margin:10px 0;">Definir N_EDATS Como Entero;
+N_EDATS &lt;- 4;
+Definir edats Como Entero;
+Dimension edats[N_EDATS];
+…
+Mientras i &lt; N_EDATS Y pos = -1 Hacer</code>
+        Altres exemples típics: <code>PI &lt;- 3.1416</code>, <code>IVA &lt;- 0.21</code> o <code>MAX_USUARIS &lt;- 100</code>.
+        L'avantatge és que el número s'escriu <strong>en un sol lloc</strong>: si el vector passa a tenir 10 caselles,
+        només canvies <code>N_EDATS &lt;- 10</code> i el <code>Dimension</code>, el <code>Para</code> i el
+        <code>Mientras</code> s'adapten sols. PSeInt no impedeix reassignar-la: som nosaltres qui ens comprometem a
+        no tocar-la.
+      </div>
+    </div>
+
     <div class="demo">
       <div class="demo-label">Exemple curt · esquema 1 (sense booleà)</div>
       <pre class="pseudo-out" data-code="Proceso OnEsElNumeroSenseBoolea
+    // Constant: valor fix que no canvia durant el programa
+    Definir N_EDATS Como Entero;
+    N_EDATS &lt;- 4;
+
     Definir i, pos, buscat Como Entero;
     Definir edats Como Entero;
-    Dimension edats[4];
+    Dimension edats[N_EDATS];
     edats[0] &lt;- 15;
     edats[1] &lt;- 22;
     edats[2] &lt;- 17;
@@ -266,7 +292,7 @@ FinSi</code></div>
 
     pos &lt;- -1;
     i &lt;- 0;
-    Mientras i &lt; 4 Y pos = -1 Hacer
+    Mientras i &lt; N_EDATS Y pos = -1 Hacer
         Si edats[i] = buscat Entonces
             pos &lt;- i;
         FinSi
@@ -307,10 +333,14 @@ FinProceso"></pre>
     <div class="demo">
       <div class="demo-label">Exemple curt · esquema 2 (amb booleà)</div>
       <pre class="pseudo-out" data-code="Proceso OnEsElNumeroAmbBoolea
+    // Constant: valor fix que no canvia durant el programa
+    Definir N_EDATS Como Entero;
+    N_EDATS &lt;- 4;
+
     Definir i, buscat Como Entero;
     Definir trobat Como Logico;
     Definir edats Como Entero;
-    Dimension edats[4];
+    Dimension edats[N_EDATS];
     edats[0] &lt;- 15;
     edats[1] &lt;- 22;
     edats[2] &lt;- 17;
@@ -320,7 +350,7 @@ FinProceso"></pre>
 
     trobat &lt;- Falso;
     i &lt;- 0;
-    Mientras i &lt; 4 Y NO trobat Hacer
+    Mientras i &lt; N_EDATS Y NO trobat Hacer
         Si edats[i] = buscat Entonces
             trobat &lt;- Verdadero;
         SiNo
@@ -370,12 +400,16 @@ FinProceso"></pre>
     <div class="demo">
       <div class="demo-label">Exemple · és a la llista? i a quina posició? (sense booleà)</div>
       <pre class="pseudo-out" data-code="Proceso CercaNotaSenseLogic
+    // Constant: valor fix que no canvia durant el programa
+    Definir N_NOTES Como Entero;
+    N_NOTES &lt;- 5;
+
     Definir i, buscada, pos Como Entero;
     Definir notes Como Entero;
-    Dimension notes[5];
+    Dimension notes[N_NOTES];
 
     // 1) Omplim el vector (recorregut)
-    Para i &lt;- 0 Hasta 4 Hacer
+    Para i &lt;- 0 Hasta N_NOTES - 1 Hacer
         Escribir 'Escriu la nota ', i + 1, ':';
         Leer notes[i];
     FinPara
@@ -386,7 +420,7 @@ FinProceso"></pre>
     // 2) Cerca: pos = -1 vol dir «encara no l'he trobada»
     pos &lt;- -1;
     i &lt;- 0;
-    Mientras i &lt; 5 Y pos = -1 Hacer
+    Mientras i &lt; N_NOTES Y pos = -1 Hacer
         Si notes[i] = buscada Entonces
             pos &lt;- i;          // guardem on l'hem trobada
         FinSi
@@ -415,13 +449,17 @@ FinProceso"></pre>
     <div class="demo">
       <div class="demo-label">El mateix exemple · amb booleà (indicador <code>trobat</code>)</div>
       <pre class="pseudo-out" data-code="Proceso CercaNota
+    // Constant: valor fix que no canvia durant el programa
+    Definir N_NOTES Como Entero;
+    N_NOTES &lt;- 5;
+
     Definir i, buscada Como Entero;
     Definir notes Como Entero;
-    Dimension notes[5];
+    Dimension notes[N_NOTES];
     Definir trobat Como Logico;
 
     // 1) Omplim el vector (recorregut)
-    Para i &lt;- 0 Hasta 4 Hacer
+    Para i &lt;- 0 Hasta N_NOTES - 1 Hacer
         Escribir 'Escriu la nota ', i + 1, ':';
         Leer notes[i];
     FinPara
@@ -432,7 +470,7 @@ FinProceso"></pre>
     // 2) Cerca: ens aturem en trobar-la
     trobat &lt;- Falso;
     i &lt;- 0;
-    Mientras i &lt; 5 Y NO trobat Hacer
+    Mientras i &lt; N_NOTES Y NO trobat Hacer
         Si notes[i] = buscada Entonces
             trobat &lt;- Verdadero;
         SiNo
@@ -506,7 +544,7 @@ FinProceso"></pre>
     </div>
 
     <p class="lead" style="margin-top:16px;">
-      Després de la volta 3, la condició <code>i &lt; 5 Y NO trobat</code> ja és falsa i el bucle s'acaba. Només ha
+      Després de la volta 3, la condició <code>i &lt; N_NOTES Y NO trobat</code> ja és falsa i el bucle s'acaba. Només ha
       calgut mirar <strong>3 caselles de 5</strong>, i <code>i</code> val 2: el programa escriu «posició 3» perquè
       mostrem <code>i + 1</code>.
     </p>
@@ -539,19 +577,23 @@ FinProceso"></pre>
     <div class="demo">
       <div class="demo-label">Exemple · el primer dia que ha glaçat (temperatura sota 0)</div>
       <pre class="pseudo-out" data-code="Proceso PrimerGlac
+    // Constant: valor fix que no canvia durant el programa
+    Definir N_DIES Como Entero;
+    N_DIES &lt;- 7;
+
     Definir i Como Entero;
     Definir temps Como Real;
-    Dimension temps[7];
+    Dimension temps[N_DIES];
     Definir trobat Como Logico;
 
-    Para i &lt;- 0 Hasta 6 Hacer
+    Para i &lt;- 0 Hasta N_DIES - 1 Hacer
         Escribir 'Temperatura mínima del dia ', i + 1, ':';
         Leer temps[i];
     FinPara
 
     trobat &lt;- Falso;
     i &lt;- 0;
-    Mientras i &lt; 7 Y NO trobat Hacer
+    Mientras i &lt; N_DIES Y NO trobat Hacer
         Si temps[i] &lt; 0 Entonces      // ara comparem amb una condició
             trobat &lt;- Verdadero;
         SiNo
@@ -578,19 +620,23 @@ FinProceso"></pre>
     <div class="demo">
       <div class="demo-label">Exemple · vectors paral·lels: buscar un alumne i mostrar-ne la nota</div>
       <pre class="pseudo-out" data-code="Proceso NotaAlumne
+    // Constant: valor fix que no canvia durant el programa
+    Definir MAX_ALUMNES Como Entero;
+    MAX_ALUMNES &lt;- 30;
+
     Definir nAlumnes, i Como Entero;
     Definir noms Como Caracter;
-    Dimension noms[30];
+    Dimension noms[MAX_ALUMNES];
     Definir notes Como Real;
-    Dimension notes[30];
+    Dimension notes[MAX_ALUMNES];
     Definir nomCercat Como Caracter;
     Definir trobat Como Logico;
 
-    // Validació de la mida lògica (entre 1 i 30)
+    // Validació de la mida lògica (entre 1 i MAX_ALUMNES)
     Repetir
-        Escribir 'Quants alumnes hi ha? (1-30):';
+        Escribir 'Quants alumnes hi ha? (1-', MAX_ALUMNES, '):';
         Leer nAlumnes;
-    Hasta Que nAlumnes &gt;= 1 Y nAlumnes &lt;= 30;
+    Hasta Que nAlumnes &gt;= 1 Y nAlumnes &lt;= MAX_ALUMNES;
 
     // Omplim els dos vectors: noms[i] i notes[i] són del mateix alumne
     Para i &lt;- 0 Hasta nAlumnes - 1 Hacer
@@ -735,16 +781,20 @@ El llibre 5000 no és al catàleg.</pre>
         <div class="ri-ans" id="sol-cerca-1">
           <div class="ri-ans-label">Solució · PSeInt</div>
           <pre class="pseudo-out" data-code="Proceso CercaLlibre
+    // Constant: valor fix que no canvia durant el programa
+    Definir MAX_LLIBRES Como Entero;
+    MAX_LLIBRES &lt;- 100;
+
     Definir nLlibres, i, codiCercat Como Entero;
     Definir codis Como Entero;
-    Dimension codis[100];
+    Dimension codis[MAX_LLIBRES];
     Definir trobat Como Logico;
 
-    // Validació de la mida lògica (entre 1 i 100)
+    // Validació de la mida lògica (entre 1 i MAX_LLIBRES)
     Repetir
-        Escribir 'Quants llibres hi ha al catàleg? (1-100):';
+        Escribir 'Quants llibres hi ha al catàleg? (1-', MAX_LLIBRES, '):';
         Leer nLlibres;
-    Hasta Que nLlibres &gt;= 1 Y nLlibres &lt;= 100;
+    Hasta Que nLlibres &gt;= 1 Y nLlibres &lt;= MAX_LLIBRES;
 
     Para i &lt;- 0 Hasta nLlibres - 1 Hacer
         Escribir 'Codi del llibre ', i + 1, ':';
@@ -806,18 +856,22 @@ Hugo no és a la llista de contactes.</pre>
         <div class="ri-ans" id="sol-cerca-2">
           <div class="ri-ans-label">Solució · PSeInt</div>
           <pre class="pseudo-out" data-code="Proceso AgendaTelefons
+    // Constant: valor fix que no canvia durant el programa
+    Definir MAX_CONTACTES Como Entero;
+    MAX_CONTACTES &lt;- 50;
+
     Definir nContactes, i Como Entero;
     Definir noms Como Caracter;
-    Dimension noms[50];
+    Dimension noms[MAX_CONTACTES];
     Definir telefons Como Caracter;
-    Dimension telefons[50];
+    Dimension telefons[MAX_CONTACTES];
     Definir nomCercat Como Caracter;
     Definir trobat Como Logico;
 
     Repetir
-        Escribir 'Quants contactes vols guardar? (1-50):';
+        Escribir 'Quants contactes vols guardar? (1-', MAX_CONTACTES, '):';
         Leer nContactes;
-    Hasta Que nContactes &gt;= 1 Y nContactes &lt;= 50;
+    Hasta Que nContactes &gt;= 1 Y nContactes &lt;= MAX_CONTACTES;
 
     Para i &lt;- 0 Hasta nContactes - 1 Hacer
         Escribir 'Nom del contacte ', i + 1, ':';
@@ -879,17 +933,23 @@ Primer pacient urgent: Omar (urgència 5).</pre>
         <div class="ri-ans" id="sol-cerca-3">
           <div class="ri-ans-label">Solució · PSeInt</div>
           <pre class="pseudo-out" data-code="Proceso PrimerUrgent
+    // Constants: valors fixos que no canvien durant el programa
+    Definir MAX_PACIENTS Como Entero;
+    Definir URGENT Como Entero;
+    MAX_PACIENTS &lt;- 30;
+    URGENT &lt;- 4;
+
     Definir nPacients, i Como Entero;
     Definir noms Como Caracter;
-    Dimension noms[30];
+    Dimension noms[MAX_PACIENTS];
     Definir nivells Como Entero;
-    Dimension nivells[30];
+    Dimension nivells[MAX_PACIENTS];
     Definir trobat Como Logico;
 
     Repetir
-        Escribir 'Quants pacients esperen? (1-30):';
+        Escribir 'Quants pacients esperen? (1-', MAX_PACIENTS, '):';
         Leer nPacients;
-    Hasta Que nPacients &gt;= 1 Y nPacients &lt;= 30;
+    Hasta Que nPacients &gt;= 1 Y nPacients &lt;= MAX_PACIENTS;
 
     Para i &lt;- 0 Hasta nPacients - 1 Hacer
         Escribir 'Nom del pacient ', i + 1, ':';
@@ -898,11 +958,11 @@ Primer pacient urgent: Omar (urgència 5).</pre>
         Leer nivells[i];
     FinPara
 
-    // Cerca per condició: el PRIMER amb urgència 4 o més
+    // Cerca per condició: el PRIMER amb urgència URGENT o més
     trobat &lt;- Falso;
     i &lt;- 0;
     Mientras i &lt; nPacients Y NO trobat Hacer
-        Si nivells[i] &gt;= 4 Entonces
+        Si nivells[i] &gt;= URGENT Entonces
             trobat &lt;- Verdadero;
         SiNo
             i &lt;- i + 1;
@@ -915,7 +975,7 @@ Primer pacient urgent: Omar (urgència 5).</pre>
         Escribir 'Cap pacient és urgent: atenem per ordre.';
     FinSi
 FinProceso"></pre>
-          <div class="ri-note">No busquem un valor exacte sinó el <strong>primer</strong> que compleix <code>nivells[i] &gt;= 4</code>. Per això surt l'Omar i no la Rita, encara que totes dues siguin urgents: l'Omar ha arribat abans. No és el mateix que buscar el màxim, que obligaria a mirar-los tots.</div>
+          <div class="ri-note">No busquem un valor exacte sinó el <strong>primer</strong> que compleix <code>nivells[i] &gt;= URGENT</code> (la constant val 4). Per això surt l'Omar i no la Rita, encara que totes dues siguin urgents: l'Omar ha arribat abans. No és el mateix que buscar el màxim, que obligaria a mirar-los tots.</div>
         </div>
       </div>
 
@@ -952,18 +1012,22 @@ No hi ha prou estoc: només en queden 4.</pre>
         <div class="ri-ans" id="sol-cerca-4">
           <div class="ri-ans-label">Solució · PSeInt</div>
           <pre class="pseudo-out" data-code="Proceso VendaBotiga
+    // Constant: valor fix que no canvia durant el programa
+    Definir MAX_PRODUCTES Como Entero;
+    MAX_PRODUCTES &lt;- 40;
+
     Definir nProductes, i, unitats Como Entero;
     Definir productes Como Caracter;
-    Dimension productes[40];
+    Dimension productes[MAX_PRODUCTES];
     Definir estoc Como Entero;
-    Dimension estoc[40];
+    Dimension estoc[MAX_PRODUCTES];
     Definir nomCercat Como Caracter;
     Definir trobat Como Logico;
 
     Repetir
-        Escribir 'Quants productes hi ha? (1-40):';
+        Escribir 'Quants productes hi ha? (1-', MAX_PRODUCTES, '):';
         Leer nProductes;
-    Hasta Que nProductes &gt;= 1 Y nProductes &lt;= 40;
+    Hasta Que nProductes &gt;= 1 Y nProductes &lt;= MAX_PRODUCTES;
 
     Para i &lt;- 0 Hasta nProductes - 1 Hacer
         Escribir 'Nom del producte ', i + 1, ':';
@@ -1030,18 +1094,22 @@ Usuari: pere  · PIN: 1234  →  Aquest usuari no existeix.</pre>
         <div class="ri-ans" id="sol-cerca-5">
           <div class="ri-ans-label">Solució · PSeInt</div>
           <pre class="pseudo-out" data-code="Proceso AccesUsuaris
+    // Constant: valor fix que no canvia durant el programa
+    Definir MAX_USUARIS Como Entero;
+    MAX_USUARIS &lt;- 20;
+
     Definir nUsuaris, i, pin Como Entero;
     Definir usuaris Como Caracter;
-    Dimension usuaris[20];
+    Dimension usuaris[MAX_USUARIS];
     Definir pins Como Entero;
-    Dimension pins[20];
+    Dimension pins[MAX_USUARIS];
     Definir usuari Como Caracter;
     Definir trobat Como Logico;
 
     Repetir
-        Escribir 'Quants usuaris vols registrar? (1-20):';
+        Escribir 'Quants usuaris vols registrar? (1-', MAX_USUARIS, '):';
         Leer nUsuaris;
-    Hasta Que nUsuaris &gt;= 1 Y nUsuaris &lt;= 20;
+    Hasta Que nUsuaris &gt;= 1 Y nUsuaris &lt;= MAX_USUARIS;
 
     Para i &lt;- 0 Hasta nUsuaris - 1 Hacer
         Escribir 'Usuari ', i + 1, ':';
@@ -1176,12 +1244,12 @@ function checkQ(grp,btn,i,choice){
 const E4 = [
   { ctx:'Demana 6 nombres enters i guarda\'ls en un vector. Després demana un nombre i digues si és dins del vector i a quina posició.',
     out:"Nombre 1:\n> 4\nNombre 2:\n> 9\nNombre 3:\n> 15\nNombre 4:\n> 7\nNombre 5:\n> 9\nNombre 6:\n> 2\nQuin nombre vols cercar?\n> 7\n7 és a la posició 4\n\n--- i si el nombre no hi és ---\nQuin nombre vols cercar?\n> 10\n10 no és al vector.",
-    code:"// Anàlisi\n// Entrades: 6 enters dins d'un vector i un nombre a cercar\n// Sortida: posició del nombre o avís si no hi és\n\nProceso CercaNombre\n    Definir i, buscat Como Entero;\n    Definir nums Como Entero;\n    Dimension nums[6];\n    Definir trobat Como Logico;\n    Para i <- 0 Hasta 5 Hacer\n        Escribir 'Nombre ', i + 1, ':';\n        Leer nums[i];\n    FinPara\n    Escribir 'Quin nombre vols cercar?';\n    Leer buscat;\n    trobat <- Falso;\n    i <- 0;\n    Mientras i < 6 Y NO trobat Hacer\n        Si nums[i] = buscat Entonces\n            trobat <- Verdadero;\n        SiNo\n            i <- i + 1;\n        FinSi\n    FinMientras\n    Si trobat Entonces\n        Escribir buscat, ' és a la posició ', i + 1;\n    SiNo\n        Escribir buscat, ' no és al vector.';\n    FinSi\nFinProceso",
+    code:"// Anàlisi\n// Entrades: 6 enters dins d'un vector i un nombre a cercar\n// Sortida: posició del nombre o avís si no hi és\n\nProceso CercaNombre\n    // Constant: valor fix que no canvia durant el programa\n    Definir N_NOMBRES Como Entero;\n    N_NOMBRES <- 6;\n\n    Definir i, buscat Como Entero;\n    Definir nums Como Entero;\n    Dimension nums[N_NOMBRES];\n    Definir trobat Como Logico;\n    Para i <- 0 Hasta N_NOMBRES - 1 Hacer\n        Escribir 'Nombre ', i + 1, ':';\n        Leer nums[i];\n    FinPara\n    Escribir 'Quin nombre vols cercar?';\n    Leer buscat;\n    trobat <- Falso;\n    i <- 0;\n    Mientras i < N_NOMBRES Y NO trobat Hacer\n        Si nums[i] = buscat Entonces\n            trobat <- Verdadero;\n        SiNo\n            i <- i + 1;\n        FinSi\n    FinMientras\n    Si trobat Entonces\n        Escribir buscat, ' és a la posició ', i + 1;\n    SiNo\n        Escribir buscat, ' no és al vector.';\n    FinSi\nFinProceso",
     exp:'Primer un recorregut amb Para per omplir el vector; després la cerca amb Mientras i l\'indicador trobat. Mostrem i + 1 perquè la persona compti les posicions des de l\'1.' },
   { ctx:'Demana els punts que ha fet un jugador en 8 partides. Mostra en quina partida ha fet per primer cop 20 punts o més; si no ho ha aconseguit mai, mostra-ho.',
     out:"Punts de la partida 1:\n> 12\nPunts de la partida 2:\n> 18\nPunts de la partida 3:\n> 25\nPunts de la partida 4:\n> 9\nPunts de la partida 5:\n> 30\nPunts de la partida 6:\n> 14\nPunts de la partida 7:\n> 22\nPunts de la partida 8:\n> 8\nHa arribat a 20 punts per primer cop a la partida 3 (25 punts).\n\n--- si no hi arriba mai ---\nNo ha arribat mai a 20 punts.",
-    code:"// Anàlisi\n// Entrada: punts de 8 partides dins d'un vector\n// Sortida: primera partida amb 20 punts o més, o avís\n\nProceso PrimeraPartida20\n    Definir i Como Entero;\n    Definir punts Como Entero;\n    Dimension punts[8];\n    Definir trobat Como Logico;\n    Para i <- 0 Hasta 7 Hacer\n        Escribir 'Punts de la partida ', i + 1, ':';\n        Leer punts[i];\n    FinPara\n    trobat <- Falso;\n    i <- 0;\n    Mientras i < 8 Y NO trobat Hacer\n        Si punts[i] >= 20 Entonces\n            trobat <- Verdadero;\n        SiNo\n            i <- i + 1;\n        FinSi\n    FinMientras\n    Si trobat Entonces\n        Escribir 'Ha arribat a 20 punts per primer cop a la partida ', i + 1, ' (', punts[i], ' punts).';\n    SiNo\n        Escribir 'No ha arribat mai a 20 punts.';\n    FinSi\nFinProceso",
-    exp:'Cerca per condició: no busquem un valor exacte sinó el primer que compleix punts[i] >= 20. En trobar-lo parem, així que és la PRIMERA partida, no la de més punts.' }
+    code:"// Anàlisi\n// Entrada: punts de 8 partides dins d'un vector\n// Sortida: primera partida amb 20 punts o més, o avís\n\nProceso PrimeraPartida20\n    // Constants: valors fixos que no canvien durant el programa\n    Definir N_PARTIDES Como Entero;\n    Definir OBJECTIU Como Entero;\n    N_PARTIDES <- 8;\n    OBJECTIU <- 20;\n\n    Definir i Como Entero;\n    Definir punts Como Entero;\n    Dimension punts[N_PARTIDES];\n    Definir trobat Como Logico;\n    Para i <- 0 Hasta N_PARTIDES - 1 Hacer\n        Escribir 'Punts de la partida ', i + 1, ':';\n        Leer punts[i];\n    FinPara\n    trobat <- Falso;\n    i <- 0;\n    Mientras i < N_PARTIDES Y NO trobat Hacer\n        Si punts[i] >= OBJECTIU Entonces\n            trobat <- Verdadero;\n        SiNo\n            i <- i + 1;\n        FinSi\n    FinMientras\n    Si trobat Entonces\n        Escribir 'Ha arribat a ', OBJECTIU, ' punts per primer cop a la partida ', i + 1, ' (', punts[i], ' punts).';\n    SiNo\n        Escribir 'No ha arribat mai a ', OBJECTIU, ' punts.';\n    FinSi\nFinProceso",
+    exp:'Cerca per condició: no busquem un valor exacte sinó el primer que compleix punts[i] >= OBJECTIU (la constant val 20). En trobar-lo parem, així que és la PRIMERA partida, no la de més punts.' }
 ];
 (function(){
   const c = document.getElementById('ex4-cont'); c.innerHTML='';
