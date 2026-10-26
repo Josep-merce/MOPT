@@ -398,80 +398,101 @@ FinProceso"></pre>
     </div>
 
     <div class="demo">
-      <div class="demo-label">Exemple · és a la llista? i a quina posició? (sense booleà)</div>
-      <pre class="pseudo-out" data-code="Proceso CercaNotaSenseLogic
+      <div class="demo-label">Exemple · sense booleà: el meu número té premi?</div>
+      <pre class="pseudo-out" data-code="Proceso NumeroPremiat
     // Constant: valor fix que no canvia durant el programa
-    Definir N_NOTES Como Entero;
-    N_NOTES &lt;- 5;
+    Definir N_PREMIS Como Entero;
+    N_PREMIS &lt;- 5;
 
-    Definir i, buscada, pos Como Entero;
-    Definir notes Como Entero;
-    Dimension notes[N_NOTES];
+    Definir i, elMeuNumero, pos Como Entero;
+    Definir premiats Como Entero;
+    Dimension premiats[N_PREMIS];
 
-    // 1) Omplim el vector (recorregut)
-    Para i &lt;- 0 Hasta N_NOTES - 1 Hacer
-        Escribir 'Escriu la nota ', i + 1, ':';
-        Leer notes[i];
+    // 1) Omplim el vector amb els números premiats (recorregut)
+    Para i &lt;- 0 Hasta N_PREMIS - 1 Hacer
+        Escribir 'Número premiat ', i + 1, ':';
+        Leer premiats[i];
     FinPara
 
-    Escribir 'Quina nota vols cercar?';
-    Leer buscada;
+    Escribir 'Quin és el teu número?';
+    Leer elMeuNumero;
 
-    // 2) Cerca: pos = -1 vol dir «encara no l'he trobada»
+    // 2) Cerca: pos = -1 vol dir «encara no l'he trobat»
     pos &lt;- -1;
     i &lt;- 0;
-    Mientras i &lt; N_NOTES Y pos = -1 Hacer
-        Si notes[i] = buscada Entonces
-            pos &lt;- i;          // guardem on l'hem trobada
+    Mientras i &lt; N_PREMIS Y pos = -1 Hacer
+        Si premiats[i] = elMeuNumero Entonces
+            pos &lt;- i;          // guardem on l'hem trobat
         FinSi
         i &lt;- i + 1;
     FinMientras
 
     // 3) Després del bucle, pos ens diu què ha passat
     Si pos &lt;&gt; -1 Entonces
-        Escribir 'La nota ', buscada, ' és a la posició ', pos + 1;
+        Escribir 'Felicitats! El ', elMeuNumero, ' té el premi número ', pos + 1, '.';
     SiNo
-        Escribir 'La nota ', buscada, ' no hi és.';
+        Escribir 'El ', elMeuNumero, ' no té premi.';
     FinSi
 FinProceso"></pre>
+      <div class="demo-label" style="margin-top:14px;">Per pantalla surt (exemple d'execució)</div>
+      <pre class="pseudo-out">Número premiat 1:
+&gt; 4821
+Número premiat 2:
+&gt; 9370
+Número premiat 3:
+&gt; 7710
+Número premiat 4:
+&gt; 2264
+Número premiat 5:
+&gt; 5508
+Quin és el teu número?
+&gt; 7710
+Felicitats! El 7710 té el premi número 3.
+
+--- si no té premi ---
+Quin és el teu número?
+&gt; 1234
+El 1234 no té premi.</pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          Fem servir un enter <code>pos</code> que comença valent <code>-1</code>, un valor que <strong>mai</strong> pot ser una posició (les caselles van del 0
-          al 4), que vol dir «encara no l'he trobada». Quan la trobem, hi guardem la posició (<code>pos &lt;- i</code>) i la
-          condició <code>pos = -1</code> deixa de complir-se: el bucle s'atura. Aquí <code>i</code> avança sempre, i
-          per això la posició bona és <code>pos</code>, no <code>i</code>. Al final, <code>pos &lt;&gt; -1</code> vol dir
-          que l'hem trobada.
+          El vector <code>premiats</code> guarda els 5 números que tenen premi, per ordre (premi 1, premi 2…). Fem servir
+          un enter <code>pos</code> que comença valent <code>-1</code>, un valor que mai pot ser una posició (les caselles
+          van del 0 al 4), i que vol dir «encara no l'he trobat». Quan el número de l'usuari coincideix amb una casella, hi
+          guardem la posició (<code>pos &lt;- i</code>) i la condició <code>pos = -1</code> deixa de complir-se: el bucle
+          s'atura. Aquí <code>i</code> avança sempre, i per això la posició bona és <code>pos</code>, no <code>i</code>. Al
+          final, <code>pos &lt;&gt; -1</code> vol dir que té premi, i <code>pos + 1</code> és el número del premi.
         </div>
       </div>
     </div>
 
     <div class="demo">
-      <div class="demo-label">El mateix exemple · amb booleà (indicador <code>trobat</code>)</div>
-      <pre class="pseudo-out" data-code="Proceso CercaNota
+      <div class="demo-label">Exemple · amb booleà: en quina posició sona la cançó?</div>
+      <pre class="pseudo-out" data-code="Proceso BuscaCanco
     // Constant: valor fix que no canvia durant el programa
-    Definir N_NOTES Como Entero;
-    N_NOTES &lt;- 5;
+    Definir N_CANCONS Como Entero;
+    N_CANCONS &lt;- 5;
 
-    Definir i, buscada Como Entero;
-    Definir notes Como Entero;
-    Dimension notes[N_NOTES];
+    Definir i Como Entero;
+    Definir cancons Como Caracter;
+    Dimension cancons[N_CANCONS];
+    Definir cancoBuscada Como Caracter;
     Definir trobat Como Logico;
 
-    // 1) Omplim el vector (recorregut)
-    Para i &lt;- 0 Hasta N_NOTES - 1 Hacer
-        Escribir 'Escriu la nota ', i + 1, ':';
-        Leer notes[i];
+    // 1) Omplim la llista de reproducció (recorregut)
+    Para i &lt;- 0 Hasta N_CANCONS - 1 Hacer
+        Escribir 'Títol de la cançó ', i + 1, ':';
+        Leer cancons[i];
     FinPara
 
-    Escribir 'Quina nota vols cercar?';
-    Leer buscada;
+    Escribir 'Quina cançó busques?';
+    Leer cancoBuscada;
 
     // 2) Cerca: ens aturem en trobar-la
     trobat &lt;- Falso;
     i &lt;- 0;
-    Mientras i &lt; N_NOTES Y NO trobat Hacer
-        Si notes[i] = buscada Entonces
+    Mientras i &lt; N_CANCONS Y NO trobat Hacer
+        Si cancons[i] = cancoBuscada Entonces
             trobat &lt;- Verdadero;
         SiNo
             i &lt;- i + 1;
@@ -480,20 +501,40 @@ FinProceso"></pre>
 
     // 3) Després del bucle, l'indicador ens diu què ha passat
     Si trobat Entonces
-        Escribir 'La nota ', buscada, ' és a la posició ', i + 1;
+        Escribir '«', cancoBuscada, '» sona en la posició ', i + 1, '.';
     SiNo
-        Escribir 'La nota ', buscada, ' no hi és.';
+        Escribir '«', cancoBuscada, '» no és a la llista.';
     FinSi
 FinProceso"></pre>
+      <div class="demo-label" style="margin-top:14px;">Per pantalla surt (exemple d'execució)</div>
+      <pre class="pseudo-out">Títol de la cançó 1:
+&gt; Boig per tu
+Títol de la cançó 2:
+&gt; Jenifer
+Títol de la cançó 3:
+&gt; Tremendo
+Títol de la cançó 4:
+&gt; La flaca
+Títol de la cançó 5:
+&gt; Pa amb oli i sal
+Quina cançó busques?
+&gt; Tremendo
+«Tremendo» sona en la posició 3.
+
+--- si no hi és ---
+Quina cançó busques?
+&gt; Despacito
+«Despacito» no és a la llista.</pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          Ara la mateixa cerca amb una variable <code>Logico</code>: <code>trobat</code> comença a <code>Falso</code> i <code>i</code> a 0. A cada volta mirem
-          <code>notes[i]</code>: si és la que busquem, posem <code>trobat</code> a <code>Verdadero</code> i el bucle
-          s'atura a la propera comprovació; si no, passem a la casella següent. Fixa't que <code>i</code> només avança
-          quan <strong>no</strong> l'hem trobat: així, en sortir, <code>i</code> és justament la <strong>posició</strong>
-          on és. Si arribem a <code>i = 5</code> sense trobar-la, el bucle s'acaba perquè ja no queden caselles i
-          <code>trobat</code> continua sent <code>Falso</code>.
+          Ara la cerca es fa en un vector de text (<code>Caracter</code>) i amb una variable <code>Logico</code>:
+          <code>trobat</code> comença a <code>Falso</code> i <code>i</code> a 0. A cada volta comparem
+          <code>cancons[i]</code> amb la cançó buscada: si és la mateixa, posem <code>trobat</code> a <code>Verdadero</code>
+          i el bucle s'atura a la propera comprovació; si no, passem a la casella següent. Fixa't que <code>i</code> només
+          avança quan <strong>no</strong> l'hem trobada: així, en sortir, <code>i</code> és justament la
+          <strong>posició</strong> on és. Si arribem a <code>i = N_CANCONS</code> sense trobar-la, el bucle s'acaba perquè
+          ja no queden caselles i <code>trobat</code> continua sent <code>Falso</code>.
         </div>
       </div>
     </div>
@@ -528,25 +569,25 @@ FinProceso"></pre>
       </div>
     </div>
     <p class="lead">
-      Fem la traça del programa amb les notes <code>8 5 9 7 6</code> i buscant el <strong>9</strong>. Cada fila és una
-      volta del <code>Mientras</code>:
+      Fem la traça del programa de les cançons amb la llista de l'exemple i buscant <strong>«Tremendo»</strong>. Cada
+      fila és una volta del <code>Mientras</code>:
     </p>
 
     <div style="overflow-x:auto; margin-top:10px;">
       <table class="trace" style="margin-top:0;">
-        <thead><tr><th>Volta</th><th>i</th><th>notes[i]</th><th>notes[i] = 9?</th><th>Què fa</th><th>trobat</th></tr></thead>
+        <thead><tr><th>Volta</th><th>i</th><th>cancons[i]</th><th>És «Tremendo»?</th><th>Què fa</th><th>trobat</th></tr></thead>
         <tbody>
-          <tr><td>1</td><td>0</td><td>8</td><td>No</td><td>i &lt;- 1</td><td>Falso</td></tr>
-          <tr><td>2</td><td>1</td><td>5</td><td>No</td><td>i &lt;- 2</td><td>Falso</td></tr>
-          <tr><td>3</td><td>2</td><td>9</td><td>Sí</td><td>trobat &lt;- Verdadero</td><td>Verdadero</td></tr>
+          <tr><td>1</td><td>0</td><td>Boig per tu</td><td>No</td><td>i &lt;- 1</td><td>Falso</td></tr>
+          <tr><td>2</td><td>1</td><td>Jenifer</td><td>No</td><td>i &lt;- 2</td><td>Falso</td></tr>
+          <tr><td>3</td><td>2</td><td>Tremendo</td><td>Sí</td><td>trobat &lt;- Verdadero</td><td>Verdadero</td></tr>
         </tbody>
       </table>
     </div>
 
     <p class="lead" style="margin-top:16px;">
-      Després de la volta 3, la condició <code>i &lt; N_NOTES Y NO trobat</code> ja és falsa i el bucle s'acaba. Només ha
-      calgut mirar <strong>3 caselles de 5</strong>, i <code>i</code> val 2: el programa escriu «posició 3» perquè
-      mostrem <code>i + 1</code>.
+      Després de la volta 3, la condició <code>i &lt; N_CANCONS Y NO trobat</code> ja és falsa i el bucle s'acaba. Només
+      ha calgut mirar <strong>3 caselles de 5</strong> («La flaca» i «Pa amb oli i sal» ja no es miren), i <code>i</code>
+      val 2: el programa escriu «posició 3» perquè mostrem <code>i + 1</code>.
     </p>
 
     <div class="ibox green">
