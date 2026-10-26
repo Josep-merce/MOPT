@@ -243,22 +243,42 @@ Escribir notes[1];        // mostra 5"></pre>
       0 a l'últim índex, fem servir un <code>Para</code> on la variable del bucle fa d'<strong>índex</strong>.
     </p>
 
+    <div class="ibox yellow">
+      <div class="ibox-label">Constants: la mida del vector en un sol lloc</div>
+      <div class="ibox-text">
+        A partir d'aquí, els programes guarden la mida del vector en una <strong>constant</strong>: un valor que
+        s'<strong>assigna una sola vegada</strong> al principi i <strong>no es torna a canviar</strong>. PSeInt la declara
+        igual que una variable; per conveni, el nom s'escriu en <strong>MAJÚSCULES</strong>:
+        <code style="display:block; white-space:pre; overflow-x:auto; padding:10px 14px; line-height:1.8; margin:10px 0;">Definir N_NOTES Como Entero;
+N_NOTES &lt;- 5;
+Dimension notes[N_NOTES];
+Para i &lt;- 0 Hasta N_NOTES - 1 Hacer</code>
+        Així, si el vector passa a tenir 10 caselles, només canvies <code>N_NOTES &lt;- 10</code> i el
+        <code>Dimension</code> i el <code>Para</code> s'adapten sols. Altres exemples típics: <code>PI &lt;- 3.1416</code>,
+        <code>IVA &lt;- 0.21</code> o <code>MAX_USUARIS &lt;- 100</code>.
+      </div>
+    </div>
+
     <div class="demo">
       <div class="demo-label">Exemple · omplir el vector des del teclat i mostrar-lo</div>
       <pre class="pseudo-out" data-code="Proceso OmplirNotes
+    // Constant: valor fix que no canvia durant el programa
+    Definir N_NOTES Como Entero;
+    N_NOTES &lt;- 5;
+
     Definir i Como Entero;
     Definir notes Como Entero;
-    Dimension notes[5];
+    Dimension notes[N_NOTES];
 
     // Recorrem les caselles 0..4 per demanar cada nota
-    Para i &lt;- 0 Hasta 4 Hacer
+    Para i &lt;- 0 Hasta N_NOTES - 1 Hacer
         Escribir 'Escriu la nota ', i + 1, ':';
         Leer notes[i];
     FinPara
 
     // Tornem a recórrer-les per mostrar-les
     Escribir 'Aquestes són les teves notes:';
-    Para i &lt;- 0 Hasta 4 Hacer
+    Para i &lt;- 0 Hasta N_NOTES - 1 Hacer
         Escribir notes[i];
     FinPara
 FinProceso"></pre>
@@ -300,13 +320,17 @@ FinProceso"></pre>
     <div class="demo">
       <div class="demo-label">Exemple · mitjana i nota més alta de 5 notes</div>
       <pre class="pseudo-out" data-code="Proceso MitjanaIMaxim
+    // Constant: valor fix que no canvia durant el programa
+    Definir N_NOTES Como Entero;
+    N_NOTES &lt;- 5;
+
     Definir i, suma, maxim Como Entero;
     Definir mitjana Como Real;
     Definir notes Como Entero;
-    Dimension notes[5];
+    Dimension notes[N_NOTES];
 
     // 1) Omplim el vector
-    Para i &lt;- 0 Hasta 4 Hacer
+    Para i &lt;- 0 Hasta N_NOTES - 1 Hacer
         Escribir 'Escriu la nota ', i + 1, ':';
         Leer notes[i];
     FinPara
@@ -316,14 +340,14 @@ FinProceso"></pre>
     maxim &lt;- notes[0];
 
     // 3) Recorrem sumant i comparant
-    Para i &lt;- 0 Hasta 4 Hacer
+    Para i &lt;- 0 Hasta N_NOTES - 1 Hacer
         suma &lt;- suma + notes[i];
         Si notes[i] &gt; maxim Entonces
             maxim &lt;- notes[i];
         FinSi
     FinPara
 
-    mitjana &lt;- suma / 5;
+    mitjana &lt;- suma / N_NOTES;
     Escribir 'La mitjana és: ', mitjana;
     Escribir 'La nota més alta és: ', maxim;
 FinProceso"></pre>
@@ -408,16 +432,20 @@ Pes mitjà: 10 kg</pre>
         <div class="ri-ans" id="sol-prova-v1">
           <div class="ri-ans-label">Solució · PSeInt</div>
           <pre class="pseudo-out" data-code="Proceso RefugiGossos
+    // Constant: valor fix que no canvia durant el programa
+    Definir MAX_GOSSOS Como Entero;
+    MAX_GOSSOS &lt;- 40;
+
     Definir nGossos, i Como Entero;
     Definir pesos Como Real;
-    Dimension pesos[40];
+    Dimension pesos[MAX_GOSSOS];
     Definir total, mitjana Como Real;
 
-    // Validació de la mida lògica (entre 1 i 40)
+    // Validació de la mida lògica (entre 1 i MAX_GOSSOS)
     Repetir
-        Escribir 'Quants gossos han arribat? (1-40):';
+        Escribir 'Quants gossos han arribat? (1-', MAX_GOSSOS, '):';
         Leer nGossos;
-    Hasta Que nGossos &gt;= 1 Y nGossos &lt;= 40;
+    Hasta Que nGossos &gt;= 1 Y nGossos &lt;= MAX_GOSSOS;
 
     // Llegim NOMÉS fins a la mida lògica (no les 40 posicions)
     Para i &lt;- 0 Hasta nGossos - 1 Hacer
@@ -463,17 +491,21 @@ amb una durada de 110 minuts.</pre>
         <div class="ri-ans" id="sol-prova-v2">
           <div class="ri-ans-label">Solució · PSeInt</div>
           <pre class="pseudo-out" data-code="Proceso FestivalConcerts
+    // Constant: valor fix que no canvia durant el programa
+    Definir MAX_GRUPS Como Entero;
+    MAX_GRUPS &lt;- 30;
+
     Definir nGrups, i Como Entero;
     Definir noms Como Caracter;
-    Dimension noms[30];
+    Dimension noms[MAX_GRUPS];
     Definir durades Como Entero;
-    Dimension durades[30];
+    Dimension durades[MAX_GRUPS];
     Definir maxDurada, posMax Como Entero;
 
     Repetir
-        Escribir 'Quants grups han tocat? (1-30):';
+        Escribir 'Quants grups han tocat? (1-', MAX_GRUPS, '):';
         Leer nGrups;
-    Hasta Que nGrups &gt;= 1 Y nGrups &lt;= 30;
+    Hasta Que nGrups &gt;= 1 Y nGrups &lt;= MAX_GRUPS;
 
     Para i &lt;- 0 Hasta nGrups - 1 Hacer
         Escribir 'Nom del grup ', i + 1, ':';
@@ -525,17 +557,21 @@ Laia no està a la llista.</pre>
         <div class="ri-ans" id="sol-prova-v3">
           <div class="ri-ans-label">Solució · PSeInt</div>
           <pre class="pseudo-out" data-code="Proceso CercaCorredor
+    // Constant: valor fix que no canvia durant el programa
+    Definir MAX_CORREDORS Como Entero;
+    MAX_CORREDORS &lt;- 50;
+
     Definir nCorredors, i Como Entero;
     Definir noms Como Caracter;
-    Dimension noms[50];
+    Dimension noms[MAX_CORREDORS];
     Definir nomCercat Como Caracter;
     Definir trobat Como Logico;
     Definir posicio Como Entero;
 
     Repetir
-        Escribir 'Quants corredors hi ha? (1-50):';
+        Escribir 'Quants corredors hi ha? (1-', MAX_CORREDORS, '):';
         Leer nCorredors;
-    Hasta Que nCorredors &gt;= 1 Y nCorredors &lt;= 50;
+    Hasta Que nCorredors &gt;= 1 Y nCorredors &lt;= MAX_CORREDORS;
 
     Para i &lt;- 0 Hasta nCorredors - 1 Hacer
         Escribir 'Nom del corredor ', i + 1, ':';
@@ -592,16 +628,20 @@ En total hi ha hagut 3 dies de calor.</pre>
         <div class="ri-ans" id="sol-prova-v4">
           <div class="ri-ans-label">Solució · PSeInt</div>
           <pre class="pseudo-out" data-code="Proceso DiesDeCalor
+    // Constant: valor fix que no canvia durant el programa
+    Definir MAX_DIES Como Entero;
+    MAX_DIES &lt;- 31;
+
     Definir nDies, i Como Entero;
     Definir temperatures Como Real;
-    Dimension temperatures[31];
+    Dimension temperatures[MAX_DIES];
     Definir llindar Como Real;
     Definir comptador Como Entero;
 
     Repetir
-        Escribir 'Quants dies vols registrar? (1-31):';
+        Escribir 'Quants dies vols registrar? (1-', MAX_DIES, '):';
         Leer nDies;
-    Hasta Que nDies &gt;= 1 Y nDies &lt;= 31;
+    Hasta Que nDies &gt;= 1 Y nDies &lt;= MAX_DIES;
 
     Para i &lt;- 0 Hasta nDies - 1 Hacer
         Escribir 'Temperatura del dia ', i + 1, ' (ºC):';
@@ -656,17 +696,23 @@ Han aprovat 2 alumnes.</pre>
         <div class="ri-ans" id="sol-prova-v5">
           <div class="ri-ans-label">Solució · PSeInt</div>
           <pre class="pseudo-out" data-code="Proceso NotesClasse
+    // Constants: valors fixos que no canvien durant el programa
+    Definir MAX_ALUMNES Como Entero;
+    Definir NOTA_APROVAT Como Entero;
+    MAX_ALUMNES &lt;- 35;
+    NOTA_APROVAT &lt;- 5;
+
     Definir nAlumnes, i Como Entero;
     Definir noms Como Caracter;
-    Dimension noms[35];
+    Dimension noms[MAX_ALUMNES];
     Definir notes Como Entero;
-    Dimension notes[35];
+    Dimension notes[MAX_ALUMNES];
     Definir aprovats Como Entero;
 
     Repetir
-        Escribir 'Quants alumnes hi ha? (1-35):';
+        Escribir 'Quants alumnes hi ha? (1-', MAX_ALUMNES, '):';
         Leer nAlumnes;
-    Hasta Que nAlumnes &gt;= 1 Y nAlumnes &lt;= 35;
+    Hasta Que nAlumnes &gt;= 1 Y nAlumnes &lt;= MAX_ALUMNES;
 
     Para i &lt;- 0 Hasta nAlumnes - 1 Hacer
         Escribir 'Alumne ', i + 1, ' (nom):';
@@ -678,7 +724,7 @@ Han aprovat 2 alumnes.</pre>
     Escribir 'Alumnes que han suspès:';
     aprovats &lt;- 0;
     Para i &lt;- 0 Hasta nAlumnes - 1 Hacer
-        Si notes[i] &lt; 5 Entonces
+        Si notes[i] &lt; NOTA_APROVAT Entonces
             Escribir '- ', noms[i], ' (', notes[i], ')';
         SiNo
             aprovats &lt;- aprovats + 1;
@@ -791,10 +837,10 @@ function checkE3(btn,i,choice){
 /* ── Exercici 4 ── */
 const E4 = [
   { ctx:'Demana 5 notes (de 0 a 10) i mostra la mitjana, la nota més alta i la més baixa.',
-    code:"// Anàlisi\n// Entrada: 5 notes dins d'un vector\n// Sortides: mitjana, màxim i mínim\n\nProceso NotesAlumnes\n    Definir i, suma, maxim, minim Como Entero;\n    Definir mitjana Como Real;\n    Definir notes Como Entero;\n    Dimension notes[5];\n    Para i <- 0 Hasta 4 Hacer\n        Escribir 'Escriu la nota ', i + 1, ':';\n        Leer notes[i];\n    FinPara\n    suma <- 0;\n    maxim <- notes[0];\n    minim <- notes[0];\n    Para i <- 0 Hasta 4 Hacer\n        suma <- suma + notes[i];\n        Si notes[i] > maxim Entonces\n            maxim <- notes[i];\n        FinSi\n        Si notes[i] < minim Entonces\n            minim <- notes[i];\n        FinSi\n    FinPara\n    mitjana <- suma / 5;\n    Escribir 'Mitjana: ', mitjana;\n    Escribir 'Nota més alta: ', maxim;\n    Escribir 'Nota més baixa: ', minim;\nFinProceso",
+    code:"// Anàlisi\n// Entrada: 5 notes dins d'un vector\n// Sortides: mitjana, màxim i mínim\n\nProceso NotesAlumnes\n    // Constant: valor fix que no canvia durant el programa\n    Definir N_NOTES Como Entero;\n    N_NOTES <- 5;\n\n    Definir i, suma, maxim, minim Como Entero;\n    Definir mitjana Como Real;\n    Definir notes Como Entero;\n    Dimension notes[N_NOTES];\n    Para i <- 0 Hasta N_NOTES - 1 Hacer\n        Escribir 'Escriu la nota ', i + 1, ':';\n        Leer notes[i];\n    FinPara\n    suma <- 0;\n    maxim <- notes[0];\n    minim <- notes[0];\n    Para i <- 0 Hasta N_NOTES - 1 Hacer\n        suma <- suma + notes[i];\n        Si notes[i] > maxim Entonces\n            maxim <- notes[i];\n        FinSi\n        Si notes[i] < minim Entonces\n            minim <- notes[i];\n        FinSi\n    FinPara\n    mitjana <- suma / N_NOTES;\n    Escribir 'Mitjana: ', mitjana;\n    Escribir 'Nota més alta: ', maxim;\n    Escribir 'Nota més baixa: ', minim;\nFinProceso",
     exp:'Combinem tres patrons en un sol recorregut: acumulador (suma), màxim i mínim. maxim i minim comencen valent la primera nota.' },
   { ctx:'Demana els valors de dos vectors de 5 enters i crea un tercer vector amb la suma posició a posició (suma[i] = a[i] + b[i]). Mostra el resultat.',
-    code:"// Anàlisi\n// Entrades: vectors a i b de 5 enters\n// Sortida: vector suma\n\nProceso SumaVectors\n    Definir i Como Entero;\n    Definir a, b, suma Como Entero;\n    Dimension a[5];\n    Dimension b[5];\n    Dimension suma[5];\n    Para i <- 0 Hasta 4 Hacer\n        Escribir 'Element ', i + 1, ' del primer vector:';\n        Leer a[i];\n        Escribir 'Element ', i + 1, ' del segon vector:';\n        Leer b[i];\n    FinPara\n    Para i <- 0 Hasta 4 Hacer\n        suma[i] <- a[i] + b[i];\n    FinPara\n    Escribir 'Vector suma:';\n    Para i <- 0 Hasta 4 Hacer\n        Escribir suma[i];\n    FinPara\nFinProceso",
+    code:"// Anàlisi\n// Entrades: vectors a i b de 5 enters\n// Sortida: vector suma\n\nProceso SumaVectors\n    // Constant: valor fix que no canvia durant el programa\n    Definir N_ELEMENTS Como Entero;\n    N_ELEMENTS <- 5;\n\n    Definir i Como Entero;\n    Definir a, b, suma Como Entero;\n    Dimension a[N_ELEMENTS];\n    Dimension b[N_ELEMENTS];\n    Dimension suma[N_ELEMENTS];\n    Para i <- 0 Hasta N_ELEMENTS - 1 Hacer\n        Escribir 'Element ', i + 1, ' del primer vector:';\n        Leer a[i];\n        Escribir 'Element ', i + 1, ' del segon vector:';\n        Leer b[i];\n    FinPara\n    Para i <- 0 Hasta N_ELEMENTS - 1 Hacer\n        suma[i] <- a[i] + b[i];\n    FinPara\n    Escribir 'Vector suma:';\n    Para i <- 0 Hasta N_ELEMENTS - 1 Hacer\n        Escribir suma[i];\n    FinPara\nFinProceso",
     exp:'A cada casella i, sumem a[i] + b[i] i ho guardem a suma[i]. Cada vector es recorre amb el mateix índex i.' }
 ];
 (function(){

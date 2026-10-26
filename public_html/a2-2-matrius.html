@@ -243,15 +243,36 @@ Escribir taula[1,2];       // mostra 3"></pre>
       línia, llegeixes paraula a paraula (columnes).
     </p>
 
+    <div class="ibox yellow">
+      <div class="ibox-label">Constants per a les files i les columnes</div>
+      <div class="ibox-text">
+        Com a l'A2.1, els programes guarden les mides en <strong>constants</strong> (en <strong>MAJÚSCULES</strong>):
+        una per a les files i una per a les columnes. S'assignen una sola vegada al principi i serveixen per al
+        <code>Dimension</code> i per als dos <code>Para</code>:
+        <code style="display:block; white-space:pre; overflow-x:auto; padding:10px 14px; line-height:1.8; margin:10px 0;">N_FILES &lt;- 2;
+N_COLUMNES &lt;- 3;
+Dimension taula[N_FILES,N_COLUMNES];
+Para fila &lt;- 0 Hasta N_FILES - 1 Hacer
+    Para columna &lt;- 0 Hasta N_COLUMNES - 1 Hacer</code>
+        Si la taula canvia de mida, només canvies les dues constants.
+      </div>
+    </div>
+
     <div class="demo">
       <div class="demo-label">Exemple · omplir una matriu des del teclat</div>
       <pre class="pseudo-out" data-code="Proceso OmplirTaula
+    // Constants: valors fixos que no canvien durant el programa
+    Definir N_FILES Como Entero;
+    Definir N_COLUMNES Como Entero;
+    N_FILES &lt;- 2;
+    N_COLUMNES &lt;- 3;
+
     Definir fila, columna Como Entero;
     Definir taula Como Entero;
-    Dimension taula[2,3];      // 2 files x 3 columnes
+    Dimension taula[N_FILES,N_COLUMNES];      // 2 files x 3 columnes
 
-    Para fila &lt;- 0 Hasta 1 Hacer
-        Para columna &lt;- 0 Hasta 2 Hacer
+    Para fila &lt;- 0 Hasta N_FILES - 1 Hacer
+        Para columna &lt;- 0 Hasta N_COLUMNES - 1 Hacer
             Escribir 'Valor de la fila ', fila, ' columna ', columna, ':';
             Leer taula[fila,columna];
         FinPara
@@ -300,13 +321,19 @@ FinProceso"></pre>
     <div class="demo">
       <div class="demo-label">Exemple · omplir, sumar-ho tot i mostrar-ho en graella</div>
       <pre class="pseudo-out" data-code="Proceso SumaTaula
+    // Constants: valors fixos que no canvien durant el programa
+    Definir N_FILES Como Entero;
+    Definir N_COLUMNES Como Entero;
+    N_FILES &lt;- 2;
+    N_COLUMNES &lt;- 3;
+
     Definir fila, columna, suma Como Entero;
     Definir taula Como Entero;
-    Dimension taula[2,3];
+    Dimension taula[N_FILES,N_COLUMNES];
 
     // Omplim la matriu
-    Para fila &lt;- 0 Hasta 1 Hacer
-        Para columna &lt;- 0 Hasta 2 Hacer
+    Para fila &lt;- 0 Hasta N_FILES - 1 Hacer
+        Para columna &lt;- 0 Hasta N_COLUMNES - 1 Hacer
             Escribir 'Valor [', fila, ',', columna, ']:';
             Leer taula[fila,columna];
         FinPara
@@ -314,16 +341,16 @@ FinProceso"></pre>
 
     // Sumem tots els elements amb un acumulador
     suma &lt;- 0;
-    Para fila &lt;- 0 Hasta 1 Hacer
-        Para columna &lt;- 0 Hasta 2 Hacer
+    Para fila &lt;- 0 Hasta N_FILES - 1 Hacer
+        Para columna &lt;- 0 Hasta N_COLUMNES - 1 Hacer
             suma &lt;- suma + taula[fila,columna];
         FinPara
     FinPara
 
     // Mostrem la matriu com una graella
     Escribir 'La matriu és:';
-    Para fila &lt;- 0 Hasta 1 Hacer
-        Para columna &lt;- 0 Hasta 2 Hacer
+    Para fila &lt;- 0 Hasta N_FILES - 1 Hacer
+        Para columna &lt;- 0 Hasta N_COLUMNES - 1 Hacer
             Escribir Sin Saltar taula[fila,columna], ' ';
         FinPara
         Escribir '';
@@ -399,26 +426,32 @@ Habitatge 3: total 580 L, mitjana 145 L/setmana</pre>
         <div class="ri-ans" id="sol-prova-m1">
           <div class="ri-ans-label">Solució · PSeInt</div>
           <pre class="pseudo-out" data-code="Proceso ConsumAigua
+    // Constants: valors fixos que no canvien durant el programa
+    Definir N_HABITATGES Como Entero;
+    Definir N_SETMANES Como Entero;
+    N_HABITATGES &lt;- 3;
+    N_SETMANES &lt;- 4;
+
     Definir fila, col Como Entero;
     Definir consum Como Real;
-    Dimension consum[3, 4];
+    Dimension consum[N_HABITATGES, N_SETMANES];
     Definir totalFila, mitjanaFila Como Real;
 
     // Càrrega de tota la matriu
-    Para fila &lt;- 0 Hasta 2 Hacer
-        Para col &lt;- 0 Hasta 3 Hacer
+    Para fila &lt;- 0 Hasta N_HABITATGES - 1 Hacer
+        Para col &lt;- 0 Hasta N_SETMANES - 1 Hacer
             Escribir 'Consum habitatge ', fila + 1, ' setmana ', col + 1, ':';
             Leer consum[fila, col];
         FinPara
     FinPara
 
     // Total i mitjana PER FILA
-    Para fila &lt;- 0 Hasta 2 Hacer
+    Para fila &lt;- 0 Hasta N_HABITATGES - 1 Hacer
         totalFila &lt;- 0;                  // es reinicia a cada habitatge!
-        Para col &lt;- 0 Hasta 3 Hacer
+        Para col &lt;- 0 Hasta N_SETMANES - 1 Hacer
             totalFila &lt;- totalFila + consum[fila, col];
         FinPara
-        mitjanaFila &lt;- totalFila / 4;
+        mitjanaFila &lt;- totalFila / N_SETMANES;
         Escribir 'Habitatge ', fila + 1, ': total ', totalFila, ' L, mitjana ', mitjanaFila, ' L/setmana';
     FinPara
 FinProceso"></pre>
@@ -441,14 +474,20 @@ La franja 2 és la que ha venut més (325 cafès).</pre>
         <div class="ri-ans" id="sol-prova-m2">
           <div class="ri-ans-label">Solució · PSeInt</div>
           <pre class="pseudo-out" data-code="Proceso CafeteriesFranges
+    // Constants: valors fixos que no canvien durant el programa
+    Definir N_CAFETERIES Como Entero;
+    Definir N_FRANGES Como Entero;
+    N_CAFETERIES &lt;- 4;
+    N_FRANGES &lt;- 3;
+
     Definir fila, col Como Entero;
     Definir vendes Como Entero;
-    Dimension vendes[4, 3];
+    Dimension vendes[N_CAFETERIES, N_FRANGES];
     Definir totalFranja, maxFranja, millorFranja Como Entero;
 
     // Càrrega
-    Para fila &lt;- 0 Hasta 3 Hacer
-        Para col &lt;- 0 Hasta 2 Hacer
+    Para fila &lt;- 0 Hasta N_CAFETERIES - 1 Hacer
+        Para col &lt;- 0 Hasta N_FRANGES - 1 Hacer
             Escribir 'Cafès cafeteria ', fila + 1, ' franja ', col + 1, ':';
             Leer vendes[fila, col];
         FinPara
@@ -457,9 +496,9 @@ La franja 2 és la que ha venut més (325 cafès).</pre>
     // Suma PER COLUMNA: el bucle extern és el de columnes
     maxFranja &lt;- -1;
     millorFranja &lt;- 0;
-    Para col &lt;- 0 Hasta 2 Hacer
+    Para col &lt;- 0 Hasta N_FRANGES - 1 Hacer
         totalFranja &lt;- 0;
-        Para fila &lt;- 0 Hasta 3 Hacer        // fixem la columna, recorrem les files
+        Para fila &lt;- 0 Hasta N_CAFETERIES - 1 Hacer        // fixem la columna, recorrem les files
             totalFranja &lt;- totalFranja + vendes[fila, col];
         FinPara
         Escribir 'Total franja ', col + 1, ': ', totalFranja, ' cafès';
@@ -489,14 +528,20 @@ Hi ha 3 lectures per sobre de 30 ºC.</pre>
         <div class="ri-ans" id="sol-prova-m3">
           <div class="ri-ans-label">Solució · PSeInt</div>
           <pre class="pseudo-out" data-code="Proceso SensorsAlarma
+    // Constants: valors fixos que no canvien durant el programa
+    Definir N_SENSORS Como Entero;
+    Definir N_LECTURES Como Entero;
+    N_SENSORS &lt;- 3;
+    N_LECTURES &lt;- 4;
+
     Definir fila, col Como Entero;
     Definir lectures Como Real;
-    Dimension lectures[3, 4];
+    Dimension lectures[N_SENSORS, N_LECTURES];
     Definir alarma Como Real;
     Definir comptador Como Entero;
 
-    Para fila &lt;- 0 Hasta 2 Hacer
-        Para col &lt;- 0 Hasta 3 Hacer
+    Para fila &lt;- 0 Hasta N_SENSORS - 1 Hacer
+        Para col &lt;- 0 Hasta N_LECTURES - 1 Hacer
             Escribir 'Sensor ', fila + 1, ' lectura ', col + 1, ':';
             Leer lectures[fila, col];
         FinPara
@@ -506,8 +551,8 @@ Hi ha 3 lectures per sobre de 30 ºC.</pre>
     Leer alarma;
 
     comptador &lt;- 0;
-    Para fila &lt;- 0 Hasta 2 Hacer
-        Para col &lt;- 0 Hasta 3 Hacer
+    Para fila &lt;- 0 Hasta N_SENSORS - 1 Hacer
+        Para col &lt;- 0 Hasta N_LECTURES - 1 Hacer
             Si lectures[fila, col] &gt; alarma Entonces
                 comptador &lt;- comptador + 1;
             FinSi
@@ -538,18 +583,24 @@ El monitor amb més hores és Nil amb 37 hores.</pre>
         <div class="ri-ans" id="sol-prova-m4">
           <div class="ri-ans-label">Solució · PSeInt</div>
           <pre class="pseudo-out" data-code="Proceso GimnasMonitors
+    // Constants: valors fixos que no canvien durant el programa
+    Definir N_MONITORS Como Entero;
+    Definir N_DIES Como Entero;
+    N_MONITORS &lt;- 4;
+    N_DIES &lt;- 5;
+
     Definir mon, dia Como Entero;
     Definir noms Como Caracter;
-    Dimension noms[4];
+    Dimension noms[N_MONITORS];
     Definir hores Como Entero;
-    Dimension hores[4, 5];
+    Dimension hores[N_MONITORS, N_DIES];
     Definir totalMon, maxHores, posMax Como Entero;
 
     // El vector de noms va en paral·lel a les files de la matriu
-    Para mon &lt;- 0 Hasta 3 Hacer
+    Para mon &lt;- 0 Hasta N_MONITORS - 1 Hacer
         Escribir 'Nom del monitor ', mon + 1, ':';
         Leer noms[mon];
-        Para dia &lt;- 0 Hasta 4 Hacer
+        Para dia &lt;- 0 Hasta N_DIES - 1 Hacer
             Escribir '  Hores de ', noms[mon], ' el dia ', dia + 1, ':';
             Leer hores[mon, dia];
         FinPara
@@ -558,9 +609,9 @@ El monitor amb més hores és Nil amb 37 hores.</pre>
     // Total per fila (monitor) + màxim amb posició
     maxHores &lt;- -1;
     posMax &lt;- 0;
-    Para mon &lt;- 0 Hasta 3 Hacer
+    Para mon &lt;- 0 Hasta N_MONITORS - 1 Hacer
         totalMon &lt;- 0;
-        Para dia &lt;- 0 Hasta 4 Hacer
+        Para dia &lt;- 0 Hasta N_DIES - 1 Hacer
             totalMon &lt;- totalMon + hores[mon, dia];
         FinPara
         Escribir noms[mon], ': ', totalMon, ' hores';
@@ -675,10 +726,10 @@ function checkE3(btn,i,choice){
 /* ── Exercici 4 ── */
 const E4 = [
   { ctx:'Crea una matriu de 3×3, demana els 9 valors per teclat i mostra la suma de tots els elements.',
-    code:"// Anàlisi\n// Entrada: matriu 3x3 de valors\n// Sortida: suma de tots els elements\n\nProceso SumaMatriu\n    Definir fila, columna, suma Como Entero;\n    Definir m Como Entero;\n    Dimension m[3,3];\n    Para fila <- 0 Hasta 2 Hacer\n        Para columna <- 0 Hasta 2 Hacer\n            Escribir 'Valor [', fila, ',', columna, ']:';\n            Leer m[fila,columna];\n        FinPara\n    FinPara\n    suma <- 0;\n    Para fila <- 0 Hasta 2 Hacer\n        Para columna <- 0 Hasta 2 Hacer\n            suma <- suma + m[fila,columna];\n        FinPara\n    FinPara\n    Escribir 'La suma de tots els elements és: ', suma;\nFinProceso",
+    code:"// Anàlisi\n// Entrada: matriu 3x3 de valors\n// Sortida: suma de tots els elements\n\nProceso SumaMatriu\n    // Constant: valor fix que no canvia durant el programa\n    Definir MIDA Como Entero;\n    MIDA <- 3;\n\n    Definir fila, columna, suma Como Entero;\n    Definir m Como Entero;\n    Dimension m[MIDA,MIDA];\n    Para fila <- 0 Hasta MIDA - 1 Hacer\n        Para columna <- 0 Hasta MIDA - 1 Hacer\n            Escribir 'Valor [', fila, ',', columna, ']:';\n            Leer m[fila,columna];\n        FinPara\n    FinPara\n    suma <- 0;\n    Para fila <- 0 Hasta MIDA - 1 Hacer\n        Para columna <- 0 Hasta MIDA - 1 Hacer\n            suma <- suma + m[fila,columna];\n        FinPara\n    FinPara\n    Escribir 'La suma de tots els elements és: ', suma;\nFinProceso",
     exp:'Un recorregut per omplir i un altre per sumar amb l\'acumulador. Els dos fan servir els mateixos dos bucles niats.' },
   { ctx:'Crea una matriu de 5×5 i omple-la de manera que la diagonal valgui 1 i la resta 0. Després mostra-la en forma de graella.',
-    code:"// Anàlisi\n// Sortida: matriu 5x5 amb 1 a la diagonal i 0 a la resta\n\nProceso Diagonal\n    Definir fila, columna Como Entero;\n    Definir m Como Entero;\n    Dimension m[5,5];\n    Para fila <- 0 Hasta 4 Hacer\n        Para columna <- 0 Hasta 4 Hacer\n            Si fila = columna Entonces\n                m[fila,columna] <- 1;\n            SiNo\n                m[fila,columna] <- 0;\n            FinSi\n        FinPara\n    FinPara\n    Para fila <- 0 Hasta 4 Hacer\n        Para columna <- 0 Hasta 4 Hacer\n            Escribir Sin Saltar m[fila,columna], ' ';\n        FinPara\n        Escribir '';\n    FinPara\nFinProceso",
+    code:"// Anàlisi\n// Sortida: matriu 5x5 amb 1 a la diagonal i 0 a la resta\n\nProceso Diagonal\n    // Constant: valor fix que no canvia durant el programa\n    Definir MIDA Como Entero;\n    MIDA <- 5;\n\n    Definir fila, columna Como Entero;\n    Definir m Como Entero;\n    Dimension m[MIDA,MIDA];\n    Para fila <- 0 Hasta MIDA - 1 Hacer\n        Para columna <- 0 Hasta MIDA - 1 Hacer\n            Si fila = columna Entonces\n                m[fila,columna] <- 1;\n            SiNo\n                m[fila,columna] <- 0;\n            FinSi\n        FinPara\n    FinPara\n    Para fila <- 0 Hasta MIDA - 1 Hacer\n        Para columna <- 0 Hasta MIDA - 1 Hacer\n            Escribir Sin Saltar m[fila,columna], ' ';\n        FinPara\n        Escribir '';\n    FinPara\nFinProceso",
     exp:'La diagonal són les caselles on la fila i la columna coincideixen (fila = columna). Per mostrar la graella, Escribir Sin Saltar dins i un Escribir buit en acabar cada fila.' }
 ];
 (function(){
