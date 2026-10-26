@@ -557,53 +557,28 @@ Quina cançó busques?
         (s'acaba el vector <strong>o</strong> ja l'hem trobat), parem.
       </div>
     </div>
+
+    <div class="ibox green">
+      <div class="ibox-label">El patró que repetiràs sempre</div>
+      <div class="ibox-text">
+        Cercar en un vector és <strong>sempre</strong> el mateix. Només canvia <strong>què comparem</strong> dins del
+        <code>Si</code>.<br><br>
+        <strong>Sense booleà</strong>, amb la posició:
+        <code style="display:block; white-space:pre; overflow-x:auto; padding:10px 14px; line-height:1.8; margin:10px 0;">pos &lt;- -1;  i &lt;- 0;
+Mientras i &lt; n Y pos = -1 Hacer … FinMientras
+Si pos &lt;&gt; -1 Entonces … SiNo … FinSi</code>
+        <strong>Amb booleà</strong>, amb l'indicador:
+        <code style="display:block; white-space:pre; overflow-x:auto; padding:10px 14px; line-height:1.8; margin:10px 0;">trobat &lt;- Falso;  i &lt;- 0;
+Mientras i &lt; n Y NO trobat Hacer … FinMientras
+Si trobat Entonces … SiNo … FinSi</code>
+      </div>
+    </div>
   </section>
 
   <!-- SECCIÓ 3 -->
   <section class="section">
     <div class="sec-head">
       <span class="sec-num">3</span>
-      <div>
-        <h2 class="sec-title">Seguir una cerca pas a pas</h2>
-        <p class="sec-sub">La traça de l'exemple anterior</p>
-      </div>
-    </div>
-    <p class="lead">
-      Fem la traça del programa de les cançons amb la llista de l'exemple i buscant <strong>«Tremendo»</strong>. Cada
-      fila és una volta del <code>Mientras</code>:
-    </p>
-
-    <div style="overflow-x:auto; margin-top:10px;">
-      <table class="trace" style="margin-top:0;">
-        <thead><tr><th>Volta</th><th>i</th><th>cancons[i]</th><th>És «Tremendo»?</th><th>Què fa</th><th>trobat</th></tr></thead>
-        <tbody>
-          <tr><td>1</td><td>0</td><td>Boig per tu</td><td>No</td><td>i &lt;- 1</td><td>Falso</td></tr>
-          <tr><td>2</td><td>1</td><td>Jenifer</td><td>No</td><td>i &lt;- 2</td><td>Falso</td></tr>
-          <tr><td>3</td><td>2</td><td>Tremendo</td><td>Sí</td><td>trobat &lt;- Verdadero</td><td>Verdadero</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <p class="lead" style="margin-top:16px;">
-      Després de la volta 3, la condició <code>i &lt; N_CANCONS Y NO trobat</code> ja és falsa i el bucle s'acaba. Només
-      ha calgut mirar <strong>3 caselles de 5</strong> («La flaca» i «Pa amb oli i sal» ja no es miren), i <code>i</code>
-      val 2: el programa escriu «posició 3» perquè mostrem <code>i + 1</code>.
-    </p>
-
-    <div class="ibox green">
-      <div class="ibox-label">El patró que repetiràs sempre</div>
-      <div class="ibox-text">
-        Cercar en un vector és <strong>sempre</strong> el mateix: <code>trobat &lt;- Falso; i &lt;- 0; Mientras i &lt; n Y NO trobat … FinMientras</code>
-        i, després, <code>Si trobat Entonces … SiNo … FinSi</code>. Només canvia <strong>què comparem</strong> dins del
-        <code>Si</code>.
-      </div>
-    </div>
-  </section>
-
-  <!-- SECCIÓ 4 -->
-  <section class="section">
-    <div class="sec-head">
-      <span class="sec-num">4</span>
       <div>
         <h2 class="sec-title">Variants habituals</h2>
         <p class="sec-sub">Buscar per condició i buscar en vectors paral·lels</p>
@@ -659,42 +634,41 @@ FinProceso"></pre>
     </div>
 
     <div class="demo">
-      <div class="demo-label">Exemple · vectors paral·lels: buscar un alumne i mostrar-ne la nota</div>
-      <pre class="pseudo-out" data-code="Proceso NotaAlumne
+      <div class="demo-label">Exemple · vectors paral·lels: de qui és aquest dorsal?</div>
+      <pre class="pseudo-out" data-code="Proceso DorsalJugador
     // Constant: valor fix que no canvia durant el programa
-    Definir MAX_ALUMNES Como Entero;
-    MAX_ALUMNES &lt;- 30;
+    Definir MAX_JUGADORS Como Entero;
+    MAX_JUGADORS &lt;- 25;
 
-    Definir nAlumnes, i Como Entero;
+    Definir nJugadors, i, dorsalCercat Como Entero;
     Definir noms Como Caracter;
-    Dimension noms[MAX_ALUMNES];
-    Definir notes Como Real;
-    Dimension notes[MAX_ALUMNES];
-    Definir nomCercat Como Caracter;
+    Dimension noms[MAX_JUGADORS];
+    Definir dorsals Como Entero;
+    Dimension dorsals[MAX_JUGADORS];
     Definir trobat Como Logico;
 
-    // Validació de la mida lògica (entre 1 i MAX_ALUMNES)
+    // Validació de la mida lògica (entre 1 i MAX_JUGADORS)
     Repetir
-        Escribir 'Quants alumnes hi ha? (1-', MAX_ALUMNES, '):';
-        Leer nAlumnes;
-    Hasta Que nAlumnes &gt;= 1 Y nAlumnes &lt;= MAX_ALUMNES;
+        Escribir 'Quants jugadors té la plantilla? (1-', MAX_JUGADORS, '):';
+        Leer nJugadors;
+    Hasta Que nJugadors &gt;= 1 Y nJugadors &lt;= MAX_JUGADORS;
 
-    // Omplim els dos vectors: noms[i] i notes[i] són del mateix alumne
-    Para i &lt;- 0 Hasta nAlumnes - 1 Hacer
-        Escribir 'Alumne ', i + 1, ' (nom):';
+    // Omplim els dos vectors: noms[i] i dorsals[i] són del mateix jugador
+    Para i &lt;- 0 Hasta nJugadors - 1 Hacer
+        Escribir 'Jugador ', i + 1, ' (nom):';
         Leer noms[i];
-        Escribir 'Nota de ', noms[i], ':';
-        Leer notes[i];
+        Escribir 'Dorsal de ', noms[i], ':';
+        Leer dorsals[i];
     FinPara
 
-    Escribir 'De quin alumne vols la nota?';
-    Leer nomCercat;
+    Escribir 'Quin dorsal busques?';
+    Leer dorsalCercat;
 
-    // Cerca en el vector de noms…
+    // Cerca en el vector de dorsals…
     trobat &lt;- Falso;
     i &lt;- 0;
-    Mientras i &lt; nAlumnes Y NO trobat Hacer
-        Si noms[i] = nomCercat Entonces
+    Mientras i &lt; nJugadors Y NO trobat Hacer
+        Si dorsals[i] = dorsalCercat Entonces
             trobat &lt;- Verdadero;
         SiNo
             i &lt;- i + 1;
@@ -703,42 +677,42 @@ FinProceso"></pre>
 
     // …i fem servir la posició i per llegir l'altre vector
     Si trobat Entonces
-        Escribir nomCercat, ' té un ', notes[i];
+        Escribir 'El dorsal ', dorsalCercat, ' és de ', noms[i], '.';
     SiNo
-        Escribir nomCercat, ' no és a la llista.';
+        Escribir 'Ningú porta el dorsal ', dorsalCercat, '.';
     FinSi
 FinProceso"></pre>
       <div class="demo-label" style="margin-top:14px;">Per pantalla surt (exemple d'execució)</div>
-      <pre class="pseudo-out">Quants alumnes hi ha? (1-30):
+      <pre class="pseudo-out">Quants jugadors té la plantilla? (1-25):
 &gt; 3
-Alumne 1 (nom):
-&gt; Aina
-Nota de Aina:
-&gt; 7.5
-Alumne 2 (nom):
-&gt; Marc
-Nota de Marc:
+Jugador 1 (nom):
+&gt; Laia
+Dorsal de Laia:
+&gt; 7
+Jugador 2 (nom):
+&gt; Pau
+Dorsal de Pau:
+&gt; 10
+Jugador 3 (nom):
+&gt; Nil
+Dorsal de Nil:
 &gt; 4
-Alumne 3 (nom):
-&gt; Clara
-Nota de Clara:
-&gt; 9
-De quin alumne vols la nota?
-&gt; Marc
-Marc té un 4
+Quin dorsal busques?
+&gt; 10
+El dorsal 10 és de Pau.
 
---- i si el nom no hi és ---
-De quin alumne vols la nota?
-&gt; Pol
-Pol no és a la llista.</pre>
+--- i si ningú el porta ---
+Quin dorsal busques?
+&gt; 23
+Ningú porta el dorsal 23.</pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          Els dos vectors es declaren amb la mateixa mida (30) i s'omplen amb el mateix índex, per això
-          <code>noms[i]</code> i <code>notes[i]</code> són sempre del mateix alumne. Busquem el nom dins de <code>noms</code>
-          i, quan el trobem, la posició <code>i</code> ens serveix per anar a buscar la dada que hi correspon a l'altre
-          vector: <code>notes[i]</code>. És la mateixa idea de la
-          <code>posMax</code> de l'A2.1a, però aplicada a una cerca.
+          Els dos vectors es declaren amb la mateixa mida (<code>MAX_JUGADORS</code>) i s'omplen amb el mateix índex, per
+          això <code>noms[i]</code> i <code>dorsals[i]</code> són sempre del mateix jugador. Busquem el número dins de
+          <code>dorsals</code> i, quan el trobem, la posició <code>i</code> ens serveix per anar a buscar la dada que hi
+          correspon a l'altre vector: <code>noms[i]</code>. És la mateixa idea de la <code>posMax</code> de l'A2.1a, però
+          aplicada a una cerca.
         </div>
       </div>
     </div>
