@@ -11,7 +11,7 @@
   <style>
     .videos{ display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap:18px; }
     .video-card{ border:1px solid var(--line); border-radius:var(--r); overflow:hidden; background:var(--bg); }
-    .video, .video iframe{ display:block; width:100%; aspect-ratio:16/9; border:0; }
+    .video, .video-card iframe{ display:block; width:100%; height:auto; aspect-ratio:16/9; border:0; }
     .video{ position:relative; cursor:pointer; padding:0; font:inherit; color:#fff; text-align:left;
       background:radial-gradient(120% 120% at 100% 0%, rgba(200,16,46,.45) 0%, rgba(200,16,46,0) 55%), #241f1f; }
     .video-num{ position:absolute; top:16px; left:18px; font-family:'JetBrains Mono', monospace; font-size:.8rem; font-weight:700;
@@ -85,8 +85,7 @@
     document.querySelectorAll('.video[data-id]').forEach(function(btn){
       btn.addEventListener('click', function(){
         var f = document.createElement('iframe');
-        f.src = 'https://www.youtube-nocookie.com/embed/' + btn.dataset.id +
-                '?autoplay=1&list=PLS2jTYamQSQKfmLoaIT8HJ7v2nw9bH1u2&index=' + btn.dataset.index;
+        f.src = 'https://www.youtube-nocookie.com/embed/' + btn.dataset.id + '?autoplay=1&rel=0';
         f.title = btn.getAttribute('aria-label').replace('Reproduir el vídeo: ', '');
         f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
         f.allowFullscreen = true;
