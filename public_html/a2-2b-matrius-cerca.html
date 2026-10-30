@@ -107,15 +107,16 @@
     .ri-ans.show { display:block; }
     .ri-ans-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--accent-mid); margin-bottom:8px; }
     .ri-note { font-size:13px; color:var(--ink-2); margin-top:10px; line-height:1.55; }
-    .ri-exec-head { font-size:12px; font-weight:600; color:var(--ink-2); margin:14px 0 6px; }
-    .exec-box { background:#0f172a; border:1px solid #1e293b; border-radius:var(--r-sm); padding:12px 16px; overflow-x:auto; }
-    .exec-pre { font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1.75; color:#e2e8f0; white-space:pre-wrap; margin:0; }
-    .exec-in { color:#38bdf8; font-weight:500; }
     @media print {
       body { background:white; font-size:14px; }
       .ri-ans { display:block !important; } .ri-btn { display:none; }
       .ex-block-head { background:#1c1917 !important; -webkit-print-color-adjust:exact; }
     }
+    /* TAULA DE TRAÇA */
+    .tz { width:100%; border-collapse:collapse; font-size:12.5px; margin:12px 0; overflow-x:auto; display:block; }
+    .tz th, .tz td { border:1px solid var(--border); padding:6px 9px; text-align:center; font-family:'JetBrains Mono',monospace; white-space:nowrap; }
+    .tz th { background:#fafaf9; color:var(--ink-3); font-weight:600; font-size:11px; }
+    .tz td.y { color:var(--green); font-weight:600; }
   </style>
 </head>
 <body>
@@ -127,18 +128,18 @@
       <span class="badge b-course">DAW · Pensament Computacional</span>
       <span class="badge b-ra">AEA2 · RA2</span>
       <span class="badge b-act" style="text-transform:none;">A2.2b</span>
-      <span class="badge b-new">Cerca</span>
+      <span class="badge b-new">Matrius (cerca)</span>
     </div>
-    <h1 class="page-title">Trobar un valor a la graella</h1>
-    <p class="page-sub">No sempre volem operar amb tota la matriu. De vegades només volem saber si un número hi és, o on és. Això és cercar.</p>
+    <h1 class="page-title">Buscar en una graella</h1>
+    <p class="page-sub">Buscar un element dins d'una matriu i aturar-se tan bon punt el trobem.</p>
     <div class="obj-box">
       <div class="obj-icon">🎯</div>
       <div>
         <div class="obj-label">Objectiu · criteris 2.2 i 2.5</div>
         <div class="obj-text">
-          Aplicar el <strong>recorregut amb dos bucles niats</strong> que ja coneixes per fer-hi dues feines noves:
-          <strong>cerca amb posició</strong> (saber a quina fila i columna és) i <strong>cerca amb indicador</strong> (saber
-          si un valor hi és). És el mateix patró de recorregut, reaprofitat per a un problema nou (criteri 2.2), i el
+          Aplicar l'<strong>esquema de cerca</strong> de l'A2.1b a les matrius: recórrer la graella amb <strong>dos
+          <code>Mientras</code> niats</strong> i una condició que atura <strong>tots dos bucles</strong> quan trobem el
+          valor (o quan s'acaba la matriu). És el mateix patró del vector, ampliat a files i columnes (criteri 2.2), i el
           validaràs executant-ho a PSeInt (criteri 2.5).
         </div>
       </div>
@@ -150,39 +151,45 @@
     <div class="sec-head">
       <span class="sec-num">1</span>
       <div>
-        <h2 class="sec-title">Cercar: on és? hi és?</h2>
-        <p class="sec-sub">Recórrer ja ho saps; ara, mentre recorres, et fas una pregunta</p>
+        <h2 class="sec-title">Recórrer o cercar?</h2>
+        <p class="sec-sub">Mirar-les totes o aturar-se en trobar-la</p>
       </div>
     </div>
     <p class="lead">
-      A l'A2.2a recorríem <strong>totes</strong> les caselles d'una matriu per fer-hi alguna cosa (sumar-les, omplir-les,
-      mostrar-les). <strong>Cercar</strong> és recórrer igual, però amb un objectiu diferent: trobar un valor concret.
-      És com buscar un nom a la llista de classe o una peça en un calaix organitzat per files i columnes: vas mirant
-      casella per casella fins que el trobes.
+      A l'A2.2a hem <strong>recorregut</strong> matrius senceres: visitàvem <strong>totes</strong> les caselles per
+      sumar-les o mostrar-les. Però moltes vegades el que volem és <strong>trobar-ne una de concreta</strong>: saber si un
+      número hi és i en <strong>quina casella</strong> (fila i columna). En aquests casos, quan l'hem trobada
+      <strong>no cal continuar mirant</strong>.
     </p>
-    <p class="lead">
-      Hi ha dues preguntes típiques, i cadascuna té el seu patró:
-    </p>
+    <p class="lead">Mira com tracta cada esquema la matriu <code>taula</code> si busquem el <strong>17</strong>:</p>
 
-    <div class="ibox blue">
-      <div class="ibox-label">Les dues cerques</div>
-      <div class="ibox-text">
-        <strong>1. On és?</strong> → vull saber la <strong>fila i la columna</strong>. Patró:
-        <strong>cerca amb posició</strong> (dues variables que guarden on l'he trobat, començant a -1).<br>
-        <strong>2. Hi és?</strong> → només vull un <strong>sí o no</strong>. Patró: <strong>cerca amb indicador</strong>
-        (una variable <code>Logico</code>).
-      </div>
+    <div class="matviz-wrap">
+      <div class="matviz-name">Recorregut · visita les 6 caselles</div>
+      <table class="matviz">
+        <tr><td class="corner"></td><th>col 0</th><th>col 1</th><th>col 2</th></tr>
+        <tr><td class="rowhead">fila 0</td><td>8</td><td>5</td><td>9</td></tr>
+        <tr><td class="rowhead">fila 1</td><td class="hl">17</td><td>7</td><td>6</td></tr>
+      </table>
+      <div class="matviz-cap">Encara que el 17 és a <code>[1,0]</code>, el recorregut continuaria fins a <code>[1,2]</code>.</div>
     </div>
 
     <div class="matviz-wrap">
-      <div class="matviz-name">Busquem el número 8 dins taula[3,4]</div>
+      <div class="matviz-name">Cerca · s'atura a [1,0]</div>
       <table class="matviz">
-        <tr><td class="corner"></td><th>col 0</th><th>col 1</th><th>col 2</th><th>col 3</th></tr>
-        <tr><td class="rowhead">fila 0</td><td>7</td><td>5</td><td>3</td><td>6</td></tr>
-        <tr><td class="rowhead">fila 1</td><td>4</td><td>9</td><td class="hl">8</td><td>5</td></tr>
-        <tr><td class="rowhead">fila 2</td><td>6</td><td>2</td><td>1</td><td>9</td></tr>
+        <tr><td class="corner"></td><th>col 0</th><th>col 1</th><th>col 2</th></tr>
+        <tr><td class="rowhead">fila 0</td><td>8</td><td>5</td><td>9</td></tr>
+        <tr><td class="rowhead">fila 1</td><td class="hl">17</td><td>7</td><td>6</td></tr>
       </table>
-      <div class="matviz-cap">El 8 és a <code>taula[1,2]</code> → fila 1, columna 2. La cerca <em>amb posició</em> diu «fila 1, columna 2»; la cerca <em>amb indicador</em> diu «sí, hi és».</div>
+      <div class="matviz-cap">Mira <code>[0,0] [0,1] [0,2]</code> i, en arribar a <code>[1,0]</code>, ja l'ha trobat: <code>[1,1]</code> i <code>[1,2]</code> no les mira.</div>
+    </div>
+
+    <div class="ibox yellow">
+      <div class="ibox-label">La pregunta clau</div>
+      <div class="ibox-text">
+        Pregunta't: <strong>«si el trobo a la primera casella, he de continuar?»</strong> Si la resposta és no, és una
+        <strong>cerca</strong>. Si has de mirar-les totes igualment (sumar, comptar quantes vegades surt…), és un
+        <strong>recorregut</strong>.
+      </div>
     </div>
   </section>
 
@@ -191,71 +198,151 @@
     <div class="sec-head">
       <span class="sec-num">2</span>
       <div>
-        <h2 class="sec-title">Cerca amb posició</h2>
-        <p class="sec-sub">Saber on és: guardar la fila i la columna on l'hem trobat</p>
+        <h2 class="sec-title">L'esquema de cerca en una matriu</h2>
+        <p class="sec-sub">Dos <code>Mientras</code> niats amb condició doble: sense booleà i amb booleà</p>
       </div>
     </div>
     <p class="lead">
-      Comencem per la pregunta més completa: volem saber <strong>a quina fila i columna</strong> és el valor. Fem servir dues variables,
-      <code>filaTrobada</code> i <code>columnaTrobada</code>. Les comencem en <strong>-1</strong>, que és una posició
-      <strong>impossible</strong> (no hi ha cap fila -1), i així «-1» vol dir «encara no l'he trobat». Si el trobem,
-      hi guardem la fila i la columna actuals.
+      Per poder aturar-nos fem servir <strong>dos <code>Mientras</code></strong> (no dos <code>Para</code>), un dins de
+      l'altre. La clau és que <strong>tots dos</strong> porten la mateixa condició doble: continuem mentre
+      <strong>queden caselles</strong> (<code>fila &lt; N_FILES</code>, <code>columna &lt; N_COLUMNES</code>)
+      <strong>i</strong> encara <strong>no l'hem trobat</strong>. Així, quan apareix el valor, l'indicador fa que
+      <strong>s'aturin els dos bucles alhora</strong>. Els índexs <code>fila</code> i <code>columna</code> els posem a 0 i
+      els fem avançar nosaltres.
+    </p>
+    <p class="lead">
+      Com als vectors, hi ha dues maneres d'escriure-ho; totes dues guarden primer el número a <code>buscat</code> i
+      recorden la posició trobada a <code>filaTrobada</code> i <code>columnaTrobada</code>:
     </p>
 
     <div class="ibox blue">
-      <div class="ibox-label">El patró</div>
-      <div class="ibox-text"><code>filaTrobada &lt;- -1; columnaTrobada &lt;- -1;</code> abans de recórrer · dins, <code>Si taula[fila,columna] = buscat Entonces filaTrobada &lt;- fila; columnaTrobada &lt;- columna;</code></div>
+      <div class="ibox-label">Constants: valors que no canvien</div>
+      <div class="ibox-text">
+        Les mides de la matriu es guarden en <strong>constants</strong> (<code>N_FILES</code>, <code>N_COLUMNES</code>),
+        valors que s'assignen <strong>una sola vegada</strong> i no es tornen a tocar. Per conveni s'escriuen en
+        <strong>MAJÚSCULES</strong>. L'avantatge és que, si la matriu canvia de mida, només ho toques en un lloc i el
+        <code>Dimension</code> i els dos <code>Mientras</code> s'adapten sols.
+      </div>
     </div>
 
     <div class="demo">
-      <div class="demo-label">Exemple · a quina fila i columna és el «buscat»?</div>
-      <pre class="pseudo-out" data-code="Proceso CercaPosicio
-    // Constants: valors fixos que no canvien durant el programa
-    Definir N_FILES Como Entero;
-    Definir N_COLUMNES Como Entero;
-    N_FILES <- 2;
-    N_COLUMNES <- 3;
-
-    Definir fila, columna, buscat Como Entero;
-    Definir filaTrobada, columnaTrobada Como Entero;
-    Definir taula Como Entero;
-    Dimension taula[N_FILES,N_COLUMNES];   // ja plena
-
-    Escribir 'Quin número vols buscar?';
-    Leer buscat;
-
-    filaTrobada <- -1;         // -1 = encara no trobat
-    columnaTrobada <- -1;
-    Para fila <- 0 Hasta N_FILES - 1 Hacer
-        Para columna <- 0 Hasta N_COLUMNES - 1 Hacer
-            Si taula[fila,columna] = buscat Entonces
-                filaTrobada <- fila;       // on l'he trobat
-                columnaTrobada <- columna;
-            FinSi
-        FinPara
-    FinPara
-
-    Si filaTrobada <> -1 Entonces
-        Escribir 'Trobat a la fila ', filaTrobada, ' i columna ', columnaTrobada;
-    SiNo
-        Escribir 'El número no és a la matriu.';
-    FinSi
-FinProceso"></pre>
+      <div class="demo-label">Esquema 1 · sense booleà (posició amb sentinella −1)</div>
+      <pre class="pseudo-out" data-code="buscat <- 17;              // el número que volem trobar
+filaTrobada <- -1;         // -1 = encara no l'hem trobat
+columnaTrobada <- -1;
+fila <- 0;
+Mientras fila < N_FILES Y filaTrobada = -1 Hacer
+    columna <- 0;
+    Mientras columna < N_COLUMNES Y filaTrobada = -1 Hacer
+        Si taula[fila,columna] = buscat Entonces
+            filaTrobada <- fila;
+            columnaTrobada <- columna;
+        FinSi
+        columna <- columna + 1;
+    FinMientras
+    fila <- fila + 1;
+FinMientras
+Si filaTrobada <> -1 Entonces
+    Escribir 'El ', buscat, ' és a [', filaTrobada, ',', columnaTrobada, ']';
+SiNo
+    Escribir 'El ', buscat, ' no hi és';
+FinSi"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          Comencem <code>filaTrobada</code> i <code>columnaTrobada</code> en <strong>-1</strong>. Si trobem el valor,
-          hi desem la <code>fila</code> i la <code>columna</code> on érem. Al final, comprovem amb <code>filaTrobada &lt;&gt; -1</code>
-          (diferent de -1): si continua en -1, és que no hem canviat mai el valor i, per tant, el número no hi era.
+          <code>filaTrobada</code> fa dues feines alhora: mentre val <strong>−1</strong> vol dir «encara no l'he trobat» i
+          els dos bucles continuen; quan <code>taula[fila,columna]</code> és igual a <code>buscat</code>, hi guardem la
+          posició (<code>filaTrobada</code> i <code>columnaTrobada</code>) i la condició <code>filaTrobada = -1</code> deixa
+          de complir-se: <strong>paren els dos <code>Mientras</code></strong>. Aquí <code>fila</code> i <code>columna</code>
+          avancen sempre, per això la posició bona és <code>filaTrobada</code>/<code>columnaTrobada</code>, no
+          <code>fila</code>/<code>columna</code>.
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Esquema 2 · amb booleà (indicador <code>trobat</code>)</div>
+      <pre class="pseudo-out" data-code="buscat <- 17;              // el número que volem trobar
+trobat <- Falso;
+fila <- 0;
+Mientras fila < N_FILES Y NO trobat Hacer
+    columna <- 0;
+    Mientras columna < N_COLUMNES Y NO trobat Hacer
+        Si taula[fila,columna] = buscat Entonces
+            trobat <- Verdadero;
+            filaTrobada <- fila;
+            columnaTrobada <- columna;
+        FinSi
+        columna <- columna + 1;
+    FinMientras
+    fila <- fila + 1;
+FinMientras
+Si trobat Entonces
+    Escribir 'El ', buscat, ' és a [', filaTrobada, ',', columnaTrobada, ']';
+SiNo
+    Escribir 'El ', buscat, ' no hi és';
+FinSi"></pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          Ara fem servir una variable <code>Logico</code>: <code>trobat</code> comença a <code>Falso</code> i els dos
+          bucles continuen mentre <code>NO trobat</code>. Quan apareix el valor, posem <code>trobat</code> a
+          <code>Verdadero</code> i, de passada, desem la posició. A diferència del vector, en 2D <strong>igualment</strong>
+          hem de desar <code>filaTrobada</code>/<code>columnaTrobada</code>, perquè les dues coordenades segueixen avançant
+          i no es queden «clavades» a la casella trobada.
         </div>
       </div>
     </div>
 
     <div class="ibox green">
-      <div class="ibox-label">El truc del -1</div>
+      <div class="ibox-label">Amb booleà o sense?</div>
       <div class="ibox-text">
-        Fem servir <strong>-1</strong> com a marca de «no trobat» perquè cap casella no té la fila -1. Qualsevol posició
-        real (0, 1, 2…) és vàlida, així que n'hi ha prou amb preguntar si continua sent -1 o ja ha canviat.
+        Les dues versions fan <strong>exactament el mateix</strong>. En una matriu, l'esquema <strong>sense booleà</strong>
+        acostuma a ser el més curt, perquè <code>filaTrobada</code> ja fa de bandera («−1 = no trobat») i t'estalvies la
+        variable <code>trobat</code>. Amb <code>trobat</code>, en canvi, el codi es llegeix com una frase: «mentre no
+        l'hagis trobat».
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple curt · esquema 1, buscant el 17</div>
+      <div class="matviz-wrap">
+        <div class="matviz-name">taula[2,3]</div>
+        <table class="matviz">
+          <tr><td class="corner"></td><th>col 0</th><th>col 1</th><th>col 2</th></tr>
+          <tr><td class="rowhead">fila 0</td><td>8</td><td>5</td><td>9</td></tr>
+          <tr><td class="rowhead">fila 1</td><td class="hl">17</td><td>7</td><td>6</td></tr>
+        </table>
+      </div>
+      <table class="tz">
+        <tr><th>Volta</th><th>fila</th><th>columna</th><th>taula[f,c]</th><th>= 17?</th><th>Què fa</th><th>filaTr / colTr</th></tr>
+        <tr><td>1</td><td>0</td><td>0</td><td>8</td><td>No</td><td>columna &lt;- 1</td><td>-1 / -1</td></tr>
+        <tr><td>2</td><td>0</td><td>1</td><td>5</td><td>No</td><td>columna &lt;- 2</td><td>-1 / -1</td></tr>
+        <tr><td>3</td><td>0</td><td>2</td><td>9</td><td>No</td><td>columna &lt;- 3 → fila &lt;- 1</td><td>-1 / -1</td></tr>
+        <tr><td>4</td><td>1</td><td>0</td><td>17</td><td class="y">Sí</td><td>filaTr &lt;- 1 · colTr &lt;- 0</td><td class="y">1 / 0 → para</td></tr>
+      </table>
+      <div class="demo-label" style="margin-top:14px;">Per pantalla surt</div>
+      <pre class="pseudo-out">El 17 és a [1,0]</pre>
+      <div class="exp-box">
+        <div class="exp-label">Fixa-t'hi</div>
+        <div class="exp-text">
+          En acabar la fila 0 (volta 3), el <code>Mientras</code> de dins para perquè <code>columna</code> arriba a 3
+          (= <code>N_COLUMNES</code>); el de fora passa a la fila 1 i torna a posar <code>columna</code> a 0. A la volta 4
+          troba el 17: desa la posició i, com que <code>filaTrobada</code> ja no és −1, <strong>els dos bucles s'aturen</strong>
+          i no es miren <code>[1,1]</code> ni <code>[1,2]</code>. Amb l'esquema 2 la traça seria idèntica: només canviaria
+          l'última columna, que passaria de <code>trobat: Falso</code> a <code>Verdadero</code>.
+        </div>
+      </div>
+    </div>
+
+    <div class="ibox red">
+      <div class="ibox-label">⚠️ Compte amb la condició</div>
+      <div class="ibox-text">
+        Les files van de <code>0</code> a <code>N_FILES - 1</code> i les columnes de <code>0</code> a
+        <code>N_COLUMNES - 1</code>; per això fem servir <code>&lt;</code> i <strong>no</strong> <code>&lt;=</code>. I cada
+        condició va unida amb <code>Y</code>: si en falla una part (s'acaba la fila/matriu <strong>o</strong> ja l'hem
+        trobat), parem. L'indicador ha d'anar a <strong>tots dos</strong> <code>Mientras</code>; si només el poses al de
+        dins, el de fora passaria a la fila següent igualment.
       </div>
     </div>
   </section>
@@ -265,134 +352,63 @@ FinProceso"></pre>
     <div class="sec-head">
       <span class="sec-num">3</span>
       <div>
-        <h2 class="sec-title">Cerca amb indicador</h2>
-        <p class="sec-sub">Saber si un valor hi és: resposta Verdadero o Falso</p>
+        <h2 class="sec-title">Variants habituals</h2>
+        <p class="sec-sub">Buscar per condició i quan NO és una cerca</p>
       </div>
     </div>
     <p class="lead">
-      Si només volem saber <strong>si hi és</strong> (sí o no) i no on, podem fer servir una variable <code>Logico</code>
-      en lloc de les posicions. La idea és molt senzilla: la variable (anomenada sovint <code>trobat</code>) comença
-      en <strong>Falso</strong>, com dient «encara no l'he vist». Recorrem tota la matriu i, si en alguna casella hi ha el
-      valor que busquem, la posem a <strong>Verdadero</strong>. Al final, <code>trobat</code> ens diu si el valor hi era o no.
+      El patró no canvia; només canvia <strong>què comparem</strong> dins del <code>Si</code>. La variant més habitual és
+      buscar la <strong>primera casella que compleix una condició</strong> en lloc d'un valor exacte.
     </p>
 
-    <div class="ibox blue">
-      <div class="ibox-label">El patró</div>
-      <div class="ibox-text"><code>trobat &lt;- Falso;</code> abans de recórrer · dins del bucle, <code>Si taula[fila,columna] = buscat Entonces trobat &lt;- Verdadero;</code></div>
-    </div>
-
     <div class="demo">
-      <div class="demo-label">Exemple · el número «buscat» hi és o no?</div>
-      <pre class="pseudo-out" data-code="Proceso CercaIndicador
-    // Constants: valors fixos que no canvien durant el programa
-    Definir N_FILES Como Entero;
-    Definir N_COLUMNES Como Entero;
-    N_FILES <- 2;
-    N_COLUMNES <- 3;
-
-    Definir fila, columna, buscat Como Entero;
-    Definir trobat Como Logico;
-    Definir taula Como Entero;
-    Dimension taula[N_FILES,N_COLUMNES];   // ja plena
-
-    Escribir 'Quin número vols buscar?';
-    Leer buscat;
-
-    trobat <- Falso;           // encara no l'he vist
-    Para fila <- 0 Hasta N_FILES - 1 Hacer
-        Para columna <- 0 Hasta N_COLUMNES - 1 Hacer
-            Si taula[fila,columna] = buscat Entonces
-                trobat <- Verdadero;   // l'he trobat!
-            FinSi
-        FinPara
-    FinPara
-
-    Si trobat = Verdadero Entonces
-        Escribir 'El número ', buscat, ' SÍ que hi és.';
-    SiNo
-        Escribir 'El número ', buscat, ' no hi és.';
-    FinSi
-FinProceso"></pre>
+      <div class="demo-label">Exemple · el primer seient lliure d'una sala (0 = lliure, 1 = ocupat)</div>
+      <pre class="pseudo-out" data-code="buscat <- 0;               // 0 vol dir seient lliure
+filaTrobada <- -1;
+columnaTrobada <- -1;
+fila <- 0;
+Mientras fila < N_FILES Y filaTrobada = -1 Hacer
+    columna <- 0;
+    Mientras columna < N_COLUMNES Y filaTrobada = -1 Hacer
+        Si sala[fila,columna] = 0 Entonces
+            filaTrobada <- fila;
+            columnaTrobada <- columna;
+        FinSi
+        columna <- columna + 1;
+    FinMientras
+    fila <- fila + 1;
+FinMientras
+Si filaTrobada <> -1 Entonces
+    Escribir 'Primer seient lliure: fila ', filaTrobada, ', butaca ', columnaTrobada;
+SiNo
+    Escribir 'La sala és plena';
+FinSi"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          <code>trobat</code> comença en <strong>Falso</strong>. Si trobem el valor en qualsevol casella, el posem a
-          <strong>Verdadero</strong> i ja no torna enrere (res no el torna a posar en Falso). Per això, encara que el
-          recorregut continuï fins al final, <code>trobat</code> es queda en Verdadero. La decisió final (<code>Si trobat…</code>)
-          es fa <strong>fora</strong> dels bucles, quan ja hem mirat tota la matriu.
+          És el mateix esquema, però dins del <code>Si</code> comprovem una <strong>condició</strong>
+          (<code>sala[fila,columna] = 0</code>) en lloc d'un valor concret. Com que ens aturem en trobar-ne un, obtenim el
+          <strong>primer</strong> seient lliure recorrent per files (fila 0 d'esquerra a dreta, després fila 1…).
         </div>
       </div>
     </div>
 
     <div class="ibox yellow">
-      <div class="ibox-label">💡 Per què una variable Logico?</div>
+      <div class="ibox-label">I si vull saber-ne quants n'hi ha?</div>
       <div class="ibox-text">
-        Com que només volem un <strong>sí o no</strong>, el tipus natural és <code>Logico</code> (Verdadero / Falso).
-        És com un interruptor: comença apagat i, si en algun moment veiem el valor, l'encenem.
-      </div>
-    </div>
-  </section>
-
-  <!-- SECCIÓ 4 -->
-  <section class="section">
-    <div class="sec-head">
-      <span class="sec-num">4</span>
-      <div>
-        <h2 class="sec-title">I si hi és més d'un cop?</h2>
-        <p class="sec-sub">Tres preguntes, tres patrons que ja coneixes</p>
-      </div>
-    </div>
-    <p class="lead">
-      Amb el recorregut senzill de dalt, si el valor apareix <strong>diverses vegades</strong>, la cerca amb posició es
-      queda amb <strong>l'última</strong> que troba (cada cop que el veu, sobreescriu <code>filaTrobada</code> amb la nova
-      posició). Si, a més, vols saber <strong>quantes vegades</strong> hi és, el patró és el <strong>comptador</strong>
-      de l'A2.2a: un recorregut i un <code>+1</code> cada cop que coincideix.
-    </p>
-
-    <div class="demo">
-      <div class="demo-label">Exemple · quantes vegades hi és el «buscat»? (comptador)</div>
-      <pre class="pseudo-out" data-code="Proceso ComptarAparicions
-    // Constants: valors fixos que no canvien durant el programa
-    Definir N_FILES Como Entero;
-    Definir N_COLUMNES Como Entero;
-    N_FILES <- 2;
-    N_COLUMNES <- 3;
-
-    Definir fila, columna, buscat, comptador Como Entero;
-    Definir taula Como Entero;
-    Dimension taula[N_FILES,N_COLUMNES];   // ja plena
-
-    Escribir 'Quin número vols comptar?';
-    Leer buscat;
-
-    comptador <- 0;
-    Para fila <- 0 Hasta N_FILES - 1 Hacer
-        Para columna <- 0 Hasta N_COLUMNES - 1 Hacer
-            Si taula[fila,columna] = buscat Entonces
-                comptador <- comptador + 1;
-            FinSi
-        FinPara
-    FinPara
-
-    Escribir 'El número ', buscat, ' hi apareix ', comptador, ' vegades.';
-FinProceso"></pre>
-      <div class="exp-box">
-        <div class="exp-label">El mateix patró, tres preguntes diferents</div>
-        <div class="exp-text">
-          Fixa't que els <strong>dos bucles niats</strong> són idèntics en els tres casos. L'únic que canvia és què hi
-          posem a dins: dues variables de posició (on és?), un indicador <code>Logico</code> (hi és?) o un
-          <code>comptador</code> (quantes vegades?). Reconèixer aquest mateix patró en problemes diferents és
-          exactament el criteri 2.2.
-        </div>
+        Llavors <strong>no</strong> és una cerca: per comptar tots els seients lliures s'ha de mirar tota la matriu. Fes un
+        <strong>recorregut</strong> (dos <code>Para</code> niats) amb un <strong>comptador</strong>, com a l'A2.2a. La
+        cerca només serveix quan en tens prou amb trobar-ne <strong>un</strong>.
       </div>
     </div>
 
-    <div class="ibox blue">
-      <div class="ibox-label">Resum: tria el patró segons la pregunta</div>
+    <div class="ibox green">
+      <div class="ibox-label">El patró que repetiràs sempre</div>
       <div class="ibox-text">
-        <strong>On és?</strong> → posició amb <code>-1</code> (fila i columna).<br>
-        <strong>Hi és?</strong> → indicador <code>Logico</code> (Falso → Verdadero).<br>
-        <strong>Quantes vegades?</strong> → <code>comptador</code> (comença a 0, +1 a cada coincidència).
+        Cercar en una matriu és <strong>sempre</strong> dos <code>Mientras</code> niats amb la condició
+        <code>… Y (filaTrobada = -1)</code> (o <code>Y NO trobat</code>) als dos. Només canvia <strong>què compares</strong>
+        dins del <code>Si</code>: un valor exacte (<code>= buscat</code>) o una condició (<code>= 0</code>,
+        <code>&gt;= URGENT</code>…).
       </div>
     </div>
   </section>
@@ -406,28 +422,28 @@ FinProceso"></pre>
 
     <div class="exercise">
       <div class="ex-head"><div class="ex-num">1</div><div>
-        <div class="ex-name">Idees clau de la cerca</div>
-        <div class="ex-level">Nivell bàsic · entendre els patrons</div>
+        <div class="ex-name">Recorregut o cerca?</div>
+        <div class="ex-level">Nivell bàsic · reconèixer l'esquema</div>
       </div></div>
-      <p class="ex-intro">Preguntes ràpides sobre com funciona una cerca. Fes clic per comprovar.</p>
+      <p class="ex-intro">Per a cada situació, tria què cal fer amb la matriu. Fes clic per comprovar.</p>
       <div id="ex1-cont"></div>
     </div>
 
     <div class="exercise">
       <div class="ex-head"><div class="ex-num">2</div><div>
-        <div class="ex-name">Què escriu el programa?</div>
+        <div class="ex-name">Què mostra el programa?</div>
         <div class="ex-level">Nivell mitjà · seguiment (traça)</div>
       </div></div>
-      <p class="ex-intro">Segueix la cerca casella a casella i tria què s'escriu per pantalla.</p>
+      <p class="ex-intro">Segueix cada cerca casella a casella (per files) i tria què s'escriu per pantalla.</p>
       <div id="ex2-cont"></div>
     </div>
 
     <div class="exercise">
       <div class="ex-head"><div class="ex-num">3</div><div>
-        <div class="ex-name">Quin patró apliques?</div>
-        <div class="ex-level">Nivell mitjà · plantejament</div>
+        <div class="ex-name">Les peces de la cerca</div>
+        <div class="ex-level">Nivell mitjà · condició, índexs i indicador</div>
       </div></div>
-      <p class="ex-intro">Per a cada objectiu, digues quin dels tres patrons de cerca necessites.</p>
+      <p class="ex-intro">Preguntes sobre cada part de l'esquema de cerca en una matriu.</p>
       <div id="ex3-cont"></div>
     </div>
 
@@ -436,7 +452,7 @@ FinProceso"></pre>
         <div class="ex-name">Programa complet</div>
         <div class="ex-level">Nivell avançat · de l'enunciat al codi</div>
       </div></div>
-      <p class="ex-intro">A partir de l'exemple d'execució, escriu el programa PSeInt sencer. Quan el tinguis, mostra la solució per comparar (i amaga-la quan vulguis).</p>
+      <p class="ex-intro">Escriu el programa PSeInt sencer per a cada enunciat. Després obre la solució per comparar.</p>
       <div id="ex4-cont"></div>
     </div>
 
@@ -468,10 +484,10 @@ document.querySelectorAll('pre[data-code]').forEach(function(pre){
 
 /* ── Exercici 1 ── */
 const E1 = [
-  { t:'Per saber NOMÉS si un número hi és (sí o no), quin tipus de variable és el més natural?', opts:['Logico (Verdadero/Falso)','Entero','Caracter'], ans:0, exp:'Com que només volem un sí o no, el tipus natural és Logico.' },
-  { t:'A la cerca amb posició, per què comencem <code>filaTrobada</code> en -1?', opts:['Perquè -1 és una fila que no existeix: marca «encara no trobat»','Perquè -1 és la primera fila','Perquè va més ràpid'], ans:0, exp:'Cap casella té la fila -1, així que -1 serveix de marca de «no trobat».' },
-  { t:'A la cerca amb indicador, a quin valor comencem la variable <code>trobat</code>?', opts:['Verdadero','Falso','0'], ans:1, exp:'Comença en Falso («encara no l\'he vist») i només passa a Verdadero si el trobem.' },
-  { t:'Quants bucles necessites per cercar dins una matriu?', opts:['1','2','3'], ans:1, exp:'Els mateixos dos bucles niats del recorregut: un per a les files i un per a les columnes.' }
+  { t:'Vull saber si el número 50 és en algun lloc d\'una matriu i a quina casella. Què faig?', opts:['Un recorregut','Una cerca'], ans:1, exp:'Només cal trobar-ne una: quan el trobo, paro. És una cerca.' },
+  { t:'Vull comptar quantes caselles d\'una matriu valen 0. Què faig?', opts:['Un recorregut','Una cerca'], ans:0, exp:'Per comptar-les totes s\'han de mirar totes: és un recorregut amb comptador, no una cerca.' },
+  { t:'Per aturar-nos a mig recorregut d\'una matriu, quins bucles fem servir?', opts:['Dos Para niats','Dos Mientras niats'], ans:1, exp:'Amb Para no pots parar a mitges; amb Mientras i una condició doble, sí.' },
+  { t:'On ha d\'anar l\'indicador (filaTrobada = -1 o NO trobat)?', opts:['Només al Mientras de dins','Als dos Mientras (dins i fora)'], ans:1, exp:'Si només el poses al de dins, el de fora passaria a la fila següent igualment. Ha d\'anar a tots dos.' }
 ];
 (function(){
   const c = document.getElementById('ex1-cont');
@@ -485,12 +501,10 @@ const E1 = [
 
 /* ── Exercici 2 ── */
 const E2 = [
-  { code:"Definir f, c Como Entero;\nDefinir ft, ct Como Entero;\nDefinir t Como Entero;\nDimension t[2,2];\nt[0,0] <- 5;  t[0,1] <- 8;\nt[1,0] <- 3;  t[1,1] <- 6;\nft <- -1;  ct <- -1;\nPara f <- 0 Hasta 1 Hacer\n    Para c <- 0 Hasta 1 Hacer\n        Si t[f,c] = 3 Entonces\n            ft <- f;  ct <- c;\n        FinSi\n    FinPara\nFinPara\nEscribir ft, ' ', ct;",
-    opts:['1 0','0 1','3'], ans:0, exp:'El 3 és a la fila 1, columna 0 → s\'escriu «1 0».' },
-  { code:"Definir f, c Como Entero;\nDefinir trobat Como Logico;\nDefinir t Como Entero;\nDimension t[2,2];\nt[0,0] <- 4;  t[0,1] <- 7;\nt[1,0] <- 2;  t[1,1] <- 9;\ntrobat <- Falso;\nPara f <- 0 Hasta 1 Hacer\n    Para c <- 0 Hasta 1 Hacer\n        Si t[f,c] = 7 Entonces\n            trobat <- Verdadero;\n        FinSi\n    FinPara\nFinPara\nSi trobat = Verdadero Entonces\n    Escribir 'Hi és';\nSiNo\n    Escribir 'No hi és';\nFinSi",
-    opts:['Hi és','No hi és','7'], ans:0, exp:'El 7 és a la casella [0,1], així que trobat passa a Verdadero: «Hi és».' },
-  { code:"Definir f, c Como Entero;\nDefinir ft, ct Como Entero;\nDefinir t Como Entero;\nDimension t[2,2];\nt[0,0] <- 2;  t[0,1] <- 5;\nt[1,0] <- 5;  t[1,1] <- 9;\nft <- -1;  ct <- -1;\nPara f <- 0 Hasta 1 Hacer\n    Para c <- 0 Hasta 1 Hacer\n        Si t[f,c] = 5 Entonces\n            ft <- f;  ct <- c;\n        FinSi\n    FinPara\nFinPara\nEscribir ft, ' ', ct;",
-    opts:['0 1 (la primera)','1 0 (la darrera)','5'], ans:1, exp:'El 5 hi és dos cops ([0,1] i [1,0]). Com que cada coincidència sobreescriu, es desa l\'última: «1 0».' }
+  { code:"// taula[2,2] = 3 1 / 1 4   (buscat 1, sense booleà)\nbuscat <- 1;\nfilaTrobada <- -1;\nfila <- 0;\nMientras fila < 2 Y filaTrobada = -1 Hacer\n    columna <- 0;\n    Mientras columna < 2 Y filaTrobada = -1 Hacer\n        Si taula[fila,columna] = buscat Entonces\n            filaTrobada <- fila;\n            columnaTrobada <- columna;\n        FinSi\n        columna <- columna + 1;\n    FinMientras\n    fila <- fila + 1;\nFinMientras\nEscribir 'El ', buscat, ' és a [', filaTrobada, ',', columnaTrobada, ']';",
+    opts:['El 1 és a [0,1]','El 1 és a [1,0]','El 1 és a [0,0]'], ans:0, exp:'Per files: [0,0]=3 no, [0,1]=1 sí → para. Posició [0,1].' },
+  { code:"// taula[2,2] = 5 6 / 7 8   (buscat 9, sense booleà)\nbuscat <- 9;\nfilaTrobada <- -1;\nfila <- 0;\nMientras fila < 2 Y filaTrobada = -1 Hacer\n    columna <- 0;\n    Mientras columna < 2 Y filaTrobada = -1 Hacer\n        Si taula[fila,columna] = buscat Entonces\n            filaTrobada <- fila;\n            columnaTrobada <- columna;\n        FinSi\n        columna <- columna + 1;\n    FinMientras\n    fila <- fila + 1;\nFinMientras\nSi filaTrobada <> -1 Entonces\n    Escribir 'Trobat';\nSiNo\n    Escribir 'El ', buscat, ' no hi és';\nFinSi",
+    opts:['Trobat','El 9 no hi és'], ans:1, exp:'El 9 no és a la matriu: es recorren les 4 caselles, filaTrobada es queda a -1 i surt el missatge de no trobat.' }
 ];
 (function(){
   const c = document.getElementById('ex2-cont');
@@ -513,16 +527,16 @@ function checkQ(grp,btn,i,choice){
 
 /* ── Exercici 3 ── */
 const E3 = [
-  { t:'Saber a quina fila i columna és el número 8.', ans:'Cerca amb posició', exp:'Vols la ubicació: dues variables (fila i columna) començades en -1.' },
-  { t:'Saber si el número 8 apareix en algun lloc de la matriu.', ans:'Cerca amb indicador', exp:'Només vols un sí o no: variable Logico que passa de Falso a Verdadero.' },
-  { t:'Saber quantes vegades apareix el número 8 a la matriu.', ans:'Comptador', exp:'Vols un recompte: un comptador que comença a 0 i puja +1 a cada coincidència.' },
-  { t:'Dir si una matriu conté algun 0.', ans:'Cerca amb indicador', exp:'Només cal saber si n\'hi ha algun: sí o no → indicador Logico.' }
+  { t:'Quin valor de partida fem servir per dir «encara no l\'he trobat» en l\'esquema sense booleà?', ans:'-1 (una posició impossible)', exp:'Les files i columnes mai són negatives, per això -1 serveix de sentinella «no trobat».' },
+  { t:'En l\'esquema amb booleà, com comença la variable trobat?', ans:'A Falso', exp:'trobat comença a Falso i passa a Verdadero quan apareix el valor.' },
+  { t:'Per què fem servir Mientras i no Para?', ans:'Per poder aturar-nos abans d\'hora', exp:'Amb Para es fan sempre totes les voltes; amb Mientras i la condició doble podem parar en trobar-lo.' },
+  { t:'On guardem la casella trobada en una matriu?', ans:'En dues variables (fila i columna)', exp:'Una posició 2D necessita dos números: filaTrobada i columnaTrobada.' }
 ];
-const E3OPTS = ['Cerca amb posició','Cerca amb indicador','Comptador'];
+const E3OPTS = ['-1 (una posició impossible)','A Falso','Per poder aturar-nos abans d\'hora','En dues variables (fila i columna)'];
 (function(){
   const c = document.getElementById('ex3-cont');
   E3.forEach((d,i)=>{
-    const opts = E3OPTS.map(o=>`<button class="qi-btn" onclick="checkE3(this,${i},'${o}')">${o}</button>`).join('');
+    const opts = E3OPTS.map(o=>`<button class="qi-btn" onclick="checkE3(this,${i},'${o.replace(/'/g,"\\'")}')">${o}</button>`).join('');
     const div = document.createElement('div'); div.className='qi';
     div.innerHTML = `<div class="qi-text">${i+1}. ${d.t}</div><div class="qi-opts">${opts}</div><div class="qi-fb" id="E3f${i}"></div>`;
     c.appendChild(div);
@@ -536,45 +550,27 @@ function checkE3(btn,i,choice){
 }
 
 /* ── Exercici 4 ── */
-/* Pinta l'exemple d'execució: les línies d'entrada (que comencen per >) en blau */
-function renderExec(text){
-  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .split('\n').map(function(l){
-      return /^\s*&gt;/.test(l) ? "<span class='exec-in'>" + l + "</span>" : l;
-    }).join('\n');
-}
 const E4 = [
-  { ctx:'Crea una matriu de 3×3, omple-la des del teclat, demana un número i digues a quina fila i columna és. Si no hi és, avisa (cerca amb posició).',
-    code:"// Anàlisi\n// Entrada: matriu 3x3 + número a buscar\n// Sortida: fila i columna on és (o avís si no hi és)\n\nProceso CercaPosicio\n    // Constant: valor fix que no canvia durant el programa\n    Definir MIDA Como Entero;\n    MIDA <- 3;\n\n    Definir fila, columna, buscat Como Entero;\n    Definir filaTrobada, columnaTrobada Como Entero;\n    Definir m Como Entero;\n    Dimension m[MIDA,MIDA];\n\n    // Omplim la matriu\n    Para fila <- 0 Hasta MIDA - 1 Hacer\n        Para columna <- 0 Hasta MIDA - 1 Hacer\n            Escribir 'Valor [', fila, ',', columna, ']:';\n            Leer m[fila,columna];\n        FinPara\n    FinPara\n\n    Escribir 'Quin número vols buscar?';\n    Leer buscat;\n\n    // Cerca amb posició\n    filaTrobada <- -1;\n    columnaTrobada <- -1;\n    Para fila <- 0 Hasta MIDA - 1 Hacer\n        Para columna <- 0 Hasta MIDA - 1 Hacer\n            Si m[fila,columna] = buscat Entonces\n                filaTrobada <- fila;\n                columnaTrobada <- columna;\n            FinSi\n        FinPara\n    FinPara\n\n    Si filaTrobada <> -1 Entonces\n        Escribir 'Trobat a la fila ', filaTrobada, ' i columna ', columnaTrobada;\n    SiNo\n        Escribir 'El número no és a la matriu.';\n    FinSi\nFinProceso",
-    exec:"Valor [0,0]:\n> 4\n... (fins a omplir les 9 caselles) ...\nQuin número vols buscar?\n> 5\nTrobat a la fila 1 i columna 2",
-    exp:'Les posicions comencen en -1 (no trobat). Si el valor hi és diversos cops, es desa l\'última coincidència; la comprovació final filaTrobada <> -1 distingeix trobat de no trobat.' },
-  { ctx:'Crea una matriu de 3×3, omple-la des del teclat, demana un número i digues si hi és o no (cerca amb indicador).',
-    code:"// Anàlisi\n// Entrada: matriu 3x3 + número a buscar\n// Sortida: si el número hi és o no\n\nProceso CercaIndicador\n    // Constant: valor fix que no canvia durant el programa\n    Definir MIDA Como Entero;\n    MIDA <- 3;\n\n    Definir fila, columna, buscat Como Entero;\n    Definir trobat Como Logico;\n    Definir m Como Entero;\n    Dimension m[MIDA,MIDA];\n\n    // Omplim la matriu\n    Para fila <- 0 Hasta MIDA - 1 Hacer\n        Para columna <- 0 Hasta MIDA - 1 Hacer\n            Escribir 'Valor [', fila, ',', columna, ']:';\n            Leer m[fila,columna];\n        FinPara\n    FinPara\n\n    Escribir 'Quin número vols buscar?';\n    Leer buscat;\n\n    // Cerca amb indicador\n    trobat <- Falso;\n    Para fila <- 0 Hasta MIDA - 1 Hacer\n        Para columna <- 0 Hasta MIDA - 1 Hacer\n            Si m[fila,columna] = buscat Entonces\n                trobat <- Verdadero;\n            FinSi\n        FinPara\n    FinPara\n\n    Si trobat = Verdadero Entonces\n        Escribir 'El número ', buscat, ' SÍ que hi és.';\n    SiNo\n        Escribir 'El número ', buscat, ' no hi és.';\n    FinSi\nFinProceso",
-    exec:"Valor [0,0]:\n> 4\nValor [0,1]:\n> 7\n... (fins a omplir les 9 caselles) ...\nQuin número vols buscar?\n> 7\nEl número 7 SÍ que hi és.",
-    exp:'Un recorregut per omplir i un altre per cercar. L\'indicador trobat comença en Falso i només passa a Verdadero si el valor apareix en alguna casella.' },
-  { ctx:'Fes un programa que digui si dues matrius de 2×3 (amb els valors posats per codi) són exactament iguals, és a dir, que a[i,j] = b[i,j] per a totes les caselles.',
-    code:"// Anàlisi\n// Entrada: dues matrius 2x3 (valors per codi)\n// Sortida: si són exactament iguals o no\n\nProceso MatriusIguals\n    // Constants: valors fixos que no canvien durant el programa\n    Definir N_FILES Como Entero;\n    Definir N_COLUMNES Como Entero;\n    N_FILES <- 2;\n    N_COLUMNES <- 3;\n\n    Definir fila, columna Como Entero;\n    Definir iguals Como Logico;\n    Definir a, b Como Entero;\n    Dimension a[N_FILES,N_COLUMNES];\n    Dimension b[N_FILES,N_COLUMNES];\n\n    // Omplim les dues matrius per codi\n    a[0,0] <- 1;  a[0,1] <- 2;  a[0,2] <- 3;\n    a[1,0] <- 4;  a[1,1] <- 5;  a[1,2] <- 6;\n    b[0,0] <- 1;  b[0,1] <- 2;  b[0,2] <- 3;\n    b[1,0] <- 4;  b[1,1] <- 5;  b[1,2] <- 6;\n\n    // Comparem casella a casella amb un indicador\n    iguals <- Verdadero;\n    Para fila <- 0 Hasta N_FILES - 1 Hacer\n        Para columna <- 0 Hasta N_COLUMNES - 1 Hacer\n            Si a[fila,columna] <> b[fila,columna] Entonces\n                iguals <- Falso;\n            FinSi\n        FinPara\n    FinPara\n\n    Si iguals = Verdadero Entonces\n        Escribir 'Les dues matrius són iguals.';\n    SiNo\n        Escribir 'Les dues matrius són diferents.';\n    FinSi\nFinProceso",
-    exec:"Les dues matrius són iguals.",
-    exp:'És la cerca amb indicador a l\'inrevés: iguals comença en Verdadero (suposem que sí) i, si trobem una sola casella diferent (amb <>), passa a Falso per sempre. Si canviessis un únic valor d\'una de les matrius, la sortida seria «Les dues matrius són diferents.».' },
-  { ctx:'Fes un programa que, donada una matriu d\'enters de 2 files i 3 columnes (amb els valors posats per codi), escrigui el valor màxim de cada fila.',
-    code:"// Anàlisi\n// Entrada: matriu 2x3 (valors per codi)\n// Sortida: el valor màxim de cada fila\n\nProceso MaximPerFila\n    // Constants: valors fixos que no canvien durant el programa\n    Definir N_FILES Como Entero;\n    Definir N_COLUMNES Como Entero;\n    N_FILES <- 2;\n    N_COLUMNES <- 3;\n\n    Definir fila, columna, maxim Como Entero;\n    Definir m Como Entero;\n    Dimension m[N_FILES,N_COLUMNES];\n\n    // Omplim la matriu per codi\n    m[0,0] <- 3;  m[0,1] <- 9;  m[0,2] <- 5;\n    m[1,0] <- 8;  m[1,1] <- 2;  m[1,2] <- 7;\n\n    // Per a cada fila, busquem el màxim\n    Para fila <- 0 Hasta N_FILES - 1 Hacer\n        maxim <- m[fila,0];        // suposem que el primer és el més gran\n        Para columna <- 1 Hasta N_COLUMNES - 1 Hacer\n            Si m[fila,columna] > maxim Entonces\n                maxim <- m[fila,columna];\n            FinSi\n        FinPara\n        Escribir 'Màxim de la fila ', fila, ': ', maxim;\n    FinPara\nFinProceso",
-    exec:"Màxim de la fila 0: 9\nMàxim de la fila 1: 8",
-    exp:'Per a cada fila apliquem el patró de màxim: suposem que el primer element de la fila és el més gran i el comparem amb la resta. El punt clau és reiniciar maxim a m[fila,0] a dins del bucle de files, perquè cada fila té el seu propi màxim.' }
+  { ctx:'Un cartó de <strong>bingo 3×3</strong> ja està ple de números. Demana un número a cercar i digues si hi és i a quina casella (fila, columna), o que no hi és. Fes-ho <strong>sense booleà</strong> (sentinella −1).',
+    out:"Número [0,0]:\n> 12\nNúmero [0,1]:\n> 25\nNúmero [0,2]:\n> 31\nNúmero [1,0]:\n> 7\n... (fins a omplir les 9 caselles) ...\nQuin número busques?\n> 7\nEl 7 és a la fila 1, columna 0\n\n--- si no hi és ---\nQuin número busques?\n> 50\nEl 50 no és al cartó",
+    code:"// Anàlisi\n// Entrada: matriu 3x3 + número a cercar\n// Sortida: posició [fila,columna] o \"no hi és\"\n\nProceso BingoCerca\n    Definir N Como Entero;\n    N <- 3;\n    Definir fila, columna, buscat Como Entero;\n    Definir filaTrobada, columnaTrobada Como Entero;\n    Definir carto Como Entero;\n    Dimension carto[N,N];\n    Para fila <- 0 Hasta N - 1 Hacer\n        Para columna <- 0 Hasta N - 1 Hacer\n            Escribir 'Número [', fila, ',', columna, ']:';\n            Leer carto[fila,columna];\n        FinPara\n    FinPara\n    Escribir 'Quin número busques?';\n    Leer buscat;\n    filaTrobada <- -1;\n    columnaTrobada <- -1;\n    fila <- 0;\n    Mientras fila < N Y filaTrobada = -1 Hacer\n        columna <- 0;\n        Mientras columna < N Y filaTrobada = -1 Hacer\n            Si carto[fila,columna] = buscat Entonces\n                filaTrobada <- fila;\n                columnaTrobada <- columna;\n            FinSi\n            columna <- columna + 1;\n        FinMientras\n        fila <- fila + 1;\n    FinMientras\n    Si filaTrobada <> -1 Entonces\n        Escribir 'El ', buscat, ' és a la fila ', filaTrobada, ', columna ', columnaTrobada;\n    SiNo\n        Escribir 'El ', buscat, ' no és al cartó';\n    FinSi\nFinProceso",
+    exp:'filaTrobada comença a −1 i fa de bandera. Quan apareix el número, desem fila i columna i la condició filaTrobada = -1 atura els dos Mientras. fila i columna avancen sempre, per això la posició bona és filaTrobada/columnaTrobada.' },
+  { ctx:'El mapa d\'una <strong>sala de cinema</strong> de 4 files × 5 butaques guarda 0 (lliure) o 1 (ocupat). Troba el <strong>primer seient lliure</strong> recorrent per files, o avisa que la sala és plena. Fes-ho <strong>amb booleà</strong> (indicador trobat).',
+    out:"Seient [0,0] (0 lliure, 1 ocupat):\n> 1\nSeient [0,1] (0 lliure, 1 ocupat):\n> 1\n... (fins als 20 seients: la fila 0 és plena i la fila 1 és 1, 1, 0, 1, 0) ...\nPrimer seient lliure: fila 1, butaca 2\n\n--- si tots els seients valen 1 ---\nLa sala és plena",
+    code:"// Anàlisi\n// Entrada: matriu 4x5 de 0/1\n// Sortida: primer [fila,columna] amb 0, o \"plena\"\n\nProceso PrimerSeient\n    Definir N_FILES, N_BUTAQUES Como Entero;\n    N_FILES <- 4;\n    N_BUTAQUES <- 5;\n    Definir fila, columna Como Entero;\n    Definir filaTrobada, columnaTrobada Como Entero;\n    Definir trobat Como Logico;\n    Definir sala Como Entero;\n    Dimension sala[N_FILES,N_BUTAQUES];\n    Para fila <- 0 Hasta N_FILES - 1 Hacer\n        Para columna <- 0 Hasta N_BUTAQUES - 1 Hacer\n            Escribir 'Seient [', fila, ',', columna, '] (0 lliure, 1 ocupat):';\n            Leer sala[fila,columna];\n        FinPara\n    FinPara\n    trobat <- Falso;\n    fila <- 0;\n    Mientras fila < N_FILES Y NO trobat Hacer\n        columna <- 0;\n        Mientras columna < N_BUTAQUES Y NO trobat Hacer\n            Si sala[fila,columna] = 0 Entonces\n                trobat <- Verdadero;\n                filaTrobada <- fila;\n                columnaTrobada <- columna;\n            FinSi\n            columna <- columna + 1;\n        FinMientras\n        fila <- fila + 1;\n    FinMientras\n    Si trobat Entonces\n        Escribir 'Primer seient lliure: fila ', filaTrobada, ', butaca ', columnaTrobada;\n    SiNo\n        Escribir 'La sala és plena';\n    FinSi\nFinProceso",
+    exp:'Mateix esquema, però dins del Si comprovem una condició (= 0) i fem servir un Logico trobat als dos Mientras. Com que recorrem per files i parem en trobar-ne un, obtenim el PRIMER seient lliure. En 2D encara ens cal desar filaTrobada/columnaTrobada per saber on era.' }
 ];
 (function(){
   const c = document.getElementById('ex4-cont');
   E4.forEach((d,i)=>{
     const div = document.createElement('div'); div.className='ri';
-    const execHtml = d.exec ? `<div class="ri-exec-head">El programa ha de mostrar (exemple d'execució)</div><div class="exec-box"><pre class="exec-pre">${renderExec(d.exec)}</pre></div>` : '';
-    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div>${execHtml}<button class="ri-btn" onclick="toggle(this,'E4a${i}')">▶ Mostrar solució</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">Solució · PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
+    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><div class="demo-label" style="margin-top:12px;">El programa ha de mostrar (exemple d'execució)</div><pre class="pseudo-out" style="margin:6px 0 4px;">${d.out.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</pre><button class="ri-btn" onclick="toggle(this,'E4a${i}')">▶ Mostrar solució</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">Solució · PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
     c.appendChild(div);
   });
 })();
 
-function toggle(btn,id){
-  const open = document.getElementById(id).classList.toggle('show');
-  btn.innerHTML = open ? '▼ Amagar solució' : '▶ Mostrar solució';
-}
+/* Botó mostrar / amagar */
+function toggle(btn,id){ var el=document.getElementById(id); var open=el.classList.toggle('show'); btn.innerHTML = open ? '&#9660; Amagar solució' : '&#9654; Mostrar solució'; }
 </script>
 </body>
 </html>
