@@ -8,6 +8,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="estils.css">
+  <style>
+    .videos{ display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap:18px; }
+    .video-card{ border:1px solid var(--line); border-radius:var(--r); overflow:hidden; background:var(--bg); }
+    .video, .video iframe{ display:block; width:100%; aspect-ratio:16/9; border:0; }
+    .video{ position:relative; cursor:pointer; padding:0; font:inherit; color:#fff; text-align:left;
+      background:radial-gradient(120% 120% at 100% 0%, rgba(200,16,46,.45) 0%, rgba(200,16,46,0) 55%), #241f1f; }
+    .video-num{ position:absolute; top:16px; left:18px; font-family:'JetBrains Mono', monospace; font-size:.8rem; font-weight:700;
+      letter-spacing:.06em; color:#f3c6cd; }
+    .video-title{ position:absolute; left:18px; bottom:16px; font-family:'DM Serif Display', Georgia, serif; font-size:clamp(2rem, 6vw, 2.8rem); line-height:1; }
+    .video-play{ position:absolute; top:50%; left:50%; width:68px; height:68px; margin:-34px 0 0 -34px; border-radius:50%;
+      background:var(--merce-red); box-shadow:0 8px 24px rgba(0,0,0,.35); transition:transform .15s ease; }
+    .video-play::after{ content:""; position:absolute; top:50%; left:54%; transform:translate(-50%,-50%);
+      border-style:solid; border-width:13px 0 13px 21px; border-color:transparent transparent transparent #fff; }
+    .video:hover .video-play, .video:focus-visible .video-play{ transform:scale(1.08); }
+    .video:focus-visible{ outline:3px solid var(--merce-red); outline-offset:-3px; }
+  </style>
 </head>
 <body class="pagina-index">
 
@@ -35,25 +51,24 @@
     <section class="aea">
       <div class="aea-head">
         <h1 class="aea-title">Vídeos explicatius</h1>
-        <p class="aea-desc">S'obren a YouTube en una pestanya nova.</p>
+        <p class="aea-desc">Fes clic a la caràtula per reproduir el vídeo.</p>
       </div>
 
-      <div class="cards">
-
-        <a class="card" href="https://www.youtube.com/watch?v=TgDCgzNMqg0&amp;list=PLS2jTYamQSQKfmLoaIT8HJ7v2nw9bH1u2&amp;index=15" target="_blank" rel="noopener">
-          <span class="card-num wide">A2.1</span>
-          <h3 class="card-title">Vectors</h3>
-          <p class="card-text">Vídeo explicatiu sobre els vectors.</p>
-          <span class="card-foot"><span class="crit">YouTube</span><span class="go">Veure ↗</span></span>
-        </a>
-
-        <a class="card" href="https://www.youtube.com/watch?v=TF-rzcq5tPk&amp;list=PLS2jTYamQSQKfmLoaIT8HJ7v2nw9bH1u2&amp;index=16" target="_blank" rel="noopener">
-          <span class="card-num wide">A2.2</span>
-          <h3 class="card-title">Matrius</h3>
-          <p class="card-text">Vídeo explicatiu sobre les matrius.</p>
-          <span class="card-foot"><span class="crit">YouTube</span><span class="go">Veure ↗</span></span>
-        </a>
-
+      <div class="videos">
+        <div class="video-card">
+          <button class="video" type="button" data-id="TgDCgzNMqg0" data-index="15" aria-label="Reproduir el vídeo: Vectors">
+            <span class="video-num">A2.1</span>
+            <span class="video-title">Vectors</span>
+            <span class="video-play" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="video-card">
+          <button class="video" type="button" data-id="TF-rzcq5tPk" data-index="16" aria-label="Reproduir el vídeo: Matrius">
+            <span class="video-num">A2.2</span>
+            <span class="video-title">Matrius</span>
+            <span class="video-play" aria-hidden="true"></span>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -66,5 +81,18 @@
     </div>
   </footer>
 
+  <script>
+    document.querySelectorAll('.video[data-id]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + btn.dataset.id +
+                '?autoplay=1&list=PLS2jTYamQSQKfmLoaIT8HJ7v2nw9bH1u2&index=' + btn.dataset.index;
+        f.title = btn.getAttribute('aria-label').replace('Reproduir el vídeo: ', '');
+        f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        f.allowFullscreen = true;
+        btn.replaceWith(f);
+      });
+    });
+  </script>
 </body>
 </html>
