@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A2.2b · Simulador de cerca en matriu — RA2 Pensament Computacional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#f7f5f0; --card:#ffffff; --ink:#1c1917; --ink-2:#57534e; --ink-3:#a8a29e;
+      --border:#e7e5e4; --accent:#9a3412; --accent-mid:#c2410c; --accent-bg:#fff7ed; --accent-bdr:#fed7aa;
+      --blue:#1e40af; --blue-bg:#eff6ff; --blue-bdr:#bfdbfe;
+      --green:#166534; --green-bg:#f0fdf4; --green-bdr:#bbf7d0;
+      --red:#991b1b; --red-bg:#fef2f2; --red-bdr:#fecaca;
+      --purple:#6d28d9; --purple-bg:#f5f3ff; --purple-bdr:#ddd6fe;
+      --code-bg:#1e293b; --code-text:#e2e8f0; --r:10px; --r-sm:6px;
+    }
+    body { font-family:'DM Sans',system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.7; font-size:16px; }
+    .wrap { max-width:960px; margin:0 auto; padding:0 24px 80px; }
+
+    .page-header { padding:40px 0 28px; border-bottom:1.5px solid var(--border); margin-bottom:34px; }
+    .meta-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+    .badge { font-size:11px; font-weight:600; padding:3px 11px; border-radius:20px; letter-spacing:.05em; text-transform:uppercase; }
+    .b-course { background:var(--ink); color:#fff; }
+    .b-ra { background:var(--blue-bg); color:var(--blue); border:1px solid var(--blue-bdr); }
+    .b-act { background:var(--accent-mid); color:#fff; }
+    .b-new { background:var(--green-bg); color:var(--green); border:1px solid var(--green-bdr); }
+    .page-title { font-family:'DM Serif Display',Georgia,serif; font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin-bottom:10px; }
+    .page-sub { font-size:16px; color:var(--ink-2); max-width:66ch; }
+    .page-sub code { font-family:'JetBrains Mono',monospace; font-size:13px; background:var(--accent-bg); padding:1px 6px; border-radius:3px; color:var(--accent); }
+
+    .sellab { font-size:12px; color:var(--ink-3); font-weight:600; min-width:62px; }
+    .selrow { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:12px; }
+    .seg { display:inline-flex; border:1.5px solid var(--border); border-radius:10px; overflow:hidden; background:var(--card); flex-wrap:wrap; }
+    .seg button { border:0; background:transparent; color:var(--ink-2); padding:10px 18px; font-size:14px; font-family:'JetBrains Mono',monospace; cursor:pointer; border-right:1.5px solid var(--border); transition:background .12s,color .12s; }
+    .seg button:last-child { border-right:0; }
+    .seg button[aria-pressed="true"] { background:var(--ink); color:#fff; }
+    .seg button:hover:not([aria-pressed="true"]) { background:#fafaf8; }
+    .trait { display:flex; gap:10px; align-items:center; background:var(--accent-bg); border:1px dashed var(--accent-bdr); border-radius:var(--r-sm); padding:9px 14px; margin:6px 0 18px; font-size:14px; color:var(--ink-2); }
+    .trait .emoji { font-size:22px; line-height:1; }
+    .trait b { color:var(--accent); } .trait code { font-family:'JetBrains Mono',monospace; font-size:12.5px; background:#fff; border:1px solid var(--accent-bdr); padding:1px 5px; border-radius:3px; color:var(--accent); }
+    .trait .voltes { margin-left:auto; font-size:12px; font-family:'JetBrains Mono',monospace; background:#fff; border:1px solid var(--accent-bdr); color:var(--accent); padding:3px 9px; border-radius:20px; white-space:nowrap; }
+
+    /* BANDA DE LA MATRIU */
+    .grid-band { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:16px; margin-bottom:18px; }
+    .gb-top { display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:18px; font-size:13px; color:var(--ink-3); }
+    .gb-top b { color:var(--ink-2); }
+    .gb-target { display:flex; align-items:center; gap:9px; color:var(--ink-2); }
+    .gb-target .tval { font-family:'JetBrains Mono',monospace; font-size:19px; font-weight:600; color:var(--accent); background:var(--accent-bg); border:1px solid var(--accent-bdr); border-radius:8px; padding:3px 13px; }
+    .gb-leg { display:flex; gap:12px; flex-wrap:wrap; }
+    .grid { display:inline-flex; flex-direction:column; gap:8px; }
+    .grow { display:flex; gap:8px; }
+    .gcell { position:relative; }
+    .gcell .gidx { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--ink-3); text-align:center; margin-bottom:3px; }
+    .gcell .gbox { width:50px; height:48px; border:1.5px solid var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:18px; background:#fafaf8; color:var(--ink); transition:border-color .15s, background .15s, color .15s, box-shadow .15s, opacity .15s; }
+    .gcell.visited .gbox { opacity:.4; }
+    .gcell.current .gbox { border-color:var(--accent-mid); color:var(--accent); box-shadow:0 0 0 3px var(--accent-bg); opacity:1; }
+    .gcell.found .gbox { border-color:var(--green); background:var(--green-bg); color:var(--green); box-shadow:0 0 0 3px var(--green-bdr); opacity:1; }
+    .gcell .gmark { height:17px; text-align:center; font-size:13px; margin-top:3px; font-weight:700; }
+    .gcell.current .gmark { color:var(--accent); } .gcell.found .gmark { color:var(--green); } .gcell.visited .gmark { color:var(--ink-3); font-weight:400; opacity:.6; }
+    .grid-ptr { margin-top:12px; font-size:12.5px; color:var(--ink-3); }
+    .grid-ptr b { color:var(--accent); font-family:'JetBrains Mono',monospace; }
+
+    /* PARÀMETRES */
+    .param { display:flex; flex-direction:column; gap:10px; background:var(--card); border:1px solid var(--border); border-radius:var(--r-sm); padding:14px 16px; margin-bottom:18px; }
+    .param .prow { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .param label { font-size:13px; font-weight:600; color:var(--ink); min-width:66px; }
+    .param .nums { display:flex; gap:7px; align-items:center; flex-wrap:wrap; }
+    .param input[type=number] { width:52px; font-family:'JetBrains Mono',monospace; font-size:15px; text-align:center; padding:6px 6px; border:1.5px solid var(--border); border-radius:var(--r-sm); background:var(--card); color:var(--ink); }
+    .param input[type=number].tgt { border-color:var(--accent-bdr); background:var(--accent-bg); color:var(--accent); font-weight:600; }
+    .param input[type=number]:focus { outline:2px solid var(--accent-mid); outline-offset:1px; border-color:var(--accent-mid); }
+    .param .phint { font-size:12.5px; color:var(--ink-3); line-height:1.5; }
+
+    .sim { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:16px; align-items:stretch; }
+    @media (max-width:760px){ .sim { grid-template-columns:minmax(0,1fr); } }
+    .lcol, .rcol { min-width:0; }
+    .lcol, .rcol { display:flex; flex-direction:column; gap:16px; min-height:100%; }
+    .panel-code, .panel-screen { flex:1; display:flex; flex-direction:column; }
+    .panel-code .code, .panel-screen .screen { flex:1; }
+    @media (max-width:760px){ .panel-code, .panel-screen { flex:initial; } }
+    .panel { background:var(--card); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; }
+    .panel-head { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-3); padding:11px 16px; border-bottom:1px solid var(--border); background:#fafaf8; display:flex; align-items:center; gap:8px; }
+
+    .code { background:var(--code-bg); padding:14px 0; font-family:'JetBrains Mono',monospace; font-size:12px; line-height:1; overflow-x:auto; }
+    .cl { white-space:pre; padding:3.5px 18px; color:var(--code-text); position:relative; transition:background .1s; }
+    .cl.active { background:#334155; box-shadow: inset 4px 0 0 #fbbf24; }
+    .pos-tag { position:absolute; right:12px; top:50%; transform:translateY(-50%); font-family:'DM Sans',sans-serif; font-size:10px; font-weight:700; letter-spacing:.03em; padding:2px 8px; border-radius:20px; white-space:nowrap; }
+    .pos-tag.help { background:#4a2a0e; color:#fde68a; border:1px solid #92590f; }
+    .kw { color:#fbbf24; font-weight:500; } .var { color:#38bdf8; } .str { color:#4ade80; } .num { color:#f472b6; } .cmt { color:#64748b; } .loop { color:#a78bfa; font-weight:600; }
+
+    .vars { display:flex; flex-direction:column; gap:9px; padding:16px; }
+    .vchip { display:flex; align-items:center; gap:14px; border:1px solid var(--border); border-radius:var(--r-sm); padding:9px 14px; }
+    .vchip .vname { font-family:'JetBrains Mono',monospace; font-size:13.5px; color:var(--ink-2); min-width:118px; flex-shrink:0; }
+    .vtrail { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+    .vtok { font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--ink-3); padding:2px 8px; border-radius:5px; }
+    .vtok.cur { font-size:17px; font-weight:500; color:var(--accent); background:var(--accent-bg); border:1px solid var(--accent-bdr); }
+    .vtok.just { animation:pop .25s ease; }
+    @keyframes pop { from { transform:scale(1.25); } to { transform:scale(1); } }
+
+    .check { padding:16px; min-height:140px; display:flex; flex-direction:column; justify-content:center; gap:10px; }
+    .check-idle { font-size:13.5px; color:var(--ink-3); text-align:center; line-height:1.5; }
+    .check-label { text-align:center; font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--ink-3); }
+    .check-expr { font-family:'JetBrains Mono',monospace; font-size:17px; text-align:center; color:var(--ink); display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .check-expr .arrow { color:var(--ink-3); }
+    .check-verdict { text-align:center; font-weight:700; font-size:14px; padding:7px; border-radius:var(--r-sm); }
+    .check-verdict.cert { background:var(--green-bg); color:var(--green); border:1px solid var(--green-bdr); }
+    .check-verdict.fals { background:var(--red-bg); color:var(--red); border:1px solid var(--red-bdr); }
+    .cond { display:flex; align-items:stretch; justify-content:center; gap:10px; flex-wrap:wrap; }
+    .cond-part { display:flex; flex-direction:column; align-items:center; gap:5px; border:1px solid var(--border); border-radius:var(--r-sm); padding:9px 12px; background:#fafaf8; }
+    .cond-expr { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-3); }
+    .cond-sub { font-family:'JetBrains Mono',monospace; font-size:15px; color:var(--ink); }
+    .cond-op { align-self:center; font-family:'JetBrains Mono',monospace; font-weight:700; color:var(--purple); font-size:15px; }
+    .mini-verdict { font-size:10.5px; font-weight:700; padding:2px 7px; border-radius:20px; }
+    .mini-verdict.cert { background:var(--green-bg); color:var(--green); border:1px solid var(--green-bdr); }
+    .mini-verdict.fals { background:var(--red-bg); color:var(--red); border:1px solid var(--red-bdr); }
+    .op-title { align-self:center; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--ink-3); }
+    .op-calc { text-align:center; font-family:'JetBrains Mono',monospace; font-size:20px; color:var(--ink); }
+    .op-calc b { color:var(--accent); }
+    .op-result { text-align:center; font-weight:700; font-size:15px; padding:7px; border-radius:var(--r-sm); background:var(--accent-bg); color:var(--accent); border:1px solid var(--accent-bdr); }
+
+    .note { font-size:13.5px; color:var(--ink-2); padding:13px 16px; background:var(--accent-bg); border-top:1px solid var(--border); line-height:1.5; min-height:46px; }
+    .note b { color:var(--accent); }
+
+    .screen { background:#0f172a; color:#e2e8f0; font-family:'JetBrains Mono',monospace; font-size:13px; line-height:1.7; padding:14px 16px; min-height:70px; white-space:pre-wrap; word-break:break-word; }
+    .screen .cursor { display:inline-block; width:8px; height:15px; background:#4ade80; vertical-align:text-bottom; animation:blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity:0; } }
+    @media (prefers-reduced-motion: reduce){ .screen .cursor { animation:none; } .vtok.just { animation:none; } }
+
+    .controls { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:20px 0 24px; }
+    .btn { font-family:'DM Sans',sans-serif; font-size:14px; cursor:pointer; border:1.5px solid var(--border); background:var(--card); color:var(--ink); padding:9px 16px; border-radius:var(--r-sm); transition:border-color .12s,background .12s; }
+    .btn:hover:not(:disabled) { border-color:var(--ink); }
+    .btn:disabled { opacity:.4; cursor:default; }
+    .btn.primary { background:var(--accent-mid); border-color:var(--accent-mid); color:#fff; }
+    .btn.primary:hover:not(:disabled) { background:var(--accent); border-color:var(--accent); }
+    .controls .spacer { flex:1; }
+    .controls .speed { font-size:13px; color:var(--ink-2); display:flex; align-items:center; gap:6px; }
+    .controls select { font-family:'DM Sans',sans-serif; font-size:13px; padding:6px 8px; border:1.5px solid var(--border); border-radius:var(--r-sm); background:var(--card); color:var(--ink); cursor:pointer; }
+    .stepcount { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-3); }
+
+    .trace-wrap { margin-top:4px; }
+    .trace { width:100%; border-collapse:collapse; font-size:13px; background:var(--card); border:1px solid var(--border); border-radius:var(--r-sm); overflow:hidden; }
+    .trace th, .trace td { padding:8px 10px; text-align:center; border-bottom:1px solid var(--border); font-family:'JetBrains Mono',monospace; }
+    .trace th { color:var(--ink-3); font-weight:600; background:#fafaf8; font-size:11px; text-transform:uppercase; letter-spacing:.04em; }
+    .trace tr:last-child td { border-bottom:none; }
+    .trace td.res-cert { color:var(--green); } .trace td.res-fals { color:var(--red); }
+    .trace .empty td { color:var(--ink-3); font-family:'DM Sans',sans-serif; font-style:italic; }
+    .trace tr.new td { animation:rowin .3s ease; }
+    @keyframes rowin { from { background:var(--accent-bg); } to { background:transparent; } }
+    @media (prefers-reduced-motion: reduce){ .trace tr.new td { animation:none; } }
+
+    .foot { margin-top:40px; padding-top:18px; border-top:1px solid var(--border); font-size:12.5px; color:var(--ink-3); line-height:1.6; }
+    .foot code { font-family:'JetBrains Mono',monospace; background:var(--accent-bg); color:var(--accent); padding:1px 5px; border-radius:3px; font-size:11.5px; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="page-header">
+    <p style="margin-bottom:14px;font-size:13px;"><a href="simuladors.html" style="color:var(--accent);text-decoration:none;font-weight:600;">← Simuladors</a></p>
+    <div class="meta-row">
+      <span class="badge b-course">DAW · Pensament Computacional</span>
+      <span class="badge b-ra">AEA2 · RA2</span>
+      <span class="badge b-act" style="text-transform:none;">A2.2b</span>
+      <span class="badge b-new">Simulador</span>
+    </div>
+    <h1 class="page-title">Cercar dins d'una matriu</h1>
+    <p class="page-sub">Cerca en una graella amb <b>dos <code>Mientras</code> niats</b> i <b>aturada anticipada</b>: quan apareix el valor, s'aturen els <b>dos</b> bucles alhora. Tria l'<b>esquema</b> (A, sense booleà amb <code>filaTrobada = -1</code>; o B, amb booleà <code>trobat</code>) i el <b>cas</b>, canvia els números i prem <b>Pas a pas</b>.</p>
+  </header>
+
+  <!-- SELECTORS -->
+  <div class="selrow">
+    <span class="sellab">Esquema:</span>
+    <div class="seg" role="group" aria-label="Esquema de cerca">
+      <button data-scheme="A" aria-pressed="true">A · sense booleà (-1)</button>
+      <button data-scheme="B" aria-pressed="false">B · amb booleà (trobat)</button>
+    </div>
+  </div>
+  <div class="selrow">
+    <span class="sellab">Cas:</span>
+    <div class="seg" role="group" aria-label="Casos de cerca">
+      <button data-demo="mig"    aria-pressed="true">🎯 Trobat al mig</button>
+      <button data-demo="primer" aria-pressed="false">⚡ Trobat primer</button>
+      <button data-demo="nohi"   aria-pressed="false">🚫 No hi és</button>
+    </div>
+  </div>
+  <div class="trait" id="trait"></div>
+
+  <!-- BANDA DE LA MATRIU -->
+  <div class="grid-band">
+    <div class="gb-top">
+      <div class="gb-target">🔎 Busquem el: <span class="tval" id="gb-target">17</span></div>
+      <span id="gb-dim"></span>
+      <span class="gb-leg"><span>🟧 ara</span><span>✗ mirada</span><span>✓ trobada</span></span>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="grid-ptr" id="grid-ptr"></div>
+  </div>
+
+  <!-- PARÀMETRES -->
+  <div class="param" id="param"></div>
+
+  <!-- SIMULADOR -->
+  <div class="sim">
+    <div class="lcol">
+      <div class="panel panel-code">
+        <div class="panel-head">📄 Codi PSeInt</div>
+        <div class="code" id="code"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">📦 Variables <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink-3)">— en gris, els valors anteriors</span></div>
+        <div class="vars" id="vars"></div>
+      </div>
+    </div>
+    <div class="rcol">
+      <div class="panel">
+        <div class="panel-head">🔎 Què passa aquest pas</div>
+        <div class="check" id="check"></div>
+        <div class="note" id="note"></div>
+      </div>
+      <div class="panel panel-screen">
+        <div class="panel-head">🖥️ Pantalla</div>
+        <div class="screen" id="screen"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <button class="btn" id="btnReset">↺ Reinicia</button>
+    <button class="btn" id="btnPrev">◀ Enrere</button>
+    <button class="btn primary" id="btnStep">Pas a pas ▶</button>
+    <button class="btn" id="btnPlay">Executa-ho tot ⏩</button>
+    <span class="stepcount" id="stepcount"></span>
+    <span class="spacer"></span>
+    <span class="speed">Velocitat
+      <select id="speed">
+        <option value="1100">Lenta</option>
+        <option value="650" selected>Normal</option>
+        <option value="300">Ràpida</option>
+      </select>
+    </span>
+  </div>
+
+  <!-- TRAÇA -->
+  <div class="panel trace-wrap">
+    <div class="panel-head">📝 Taula de seguiment <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink-3)">— una fila per casella examinada</span></div>
+    <div style="overflow-x:auto"><table class="trace" id="trace"></table></div>
+  </div>
+
+  <p class="foot">
+    Simulador fet per a l'activitat <b>A2.2b · Matrius (cerca)</b> (criteris 2.2 i 2.5). Cerca en matriu amb <b>aturada anticipada</b>: recorre la graella per files i para tan bon punt troba el valor. Compara els <b>dos esquemes</b>: sense booleà (<code>filaTrobada = -1</code>) i amb booleà (<code>NO trobat</code>). L'indicador va als <b>dos</b> <code>Mientras</code>, per això s'aturen tots dos alhora.
+  </p>
+</div>
+
+<script>
+/* ───────── Acoloridor de pseudocodi (per línia) ───────── */
+function paintLine(line){
+  line = line.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  var idx = line.indexOf('//');
+  var code = idx >= 0 ? line.slice(0, idx) : line;
+  var comment = idx >= 0 ? line.slice(idx) : '';
+  var strs = [];
+  code = code.replace(/'(?:''|[^'])*'/g, function(m){ strs.push(m); return '\u0001'; });
+  code = code.replace(/\b(Mientras|FinMientras|Repetir|Hasta|Que|Para|Con|Paso|Hacer|FinPara)\b/g, "<span class='loop'>$1</span>");
+  code = code.replace(/\b(Proceso|FinProceso|Algoritmo|FinAlgoritmo|Definir|Como|Entero|Real|Numerico|Numero|Caracter|Texto|Cadena|Logico|Leer|Escribir|Sin|Saltar|Si|Entonces|SiNo|FinSi|Segun|FinSegun|Y|O|NO|mod)\b/g, "<span class='kw'>$1</span>");
+  code = code.replace(/\b(Verdadero|Falso|PI)\b/g, "<span class='num'>$1</span>");
+  code = code.replace(/\b(\d+\.?\d*)\b/g, "<span class='num'>$1</span>");
+  var k = 0;
+  code = code.replace(/\u0001/g, function(){ return "<span class='str'>" + strs[k++] + "</span>"; });
+  return code + (comment ? "<span class='cmt'>" + comment + "</span>" : '');
+}
+
+/* ───────── Constructor de fotogrames ─────────
+   Dos Mientras niats amb condició doble. L'indicador «encara no trobat» va
+   als dos bucles, per això s'aturen tots dos quan apareix el valor.
+   A = sense booleà (filaTrobada = -1)   B = amb booleà (NO trobat) */
+function build(M, buscat, scheme){
+  var NF = M.length, NC = M[0].length;
+  var B = (scheme === "B");
+  var lines = B ? [
+    "Proceso CercaTaula",
+    "    // taula: matriu de N_FILES x N_COLUMNES, ja plena",
+    "    buscat <- " + buscat + ";",
+    "    trobat <- Falso;",
+    "    fila <- 0;",
+    "    Mientras fila < N_FILES Y NO trobat Hacer",
+    "        columna <- 0;",
+    "        Mientras columna < N_COLUMNES Y NO trobat Hacer",
+    "            Si taula[fila,columna] = buscat Entonces",
+    "                trobat <- Verdadero;",
+    "                filaTrobada <- fila;",
+    "                columnaTrobada <- columna;",
+    "            FinSi",
+    "            columna <- columna + 1;",
+    "        FinMientras",
+    "        fila <- fila + 1;",
+    "    FinMientras",
+    "    Si trobat Entonces",
+    "        Escribir 'El ', buscat, ' és a [', filaTrobada, ',', columnaTrobada, ']';",
+    "    SiNo",
+    "        Escribir 'El ', buscat, ' no hi és';",
+    "    FinSi",
+    "FinProceso"
+  ] : [
+    "Proceso CercaTaula",
+    "    // taula: matriu de N_FILES x N_COLUMNES, ja plena",
+    "    buscat <- " + buscat + ";",
+    "    filaTrobada <- -1;       // -1 = encara no l'hem trobat",
+    "    columnaTrobada <- -1;",
+    "    fila <- 0;",
+    "    Mientras fila < N_FILES Y filaTrobada = -1 Hacer",
+    "        columna <- 0;",
+    "        Mientras columna < N_COLUMNES Y filaTrobada = -1 Hacer",
+    "            Si taula[fila,columna] = buscat Entonces",
+    "                filaTrobada <- fila;",
+    "                columnaTrobada <- columna;",
+    "            FinSi",
+    "            columna <- columna + 1;",
+    "        FinMientras",
+    "        fila <- fila + 1;",
+    "    FinMientras",
+    "    Si filaTrobada <> -1 Entonces",
+    "        Escribir 'El ', buscat, ' és a [', filaTrobada, ',', columnaTrobada, ']';",
+    "    SiNo",
+    "        Escribir 'El ', buscat, ' no hi és';",
+    "    FinSi",
+    "FinProceso"
+  ];
+  // mapa de línies segons l'esquema
+  var L = B
+    ? { buscat:2, init:3, filaInit:4, outer:5, colInit:6, inner:7, si:8, setFlag:9, setFt:10, setCt:11, finSi:12, colInc:13, finInner:14, filaInc:15, finOuter:16, finalSi:17, esc:18, siNo:19, escNo:20, finalFinSi:21, fin:22 }
+    : { buscat:2, init:3, ctInit:4, filaInit:5, outer:6, colInit:7, inner:8, si:9, setFt:10, setCt:11, finSi:12, colInc:13, finInner:14, filaInc:15, finOuter:16, finalSi:17, esc:18, siNo:19, escNo:20, finalFinSi:21, fin:22 };
+
+  var frames = [], trace = [], out = [], vars = {}, volta = 0;
+  function F(line, note, extra){
+    frames.push(Object.assign({ line:line, note:note, vars:Object.assign({},vars), out:out.slice(), tr:trace.length, voltes:volta, check:null, op:null, cond:null, cur:-1, seen:0 }, extra||{}));
+  }
+  function notFound(){ return B ? (vars.trobat === "Falso") : (vars.filaTrobada === -1); }
+  function sentPart(){
+    return B ? { expr:"NO trobat", sub:"NO " + vars.trobat, res:(vars.trobat === "Falso") }
+             : { expr:"filaTrobada = -1", sub:vars.filaTrobada + " = -1", res:(vars.filaTrobada === -1) };
+  }
+
+  vars.buscat = buscat;
+  F(L.buscat, "Volem trobar el <b>" + buscat + "</b> dins de la matriu.", { seen:0 });
+  if (B){ vars.trobat = "Falso"; F(L.init, "Encara no l'hem trobat: <b>trobat = Falso</b>.", { seen:0 }); }
+  else { vars.filaTrobada = -1; F(L.init, "Encara no l'hem trobat: <b>filaTrobada = -1</b>.", { seen:0 });
+         vars.columnaTrobada = -1; F(L.ctInit, "I <b>columnaTrobada = -1</b> també.", { seen:0 }); }
+  vars.fila = 0;
+  F(L.filaInit, "Comencem per la <b>fila 0</b>.", { seen:0 });
+
+  var og = 0, seen = 0, found = false;
+  while (og++ < 50){
+    var oc1 = vars.fila < NF, ocS = notFound(), ocont = oc1 && ocS;
+    var onote = ocont ? "Queden files (<b>fila &lt; " + NF + "</b>) i no l'hem trobat: <b>entrem</b> al bucle de fora."
+             : !oc1 ? "Ja hem mirat totes les files (<b>fila = " + NF + "</b>): <b>sortim</b> del bucle de fora."
+                    : "Ja l'hem trobat: <b>sortim</b> del bucle de fora.";
+    F(L.outer, onote, { seen:seen, cond:{ parts:[ { expr:"fila &lt; N_FILES", sub:vars.fila + " &lt; " + NF, res:oc1 }, sentPart() ], op:"Y", res:ocont } });
+    if (!ocont) break;
+
+    vars.columna = 0;
+    F(L.colInit, "Posem <b>columna = 0</b> i recorrem la fila <b>" + vars.fila + "</b>.", { seen:seen });
+
+    var ig = 0;
+    while (ig++ < 50){
+      var ic1 = vars.columna < NC, icS = notFound(), icont = ic1 && icS;
+      var inote = icont ? "Queden columnes (<b>columna &lt; " + NC + "</b>) i no l'hem trobat: <b>entrem</b> al bucle de dins."
+               : !ic1 ? "S'acaba la fila (<b>columna = " + NC + "</b>): <b>sortim</b> del bucle de dins."
+                      : "Ja l'hem trobat: <b>sortim</b> del bucle de dins.";
+      F(L.inner, inote, { seen:seen, cond:{ parts:[ { expr:"columna &lt; N_COLUMNES", sub:vars.columna + " &lt; " + NC, res:ic1 }, sentPart() ], op:"Y", res:icont } });
+      if (!icont) break;
+
+      var f = vars.fila, c = vars.columna, lin = f * NC + c, val = M[f][c], match = (val === buscat);
+      seen = lin + 1; volta++;
+      F(L.si, "Mirem <b>taula[" + f + "," + c + "] = " + val + "</b>. És el que busquem?",
+        { cur:lin, seen:seen, check:{ label:"taula[" + f + "," + c + "] = buscat", sub:val + " = " + buscat, res:match } });
+
+      if (match){
+        found = true;
+        if (B){
+          vars.trobat = "Verdadero";
+          F(L.setFlag, "<b>Sí!</b> Marquem <b>trobat = Verdadero</b>.", { cur:lin, seen:seen, op:{ title:"trobat ← Verdadero", calc:"", result:"Verdadero" } });
+        }
+        vars.filaTrobada = f;
+        F(L.setFt, "Desem la fila on és: <b>filaTrobada = " + f + "</b>.", { cur:lin, seen:seen, op:{ title:"filaTrobada ← fila", calc:"", result:f } });
+        vars.columnaTrobada = c;
+        F(L.setCt, "Desem la columna: <b>columnaTrobada = " + c + "</b>.", { cur:lin, seen:seen, op:{ title:"columnaTrobada ← columna", calc:"", result:c } });
+        F(L.finSi, "Tanquem el <b>Si</b>.", { cur:lin, seen:seen });
+        trace.push({ n:volta, f:f, c:c, val:val, match:true, helper:B ? "Verdadero" : (f + "," + c) });
+      } else {
+        F(L.finSi, "<b>No.</b> Aquí no hi és; el <b>Si</b> no es compleix.", { cur:lin, seen:seen });
+        trace.push({ n:volta, f:f, c:c, val:val, match:false, helper:B ? "Falso" : "-1,-1" });
+      }
+      var oldc = vars.columna; vars.columna = oldc + 1;
+      F(L.colInc, "<b>columna</b> avança a <b>" + vars.columna + "</b>" + (found ? " (però ja no hi tornarem: l'hem trobat)." : "."),
+        { seen:seen, op:{ title:"columna ← columna + 1", calc:oldc + " + 1", result:vars.columna } });
+    }
+    F(L.finInner, "Fi del bucle de dins.", { seen:seen });
+    var oldf = vars.fila; vars.fila = oldf + 1;
+    F(L.filaInc, "<b>fila</b> avança a <b>" + vars.fila + "</b>" + (found ? " (però el de fora també pararà)." : "."),
+      { seen:seen, op:{ title:"fila ← fila + 1", calc:oldf + " + 1", result:vars.fila } });
+  }
+  F(L.finOuter, "Hem sortit dels dos bucles.", { seen:seen });
+
+  var ok = !notFound();
+  if (B) F(L.finalSi, ok ? "Comprovem: <b>trobat = Verdadero</b> → <b>sí</b> que l'hem trobat." : "Comprovem: <b>trobat = Falso</b> → <b>no</b> l'hem trobat.",
+            { seen:seen, check:{ label:"trobat", sub:vars.trobat, res:ok } });
+  else F(L.finalSi, ok ? "Comprovem: <b>filaTrobada</b> ja no és -1 → <b>sí</b> que l'hem trobat." : "Comprovem: <b>filaTrobada</b> encara és -1 → <b>no</b> l'hem trobat.",
+            { seen:seen, check:{ label:"filaTrobada &lt;&gt; -1", sub:vars.filaTrobada + " &lt;&gt; -1", res:ok } });
+  if (ok){ out.push("El " + buscat + " és a [" + vars.filaTrobada + "," + vars.columnaTrobada + "]"); F(L.esc, "Ho escrivim a la pantalla.", { seen:seen }); }
+  else { out.push("El " + buscat + " no hi és"); F(L.escNo, "Ho escrivim a la pantalla.", { seen:seen }); }
+  F(L.fin, "Programa acabat.", { seen:seen });
+
+  var varsOrder = B ? ["buscat","fila","columna","trobat","filaTrobada","columnaTrobada"]
+                    : ["buscat","fila","columna","filaTrobada","columnaTrobada"];
+  return { lines:lines, frames:frames, trace:trace, matrix:M.map(function(r){ return r.slice(); }), NF:NF, NC:NC,
+           mark:{ line:B ? L.setFlag : L.setFt, text:B ? "🎯 marca trobat" : "🎯 desa la posició" },
+           varsOrder:varsOrder,
+           traceHead:["Volta","fila","col","taula[f,c]","= " + buscat + "?", B ? "trobat" : "filaTr,colTr"] };
+}
+
+/* ───────── Casos ───────── */
+var DEMOS = {
+  mig: {
+    emoji:"🎯", label:"Trobat al mig",
+    trait:"El 17 és a <code>[1,0]</code>. Un cop trobat, <b>no es miren</b> <code>[1,1]</code> ni <code>[1,2]</code>: els dos bucles s'aturen.",
+    m:[[8,5,9],[17,7,6]], buscat:17,
+    hint:"Com que el 17 surt a mitja matriu, la cerca estalvia les caselles de la dreta."
+  },
+  primer: {
+    emoji:"⚡", label:"Trobat primer",
+    trait:"El 17 és a la <b>primera casella</b> <code>[0,0]</code>. El millor cas: una sola comprovació.",
+    m:[[17,5,9],[8,7,6]], buscat:17,
+    hint:"Posa el que busques a [0,0] i veuràs que només cal mirar una casella."
+  },
+  nohi: {
+    emoji:"🚫", label:"No hi és",
+    trait:"El 17 <b>no hi és</b>. El pitjor cas: cal recórrer <b>les 6 caselles</b> abans de dir que no hi és.",
+    m:[[8,5,9],[3,7,6]], buscat:17,
+    hint:"Si el valor no apareix, els bucles paren perquè fila arriba a N_FILES, no per haver-lo trobat."
+  }
+};
+
+/* ───────── Estat ───────── */
+var S = { key:"mig", scheme:"A", vals:DEMOS.mig.m.map(function(r){ return r.slice(); }), buscat:DEMOS.mig.buscat, data:null, idx:0, timer:null };
+var codeEl = document.getElementById("code");
+var lineEls = [];
+
+function rebuild(){
+  S.data = build(S.vals, S.buscat, S.scheme);
+  S.idx = 0;
+  codeEl.innerHTML = "";
+  lineEls = [];
+  S.data.lines.forEach(function(ln, i){
+    var div = document.createElement("div");
+    div.className = "cl";
+    div.innerHTML = paintLine(ln);
+    if (S.data.mark && i === S.data.mark.line){
+      var tag = document.createElement("span");
+      tag.className = "pos-tag help";
+      tag.textContent = S.data.mark.text;
+      div.appendChild(tag);
+    }
+    codeEl.appendChild(div);
+    lineEls.push(div);
+  });
+  document.getElementById("gb-target").textContent = S.buscat;
+  document.getElementById("gb-dim").textContent = "· matriu de " + S.data.NF + " files × " + S.data.NC + " columnes";
+  render();
+}
+
+function varHistory(name, idx){
+  var seq = [];
+  for (var i = 0; i <= idx; i++){
+    var val = S.data.frames[i].vars[name];
+    if (val === undefined) continue;
+    if (seq.length === 0 || seq[seq.length - 1] !== val) seq.push(val);
+  }
+  return seq;
+}
+
+function renderGrid(f){
+  var d = S.data, NF = d.NF, NC = d.NC, cur = (f.cur === undefined ? -1 : f.cur), seen = (f.seen || 0);
+  var ft = f.vars.filaTrobada, ct = f.vars.columnaTrobada;
+  var found = (ft !== undefined && ft !== -1 && ct !== undefined && ct !== -1) ? ft * NC + ct : -1;
+  var html = "";
+  for (var r = 0; r < NF; r++){
+    html += "<div class='grow'>";
+    for (var c = 0; c < NC; c++){
+      var lin = r * NC + c, cls = "gcell", mark = "";
+      if (found !== -1 && lin === found){ cls += " found"; mark = "✓"; }
+      else if (lin === cur){ cls += " current"; mark = "▲"; }
+      else if (lin < seen){ cls += " visited"; mark = "✗"; }
+      html += "<div class='" + cls + "'><div class='gidx'>[" + r + "," + c + "]</div><div class='gbox'>" + d.matrix[r][c] + "</div><div class='gmark'>" + mark + "</div></div>";
+    }
+    html += "</div>";
+  }
+  document.getElementById("grid").innerHTML = html;
+  var ptr = document.getElementById("grid-ptr");
+  if (found !== -1) ptr.innerHTML = "Trobat a <b>[" + ft + "," + ct + "]</b>. Les caselles de després no s'han mirat.";
+  else if (cur >= 0) ptr.innerHTML = "Ara mirem <b>taula[" + Math.floor(cur / NC) + "," + (cur % NC) + "]</b>.";
+  else if (seen >= NF * NC) ptr.innerHTML = "Hem mirat tota la matriu: el valor no hi és.";
+  else ptr.innerHTML = "Recorrem la graella per files, d'esquerra a dreta.";
+}
+
+var prevVars = {};
+function render(){
+  var d = S.data, f = d.frames[S.idx];
+  lineEls.forEach(function(el, i){ el.classList.toggle("active", i === f.line); });
+  renderGrid(f);
+
+  var vwrap = document.getElementById("vars");
+  vwrap.innerHTML = "";
+  d.varsOrder.forEach(function(name){
+    var seq = varHistory(name, S.idx);
+    var changed = prevVars[name] !== undefined && prevVars[name] !== f.vars[name];
+    var toks = seq.map(function(val, i){
+      var cur = (i === seq.length - 1);
+      return "<span class='vtok" + (cur ? " cur" : "") + (cur && changed ? " just" : "") + "'>" + val + "</span>";
+    }).join("");
+    var chip = document.createElement("div");
+    chip.className = "vchip";
+    chip.innerHTML = "<div class='vname'>" + name + "</div><div class='vtrail'>" + (toks || "<span class='vtok'>—</span>") + "</div>";
+    vwrap.appendChild(chip);
+  });
+  prevVars = Object.assign({}, f.vars);
+
+  var ch = document.getElementById("check");
+  if (f.cond){
+    var parts = f.cond.parts.map(function(p){
+      return "<div class='cond-part'><span class='cond-expr'>" + p.expr + "</span><span class='cond-sub'>" + p.sub + "</span>" +
+             "<span class='mini-verdict " + (p.res ? "cert" : "fals") + "'>" + (p.res ? "CERT ✓" : "FALS ✗") + "</span></div>";
+    }).join("<div class='cond-op'>" + f.cond.op + "</div>");
+    ch.innerHTML = "<div class='cond'>" + parts + "</div>" +
+      "<div class='check-verdict " + (f.cond.res ? "cert" : "fals") + "'>" +
+      (f.cond.res ? "CERT ✓ · continua al bucle" : "FALS ✗ · surt del bucle") + "</div>";
+  } else if (f.check){
+    var res = f.check.res;
+    ch.innerHTML =
+      (f.check.label ? "<div class='check-label'>" + f.check.label + "</div>" : "") +
+      "<div class='check-expr'><span>" + f.check.sub + "</span><span class='arrow'>→</span></div>" +
+      "<div class='check-verdict " + (res ? "cert" : "fals") + "'>" + (res ? "CERT ✓" : "FALS ✗") + "</div>";
+  } else if (f.op){
+    ch.innerHTML =
+      "<div class='op-title'>" + f.op.title + "</div>" +
+      (f.op.calc ? "<div class='op-calc'>" + f.op.calc + " = <b>" + f.op.result + "</b></div>"
+                 : "<div class='op-result'>" + f.op.result + "</div>");
+  } else {
+    ch.innerHTML = "<div class='check-idle'>Aquí es mostraran les condicions i els canvis de variable.<br>Prem <b>Pas a pas</b> per avançar.</div>";
+  }
+
+  document.getElementById("note").innerHTML = f.note;
+
+  var scr = document.getElementById("screen");
+  var text = f.out.join("\n");
+  scr.innerHTML = (text ? text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;") : "") + "<span class='cursor'></span>";
+
+  var tbl = document.getElementById("trace");
+  var head = "<tr>" + d.traceHead.map(function(h){ return "<th>" + h + "</th>"; }).join("") + "</tr>";
+  var rows = "";
+  if (f.tr === 0){
+    rows = "<tr class='empty'><td colspan='6'>Encara no s'ha mirat cap casella.</td></tr>";
+  } else {
+    for (var i = 0; i < f.tr; i++){
+      var r = d.trace[i];
+      var isNew = (i === f.tr - 1);
+      rows += "<tr" + (isNew ? " class='new'" : "") + "><td>" + r.n + "</td><td>" + r.f + "</td><td>" + r.c + "</td><td>" + r.val +
+              "</td><td class='" + (r.match ? "res-cert" : "res-fals") + "'>" + (r.match ? "Sí ✓" : "No") + "</td><td>" + r.helper + "</td></tr>";
+    }
+  }
+  tbl.innerHTML = head + rows;
+
+  document.getElementById("trait-voltes").textContent = f.voltes + (f.voltes === 1 ? " casella" : " caselles");
+  document.getElementById("stepcount").textContent = "Pas " + (S.idx + 1) + " / " + d.frames.length;
+
+  document.getElementById("btnPrev").disabled = S.idx === 0;
+  var atEnd = S.idx >= d.frames.length - 1;
+  document.getElementById("btnStep").disabled = atEnd;
+  document.getElementById("btnPlay").disabled = atEnd && !S.timer;
+}
+
+/* ───────── Controls ───────── */
+function step(){ if (S.idx < S.data.frames.length - 1){ S.idx++; render(); return true; } return false; }
+function prev(){ if (S.idx > 0){ S.idx--; render(); } }
+function stopPlay(){ if (S.timer){ clearInterval(S.timer); S.timer = null; document.getElementById("btnPlay").textContent = "Executa-ho tot ⏩"; } }
+function play(){
+  if (S.timer){ stopPlay(); return; }
+  if (S.idx >= S.data.frames.length - 1){ S.idx = 0; render(); }
+  document.getElementById("btnPlay").textContent = "Atura ⏸";
+  var ms = parseInt(document.getElementById("speed").value, 10);
+  S.timer = setInterval(function(){ if (!step()){ stopPlay(); render(); } }, ms);
+}
+
+document.getElementById("btnStep").addEventListener("click", function(){ stopPlay(); step(); });
+document.getElementById("btnPrev").addEventListener("click", function(){ stopPlay(); prev(); });
+document.getElementById("btnReset").addEventListener("click", function(){ stopPlay(); rebuild(); });
+document.getElementById("btnPlay").addEventListener("click", play);
+
+document.querySelectorAll("[data-scheme]").forEach(function(b){
+  b.addEventListener("click", function(){
+    stopPlay();
+    document.querySelectorAll("[data-scheme]").forEach(function(x){ x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+    S.scheme = b.dataset.scheme;
+    rebuild();
+  });
+});
+document.querySelectorAll("[data-demo]").forEach(function(b){
+  b.addEventListener("click", function(){
+    stopPlay();
+    document.querySelectorAll("[data-demo]").forEach(function(x){ x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+    S.key = b.dataset.demo;
+    S.vals = DEMOS[S.key].m.map(function(r){ return r.slice(); });
+    S.buscat = DEMOS[S.key].buscat;
+    setupTrait(); setupParam(); rebuild();
+  });
+});
+
+function setupTrait(){
+  var d = DEMOS[S.key];
+  document.getElementById("trait").innerHTML =
+    "<span class='emoji'>" + d.emoji + "</span><span>" + d.trait + "</span>" +
+    "<span class='voltes' id='trait-voltes'>0 caselles</span>";
+}
+
+function setupParam(){
+  var d = DEMOS[S.key], el = document.getElementById("param");
+  var rowsHtml = S.vals.map(function(row, r){
+    var inputs = row.map(function(v, c){
+      return "<input type='number' data-r='" + r + "' data-c='" + c + "' min='0' max='99' value='" + v + "' aria-label='fila " + r + " columna " + c + "'>";
+    }).join("");
+    return "<div class='prow'><label>" + (r === 0 ? "Matriu:" : "") + "</label><span class='nums'>" + inputs + "</span></div>";
+  }).join("");
+  el.innerHTML = rowsHtml +
+    "<div class='prow'><label>Busquem:</label><span class='nums'><input type='number' id='inp-buscat' min='0' max='99' value='" + S.buscat + "' class='tgt' aria-label='valor que busquem'></span></div>" +
+    "<div class='phint'>💡 " + d.hint + " Pots canviar qualsevol casella (0–99) i el valor que busques.</div>";
+  el.querySelectorAll("input[data-r]").forEach(function(inp){
+    inp.addEventListener("input", function(){
+      stopPlay();
+      var raw = parseInt(this.value, 10);
+      if (isNaN(raw)) return;
+      var val = raw < 0 ? 0 : raw > 99 ? 99 : raw;
+      if (val !== raw) this.value = val;
+      S.vals[parseInt(this.dataset.r, 10)][parseInt(this.dataset.c, 10)] = val;
+      rebuild();
+    });
+  });
+  document.getElementById("inp-buscat").addEventListener("input", function(){
+    stopPlay();
+    var raw = parseInt(this.value, 10);
+    if (isNaN(raw)) return;
+    var val = raw < 0 ? 0 : raw > 99 ? 99 : raw;
+    if (val !== raw) this.value = val;
+    S.buscat = val;
+    rebuild();
+  });
+}
+
+/* Arrencada */
+setupTrait();
+setupParam();
+rebuild();
+</script>
+</body>
+</html>

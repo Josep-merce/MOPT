@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A2.2a · Simulador de recórrer una matriu — RA2 Pensament Computacional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#f7f5f0; --card:#ffffff; --ink:#1c1917; --ink-2:#57534e; --ink-3:#a8a29e;
+      --border:#e7e5e4; --accent:#9a3412; --accent-mid:#c2410c; --accent-bg:#fff7ed; --accent-bdr:#fed7aa;
+      --blue:#1e40af; --blue-bg:#eff6ff; --blue-bdr:#bfdbfe;
+      --green:#166534; --green-bg:#f0fdf4; --green-bdr:#bbf7d0;
+      --red:#991b1b; --red-bg:#fef2f2; --red-bdr:#fecaca;
+      --purple:#6d28d9; --purple-bg:#f5f3ff; --purple-bdr:#ddd6fe;
+      --code-bg:#1e293b; --code-text:#e2e8f0; --r:10px; --r-sm:6px;
+    }
+    body { font-family:'DM Sans',system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.7; font-size:16px; }
+    .wrap { max-width:960px; margin:0 auto; padding:0 24px 80px; }
+
+    /* HEADER */
+    .page-header { padding:40px 0 28px; border-bottom:1.5px solid var(--border); margin-bottom:34px; }
+    .meta-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+    .badge { font-size:11px; font-weight:600; padding:3px 11px; border-radius:20px; letter-spacing:.05em; text-transform:uppercase; }
+    .b-course { background:var(--ink); color:#fff; }
+    .b-ra { background:var(--blue-bg); color:var(--blue); border:1px solid var(--blue-bdr); }
+    .b-act { background:var(--accent-mid); color:#fff; }
+    .b-new { background:var(--green-bg); color:var(--green); border:1px solid var(--green-bdr); }
+    .page-title { font-family:'DM Serif Display',Georgia,serif; font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin-bottom:10px; }
+    .page-sub { font-size:16px; color:var(--ink-2); max-width:64ch; }
+    .page-sub code { font-family:'JetBrains Mono',monospace; font-size:13px; background:var(--accent-bg); padding:1px 6px; border-radius:3px; color:var(--accent); }
+
+    /* SELECTOR DE CAS */
+    .seg { display:inline-flex; border:1.5px solid var(--border); border-radius:10px; overflow:hidden; background:var(--card); margin-bottom:12px; flex-wrap:wrap; }
+    .seg button { border:0; background:transparent; color:var(--ink-2); padding:10px 20px; font-size:15px; font-family:'JetBrains Mono',monospace; cursor:pointer; border-right:1.5px solid var(--border); transition:background .12s,color .12s; }
+    .seg button:last-child { border-right:0; }
+    .seg button[aria-pressed="true"] { background:var(--ink); color:#fff; }
+    .seg button:hover:not([aria-pressed="true"]) { background:#fafaf8; }
+    .trait { display:flex; gap:10px; align-items:center; background:var(--accent-bg); border:1px dashed var(--accent-bdr); border-radius:var(--r-sm); padding:9px 14px; margin-bottom:18px; font-size:14px; color:var(--ink-2); }
+    .trait .emoji { font-size:22px; line-height:1; }
+    .trait b { color:var(--accent); }
+    .trait code { font-family:'JetBrains Mono',monospace; font-size:12.5px; background:#fff; border:1px solid var(--accent-bdr); padding:1px 5px; border-radius:3px; color:var(--accent); }
+    .trait .voltes { margin-left:auto; font-size:12px; font-family:'JetBrains Mono',monospace; background:#fff; border:1px solid var(--accent-bdr); color:var(--accent); padding:3px 9px; border-radius:20px; white-space:nowrap; }
+
+    /* BANDA DE LA MATRIU (protagonista) */
+    .grid-band { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:16px; margin-bottom:18px; }
+    .gb-top { display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:18px; font-size:13px; color:var(--ink-3); }
+    .gb-top b { color:var(--ink-2); }
+    .gb-leg { display:flex; gap:14px; flex-wrap:wrap; }
+    .grid { display:inline-flex; flex-direction:column; gap:8px; }
+    .grow { display:flex; gap:8px; }
+    .gcell { position:relative; }
+    .gcell .gidx { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--ink-3); text-align:center; margin-bottom:3px; }
+    .gcell .gbox { width:50px; height:48px; border:1.5px solid var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:18px; background:#fafaf8; color:var(--ink); transition:border-color .15s, background .15s, color .15s, box-shadow .15s, opacity .15s; }
+    .gcell .gbox.empty-box { color:var(--ink-3); border-style:dashed; background:#fff; }
+    .gcell.done .gbox { opacity:.42; }
+    .gcell.current .gbox { border-color:var(--accent-mid); color:var(--accent); box-shadow:0 0 0 3px var(--accent-bg); opacity:1; }
+    .grid-ptr { margin-top:12px; font-size:12.5px; color:var(--ink-3); }
+    .grid-ptr b { color:var(--accent); font-family:'JetBrains Mono',monospace; }
+
+    /* PARÀMETRES EDITABLES */
+    .param { display:flex; flex-direction:column; gap:10px; background:var(--card); border:1px solid var(--border); border-radius:var(--r-sm); padding:14px 16px; margin-bottom:18px; }
+    .param .prow { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .param label { font-size:13px; font-weight:600; color:var(--ink); min-width:62px; }
+    .param .nums { display:flex; gap:7px; align-items:center; flex-wrap:wrap; }
+    .param input[type=number] { width:52px; font-family:'JetBrains Mono',monospace; font-size:15px; text-align:center; padding:6px 6px; border:1.5px solid var(--border); border-radius:var(--r-sm); background:var(--card); color:var(--ink); }
+    .param input[type=number]:focus { outline:2px solid var(--accent-mid); outline-offset:1px; border-color:var(--accent-mid); }
+    .param .phint { font-size:12.5px; color:var(--ink-3); line-height:1.5; }
+
+    /* GRID PRINCIPAL */
+    .sim { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:16px; align-items:stretch; }
+    @media (max-width:760px){ .sim { grid-template-columns:minmax(0,1fr); } }
+    .lcol, .rcol { min-width:0; }
+    .lcol, .rcol { display:flex; flex-direction:column; gap:16px; min-height:100%; }
+    .panel-code, .panel-screen { flex:1; display:flex; flex-direction:column; }
+    .panel-code .code, .panel-screen .screen { flex:1; }
+    @media (max-width:760px){ .panel-code, .panel-screen { flex:initial; } }
+    .panel { background:var(--card); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; }
+    .panel-head { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-3); padding:11px 16px; border-bottom:1px solid var(--border); background:#fafaf8; display:flex; align-items:center; gap:8px; }
+
+    /* CODI */
+    .code { background:var(--code-bg); padding:14px 0; font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1; overflow-x:auto; }
+    .cl { white-space:pre; padding:4px 18px; color:var(--code-text); position:relative; transition:background .1s; }
+    .cl.active { background:#334155; box-shadow: inset 4px 0 0 #fbbf24; }
+    .pos-tag { position:absolute; right:12px; top:50%; transform:translateY(-50%); font-family:'DM Sans',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:.03em; padding:2px 9px; border-radius:20px; white-space:nowrap; }
+    .pos-tag.help { background:#4a2a0e; color:#fde68a; border:1px solid #92590f; }
+    .kw { color:#fbbf24; font-weight:500; } .var { color:#38bdf8; } .str { color:#4ade80; } .num { color:#f472b6; } .cmt { color:#64748b; } .loop { color:#a78bfa; font-weight:600; }
+
+    /* COLUMNA DRETA */
+    .vars { display:flex; flex-direction:column; gap:10px; padding:16px; }
+    .vchip { display:flex; align-items:center; gap:14px; border:1px solid var(--border); border-radius:var(--r-sm); padding:10px 14px; }
+    .vchip .vname { font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--ink-2); min-width:96px; flex-shrink:0; }
+    .vtrail { display:flex; flex-wrap:wrap; gap:7px; align-items:center; }
+    .vtok { font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--ink-3); padding:2px 8px; border-radius:5px; }
+    .vtok.cur { font-size:18px; font-weight:500; color:var(--accent); background:var(--accent-bg); border:1px solid var(--accent-bdr); }
+    .vtok.just { animation:pop .25s ease; }
+    @keyframes pop { from { transform:scale(1.25); } to { transform:scale(1); } }
+
+    /* PANELL CENTRAL */
+    .check { padding:16px; min-height:132px; display:flex; flex-direction:column; justify-content:center; gap:10px; }
+    .check-idle { font-size:13.5px; color:var(--ink-3); text-align:center; line-height:1.5; }
+    .check-info { text-align:center; font-size:15px; color:var(--ink); line-height:1.5; }
+    .check-info b { color:var(--accent); }
+    .op-title { align-self:center; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--ink-3); }
+    .op-calc { text-align:center; font-family:'JetBrains Mono',monospace; font-size:20px; color:var(--ink); }
+    .op-calc b { color:var(--accent); }
+    .op-result { text-align:center; font-weight:700; font-size:15px; padding:7px; border-radius:var(--r-sm); background:var(--accent-bg); color:var(--accent); border:1px solid var(--accent-bdr); }
+
+    /* NOTA / NARRADOR */
+    .note { font-size:13.5px; color:var(--ink-2); padding:13px 16px; background:var(--accent-bg); border-top:1px solid var(--border); line-height:1.5; min-height:46px; }
+    .note b { color:var(--accent); }
+
+    /* PANTALLA */
+    .screen { background:#0f172a; color:#e2e8f0; font-family:'JetBrains Mono',monospace; font-size:13px; line-height:1.7; padding:14px 16px; min-height:70px; white-space:pre-wrap; word-break:break-word; }
+    .screen .cursor { display:inline-block; width:8px; height:15px; background:#4ade80; vertical-align:text-bottom; animation:blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity:0; } }
+    @media (prefers-reduced-motion: reduce){ .screen .cursor { animation:none; } .vtok.just { animation:none; } }
+
+    /* CONTROLS */
+    .controls { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:20px 0 24px; }
+    .btn { font-family:'DM Sans',sans-serif; font-size:14px; cursor:pointer; border:1.5px solid var(--border); background:var(--card); color:var(--ink); padding:9px 16px; border-radius:var(--r-sm); transition:border-color .12s,background .12s; }
+    .btn:hover:not(:disabled) { border-color:var(--ink); }
+    .btn:disabled { opacity:.4; cursor:default; }
+    .btn.primary { background:var(--accent-mid); border-color:var(--accent-mid); color:#fff; }
+    .btn.primary:hover:not(:disabled) { background:var(--accent); border-color:var(--accent); }
+    .controls .spacer { flex:1; }
+    .controls .speed { font-size:13px; color:var(--ink-2); display:flex; align-items:center; gap:6px; }
+    .controls select { font-family:'DM Sans',sans-serif; font-size:13px; padding:6px 8px; border:1.5px solid var(--border); border-radius:var(--r-sm); background:var(--card); color:var(--ink); cursor:pointer; }
+    .stepcount { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-3); }
+
+    /* TRAÇA */
+    .trace-wrap { margin-top:4px; }
+    .trace { width:100%; border-collapse:collapse; font-size:13px; background:var(--card); border:1px solid var(--border); border-radius:var(--r-sm); overflow:hidden; }
+    .trace th, .trace td { padding:8px 12px; text-align:center; border-bottom:1px solid var(--border); font-family:'JetBrains Mono',monospace; }
+    .trace th { color:var(--ink-3); font-weight:600; background:#fafaf8; font-size:11px; text-transform:uppercase; letter-spacing:.04em; }
+    .trace tr:last-child td { border-bottom:none; }
+    .trace td.hl { color:var(--accent); font-weight:600; }
+    .trace .empty td { color:var(--ink-3); font-family:'DM Sans',sans-serif; font-style:italic; }
+    .trace tr.new td { animation:rowin .3s ease; }
+    @keyframes rowin { from { background:var(--accent-bg); } to { background:transparent; } }
+    @media (prefers-reduced-motion: reduce){ .trace tr.new td { animation:none; } }
+
+    .foot { margin-top:40px; padding-top:18px; border-top:1px solid var(--border); font-size:12.5px; color:var(--ink-3); line-height:1.6; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="page-header">
+    <p style="margin-bottom:14px;font-size:13px;"><a href="simuladors.html" style="color:var(--accent);text-decoration:none;font-weight:600;">← Simuladors</a></p>
+    <div class="meta-row">
+      <span class="badge b-course">DAW · Pensament Computacional</span>
+      <span class="badge b-ra">AEA2 · RA2</span>
+      <span class="badge b-act" style="text-transform:none;">A2.2a</span>
+      <span class="badge b-new">Simulador</span>
+    </div>
+    <h1 class="page-title">Recórrer una matriu</h1>
+    <p class="page-sub">Per recórrer una graella necessitem <b>dos bucles niats</b>: el de fora avança les <code>fila</code>s i el de dins recorre les <code>columna</code>s. A cada fila, la columna fa tot el seu recorregut (0, 1, 2…) abans que la fila passi a la següent. Tria una mida, canvia els números i prem <b>Pas a pas</b>.</p>
+  </header>
+
+  <!-- SELECTOR -->
+  <div class="seg" role="group" aria-label="Mida de la matriu">
+    <button data-demo="m2x3" aria-pressed="true">▭ 2 × 3</button>
+    <button data-demo="m3x2" aria-pressed="false">▯ 3 × 2</button>
+    <button data-demo="m3x3" aria-pressed="false">▣ 3 × 3</button>
+  </div>
+  <div class="trait" id="trait"></div>
+
+  <!-- BANDA DE LA MATRIU -->
+  <div class="grid-band">
+    <div class="gb-top">
+      <span id="gb-dim"><b>Matriu taula</b></span>
+      <span class="gb-leg">
+        <span>⬜ per visitar</span><span>▦ ja recorregut</span><span>🟧 cel·la actual</span>
+      </span>
+    </div>
+    <div class="grid" id="grid"></div>
+    <div class="grid-ptr" id="grid-ptr"></div>
+  </div>
+
+  <!-- PARÀMETRES EDITABLES -->
+  <div class="param" id="param"></div>
+
+  <!-- SIMULADOR -->
+  <div class="sim">
+    <div class="lcol">
+      <div class="panel panel-code">
+        <div class="panel-head">📄 Codi PSeInt</div>
+        <div class="code" id="code"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">📦 Variables <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink-3)">— en gris, els valors anteriors</span></div>
+        <div class="vars" id="vars"></div>
+      </div>
+    </div>
+
+    <div class="rcol">
+      <div class="panel">
+        <div class="panel-head">🔎 Què passa aquest pas</div>
+        <div class="check" id="check"></div>
+        <div class="note" id="note"></div>
+      </div>
+      <div class="panel panel-screen">
+        <div class="panel-head">🖥️ Pantalla</div>
+        <div class="screen" id="screen"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <button class="btn" id="btnReset">↺ Reinicia</button>
+    <button class="btn" id="btnPrev">◀ Enrere</button>
+    <button class="btn primary" id="btnStep">Pas a pas ▶</button>
+    <button class="btn" id="btnPlay">Executa-ho tot ⏩</button>
+    <span class="stepcount" id="stepcount"></span>
+    <span class="spacer"></span>
+    <span class="speed">Velocitat
+      <select id="speed">
+        <option value="1100">Lenta</option>
+        <option value="650" selected>Normal</option>
+        <option value="300">Ràpida</option>
+      </select>
+    </span>
+  </div>
+
+  <!-- TRAÇA -->
+  <div class="panel trace-wrap">
+    <div class="panel-head">📝 Taula de seguiment <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink-3)">— una fila per element durant la suma</span></div>
+    <div style="overflow-x:auto"><table class="trace" id="trace"></table></div>
+  </div>
+
+  <p class="foot">
+    Simulador fet per a l'activitat <b>A2.2a · Matrius (recorregut)</b> (criteris 2.2 i 2.5). És el patró de <b>recorregut d'una matriu amb bucles niats</b>: el programa fa tres passades (omplir, sumar i mostrar) i totes recorren la graella <b>per files</b> (primer tota la fila 0, després tota la fila 1…). Canvia la mida o els valors per veure com s'adapta el doble bucle.
+  </p>
+</div>
+
+<script>
+/* ───────── Acoloridor de pseudocodi (per línia) ───────── */
+function paintLine(line){
+  line = line.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  var idx = line.indexOf('//');
+  var code = idx >= 0 ? line.slice(0, idx) : line;
+  var comment = idx >= 0 ? line.slice(idx) : '';
+  var strs = [];
+  code = code.replace(/'(?:''|[^'])*'/g, function(m){ strs.push(m); return '\u0001'; });
+  code = code.replace(/\b(Mientras|FinMientras|Repetir|Hasta|Que|Para|Con|Paso|Hacer|FinPara)\b/g, "<span class='loop'>$1</span>");
+  code = code.replace(/\b(Proceso|FinProceso|Algoritmo|FinAlgoritmo|Definir|Como|Entero|Real|Numerico|Numero|Caracter|Texto|Cadena|Logico|Leer|Escribir|Sin|Saltar|Si|Entonces|SiNo|FinSi|Segun|FinSegun|Y|O|NO|mod)\b/g, "<span class='kw'>$1</span>");
+  code = code.replace(/\b(Verdadero|Falso|PI)\b/g, "<span class='num'>$1</span>");
+  code = code.replace(/\b(\d+\.?\d*)\b/g, "<span class='num'>$1</span>");
+  var k = 0;
+  code = code.replace(/\u0001/g, function(){ return "<span class='str'>" + strs[k++] + "</span>"; });
+  return code + (comment ? "<span class='cmt'>" + comment + "</span>" : '');
+}
+
+/* ───────── Constructor de fotogrames ─────────
+   Executa el programa de debò i desa un fotograma als moments importants:
+   omplir cada cel·la, acumular la suma i mostrar la graella. */
+function build(M){
+  var NF = M.length, NC = M[0].length;
+  var lines = [
+    "Proceso SumaTaula",
+    "    // Constants: valors fixos que no canvien durant el programa",
+    "    Definir N_FILES Como Entero;",
+    "    Definir N_COLUMNES Como Entero;",
+    "    N_FILES <- " + NF + ";",
+    "    N_COLUMNES <- " + NC + ";",
+    "    Definir fila, columna, suma Como Entero;",
+    "    Definir taula Como Entero;",
+    "    Dimension taula[N_FILES,N_COLUMNES];",
+    "    // Omplim la matriu",
+    "    Para fila <- 0 Hasta N_FILES - 1 Hacer",
+    "        Para columna <- 0 Hasta N_COLUMNES - 1 Hacer",
+    "            Escribir 'Valor [', fila, ',', columna, ']:';",
+    "            Leer taula[fila,columna];",
+    "        FinPara",
+    "    FinPara",
+    "    // Sumem tots els elements amb un acumulador",
+    "    suma <- 0;",
+    "    Para fila <- 0 Hasta N_FILES - 1 Hacer",
+    "        Para columna <- 0 Hasta N_COLUMNES - 1 Hacer",
+    "            suma <- suma + taula[fila,columna];",
+    "        FinPara",
+    "    FinPara",
+    "    // Mostrem la matriu com una graella",
+    "    Escribir 'La matriu és:';",
+    "    Para fila <- 0 Hasta N_FILES - 1 Hacer",
+    "        Para columna <- 0 Hasta N_COLUMNES - 1 Hacer",
+    "            Escribir Sin Saltar taula[fila,columna], ' ';",
+    "        FinPara",
+    "        Escribir '';",
+    "    FinPara",
+    "    Escribir 'La suma de tots els elements és: ', suma;",
+    "FinProceso"
+  ];
+  var frames = [], trace = [], out = [], vars = {}, volta = 0;
+  function F(line, note, extra){
+    frames.push(Object.assign({ line:line, note:note, vars:Object.assign({},vars), out:out.slice(), tr:trace.length, voltes:volta, op:null, info:null, cur:-1, phase:"setup" }, extra||{}));
+  }
+  var TOT = NF * NC;
+
+  // Constants + dimensió
+  vars.N_FILES = NF;
+  F(4, "Guardem la constant.", { info:"<b>N_FILES</b> = <b>" + NF + "</b> (constant)" });
+  vars.N_COLUMNES = NC;
+  F(5, "Guardem la constant.", { info:"<b>N_COLUMNES</b> = <b>" + NC + "</b> (constant)" });
+  F(8, "Reservem l'espai de la matriu.", { info:"Matriu buida de <b>" + NF + " × " + NC + "</b>" });
+
+  // Fase 1: omplir
+  F(10, "Primer recorregut: <b>omplir</b>. El bucle de fora mou la fila, el de dins la columna.",
+    { phase:"fill", info:"Recorregut 1 de 3 · <b>omplir</b>" });
+  for (var f1 = 0; f1 < NF; f1++){
+    for (var c1 = 0; c1 < NC; c1++){
+      vars.fila = f1; vars.columna = c1;
+      var v = M[f1][c1], li = f1 * NC + c1;
+      F(13, "Llegeixo el valor de <b>taula[" + f1 + "," + c1 + "]</b> i hi deso un <b>" + v + "</b>.",
+        { phase:"fill", cur:li, op:{ title:"taula[" + f1 + "," + c1 + "] ← " + v, calc:"", result:v } });
+    }
+    F(14, "Fi de la fila.",
+      { phase:"fill", cur:(f1 + 1) * NC - 1,
+        info: f1 < NF - 1
+          ? "Fila <b>" + f1 + "</b> plena. La columna torna a <b>0</b> i la fila passa a <b>" + (f1 + 1) + "</b>."
+          : "Fila <b>" + f1 + "</b> plena. Era l'última fila." });
+  }
+  F(15, "Ja tenim tota la matriu.", { phase:"sum", info:"Matriu plena 🎉" });
+
+  // Fase 2: sumar
+  vars.suma = 0;
+  F(17, "L'acumulador comença a 0.", { phase:"sum", op:{ title:"suma ← 0", calc:"", result:0 } });
+  F(18, "Segon recorregut: <b>sumar</b>. El mateix doble bucle, ara per acumular.",
+    { phase:"sum", info:"Recorregut 2 de 3 · <b>sumar</b>" });
+  for (var f2 = 0; f2 < NF; f2++){
+    for (var c2 = 0; c2 < NC; c2++){
+      vars.fila = f2; vars.columna = c2;
+      var val = M[f2][c2], li2 = f2 * NC + c2, old = vars.suma;
+      vars.suma = old + val;
+      volta = li2 + 1;
+      trace.push({ f:f2, c:c2, val:val, suma:vars.suma });
+      F(20, "Afegeixo <b>taula[" + f2 + "," + c2 + "] = " + val + "</b> a la suma: ara val <b>" + vars.suma + "</b>.",
+        { phase:"sum", cur:li2, op:{ title:"suma ← suma + taula[fila,columna]", calc: old + " + " + val, result: vars.suma } });
+    }
+    F(21, "Fi de la fila en la suma.",
+      { phase:"sum", cur:(f2 + 1) * NC - 1, info:"Fila <b>" + f2 + "</b> sumada sencera." });
+  }
+  F(22, "Hem recorregut tota la matriu.", { phase:"sum", cur:TOT, info:"Suma de tots els elements: <b>" + vars.suma + "</b>" });
+
+  // Fase 3: mostrar
+  out.push("La matriu és:");
+  F(24, "Tercer recorregut: <b>mostrar</b> la matriu com una graella.",
+    { phase:"print", info:"Recorregut 3 de 3 · <b>mostrar</b>" });
+  for (var f3 = 0; f3 < NF; f3++){
+    out.push("");
+    var rowLine = out.length - 1;
+    for (var c3 = 0; c3 < NC; c3++){
+      vars.fila = f3; vars.columna = c3;
+      var li3 = f3 * NC + c3;
+      out[rowLine] += M[f3][c3] + " ";
+      F(27, "<b>Escribir Sin Saltar</b>: escric el valor <b>sense</b> saltar de línia, així la fila queda en una sola ratlla.",
+        { phase:"print", cur:li3, op:{ title:"Escribir Sin Saltar taula[" + f3 + "," + c3 + "]", calc:"", result:"'" + M[f3][c3] + " '" } });
+    }
+    F(29, "Final de fila.",
+      { phase:"print", cur:(f3 + 1) * NC - 1, info:"<b>Escribir ''</b> → ara sí, salto de línia i tanco la fila <b>" + f3 + "</b>." });
+  }
+  out.push("La suma de tots els elements és: " + vars.suma);
+  F(31, "Escric la suma total.", { phase:"print", info:"Suma total a la pantalla: <b>" + vars.suma + "</b>" });
+  F(32, "Fet.", { phase:"done", info:"Programa acabat ✅" });
+
+  return { lines:lines, frames:frames, trace:trace, matrix:M.map(function(r){ return r.slice(); }), NF:NF, NC:NC,
+           mark:{ line:20, text:"➕ suma cada element" },
+           varsOrder:["N_FILES","N_COLUMNES","fila","columna","suma"],
+           traceHead:["fila","columna","taula[f,c]","suma"] };
+}
+
+/* ───────── Metadades de cada cas ───────── */
+var DEMOS = {
+  m2x3: {
+    emoji:"▭", label:"2 × 3",
+    trait:"Dues files i tres columnes. El bucle de dins fa <code>0,1,2</code> per cada fila; el de fora, <code>0,1</code>.",
+    m:[[2,4,1],[5,3,6]],
+    hint:"Fixa't que es recorre tota la fila 0 abans de començar la fila 1."
+  },
+  m3x2: {
+    emoji:"▯", label:"3 × 2",
+    trait:"Tres files i dues columnes. Mateix codi, només canvien les constants <code>N_FILES</code> i <code>N_COLUMNES</code>.",
+    m:[[3,7],[1,4],[6,2]],
+    hint:"El doble bucle s'adapta sol a qualsevol mida: ara el de dins fa 0,1."
+  },
+  m3x3: {
+    emoji:"▣", label:"3 × 3",
+    trait:"Matriu quadrada 3 × 3: nou elements recorreguts per files.",
+    m:[[1,2,3],[4,5,6],[7,8,9]],
+    hint:"Nou cel·les en total; la suma recorre les 9 d'una en una."
+  }
+};
+
+/* ───────── Estat ───────── */
+var S = { key:"m2x3", vals:DEMOS.m2x3.m.map(function(r){ return r.slice(); }), data:null, idx:0, timer:null };
+var codeEl = document.getElementById("code");
+var lineEls = [];
+
+function rebuild(){
+  S.data = build(S.vals);
+  S.idx = 0;
+  codeEl.innerHTML = "";
+  lineEls = [];
+  S.data.lines.forEach(function(ln, i){
+    var div = document.createElement("div");
+    div.className = "cl";
+    div.innerHTML = paintLine(ln);
+    if (S.data.mark && i === S.data.mark.line){
+      var tag = document.createElement("span");
+      tag.className = "pos-tag help";
+      tag.textContent = S.data.mark.text;
+      div.appendChild(tag);
+    }
+    codeEl.appendChild(div);
+    lineEls.push(div);
+  });
+  document.getElementById("gb-dim").innerHTML = "<b>Matriu taula</b> · " + S.data.NF + " files × " + S.data.NC + " columnes";
+  render();
+}
+
+function varHistory(name, idx){
+  var seq = [];
+  for (var i = 0; i <= idx; i++){
+    var val = S.data.frames[i].vars[name];
+    if (val === undefined) continue;
+    if (seq.length === 0 || seq[seq.length - 1] !== val) seq.push(val);
+  }
+  return seq;
+}
+
+function renderGrid(f){
+  var d = S.data, NF = d.NF, NC = d.NC, cur = (f.cur === undefined ? -1 : f.cur), phase = f.phase || "setup";
+  var html = "";
+  for (var r = 0; r < NF; r++){
+    html += "<div class='grow'>";
+    for (var c = 0; c < NC; c++){
+      var i = r * NC + c;
+      var hasVal = (phase === "setup") ? false : (phase === "fill" ? i <= cur : true);
+      var isCur = (i === cur);
+      var done = (i < cur);
+      var cls = "gcell" + (isCur ? " current" : (done ? " done" : ""));
+      var boxcls = "gbox" + (hasVal ? "" : " empty-box");
+      var content = hasVal ? d.matrix[r][c] : "·";
+      html += "<div class='" + cls + "'><div class='gidx'>[" + r + "," + c + "]</div><div class='" + boxcls + "'>" + content + "</div></div>";
+    }
+    html += "</div>";
+  }
+  document.getElementById("grid").innerHTML = html;
+
+  var ptr = document.getElementById("grid-ptr");
+  if (cur >= 0 && cur < NF * NC){
+    var rr = Math.floor(cur / NC), cc = cur % NC;
+    ptr.innerHTML = "Ara som a <b>taula[" + rr + "," + cc + "]</b> · fila = <b>" + rr + "</b>, columna = <b>" + cc + "</b>.";
+  } else if (phase === "setup"){
+    ptr.innerHTML = "Matriu encara buida.";
+  } else {
+    ptr.innerHTML = "Recorregut complet de la graella.";
+  }
+}
+
+var prevVars = {};
+function render(){
+  var d = S.data, f = d.frames[S.idx];
+
+  lineEls.forEach(function(el, i){ el.classList.toggle("active", i === f.line); });
+
+  renderGrid(f);
+
+  var vwrap = document.getElementById("vars");
+  vwrap.innerHTML = "";
+  d.varsOrder.forEach(function(name){
+    var seq = varHistory(name, S.idx);
+    var changed = prevVars[name] !== undefined && prevVars[name] !== f.vars[name];
+    var toks = seq.map(function(val, i){
+      var cur = (i === seq.length - 1);
+      return "<span class='vtok" + (cur ? " cur" : "") + (cur && changed ? " just" : "") + "'>" + val + "</span>";
+    }).join("");
+    var chip = document.createElement("div");
+    chip.className = "vchip";
+    chip.innerHTML = "<div class='vname'>" + name + "</div><div class='vtrail'>" + (toks || "<span class='vtok'>—</span>") + "</div>";
+    vwrap.appendChild(chip);
+  });
+  prevVars = Object.assign({}, f.vars);
+
+  var ch = document.getElementById("check");
+  if (f.op){
+    ch.innerHTML =
+      "<div class='op-title'>" + f.op.title + "</div>" +
+      (f.op.calc ? "<div class='op-calc'>" + f.op.calc + " = <b>" + f.op.result + "</b></div>"
+                 : "<div class='op-result'>" + f.op.result + "</div>");
+  } else if (f.info){
+    ch.innerHTML = "<div class='check-info'>" + f.info + "</div>";
+  } else {
+    ch.innerHTML = "<div class='check-idle'>Aquí es mostraran les operacions.<br>Prem <b>Pas a pas</b> per avançar.</div>";
+  }
+
+  document.getElementById("note").innerHTML = f.note;
+
+  var scr = document.getElementById("screen");
+  var text = f.out.join("\n");
+  scr.innerHTML = (text ? text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;") : "") + "<span class='cursor'></span>";
+
+  var tbl = document.getElementById("trace");
+  var head = "<tr>" + d.traceHead.map(function(h){ return "<th>" + h + "</th>"; }).join("") + "</tr>";
+  var rows = "";
+  if (f.tr === 0){
+    rows = "<tr class='empty'><td colspan='4'>Encara no s'ha sumat cap element.</td></tr>";
+  } else {
+    for (var i = 0; i < f.tr; i++){
+      var r = d.trace[i];
+      var isNew = (i === f.tr - 1);
+      rows += "<tr" + (isNew ? " class='new'" : "") + "><td>" + r.f + "</td><td>" + r.c + "</td><td>" + r.val +
+              "</td><td class='hl'>" + r.suma + "</td></tr>";
+    }
+  }
+  tbl.innerHTML = head + rows;
+
+  document.getElementById("trait-voltes").textContent = f.voltes + (f.voltes === 1 ? " element" : " elements");
+  document.getElementById("stepcount").textContent = "Pas " + (S.idx + 1) + " / " + d.frames.length;
+
+  document.getElementById("btnPrev").disabled = S.idx === 0;
+  var atEnd = S.idx >= d.frames.length - 1;
+  document.getElementById("btnStep").disabled = atEnd;
+  document.getElementById("btnPlay").disabled = atEnd && !S.timer;
+}
+
+/* ───────── Controls ───────── */
+function step(){ if (S.idx < S.data.frames.length - 1){ S.idx++; render(); return true; } return false; }
+function prev(){ if (S.idx > 0){ S.idx--; render(); } }
+function stopPlay(){ if (S.timer){ clearInterval(S.timer); S.timer = null; document.getElementById("btnPlay").textContent = "Executa-ho tot ⏩"; } }
+function play(){
+  if (S.timer){ stopPlay(); return; }
+  if (S.idx >= S.data.frames.length - 1){ S.idx = 0; render(); }
+  document.getElementById("btnPlay").textContent = "Atura ⏸";
+  var ms = parseInt(document.getElementById("speed").value, 10);
+  S.timer = setInterval(function(){ if (!step()){ stopPlay(); render(); } }, ms);
+}
+
+document.getElementById("btnStep").addEventListener("click", function(){ stopPlay(); step(); });
+document.getElementById("btnPrev").addEventListener("click", function(){ stopPlay(); prev(); });
+document.getElementById("btnReset").addEventListener("click", function(){ stopPlay(); rebuild(); });
+document.getElementById("btnPlay").addEventListener("click", play);
+
+document.querySelectorAll(".seg button").forEach(function(b){
+  b.addEventListener("click", function(){
+    stopPlay();
+    document.querySelectorAll(".seg button").forEach(function(x){ x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+    S.key = b.dataset.demo;
+    S.vals = DEMOS[S.key].m.map(function(r){ return r.slice(); });
+    setupTrait(); setupParam(); rebuild();
+  });
+});
+
+function setupTrait(){
+  var d = DEMOS[S.key];
+  document.getElementById("trait").innerHTML =
+    "<span class='emoji'>" + d.emoji + "</span><span>" + d.trait + "</span>" +
+    "<span class='voltes' id='trait-voltes'>0 elements</span>";
+}
+
+function setupParam(){
+  var d = DEMOS[S.key], el = document.getElementById("param");
+  var rowsHtml = S.vals.map(function(row, r){
+    var inputs = row.map(function(v, c){
+      return "<input type='number' data-r='" + r + "' data-c='" + c + "' min='0' max='99' value='" + v + "' aria-label='fila " + r + " columna " + c + "'>";
+    }).join("");
+    return "<div class='prow'><label>" + (r === 0 ? "Matriu:" : "") + "</label><span class='nums'>" + inputs + "</span></div>";
+  }).join("");
+  el.innerHTML = rowsHtml + "<div class='phint'>💡 " + d.hint + " Pots posar cada valor de 0 a 99.</div>";
+  el.querySelectorAll("input[data-r]").forEach(function(inp){
+    inp.addEventListener("input", function(){
+      stopPlay();
+      var raw = parseInt(this.value, 10);
+      if (isNaN(raw)) return;
+      var val = raw < 0 ? 0 : raw > 99 ? 99 : raw;
+      if (val !== raw) this.value = val;
+      S.vals[parseInt(this.dataset.r, 10)][parseInt(this.dataset.c, 10)] = val;
+      rebuild();
+    });
+  });
+}
+
+/* Arrencada */
+setupTrait();
+setupParam();
+rebuild();
+</script>
+</body>
+</html>
