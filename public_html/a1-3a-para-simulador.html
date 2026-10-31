@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A1.3a · Simulador del bucle Para — RA2 Pensament Computacional</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:#f7f5f0; --card:#ffffff; --ink:#1c1917; --ink-2:#57534e; --ink-3:#a8a29e;
+      --border:#e7e5e4; --accent:#9a3412; --accent-mid:#c2410c; --accent-bg:#fff7ed; --accent-bdr:#fed7aa;
+      --blue:#1e40af; --blue-bg:#eff6ff; --blue-bdr:#bfdbfe;
+      --green:#166534; --green-bg:#f0fdf4; --green-bdr:#bbf7d0;
+      --red:#991b1b; --red-bg:#fef2f2; --red-bdr:#fecaca;
+      --purple:#6d28d9; --purple-bg:#f5f3ff; --purple-bdr:#ddd6fe;
+      --code-bg:#1e293b; --code-text:#e2e8f0; --r:10px; --r-sm:6px;
+    }
+    body { font-family:'DM Sans',system-ui,sans-serif; background:var(--bg); color:var(--ink); line-height:1.7; font-size:16px; }
+    .wrap { max-width:960px; margin:0 auto; padding:0 24px 80px; }
+
+    /* HEADER */
+    .page-header { padding:40px 0 28px; border-bottom:1.5px solid var(--border); margin-bottom:34px; }
+    .meta-row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+    .badge { font-size:11px; font-weight:600; padding:3px 11px; border-radius:20px; letter-spacing:.05em; text-transform:uppercase; }
+    .b-course { background:var(--ink); color:#fff; }
+    .b-ra { background:var(--blue-bg); color:var(--blue); border:1px solid var(--blue-bdr); }
+    .b-act { background:var(--accent-mid); color:#fff; }
+    .b-new { background:var(--green-bg); color:var(--green); border:1px solid var(--green-bdr); }
+    .page-title { font-family:'DM Serif Display',Georgia,serif; font-size:clamp(1.9rem,5vw,2.6rem); line-height:1.15; margin-bottom:10px; }
+    .page-sub { font-size:16px; color:var(--ink-2); max-width:64ch; }
+    .page-sub code { font-family:'JetBrains Mono',monospace; font-size:13px; background:var(--accent-bg); padding:1px 6px; border-radius:3px; color:var(--accent); }
+
+    /* SELECTOR DE CAS */
+    .seg { display:inline-flex; border:1.5px solid var(--border); border-radius:10px; overflow:hidden; background:var(--card); margin-bottom:12px; flex-wrap:wrap; }
+    .seg button { border:0; background:transparent; color:var(--ink-2); padding:10px 20px; font-size:15px; font-family:'JetBrains Mono',monospace; cursor:pointer; border-right:1.5px solid var(--border); transition:background .12s,color .12s; }
+    .seg button:last-child { border-right:0; }
+    .seg button[aria-pressed="true"] { background:var(--ink); color:#fff; }
+    .seg button:hover:not([aria-pressed="true"]) { background:#fafaf8; }
+    .trait { display:flex; gap:10px; align-items:center; background:var(--accent-bg); border:1px dashed var(--accent-bdr); border-radius:var(--r-sm); padding:9px 14px; margin-bottom:18px; font-size:14px; color:var(--ink-2); }
+    .trait .emoji { font-size:22px; line-height:1; }
+    .trait b { color:var(--accent); }
+    .trait code { font-family:'JetBrains Mono',monospace; font-size:12.5px; background:#fff; border:1px solid var(--accent-bdr); padding:1px 5px; border-radius:3px; color:var(--accent); }
+    .trait .voltes { margin-left:auto; font-size:12px; font-family:'JetBrains Mono',monospace; background:#fff; border:1px solid var(--accent-bdr); color:var(--accent); padding:3px 9px; border-radius:20px; white-space:nowrap; }
+
+    /* BANDA PROTAGONISTA */
+    .grid-band { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:16px; margin-bottom:18px; }
+    .gb-top { display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:16px; font-size:13px; color:var(--ink-3); }
+    .gb-top b { color:var(--ink-2); }
+    .gb-leg { display:flex; gap:14px; flex-wrap:wrap; }
+
+    /* CAIXA DE CONDICIÓ */
+    .band-cond { border:1.5px solid var(--border); background:#fafaf8; border-radius:var(--r-sm); padding:10px 14px; margin-bottom:16px; text-align:center; transition:border-color .15s, background .15s; }
+    .band-cond.on-true { border-color:var(--green-bdr); background:var(--green-bg); }
+    .band-cond.on-false { border-color:var(--red-bdr); background:var(--red-bg); }
+    .band-cond .cond-label { font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-3); margin-bottom:5px; }
+    .band-cond .cond-expr { font-family:'JetBrains Mono',monospace; font-size:16px; color:var(--ink); }
+    .band-cond .cond-verdict { margin-top:5px; font-weight:700; font-size:13.5px; }
+    .band-cond.on-true .cond-verdict { color:var(--green); }
+    .band-cond.on-false .cond-verdict { color:var(--red); }
+
+    /* CARRIL DE VOLTES */
+    .grid { display:flex; gap:8px; flex-wrap:wrap; }
+    .grow { display:flex; gap:8px; flex-wrap:wrap; }
+    .gcell { position:relative; }
+    .gcell .gidx { font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--ink-3); text-align:center; margin-bottom:3px; }
+    .gcell .gbox { width:50px; height:48px; border:1.5px solid var(--border); border-radius:8px; display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:18px; background:#fafaf8; color:var(--ink); transition:border-color .15s, background .15s, color .15s, box-shadow .15s, opacity .15s; }
+    .gcell .gbox.empty-box { color:var(--ink-3); border-style:dashed; background:#fff; }
+    .gcell.done .gbox { opacity:.42; }
+    .gcell.current .gbox { border-color:var(--accent-mid); color:var(--accent); box-shadow:0 0 0 3px var(--accent-bg); opacity:1; }
+    .rail-empty { font-style:italic; color:var(--ink-3); font-size:13.5px; padding:10px 2px; }
+    .grid-ptr { margin-top:12px; font-size:12.5px; color:var(--ink-3); }
+    .grid-ptr b { color:var(--accent); font-family:'JetBrains Mono',monospace; }
+
+    /* PARÀMETRES EDITABLES */
+    .param { display:flex; flex-direction:column; gap:10px; background:var(--card); border:1px solid var(--border); border-radius:var(--r-sm); padding:14px 16px; margin-bottom:18px; }
+    .param .prow { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+    .param label { font-size:13px; font-weight:600; color:var(--ink); }
+    .param .nums { display:flex; gap:7px; align-items:center; flex-wrap:wrap; }
+    .param input[type=number] { width:60px; font-family:'JetBrains Mono',monospace; font-size:15px; text-align:center; padding:6px 6px; border:1.5px solid var(--border); border-radius:var(--r-sm); background:var(--card); color:var(--ink); }
+    .param input[type=number]:focus { outline:2px solid var(--accent-mid); outline-offset:1px; border-color:var(--accent-mid); }
+    .param .phint { font-size:12.5px; color:var(--ink-3); line-height:1.5; }
+
+    /* GRID PRINCIPAL */
+    .sim { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr); gap:16px; align-items:stretch; }
+    @media (max-width:760px){ .sim { grid-template-columns:minmax(0,1fr); } }
+    .lcol, .rcol { min-width:0; }
+    .lcol, .rcol { display:flex; flex-direction:column; gap:16px; min-height:100%; }
+    .panel-code, .panel-screen { flex:1; display:flex; flex-direction:column; }
+    .panel-code .code, .panel-screen .screen { flex:1; }
+    @media (max-width:760px){ .panel-code, .panel-screen { flex:initial; } }
+    .panel { background:var(--card); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; }
+    .panel-head { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-3); padding:11px 16px; border-bottom:1px solid var(--border); background:#fafaf8; display:flex; align-items:center; gap:8px; }
+
+    /* CODI */
+    .code { background:var(--code-bg); padding:14px 0; font-family:'JetBrains Mono',monospace; font-size:12.5px; line-height:1; overflow-x:auto; }
+    .cl { white-space:pre; padding:4px 18px; color:var(--code-text); position:relative; transition:background .1s; }
+    .cl.active { background:#334155; box-shadow: inset 4px 0 0 #fbbf24; }
+    .kw { color:#fbbf24; font-weight:500; } .var { color:#38bdf8; } .str { color:#4ade80; } .num { color:#f472b6; } .cmt { color:#64748b; } .loop { color:#a78bfa; font-weight:600; }
+
+    /* COLUMNA DRETA — VARIABLES */
+    .vars { display:flex; flex-direction:column; gap:10px; padding:16px; }
+    .vchip { display:flex; align-items:center; gap:14px; border:1px solid var(--border); border-radius:var(--r-sm); padding:10px 14px; }
+    .vchip .vname { font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--ink-2); min-width:72px; flex-shrink:0; }
+    .vtrail { display:flex; flex-wrap:wrap; gap:7px; align-items:center; }
+    .vtok { font-family:'JetBrains Mono',monospace; font-size:14px; color:var(--ink-3); padding:2px 8px; border-radius:5px; }
+    .vtok.cur { font-size:18px; font-weight:500; color:var(--accent); background:var(--accent-bg); border:1px solid var(--accent-bdr); }
+    .vtok.just { animation:pop .25s ease; }
+    @keyframes pop { from { transform:scale(1.25); } to { transform:scale(1); } }
+
+    /* PANELL CENTRAL */
+    .check { padding:16px; min-height:132px; display:flex; flex-direction:column; justify-content:center; gap:10px; }
+    .check-idle { font-size:13.5px; color:var(--ink-3); text-align:center; line-height:1.5; }
+    .check-info { text-align:center; font-size:15px; color:var(--ink); line-height:1.5; }
+    .check-info b { color:var(--accent); }
+    .op-title { align-self:center; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--ink-3); }
+    .op-calc { text-align:center; font-family:'JetBrains Mono',monospace; font-size:20px; color:var(--ink); }
+    .op-calc b { color:var(--accent); }
+    .op-result { text-align:center; font-weight:700; font-size:15px; padding:7px; border-radius:var(--r-sm); background:var(--accent-bg); color:var(--accent); border:1px solid var(--accent-bdr); }
+
+    /* NOTA / NARRADOR */
+    .note { font-size:13.5px; color:var(--ink-2); padding:13px 16px; background:var(--accent-bg); border-top:1px solid var(--border); line-height:1.5; min-height:46px; }
+    .note b { color:var(--accent); }
+
+    /* PANTALLA */
+    .screen { background:#0f172a; color:#e2e8f0; font-family:'JetBrains Mono',monospace; font-size:13px; line-height:1.7; padding:14px 16px; min-height:70px; white-space:pre-wrap; word-break:break-word; }
+    .screen .cursor { display:inline-block; width:8px; height:15px; background:#4ade80; vertical-align:text-bottom; animation:blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity:0; } }
+    @media (prefers-reduced-motion: reduce){ .screen .cursor { animation:none; } .vtok.just { animation:none; } }
+
+    /* CONTROLS */
+    .controls { display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin:20px 0 24px; }
+    .btn { font-family:'DM Sans',sans-serif; font-size:14px; cursor:pointer; border:1.5px solid var(--border); background:var(--card); color:var(--ink); padding:9px 16px; border-radius:var(--r-sm); transition:border-color .12s,background .12s; }
+    .btn:hover:not(:disabled) { border-color:var(--ink); }
+    .btn:disabled { opacity:.4; cursor:default; }
+    .btn.primary { background:var(--accent-mid); border-color:var(--accent-mid); color:#fff; }
+    .btn.primary:hover:not(:disabled) { background:var(--accent); border-color:var(--accent); }
+    .controls .spacer { flex:1; }
+    .controls .speed { font-size:13px; color:var(--ink-2); display:flex; align-items:center; gap:6px; }
+    .controls select { font-family:'DM Sans',sans-serif; font-size:13px; padding:6px 8px; border:1.5px solid var(--border); border-radius:var(--r-sm); background:var(--card); color:var(--ink); cursor:pointer; }
+    .stepcount { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-3); }
+
+    /* TRAÇA */
+    .trace-wrap { margin-top:4px; }
+    .trace { width:100%; border-collapse:collapse; font-size:13px; background:var(--card); border:1px solid var(--border); border-radius:var(--r-sm); overflow:hidden; }
+    .trace th, .trace td { padding:8px 12px; text-align:center; border-bottom:1px solid var(--border); font-family:'JetBrains Mono',monospace; }
+    .trace th { color:var(--ink-3); font-weight:600; background:#fafaf8; font-size:11px; text-transform:uppercase; letter-spacing:.04em; }
+    .trace tr:last-child td { border-bottom:none; }
+    .trace td.hl { color:var(--accent); font-weight:600; }
+    .trace .empty td { color:var(--ink-3); font-family:'DM Sans',sans-serif; font-style:italic; }
+    .trace tr.new td { animation:rowin .3s ease; }
+    @keyframes rowin { from { background:var(--accent-bg); } to { background:transparent; } }
+    @media (prefers-reduced-motion: reduce){ .trace tr.new td { animation:none; } }
+
+    .foot { margin-top:40px; padding-top:18px; border-top:1px solid var(--border); font-size:12.5px; color:var(--ink-3); line-height:1.6; }
+    .foot b { color:var(--ink-2); }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="page-header">
+    <p style="margin-bottom:14px;font-size:13px;"><a href="a1_simuladors.html" style="color:var(--accent);text-decoration:none;font-weight:600;">← Simuladors</a></p>
+    <div class="meta-row">
+      <span class="badge b-course">DAW · Pensament Computacional</span>
+      <span class="badge b-ra">AEA2 · RA2</span>
+      <span class="badge b-act" style="text-transform:none;">A1.3a</span>
+      <span class="badge b-new">Simulador</span>
+    </div>
+    <h1 class="page-title">El bucle <code style="font-family:inherit">Para</code></h1>
+    <p class="page-sub">El <code>Para</code> és el bucle de les <b>repeticions conegudes</b>: sabem <b>quantes voltes</b> farà abans de començar. Té un <b>comptador</b> (<code>i</code>) que arrenca en un valor, avança <b>sol</b> cada volta i s'atura en arribar al final. Tria un cas, canvia els números i prem <b>Pas a pas</b>.</p>
+  </header>
+
+  <!-- SELECTOR -->
+  <div class="seg" role="group" aria-label="Cas del bucle Para">
+    <button data-demo="compta" aria-pressed="true">▸ Comptar</button>
+    <button data-demo="suma" aria-pressed="false">∑ Sumar</button>
+    <button data-demo="enrere" aria-pressed="false">◂ Compte enrere</button>
+  </div>
+  <div class="trait" id="trait"></div>
+
+  <!-- BANDA -->
+  <div class="grid-band">
+    <div class="gb-top">
+      <span id="gb-dim"><b>Voltes del bucle</b></span>
+      <span class="gb-leg">
+        <span>⬜ pendent</span><span>▦ ja feta</span><span>🟧 volta actual</span>
+      </span>
+    </div>
+    <div class="band-cond" id="bandcond"></div>
+    <div class="grid" id="grid"></div>
+    <div class="grid-ptr" id="grid-ptr"></div>
+  </div>
+
+  <!-- PARÀMETRES -->
+  <div class="param" id="param"></div>
+
+  <!-- SIMULADOR -->
+  <div class="sim">
+    <div class="lcol">
+      <div class="panel panel-code">
+        <div class="panel-head">📄 Codi PSeInt</div>
+        <div class="code" id="code"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">📦 Variables <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink-3)">— en gris, els valors anteriors</span></div>
+        <div class="vars" id="vars"></div>
+      </div>
+    </div>
+
+    <div class="rcol">
+      <div class="panel">
+        <div class="panel-head">🔎 Què passa aquest pas</div>
+        <div class="check" id="check"></div>
+        <div class="note" id="note"></div>
+      </div>
+      <div class="panel panel-screen">
+        <div class="panel-head">🖥️ Pantalla</div>
+        <div class="screen" id="screen"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <button class="btn" id="btnReset">↺ Reinicia</button>
+    <button class="btn" id="btnPrev">◀ Enrere</button>
+    <button class="btn primary" id="btnStep">Pas a pas ▶</button>
+    <button class="btn" id="btnPlay">Executa-ho tot ⏩</button>
+    <span class="stepcount" id="stepcount"></span>
+    <span class="spacer"></span>
+    <span class="speed">Velocitat
+      <select id="speed">
+        <option value="1100">Lenta</option>
+        <option value="650" selected>Normal</option>
+        <option value="300">Ràpida</option>
+      </select>
+    </span>
+  </div>
+
+  <!-- TRAÇA -->
+  <div class="panel trace-wrap">
+    <div class="panel-head">📝 Taula de seguiment <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink-3)">— una fila per cada volta</span></div>
+    <div style="overflow-x:auto"><table class="trace" id="trace"></table></div>
+  </div>
+
+  <p class="foot">
+    Simulador fet per a l'activitat <b>A1.3 · Estructures repetitives</b> (criteris 2.1 i 2.5). Mostra el patró del bucle <b>Para</b>: el comptador arrenca, es comprova si encara queda alguna volta, s'executa el cos i el comptador avança <b>automàticament</b> fins que la condició deixa de complir-se.
+  </p>
+</div>
+
+<script>
+/* ───────── Acoloridor de pseudocodi (per línia) ───────── */
+function paintLine(line){
+  line = line.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  var idx = line.indexOf('//');
+  var code = idx >= 0 ? line.slice(0, idx) : line;
+  var comment = idx >= 0 ? line.slice(idx) : '';
+  var strs = [];
+  code = code.replace(/'(?:''|[^'])*'/g, function(m){ strs.push(m); return '\u0001'; });
+  code = code.replace(/\b(Mientras|FinMientras|Repetir|Hasta|Que|Para|Con|Paso|Hacer|FinPara)\b/g, "<span class='loop'>$1</span>");
+  code = code.replace(/\b(Proceso|FinProceso|Algoritmo|FinAlgoritmo|Definir|Como|Entero|Real|Numerico|Numero|Caracter|Texto|Cadena|Logico|Leer|Escribir|Sin|Saltar|Si|Entonces|SiNo|FinSi|Segun|FinSegun|Y|O|NO|mod)\b/g, "<span class='kw'>$1</span>");
+  code = code.replace(/\b(Verdadero|Falso|PI)\b/g, "<span class='num'>$1</span>");
+  code = code.replace(/\b(\d+\.?\d*)\b/g, "<span class='num'>$1</span>");
+  var k = 0;
+  code = code.replace(/\u0001/g, function(){ return "<span class='str'>" + strs[k++] + "</span>"; });
+  return code + (comment ? "<span class='cmt'>" + comment + "</span>" : '');
+}
+
+/* ───────── Metadades de cada cas ───────── */
+var DEMOS = {
+  compta: {
+    emoji:"▸",
+    trait:"Compta i escriu els números d'<b>1</b> fins a <b>N</b>. El <code>Para</code> fa exactament <b>N</b> voltes.",
+    params:[{key:"N", label:"N (fins on)", min:1, max:9, def:5}],
+    hint:"El bucle fa tantes voltes com digui N. Canvia N i mira com s'adapta."
+  },
+  suma: {
+    emoji:"∑",
+    trait:"Suma tots els números d'<b>1</b> a <b>N</b> amb un <b>acumulador</b> (<code>suma</code>).",
+    params:[{key:"N", label:"N (fins on)", min:1, max:9, def:5}],
+    hint:"L'acumulador comença a 0 i a cada volta hi afegeix el comptador i."
+  },
+  enrere: {
+    emoji:"◂",
+    trait:"Compte enrere de <b>N</b> fins a <b>1</b> amb <code>Con Paso -1</code>: el comptador <b>baixa</b> cada volta.",
+    params:[{key:"N", label:"N (des d'on)", min:1, max:9, def:5}],
+    hint:"Amb Con Paso -1 el comptador resta 1 cada volta en lloc de sumar-ne 1."
+  }
+};
+
+/* ───────── Constructor de fotogrames ───────── */
+function build(key, P){
+  var N = P.N;
+  var lines, frames = [], trace = [], out = [], vars = {}, volta = 0;
+  var railVals = [], traceHead, hlCol, varsOrder, voltesLabel = "voltes";
+
+  function F(line, note, extra){
+    frames.push(Object.assign({ line:line, note:note, vars:Object.assign({},vars), out:out.slice(),
+      tr:trace.length, voltes:volta, op:null, info:null, cond:null, cur:-1, exited:false }, extra||{}));
+  }
+
+  if (key === "compta"){
+    lines = [
+      "Proceso ComptaFins",
+      "    Definir i, N Como Entero;",
+      "    N <- " + N + ";",
+      "    Para i <- 1 Hasta N Hacer",
+      "        Escribir 'Volta ', i;",
+      "    FinPara",
+      "    Escribir 'Fet!';",
+      "FinProceso"
+    ];
+    traceHead = ["volta", "i", "sortida"]; hlCol = 2; varsOrder = ["N", "i"];
+    for (var a = 1; a <= N; a++) railVals.push(a);
+
+    vars.N = N;
+    F(2, "Guardo quantes voltes vull fer.", { info:"<b>N</b> = <b>" + N + "</b>" });
+    for (var k = 0; k < N; k++){
+      var i = k + 1;
+      vars.i = i;
+      F(3, "El <b>Para</b> comprova si encara queda alguna volta.",
+        { cur:k, cond:{ label:"Queda alguna volta?", expr:"i ≤ N → " + i + " ≤ " + N, ok:true, msg:"CERT → entro i faig la volta" } });
+      out.push("Volta " + i);
+      trace.push([k + 1, i, "Volta " + i]);
+      volta = k + 1;
+      F(4, "Escric «Volta " + i + "». Després el comptador avançarà sol.",
+        { cur:k, op:{ title:"Escribir 'Volta ', i", calc:"", result:"'Volta " + i + "'" } });
+    }
+    vars.i = N + 1;
+    F(3, "El comptador ja ha passat de N, així que surto del bucle.",
+      { cur:N, exited:true, cond:{ label:"Queda alguna volta?", expr:"i ≤ N → " + (N + 1) + " ≤ " + N, ok:false, msg:"FALS → surto del bucle" } });
+    out.push("Fet!");
+    F(6, "Fora del bucle, escric «Fet!».", { cur:N, exited:true, op:{ title:"Escribir 'Fet!'", calc:"", result:"'Fet!'" } });
+    F(7, "Programa acabat.", { cur:N, exited:true, info:"Fet ✅ · s'han fet <b>" + N + "</b> voltes" });
+
+  } else if (key === "suma"){
+    lines = [
+      "Proceso Suma1aN",
+      "    Definir i, N, suma Como Entero;",
+      "    N <- " + N + ";",
+      "    suma <- 0;",
+      "    Para i <- 1 Hasta N Hacer",
+      "        suma <- suma + i;",
+      "    FinPara",
+      "    Escribir 'La suma és: ', suma;",
+      "FinProceso"
+    ];
+    traceHead = ["volta", "i", "suma"]; hlCol = 2; varsOrder = ["N", "suma", "i"];
+    for (var b = 1; b <= N; b++) railVals.push(b);
+
+    vars.N = N;
+    F(2, "Guardo fins on vull sumar.", { info:"<b>N</b> = <b>" + N + "</b>" });
+    vars.suma = 0;
+    F(3, "L'acumulador comença a <b>0</b>.", { op:{ title:"suma ← 0", calc:"", result:0 } });
+    for (var k2 = 0; k2 < N; k2++){
+      var ii = k2 + 1;
+      vars.i = ii;
+      F(4, "Comprovo si encara queda volta.",
+        { cur:k2, cond:{ label:"Queda alguna volta?", expr:"i ≤ N → " + ii + " ≤ " + N, ok:true, msg:"CERT → entro i faig la volta" } });
+      var old = vars.suma;
+      vars.suma = old + ii;
+      trace.push([k2 + 1, ii, vars.suma]);
+      volta = k2 + 1;
+      F(5, "Afegeixo <b>i = " + ii + "</b> a la suma: ara val <b>" + vars.suma + "</b>.",
+        { cur:k2, op:{ title:"suma ← suma + i", calc:old + " + " + ii, result:vars.suma } });
+    }
+    vars.i = N + 1;
+    F(4, "El comptador passa de N: surto del bucle.",
+      { cur:N, exited:true, cond:{ label:"Queda alguna volta?", expr:"i ≤ N → " + (N + 1) + " ≤ " + N, ok:false, msg:"FALS → surto del bucle" } });
+    out.push("La suma és: " + vars.suma);
+    F(7, "Escric el resultat.", { cur:N, exited:true, op:{ title:"Escribir 'La suma és: ', suma", calc:"", result:vars.suma } });
+    F(8, "Programa acabat.", { cur:N, exited:true, info:"Suma d'1 a " + N + " = <b>" + vars.suma + "</b> ✅" });
+
+  } else { // enrere
+    lines = [
+      "Proceso ComptEnrere",
+      "    Definir i, N Como Entero;",
+      "    N <- " + N + ";",
+      "    Para i <- N Hasta 1 Con Paso -1 Hacer",
+      "        Escribir i;",
+      "    FinPara",
+      "    Escribir 'Despega!';",
+      "FinProceso"
+    ];
+    traceHead = ["volta", "i", "sortida"]; hlCol = 2; varsOrder = ["N", "i"];
+    for (var c = N; c >= 1; c--) railVals.push(c);
+
+    vars.N = N;
+    F(2, "Guardo des d'on començarà el compte enrere.", { info:"<b>N</b> = <b>" + N + "</b>" });
+    for (var k3 = 0; k3 < N; k3++){
+      var iv = N - k3;
+      vars.i = iv;
+      F(3, "Amb <code>Con Paso -1</code> comprovo si encara no he arribat a 1.",
+        { cur:k3, cond:{ label:"Encara no he arribat al final?", expr:"i ≥ 1 → " + iv + " ≥ 1", ok:true, msg:"CERT → entro i faig la volta" } });
+      out.push(String(iv));
+      trace.push([k3 + 1, iv, iv]);
+      volta = k3 + 1;
+      F(4, "Escric <b>" + iv + "</b>. Després el comptador <b>baixa</b> 1.",
+        { cur:k3, op:{ title:"Escribir i", calc:"", result:iv } });
+    }
+    vars.i = 0;
+    F(3, "El comptador baixa a 0: ja no és ≥ 1, surto.",
+      { cur:N, exited:true, cond:{ label:"Encara no he arribat al final?", expr:"i ≥ 1 → 0 ≥ 1", ok:false, msg:"FALS → surto del bucle" } });
+    out.push("Despega!");
+    F(6, "Fora del bucle, escric «Despega!».", { cur:N, exited:true, op:{ title:"Escribir 'Despega!'", calc:"", result:"'Despega!'" } });
+    F(7, "Programa acabat.", { cur:N, exited:true, info:"Compte enrere complet 🚀" });
+  }
+
+  return { lines:lines, frames:frames, trace:trace, railVals:railVals,
+           traceHead:traceHead, hlCol:hlCol, varsOrder:varsOrder, voltesLabel:voltesLabel };
+}
+
+/* ───────── Estat ───────── */
+var S = { key:"compta", params:{}, data:null, idx:0, timer:null };
+var codeEl = document.getElementById("code");
+var lineEls = [];
+
+function defaults(key){
+  var p = {};
+  DEMOS[key].params.forEach(function(d){ p[d.key] = d.def; });
+  return p;
+}
+
+function rebuild(){
+  S.data = build(S.key, S.params);
+  S.idx = 0;
+  codeEl.innerHTML = "";
+  lineEls = [];
+  S.data.lines.forEach(function(ln){
+    var div = document.createElement("div");
+    div.className = "cl";
+    div.innerHTML = paintLine(ln);
+    codeEl.appendChild(div);
+    lineEls.push(div);
+  });
+  render();
+}
+
+function varHistory(name, idx){
+  var seq = [];
+  for (var i = 0; i <= idx; i++){
+    var val = S.data.frames[i].vars[name];
+    if (val === undefined) continue;
+    if (seq.length === 0 || seq[seq.length - 1] !== val) seq.push(val);
+  }
+  return seq;
+}
+
+function renderCond(f){
+  var cb = document.getElementById("bandcond");
+  if (f.cond){
+    cb.style.display = "";
+    cb.className = "band-cond " + (f.cond.ok === true ? "on-true" : f.cond.ok === false ? "on-false" : "");
+    cb.innerHTML = "<div class='cond-label'>" + f.cond.label + "</div>" +
+                   "<div class='cond-expr'>" + f.cond.expr + "</div>" +
+                   (f.cond.msg ? "<div class='cond-verdict'>" + f.cond.msg + "</div>" : "");
+  } else {
+    cb.style.display = "none";
+  }
+}
+
+function renderRail(f){
+  var d = S.data, cur = (f.cur === undefined ? -1 : f.cur), n = d.railVals.length;
+  var g = document.getElementById("grid"), ptr = document.getElementById("grid-ptr");
+  if (n === 0){
+    g.innerHTML = "<div class='rail-empty'>0 voltes · el cos del bucle no s'executa cap vegada.</div>";
+    ptr.innerHTML = "El bucle no arrenca.";
+    return;
+  }
+  var html = "<div class='grow'>";
+  for (var k = 0; k < n; k++){
+    var reached = (k <= cur) || f.exited;
+    var isCur = (k === cur && !f.exited);
+    var done = (k < cur) || f.exited;
+    var cls = "gcell" + (isCur ? " current" : (done ? " done" : ""));
+    var boxcls = "gbox" + (reached ? "" : " empty-box");
+    var content = reached ? d.railVals[k] : "·";
+    html += "<div class='" + cls + "'><div class='gidx'>volta " + (k + 1) + "</div><div class='" + boxcls + "'>" + content + "</div></div>";
+  }
+  html += "</div>";
+  g.innerHTML = html;
+  if (cur >= 0 && cur < n && !f.exited){
+    ptr.innerHTML = "Volta <b>" + (cur + 1) + "</b> de " + n + " · el comptador val <b>" + d.railVals[cur] + "</b>.";
+  } else if (f.exited){
+    ptr.innerHTML = "Bucle acabat · s'han fet <b>" + n + "</b> voltes.";
+  } else {
+    ptr.innerHTML = "A punt de començar.";
+  }
+}
+
+var prevVars = {};
+function render(){
+  var d = S.data, f = d.frames[S.idx];
+
+  lineEls.forEach(function(el, i){ el.classList.toggle("active", i === f.line); });
+
+  renderCond(f);
+  renderRail(f);
+
+  var vwrap = document.getElementById("vars");
+  vwrap.innerHTML = "";
+  d.varsOrder.forEach(function(name){
+    var seq = varHistory(name, S.idx);
+    var changed = prevVars[name] !== undefined && prevVars[name] !== f.vars[name];
+    var toks = seq.map(function(val, i){
+      var cur = (i === seq.length - 1);
+      return "<span class='vtok" + (cur ? " cur" : "") + (cur && changed ? " just" : "") + "'>" + val + "</span>";
+    }).join("");
+    var chip = document.createElement("div");
+    chip.className = "vchip";
+    chip.innerHTML = "<div class='vname'>" + name + "</div><div class='vtrail'>" + (toks || "<span class='vtok'>—</span>") + "</div>";
+    vwrap.appendChild(chip);
+  });
+  prevVars = Object.assign({}, f.vars);
+
+  var ch = document.getElementById("check");
+  if (f.op){
+    ch.innerHTML =
+      "<div class='op-title'>" + f.op.title + "</div>" +
+      (f.op.calc ? "<div class='op-calc'>" + f.op.calc + " = <b>" + f.op.result + "</b></div>"
+                 : "<div class='op-result'>" + f.op.result + "</div>");
+  } else if (f.info){
+    ch.innerHTML = "<div class='check-info'>" + f.info + "</div>";
+  } else {
+    ch.innerHTML = "<div class='check-idle'>Aquí es mostra cada pas.<br>Prem <b>Pas a pas</b> per avançar.</div>";
+  }
+
+  document.getElementById("note").innerHTML = f.note;
+
+  var scr = document.getElementById("screen");
+  var text = f.out.join("\n");
+  scr.innerHTML = (text ? text.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;") : "") + "<span class='cursor'></span>";
+
+  var tbl = document.getElementById("trace");
+  var head = "<tr>" + d.traceHead.map(function(h){ return "<th>" + h + "</th>"; }).join("") + "</tr>";
+  var rows = "";
+  if (f.tr === 0){
+    rows = "<tr class='empty'><td colspan='" + d.traceHead.length + "'>Encara no s'ha fet cap volta.</td></tr>";
+  } else {
+    for (var i = 0; i < f.tr; i++){
+      var r = d.trace[i];
+      var isNew = (i === f.tr - 1);
+      var cells = r.map(function(c, ci){ return "<td" + (ci === d.hlCol ? " class='hl'" : "") + ">" + c + "</td>"; }).join("");
+      rows += "<tr" + (isNew ? " class='new'" : "") + ">" + cells + "</tr>";
+    }
+  }
+  tbl.innerHTML = head + rows;
+
+  document.getElementById("trait-voltes").textContent = f.voltes + " " + (f.voltes === 1 ? "volta" : "voltes");
+  document.getElementById("stepcount").textContent = "Pas " + (S.idx + 1) + " / " + d.frames.length;
+
+  document.getElementById("btnPrev").disabled = S.idx === 0;
+  var atEnd = S.idx >= d.frames.length - 1;
+  document.getElementById("btnStep").disabled = atEnd;
+  document.getElementById("btnPlay").disabled = atEnd && !S.timer;
+}
+
+/* ───────── Controls ───────── */
+function step(){ if (S.idx < S.data.frames.length - 1){ S.idx++; render(); return true; } return false; }
+function prev(){ if (S.idx > 0){ S.idx--; render(); } }
+function stopPlay(){ if (S.timer){ clearInterval(S.timer); S.timer = null; document.getElementById("btnPlay").textContent = "Executa-ho tot ⏩"; } }
+function play(){
+  if (S.timer){ stopPlay(); return; }
+  if (S.idx >= S.data.frames.length - 1){ S.idx = 0; render(); }
+  document.getElementById("btnPlay").textContent = "Atura ⏸";
+  var ms = parseInt(document.getElementById("speed").value, 10);
+  S.timer = setInterval(function(){ if (!step()){ stopPlay(); render(); } }, ms);
+}
+
+document.getElementById("btnStep").addEventListener("click", function(){ stopPlay(); step(); });
+document.getElementById("btnPrev").addEventListener("click", function(){ stopPlay(); prev(); });
+document.getElementById("btnReset").addEventListener("click", function(){ stopPlay(); rebuild(); });
+document.getElementById("btnPlay").addEventListener("click", play);
+
+document.querySelectorAll(".seg button").forEach(function(b){
+  b.addEventListener("click", function(){
+    stopPlay();
+    document.querySelectorAll(".seg button").forEach(function(x){ x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+    S.key = b.dataset.demo;
+    S.params = defaults(S.key);
+    setupTrait(); setupParam(); rebuild();
+  });
+});
+
+function setupTrait(){
+  var d = DEMOS[S.key];
+  document.getElementById("trait").innerHTML =
+    "<span class='emoji'>" + d.emoji + "</span><span>" + d.trait + "</span>" +
+    "<span class='voltes' id='trait-voltes'>0 voltes</span>";
+}
+
+function setupParam(){
+  var d = DEMOS[S.key], el = document.getElementById("param");
+  var rows = d.params.map(function(p){
+    return "<div class='prow'><label>" + p.label + ":</label><span class='nums'>" +
+      "<input type='number' data-k='" + p.key + "' min='" + p.min + "' max='" + p.max + "' value='" + S.params[p.key] + "' aria-label='" + p.label + "'>" +
+      "</span></div>";
+  }).join("");
+  el.innerHTML = rows + "<div class='phint'>💡 " + d.hint + "</div>";
+  el.querySelectorAll("input[data-k]").forEach(function(inp){
+    inp.addEventListener("input", function(){
+      stopPlay();
+      var p = DEMOS[S.key].params.filter(function(x){ return x.key === this.dataset.k; }.bind(this))[0];
+      var raw = parseInt(this.value, 10);
+      if (isNaN(raw)) return;
+      var val = raw < p.min ? p.min : raw > p.max ? p.max : raw;
+      if (val !== raw) this.value = val;
+      S.params[this.dataset.k] = val;
+      rebuild();
+    });
+  });
+}
+
+/* Arrencada */
+S.params = defaults(S.key);
+setupTrait();
+setupParam();
+rebuild();
+</script>
+</body>
+</html>
