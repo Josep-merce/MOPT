@@ -8,6 +8,23 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="estils.css">
+  <style>
+    .videos{ display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap:18px; }
+    .video-card{ border:1px solid var(--line); border-radius:var(--r); overflow:hidden; background:var(--bg); }
+    .video, .video-card iframe{ display:block; width:100%; height:auto; aspect-ratio:16/9; border:0; }
+    .video{ position:relative; cursor:pointer; padding:0; font:inherit; color:#fff; text-align:left;
+      background:radial-gradient(120% 120% at 100% 0%, rgba(200,16,46,.45) 0%, rgba(200,16,46,0) 55%), #241f1f; }
+    .video-num{ position:absolute; top:16px; left:18px; font-family:'JetBrains Mono', monospace; font-size:.8rem; font-weight:700;
+      letter-spacing:.06em; color:#f3c6cd; }
+    .video-title code{ font-family:inherit; }
+    .video-title{ position:absolute; left:18px; bottom:16px; font-family:'DM Serif Display', Georgia, serif; font-size:clamp(1.35rem, 3.6vw, 1.9rem); line-height:1.1; right:18px; }
+    .video-play{ position:absolute; top:42%; left:50%; width:68px; height:68px; margin:-34px 0 0 -34px; border-radius:50%;
+      background:var(--merce-red); box-shadow:0 8px 24px rgba(0,0,0,.35); transition:transform .15s ease; }
+    .video-play::after{ content:""; position:absolute; top:50%; left:54%; transform:translate(-50%,-50%);
+      border-style:solid; border-width:13px 0 13px 21px; border-color:transparent transparent transparent #fff; }
+    .video:hover .video-play, .video:focus-visible .video-play{ transform:scale(1.08); }
+    .video:focus-visible{ outline:3px solid var(--merce-red); outline-offset:-3px; }
+  </style>
 </head>
 <body class="pagina-index">
 
@@ -33,9 +50,82 @@
 
   <main class="wrap">
     <section class="aea">
-      <div class="soon">
-        <div class="soon-badge">En preparació</div>
-        <p>Aviat trobaràs aquí els vídeos explicatius de les estructures de control.</p>
+      <div class="aea-head">
+        <h1 class="aea-title">Vídeos explicatius</h1>
+        <p class="aea-desc">Fes clic a la caràtula per reproduir el vídeo.</p>
+      </div>
+
+      <div class="videos">
+        <div class="video-card">
+          <button class="video" type="button" data-id="x6NdsUwo7IE" aria-label="Reproduir el vídeo: Variables i tipus de dades">
+            <span class="video-num">01</span>
+            <span class="video-title">Variables i tipus de dades</span>
+            <span class="video-play" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="video-card">
+          <button class="video" type="button" data-id="w7fi_n4LAjI" aria-label="Reproduir el vídeo: Escriure i llegir (Escribir i Leer)">
+            <span class="video-num">02</span>
+            <span class="video-title">Escriure i llegir (<code>Escribir</code> i <code>Leer</code>)</span>
+            <span class="video-play" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="video-card">
+          <button class="video" type="button" data-id="H43OSB26Piw" aria-label="Reproduir el vídeo: Operacions aritmètiques">
+            <span class="video-num">03</span>
+            <span class="video-title">Operacions aritmètiques</span>
+            <span class="video-play" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="video-card">
+          <button class="video" type="button" data-id="jefjmgFwxGU" aria-label="Reproduir el vídeo: Operadors relacionals">
+            <span class="video-num">04</span>
+            <span class="video-title">Operadors relacionals</span>
+            <span class="video-play" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="video-card">
+          <button class="video" type="button" data-id="NO8gAUANY1s" aria-label="Reproduir el vídeo: Operadors lògics">
+            <span class="video-num">05</span>
+            <span class="video-title">Operadors lògics</span>
+            <span class="video-play" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="video-card">
+          <button class="video" type="button" data-id="Mf8BGoETRgQ" aria-label="Reproduir el vídeo: Condicions simples">
+            <span class="video-num">06</span>
+            <span class="video-title">Condicions simples</span>
+            <span class="video-play" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="video-card">
+          <button class="video" type="button" data-id="AGBmpn6y9z4" aria-label="Reproduir el vídeo: Condicions compostes">
+            <span class="video-num">07</span>
+            <span class="video-title">Condicions compostes</span>
+            <span class="video-play" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="video-card">
+          <button class="video" type="button" data-id="Rb7r-YnAd_8" aria-label="Reproduir el vídeo: Condicions múltiples">
+            <span class="video-num">08</span>
+            <span class="video-title">Condicions múltiples</span>
+            <span class="video-play" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="video-card">
+          <button class="video" type="button" data-id="Y3pbcgM7J1w" aria-label="Reproduir el vídeo: Condicions imbricades">
+            <span class="video-num">09</span>
+            <span class="video-title">Condicions imbricades</span>
+            <span class="video-play" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="video-card">
+          <button class="video" type="button" data-id="HU3I9XcpaMQ" aria-label="Reproduir el vídeo: Acumuladors i comptadors">
+            <span class="video-num">10</span>
+            <span class="video-title">Acumuladors i comptadors</span>
+            <span class="video-play" aria-hidden="true"></span>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -48,5 +138,17 @@
     </div>
   </footer>
 
+  <script>
+    document.querySelectorAll('.video[data-id]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + btn.dataset.id + '?autoplay=1&rel=0';
+        f.title = btn.getAttribute('aria-label').replace('Reproduir el vídeo: ', '');
+        f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        f.allowFullscreen = true;
+        btn.replaceWith(f);
+      });
+    });
+  </script>
 </body>
 </html>
