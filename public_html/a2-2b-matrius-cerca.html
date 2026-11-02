@@ -227,26 +227,41 @@
 
     <div class="demo">
       <div class="demo-label">Esquema 1 · sense booleà (posició amb sentinella −1)</div>
-      <pre class="pseudo-out" data-code="buscat <- 17;              // el número que volem trobar
-filaTrobada <- -1;         // -1 = encara no l'hem trobat
-columnaTrobada <- -1;
-fila <- 0;
-Mientras fila < N_FILES Y filaTrobada = -1 Hacer
-    columna <- 0;
-    Mientras columna < N_COLUMNES Y filaTrobada = -1 Hacer
-        Si taula[fila,columna] = buscat Entonces
-            filaTrobada <- fila;
-            columnaTrobada <- columna;
-        FinSi
-        columna <- columna + 1;
+      <pre class="pseudo-out" data-code="Proceso CercaSenseBoolea
+    Definir N_FILES, N_COLUMNES Como Entero;
+    N_FILES <- 2;
+    N_COLUMNES <- 3;
+    Definir fila, columna, buscat Como Entero;
+    Definir filaTrobada, columnaTrobada Como Entero;
+    Definir taula Como Entero;
+    Dimension taula[N_FILES,N_COLUMNES];
+    taula[0,0] <- 8;
+    taula[0,1] <- 5;
+    taula[0,2] <- 9;
+    taula[1,0] <- 17;
+    taula[1,1] <- 7;
+    taula[1,2] <- 6;
+    buscat <- 17;              // el número que volem trobar
+    filaTrobada <- -1;         // -1 = encara no l'hem trobat
+    columnaTrobada <- -1;
+    fila <- 0;
+    Mientras fila < N_FILES Y filaTrobada = -1 Hacer
+        columna <- 0;
+        Mientras columna < N_COLUMNES Y filaTrobada = -1 Hacer
+            Si taula[fila,columna] = buscat Entonces
+                filaTrobada <- fila;
+                columnaTrobada <- columna;
+            FinSi
+            columna <- columna + 1;
+        FinMientras
+        fila <- fila + 1;
     FinMientras
-    fila <- fila + 1;
-FinMientras
-Si filaTrobada <> -1 Entonces
-    Escribir 'El ', buscat, ' és a [', filaTrobada, ',', columnaTrobada, ']';
-SiNo
-    Escribir 'El ', buscat, ' no hi és';
-FinSi"></pre>
+    Si filaTrobada <> -1 Entonces
+        Escribir 'El ', buscat, ' és a [', filaTrobada, ',', columnaTrobada, ']';
+    SiNo
+        Escribir 'El ', buscat, ' no hi és';
+    FinSi
+FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
@@ -262,26 +277,42 @@ FinSi"></pre>
 
     <div class="demo">
       <div class="demo-label">Esquema 2 · amb booleà (indicador <code>trobat</code>)</div>
-      <pre class="pseudo-out" data-code="buscat <- 17;              // el número que volem trobar
-trobat <- Falso;
-fila <- 0;
-Mientras fila < N_FILES Y NO trobat Hacer
-    columna <- 0;
-    Mientras columna < N_COLUMNES Y NO trobat Hacer
-        Si taula[fila,columna] = buscat Entonces
-            trobat <- Verdadero;
-            filaTrobada <- fila;
-            columnaTrobada <- columna;
-        FinSi
-        columna <- columna + 1;
+      <pre class="pseudo-out" data-code="Proceso CercaAmbBoolea
+    Definir N_FILES, N_COLUMNES Como Entero;
+    N_FILES <- 2;
+    N_COLUMNES <- 3;
+    Definir fila, columna, buscat Como Entero;
+    Definir filaTrobada, columnaTrobada Como Entero;
+    Definir trobat Como Logico;
+    Definir taula Como Entero;
+    Dimension taula[N_FILES,N_COLUMNES];
+    taula[0,0] <- 8;
+    taula[0,1] <- 5;
+    taula[0,2] <- 9;
+    taula[1,0] <- 17;
+    taula[1,1] <- 7;
+    taula[1,2] <- 6;
+    buscat <- 17;              // el número que volem trobar
+    trobat <- Falso;
+    fila <- 0;
+    Mientras fila < N_FILES Y NO trobat Hacer
+        columna <- 0;
+        Mientras columna < N_COLUMNES Y NO trobat Hacer
+            Si taula[fila,columna] = buscat Entonces
+                trobat <- Verdadero;
+                filaTrobada <- fila;
+                columnaTrobada <- columna;
+            FinSi
+            columna <- columna + 1;
+        FinMientras
+        fila <- fila + 1;
     FinMientras
-    fila <- fila + 1;
-FinMientras
-Si trobat Entonces
-    Escribir 'El ', buscat, ' és a [', filaTrobada, ',', columnaTrobada, ']';
-SiNo
-    Escribir 'El ', buscat, ' no hi és';
-FinSi"></pre>
+    Si trobat Entonces
+        Escribir 'El ', buscat, ' és a [', filaTrobada, ',', columnaTrobada, ']';
+    SiNo
+        Escribir 'El ', buscat, ' no hi és';
+    FinSi
+FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
@@ -363,26 +394,40 @@ FinSi"></pre>
 
     <div class="demo">
       <div class="demo-label">Exemple · el primer seient lliure d'una sala (0 = lliure, 1 = ocupat)</div>
-      <pre class="pseudo-out" data-code="buscat <- 0;               // 0 vol dir seient lliure
-filaTrobada <- -1;
-columnaTrobada <- -1;
-fila <- 0;
-Mientras fila < N_FILES Y filaTrobada = -1 Hacer
-    columna <- 0;
-    Mientras columna < N_COLUMNES Y filaTrobada = -1 Hacer
-        Si sala[fila,columna] = 0 Entonces
-            filaTrobada <- fila;
-            columnaTrobada <- columna;
-        FinSi
-        columna <- columna + 1;
+      <pre class="pseudo-out" data-code="Proceso PrimerSeientLliure
+    Definir N_FILES, N_COLUMNES Como Entero;
+    N_FILES <- 2;
+    N_COLUMNES <- 3;
+    Definir fila, columna Como Entero;
+    Definir filaTrobada, columnaTrobada Como Entero;
+    Definir sala Como Entero;
+    Dimension sala[N_FILES,N_COLUMNES];
+    sala[0,0] <- 1;
+    sala[0,1] <- 1;
+    sala[0,2] <- 1;
+    sala[1,0] <- 1;
+    sala[1,1] <- 0;
+    sala[1,2] <- 0;
+    filaTrobada <- -1;
+    columnaTrobada <- -1;
+    fila <- 0;
+    Mientras fila < N_FILES Y filaTrobada = -1 Hacer
+        columna <- 0;
+        Mientras columna < N_COLUMNES Y filaTrobada = -1 Hacer
+            Si sala[fila,columna] = 0 Entonces
+                filaTrobada <- fila;
+                columnaTrobada <- columna;
+            FinSi
+            columna <- columna + 1;
+        FinMientras
+        fila <- fila + 1;
     FinMientras
-    fila <- fila + 1;
-FinMientras
-Si filaTrobada <> -1 Entonces
-    Escribir 'Primer seient lliure: fila ', filaTrobada, ', butaca ', columnaTrobada;
-SiNo
-    Escribir 'La sala és plena';
-FinSi"></pre>
+    Si filaTrobada <> -1 Entonces
+        Escribir 'Primer seient lliure: fila ', filaTrobada, ', butaca ', columnaTrobada;
+    SiNo
+        Escribir 'La sala és plena';
+    FinSi
+FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
@@ -501,9 +546,9 @@ const E1 = [
 
 /* ── Exercici 2 ── */
 const E2 = [
-  { code:"// taula[2,2] = 3 1 / 1 4   (buscat 1, sense booleà)\nbuscat <- 1;\nfilaTrobada <- -1;\nfila <- 0;\nMientras fila < 2 Y filaTrobada = -1 Hacer\n    columna <- 0;\n    Mientras columna < 2 Y filaTrobada = -1 Hacer\n        Si taula[fila,columna] = buscat Entonces\n            filaTrobada <- fila;\n            columnaTrobada <- columna;\n        FinSi\n        columna <- columna + 1;\n    FinMientras\n    fila <- fila + 1;\nFinMientras\nEscribir 'El ', buscat, ' és a [', filaTrobada, ',', columnaTrobada, ']';",
+  { code:"Proceso Exercici1\n    Definir N_FILES, N_COLUMNES Como Entero;\n    N_FILES <- 2;\n    N_COLUMNES <- 2;\n    Definir fila, columna, buscat Como Entero;\n    Definir filaTrobada, columnaTrobada Como Entero;\n    Definir taula Como Entero;\n    Dimension taula[N_FILES,N_COLUMNES];\n    taula[0,0] <- 3;\n    taula[0,1] <- 1;\n    taula[1,0] <- 1;\n    taula[1,1] <- 4;\n    buscat <- 1;\n    filaTrobada <- -1;\n    columnaTrobada <- -1;\n    fila <- 0;\n    Mientras fila < N_FILES Y filaTrobada = -1 Hacer\n        columna <- 0;\n        Mientras columna < N_COLUMNES Y filaTrobada = -1 Hacer\n            Si taula[fila,columna] = buscat Entonces\n                filaTrobada <- fila;\n                columnaTrobada <- columna;\n            FinSi\n            columna <- columna + 1;\n        FinMientras\n        fila <- fila + 1;\n    FinMientras\n    Escribir 'El ', buscat, ' és a [', filaTrobada, ',', columnaTrobada, ']';\nFinProceso",
     opts:['El 1 és a [0,1]','El 1 és a [1,0]','El 1 és a [0,0]'], ans:0, exp:'Per files: [0,0]=3 no, [0,1]=1 sí → para. Posició [0,1].' },
-  { code:"// taula[2,2] = 5 6 / 7 8   (buscat 9, sense booleà)\nbuscat <- 9;\nfilaTrobada <- -1;\nfila <- 0;\nMientras fila < 2 Y filaTrobada = -1 Hacer\n    columna <- 0;\n    Mientras columna < 2 Y filaTrobada = -1 Hacer\n        Si taula[fila,columna] = buscat Entonces\n            filaTrobada <- fila;\n            columnaTrobada <- columna;\n        FinSi\n        columna <- columna + 1;\n    FinMientras\n    fila <- fila + 1;\nFinMientras\nSi filaTrobada <> -1 Entonces\n    Escribir 'Trobat';\nSiNo\n    Escribir 'El ', buscat, ' no hi és';\nFinSi",
+  { code:"Proceso Exercici2\n    Definir N_FILES, N_COLUMNES Como Entero;\n    N_FILES <- 2;\n    N_COLUMNES <- 2;\n    Definir fila, columna, buscat Como Entero;\n    Definir filaTrobada, columnaTrobada Como Entero;\n    Definir taula Como Entero;\n    Dimension taula[N_FILES,N_COLUMNES];\n    taula[0,0] <- 5;\n    taula[0,1] <- 6;\n    taula[1,0] <- 7;\n    taula[1,1] <- 8;\n    buscat <- 9;\n    filaTrobada <- -1;\n    columnaTrobada <- -1;\n    fila <- 0;\n    Mientras fila < N_FILES Y filaTrobada = -1 Hacer\n        columna <- 0;\n        Mientras columna < N_COLUMNES Y filaTrobada = -1 Hacer\n            Si taula[fila,columna] = buscat Entonces\n                filaTrobada <- fila;\n                columnaTrobada <- columna;\n            FinSi\n            columna <- columna + 1;\n        FinMientras\n        fila <- fila + 1;\n    FinMientras\n    Si filaTrobada <> -1 Entonces\n        Escribir 'Trobat';\n    SiNo\n        Escribir 'El ', buscat, ' no hi és';\n    FinSi\nFinProceso",
     opts:['Trobat','El 9 no hi és'], ans:1, exp:'El 9 no és a la matriu: es recorren les 4 caselles, filaTrobada es queda a -1 i surt el missatge de no trobat.' }
 ];
 (function(){
