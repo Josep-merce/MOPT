@@ -461,7 +461,7 @@ FinProceso"></pre>
   <!-- EXERCICIS -->
   <div class="ex-block-head">
     <h2 class="ex-block-title">Exercicis de demostració</h2>
-    <p class="ex-block-sub">Quatre nivells · del reconeixement a la codificació · criteris 2.2 i 2.5</p>
+    <p class="ex-block-sub">Quatre nivells i un repte · del reconeixement a la codificació · criteris 2.2 i 2.5</p>
   </div>
   <div class="ex-block-body">
 
@@ -499,6 +499,150 @@ FinProceso"></pre>
       </div></div>
       <p class="ex-intro">Escriu el programa PSeInt sencer per a cada enunciat. Després obre la solució per comparar.</p>
       <div id="ex4-cont"></div>
+    </div>
+
+    <div class="exercise">
+      <div class="ex-head"><div class="ex-num">5</div><div>
+        <div class="ex-name">Repte · Control de producció d'una fàbrica</div>
+        <div class="ex-level">Nivell avançat · programa amb diverses parts (tipus prova)</div>
+      </div></div>
+      <p class="ex-intro">Un programa sencer que combina un vector de noms, una matriu, dos recorreguts (per files i per columnes) i una cerca. Escriu-lo i després obre la solució per comparar.</p>
+      <div class="ri">
+        <div class="ri-q">
+          <div class="ri-q-text">
+            <p style="margin-bottom:10px;"><strong>Context:</strong> una fàbrica vol analitzar la producció de les seves màquines durant un dia. Es disposa de les unitats que ha fabricat cada màquina a cada torn.</p>
+            <p style="margin-bottom:6px;"><strong>Dades:</strong></p>
+            <ul style="margin:0 0 10px 20px;">
+              <li>A la fàbrica hi ha <strong>4 màquines</strong> (constant <code>N_MAQUINES</code>).</li>
+              <li>Es treballa en <strong>3 torns</strong> fixos: Matí, Tarda i Nit (constant <code>N_TORNS</code>).</li>
+              <li><code>nomsMaquines</code>: vector de mida 4 amb el nom de cada màquina.</li>
+              <li><code>produccio</code>: matriu <code>[4,3]</code> (Entero); les files són les màquines i les columnes, els torns.</li>
+            </ul>
+            <p style="margin-bottom:6px;"><strong>Funcionalitats:</strong></p>
+            <ol style="margin:0 0 4px 20px;">
+              <li><strong>Càrrega de dades (1,5 punts):</strong> demana el nom de totes les màquines i, per a cada màquina, les unitats fabricades a cada torn. S'ha d'omplir tota la matriu.</li>
+              <li><strong>Rendiment per màquina (2,5 punts):</strong> calcula la mitjana d'unitats de cada màquina i mostra el nom i la mitjana.</li>
+              <li><strong>Torn més productiu (2,5 punts):</strong> suma les unitats de totes les màquines a cada torn (total Matí, Tarda i Nit) i indica quin torn ha fabricat més.</li>
+              <li><strong>Cerca per sota del mínim (2,5 punts):</strong> demana un mínim d'unitats i, recorrent per màquines, troba la <strong>primera</strong> casella (màquina i torn) que no hi arriba. Si no n'hi ha cap, avisa-ho. Fes-ho <strong>sense booleà</strong> (sentinella −1).</li>
+            </ol>
+          </div>
+          <div class="demo-label" style="margin-top:12px;">El programa ha de mostrar (exemple d'execució)</div>
+          <pre class="pseudo-out" style="margin:6px 0 4px;">Nom de la màquina 1:
+&gt; Premsa
+Nom de la màquina 2:
+&gt; Fresadora
+... (Soldadora i Envasadora) ...
+Unitats de Premsa al torn de Matí:
+&gt; 120
+Unitats de Premsa al torn de Tarda:
+&gt; 110
+... (fins a omplir les 12 caselles: Premsa 120, 110, 100 · Fresadora 95, 100, 75 · Soldadora 130, 125, 60 · Envasadora 140, 120, 100) ...
+--- Mitjana per màquina ---
+Premsa: 110 unitats
+Fresadora: 90 unitats
+Soldadora: 105 unitats
+Envasadora: 120 unitats
+--- Total per torn ---
+Matí: 485 unitats
+Tarda: 455 unitats
+Nit: 335 unitats
+El torn més productiu és el de Matí
+Quantes unitats ha de fer, com a mínim, cada màquina en un torn?
+&gt; 80
+Per sota del mínim: Fresadora al torn de Nit (75 unitats)
+
+--- si el mínim és 50 ---
+Totes les màquines arriben al mínim en tots els torns</pre>
+          <button class="ri-btn" onclick="toggle(this,'E5a0')">▶ Mostrar solució</button>
+        </div>
+        <div class="ri-ans" id="E5a0">
+          <div class="ri-ans-label">Solució · PSeInt</div>
+          <pre class="pseudo-out" data-code="// Anàlisi
+// Entrades: noms de 4 màquines i unitats fabricades a cada torn (matriu 4x3); mínim d'unitats
+// Sortides: mitjana per màquina, total per torn i torn més productiu,
+//           primera producció per sota del mínim (o avís)
+
+Proceso ControlProduccio
+    Definir N_MAQUINES, N_TORNS Como Entero;
+    N_MAQUINES <- 4;
+    N_TORNS <- 3;
+    Definir fila, columna, suma, millorTorn, minim Como Entero;
+    Definir filaTrobada, columnaTrobada Como Entero;
+    Definir mitjana Como Real;
+    Definir nomsMaquines, nomsTorns Como Caracter;
+    Dimension nomsMaquines[N_MAQUINES];
+    Dimension nomsTorns[N_TORNS];
+    Definir produccio, totalTorn Como Entero;
+    Dimension produccio[N_MAQUINES,N_TORNS];
+    Dimension totalTorn[N_TORNS];
+    nomsTorns[0] <- 'Matí';
+    nomsTorns[1] <- 'Tarda';
+    nomsTorns[2] <- 'Nit';
+
+    // 1. Càrrega de dades
+    Para fila <- 0 Hasta N_MAQUINES - 1 Hacer
+        Escribir 'Nom de la màquina ', fila + 1, ':';
+        Leer nomsMaquines[fila];
+    FinPara
+    Para fila <- 0 Hasta N_MAQUINES - 1 Hacer
+        Para columna <- 0 Hasta N_TORNS - 1 Hacer
+            Escribir 'Unitats de ', nomsMaquines[fila], ' al torn de ', nomsTorns[columna], ':';
+            Leer produccio[fila,columna];
+        FinPara
+    FinPara
+
+    // 2. Rendiment per màquina (recorregut per files)
+    Escribir '--- Mitjana per màquina ---';
+    Para fila <- 0 Hasta N_MAQUINES - 1 Hacer
+        suma <- 0;
+        Para columna <- 0 Hasta N_TORNS - 1 Hacer
+            suma <- suma + produccio[fila,columna];
+        FinPara
+        mitjana <- suma / N_TORNS;
+        Escribir nomsMaquines[fila], ': ', mitjana, ' unitats';
+    FinPara
+
+    // 3. Torn més productiu (recorregut per columnes)
+    Escribir '--- Total per torn ---';
+    millorTorn <- 0;
+    Para columna <- 0 Hasta N_TORNS - 1 Hacer
+        totalTorn[columna] <- 0;
+        Para fila <- 0 Hasta N_MAQUINES - 1 Hacer
+            totalTorn[columna] <- totalTorn[columna] + produccio[fila,columna];
+        FinPara
+        Escribir nomsTorns[columna], ': ', totalTorn[columna], ' unitats';
+        Si totalTorn[columna] > totalTorn[millorTorn] Entonces
+            millorTorn <- columna;
+        FinSi
+    FinPara
+    Escribir 'El torn més productiu és el de ', nomsTorns[millorTorn];
+
+    // 4. Cerca: primera producció per sota del mínim (sense booleà)
+    Escribir 'Quantes unitats ha de fer, com a mínim, cada màquina en un torn?';
+    Leer minim;
+    filaTrobada <- -1;
+    columnaTrobada <- -1;
+    fila <- 0;
+    Mientras fila < N_MAQUINES Y filaTrobada = -1 Hacer
+        columna <- 0;
+        Mientras columna < N_TORNS Y filaTrobada = -1 Hacer
+            Si produccio[fila,columna] < minim Entonces
+                filaTrobada <- fila;
+                columnaTrobada <- columna;
+            FinSi
+            columna <- columna + 1;
+        FinMientras
+        fila <- fila + 1;
+    FinMientras
+    Si filaTrobada <> -1 Entonces
+        Escribir 'Per sota del mínim: ', nomsMaquines[filaTrobada], ' al torn de ', nomsTorns[columnaTrobada], ' (', produccio[filaTrobada,columnaTrobada], ' unitats)';
+    SiNo
+        Escribir 'Totes les màquines arriben al mínim en tots els torns';
+    FinSi
+FinProceso"></pre>
+          <div class="ri-note">Les parts 2 i 3 són <strong>recorreguts</strong>: cal mirar totes les caselles, per això fem servir dos <code>Para</code> niats. A la 2 el bucle de fora són les files (cada màquina) i a la 3 són les columnes (cada torn), i el torn més productiu es troba guardant la posició del màxim a <code>millorTorn</code>. La part 4 és una <strong>cerca</strong>: només volem la primera casella per sota del mínim, així que fem servir dos <code>Mientras</code> amb <code>filaTrobada = -1</code> i ens aturem en trobar-la. Si en lloc d'això et demanessin <em>quantes</em> caselles hi ha per sota del mínim, tornaria a ser un recorregut amb comptador.</div>
+        </div>
+      </div>
     </div>
 
   </div>
