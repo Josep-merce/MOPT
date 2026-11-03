@@ -529,14 +529,17 @@ FinProceso"></pre>
           <div class="demo-label" style="margin-top:12px;">El programa ha de mostrar (exemple d'execució)</div>
           <pre class="pseudo-out" style="margin:6px 0 4px;">Nom de la màquina 1:
 &gt; Premsa
-Nom de la màquina 2:
-&gt; Fresadora
-... (Soldadora i Envasadora) ...
 Unitats de Premsa al torn de Matí:
 &gt; 120
 Unitats de Premsa al torn de Tarda:
 &gt; 110
-... (fins a omplir les 12 caselles: Premsa 120, 110, 100 · Fresadora 95, 100, 75 · Soldadora 130, 125, 60 · Envasadora 140, 120, 100) ...
+Unitats de Premsa al torn de Nit:
+&gt; 100
+Nom de la màquina 2:
+&gt; Fresadora
+Unitats de Fresadora al torn de Matí:
+&gt; 95
+... (fins a les 4 màquines: Fresadora 95, 100, 75 · Soldadora 130, 125, 60 · Envasadora 140, 120, 100) ...
 --- Mitjana per màquina ---
 Premsa: 110 unitats
 Fresadora: 90 unitats
@@ -584,8 +587,6 @@ Proceso ControlProduccio
     Para fila <- 0 Hasta N_MAQUINES - 1 Hacer
         Escribir 'Nom de la màquina ', fila + 1, ':';
         Leer nomsMaquines[fila];
-    FinPara
-    Para fila <- 0 Hasta N_MAQUINES - 1 Hacer
         Para columna <- 0 Hasta N_TORNS - 1 Hacer
             Escribir 'Unitats de ', nomsMaquines[fila], ' al torn de ', nomsTorns[columna], ':';
             Leer produccio[fila,columna];
