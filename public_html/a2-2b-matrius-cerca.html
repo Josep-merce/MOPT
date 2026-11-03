@@ -520,10 +520,10 @@ FinProceso"></pre>
             </ul>
             <p style="margin-bottom:6px;"><strong>Funcionalitats:</strong></p>
             <ol style="margin:0 0 4px 20px;">
-              <li><strong>Càrrega de dades (1,5 punts):</strong> demana el nom de totes les màquines i, per a cada màquina, les unitats fabricades a cada torn. S'ha d'omplir tota la matriu.</li>
-              <li><strong>Rendiment per màquina (2,5 punts):</strong> calcula la mitjana d'unitats de cada màquina i mostra el nom i la mitjana.</li>
-              <li><strong>Torn més productiu (2,5 punts):</strong> suma les unitats de totes les màquines a cada torn (total Matí, Tarda i Nit) i indica quin torn ha fabricat més.</li>
-              <li><strong>Cerca per sota del mínim (2,5 punts):</strong> demana un mínim d'unitats i, recorrent per màquines, troba la <strong>primera</strong> casella (màquina i torn) que no hi arriba. Si no n'hi ha cap, avisa-ho. Fes-ho <strong>sense booleà</strong> (sentinella −1).</li>
+              <li><strong>Càrrega de dades:</strong> demana el nom de totes les màquines i, per a cada màquina, les unitats fabricades a cada torn. S'ha d'omplir tota la matriu.</li>
+              <li><strong>Rendiment per màquina:</strong> calcula la mitjana d'unitats de cada màquina i mostra el nom i la mitjana.</li>
+              <li><strong>Torn més productiu:</strong> suma les unitats de totes les màquines a cada torn (total Matí, Tarda i Nit) i indica quin torn ha fabricat més.</li>
+              <li><strong>Cerca per sota del mínim:</strong> demana un mínim d'unitats i, recorrent per màquines, troba la <strong>primera</strong> casella (màquina i torn) que no hi arriba. Si no n'hi ha cap, avisa-ho. Fes-ho <strong>amb booleà</strong> (indicador <code>trobat</code>).</li>
             </ol>
           </div>
           <div class="demo-label" style="margin-top:12px;">El programa ha de mostrar (exemple d'execució)</div>
@@ -569,6 +569,7 @@ Proceso ControlProduccio
     Definir fila, columna, suma, millorTorn, minim Como Entero;
     Definir filaTrobada, columnaTrobada Como Entero;
     Definir mitjana Como Real;
+    Definir trobat Como Logico;
     Definir nomsMaquines, nomsTorns Como Caracter;
     Dimension nomsMaquines[N_MAQUINES];
     Dimension nomsTorns[N_TORNS];
@@ -617,16 +618,16 @@ Proceso ControlProduccio
     FinPara
     Escribir 'El torn més productiu és el de ', nomsTorns[millorTorn];
 
-    // 4. Cerca: primera producció per sota del mínim (sense booleà)
+    // 4. Cerca: primera producció per sota del mínim (amb booleà)
     Escribir 'Quantes unitats ha de fer, com a mínim, cada màquina en un torn?';
     Leer minim;
-    filaTrobada <- -1;
-    columnaTrobada <- -1;
+    trobat <- Falso;
     fila <- 0;
-    Mientras fila < N_MAQUINES Y filaTrobada = -1 Hacer
+    Mientras fila < N_MAQUINES Y NO trobat Hacer
         columna <- 0;
-        Mientras columna < N_TORNS Y filaTrobada = -1 Hacer
+        Mientras columna < N_TORNS Y NO trobat Hacer
             Si produccio[fila,columna] < minim Entonces
+                trobat <- Verdadero;
                 filaTrobada <- fila;
                 columnaTrobada <- columna;
             FinSi
@@ -634,13 +635,13 @@ Proceso ControlProduccio
         FinMientras
         fila <- fila + 1;
     FinMientras
-    Si filaTrobada <> -1 Entonces
+    Si trobat Entonces
         Escribir 'Per sota del mínim: ', nomsMaquines[filaTrobada], ' al torn de ', nomsTorns[columnaTrobada], ' (', produccio[filaTrobada,columnaTrobada], ' unitats)';
     SiNo
         Escribir 'Totes les màquines arriben al mínim en tots els torns';
     FinSi
 FinProceso"></pre>
-          <div class="ri-note">Les parts 2 i 3 són <strong>recorreguts</strong>: cal mirar totes les caselles, per això fem servir dos <code>Para</code> niats. A la 2 el bucle de fora són les files (cada màquina) i a la 3 són les columnes (cada torn), i el torn més productiu es troba guardant la posició del màxim a <code>millorTorn</code>. La part 4 és una <strong>cerca</strong>: només volem la primera casella per sota del mínim, així que fem servir dos <code>Mientras</code> amb <code>filaTrobada = -1</code> i ens aturem en trobar-la. Si en lloc d'això et demanessin <em>quantes</em> caselles hi ha per sota del mínim, tornaria a ser un recorregut amb comptador.</div>
+          <div class="ri-note">Les parts 2 i 3 són <strong>recorreguts</strong>: cal mirar totes les caselles, per això fem servir dos <code>Para</code> niats. A la 2 el bucle de fora són les files (cada màquina) i a la 3 són les columnes (cada torn), i el torn més productiu es troba guardant la posició del màxim a <code>millorTorn</code>. La part 4 és una <strong>cerca</strong>: només volem la primera casella per sota del mínim, així que fem servir dos <code>Mientras</code> amb <code>NO trobat</code> i ens aturem en trobar-la. Com que <code>fila</code> i <code>columna</code> continuen avançant, també desem <code>filaTrobada</code> i <code>columnaTrobada</code> per saber on era. Si en lloc d'això et demanessin <em>quantes</em> caselles hi ha per sota del mínim, tornaria a ser un recorregut amb comptador.</div>
         </div>
       </div>
     </div>
