@@ -880,7 +880,7 @@ function makeTable(data, hideRes) {
   return `<div class="tt-wrap"><table class="tt"><thead><tr>${thRow}</tr></thead><tbody>${rows}</tbody></table></div>`;
 }
 
-function reveal(btn, id) { document.getElementById(id).classList.add('show'); btn.style.display = 'none'; }
+function reveal(btn, id) { var el = document.getElementById(id); var open = el.classList.toggle('show'); var txt = btn.dataset.txt || 'solució'; btn.innerHTML = open ? '&#9660; Amagar ' + txt : '&#9654; Mostrar ' + txt; }
 
 /* ══ E1 DATA ══ */
 const E1 = [
@@ -1009,7 +1009,7 @@ const E4 = [
           ${i+1}. Expressió: <span class="formula">${d.expr}</span>
         </p>
         ${makeTable(d, true)}
-        <button class="ri-btn" onclick="reveal(this,'e1a${i}')">▶ Mostra la solució</button>
+        <button class="ri-btn" onclick="reveal(this,'e1a${i}')">▶ Mostrar solució</button>
       </div>
       <div class="ri-ans" id="e1a${i}">
         <div class="ri-ans-label">Taula completa</div>
@@ -1077,7 +1077,7 @@ function checkCls(btn, i, choice) {
           Variables: ${d.headers.filter((_,j) => d.htypes[j]==='var').join(', ')} ·
           ${nFiles} files · ${d.headers.length - nVars} columna(es) a calcular
         </p>
-        <button class="ri-btn" onclick="reveal(this,'e3a${i}')">▶ Mostra la taula completa</button>
+        <button class="ri-btn" onclick="reveal(this,'e3a${i}')" data-txt="taula completa">▶ Mostrar taula completa</button>
       </div>
       <div class="ri-ans" id="e3a${i}">
         <div class="ri-ans-label">Taula de veritat</div>
@@ -1102,7 +1102,7 @@ function checkCls(btn, i, choice) {
         </div>
         <div class="ri-q-text">${d.q}</div>
         <div style="font-size:12px;color:var(--ink-3);margin-top:5px;">${d.ctx}</div>
-        <button class="ri-btn" onclick="reveal(this,'e4a${i}')">▶ Veure implicació en codi</button>
+        <button class="ri-btn" onclick="reveal(this,'e4a${i}')" data-txt="implicació en codi">▶ Mostrar implicació en codi</button>
       </div>
       <div class="ri-ans" id="e4a${i}">
         <div class="ri-ans-label">PSeInt</div>

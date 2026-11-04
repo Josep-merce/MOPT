@@ -239,13 +239,6 @@
             <div class="reason-text">La majoria d'errors en programes són condicions mal escrites: una "i" on tocava "o", un "no" oblidat... Tot el que has practicat serveix per evitar-los.</div>
           </div>
         </div>
-        <div class="reason-item">
-          <div class="reason-num">3</div>
-          <div>
-            <div class="reason-title">És el que faràs a partir d'ara</div>
-            <div class="reason-text">Al RA2 escriuràs programes sencers en pseudocodi, i més endavant en Java. Aquest és l'enllaç entre la teoria i la pràctica.</div>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -671,7 +664,7 @@ const E5 = [
 ];
 
 /* ══ HELPERS ══ */
-function reveal(btn, id) { document.getElementById(id).classList.add('show'); btn.style.display = 'none'; }
+function reveal(btn, id) { var el = document.getElementById(id); var open = el.classList.toggle('show'); var txt = btn.dataset.txt || 'solució'; btn.innerHTML = open ? '&#9660; Amagar ' + txt : '&#9654; Mostrar ' + txt; }
 function colorPseudo(text) {
   return text
     .replace(/\b(Si|SiNo|FinSi|Entonces|Escribir|Leer|Mientras|Hacer|FinMientras)\b/g, m => `<span class='kw'>${m}</span>`)
@@ -711,7 +704,7 @@ function checkE1(btn, i, choice) {
     div.innerHTML = `
       <div class="ri-q">
         <p class="ri-q-text">${i+1}. ${d.ask}</p>
-        <button class="ri-btn" onclick="reveal(this,'e2a${i}')">▶ Veure solució</button>
+        <button class="ri-btn" onclick="reveal(this,'e2a${i}')">▶ Mostrar solució</button>
       </div>
       <div class="ri-ans" id="e2a${i}">
         <div class="ri-ans-label">Codi PSeInt</div>
@@ -731,7 +724,7 @@ function checkE1(btn, i, choice) {
     div.innerHTML = `
       <div class="ri-q">
         <p class="ri-q-text">${i+1}. ${d.ask}</p>
-        <button class="ri-btn" onclick="reveal(this,'e3a${i}')">▶ Veure solució</button>
+        <button class="ri-btn" onclick="reveal(this,'e3a${i}')">▶ Mostrar solució</button>
       </div>
       <div class="ri-ans" id="e3a${i}">
         <div class="ri-ans-label">Codi PSeInt</div>
@@ -752,7 +745,7 @@ function checkE1(btn, i, choice) {
     div.innerHTML = `
       <div class="ri-q">
         <p class="ri-q-text">${i+1}. ${d.ask}</p>
-        <button class="ri-btn" onclick="reveal(this,'e4a${i}')">▶ Veure solució completa</button>
+        <button class="ri-btn" onclick="reveal(this,'e4a${i}')" data-txt="solució completa">▶ Mostrar solució completa</button>
       </div>
       <div class="ri-ans" id="e4a${i}">
         <div class="ri-ans-label">Pas a pas</div>
@@ -778,7 +771,7 @@ function checkE1(btn, i, choice) {
       <div class="ri-q">
         <p class="ri-q-text">${i+1}. ${d.ask}</p>
         <pre class="codeblock" style="margin:10px 0;">${colorPseudo(d.bad)}</pre>
-        <button class="ri-btn" onclick="reveal(this,'e5a${i}')">▶ Veure solució</button>
+        <button class="ri-btn" onclick="reveal(this,'e5a${i}')">▶ Mostrar solució</button>
       </div>
       <div class="ri-ans" id="e5a${i}">
         <div class="ri-ans-label">Raonament</div>

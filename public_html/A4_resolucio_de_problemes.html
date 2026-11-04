@@ -676,7 +676,7 @@ const E4 = [
 ];
 
 /* ══ HELPERS ══ */
-function reveal(btn, id) { document.getElementById(id).classList.add('show'); btn.style.display = 'none'; }
+function reveal(btn, id) { var el = document.getElementById(id); var open = el.classList.toggle('show'); var txt = btn.dataset.txt || 'solució'; btn.innerHTML = open ? '&#9660; Amagar ' + txt : '&#9654; Mostrar ' + txt; }
 
 /* ══ RENDER E1 ══ */
 (function() {
@@ -714,7 +714,7 @@ function checkE1(btn, i, choice) {
       <div class="ri-q">
         <p class="ri-q-text">${i+1}. ${d.scenario}</p>
         <p class="ri-q-text" style="margin-top:8px;">Condició: <span class="formula">${d.cond}</span></p>
-        <button class="ri-btn" onclick="reveal(this,'e2a${i}')">▶ Veure solució</button>
+        <button class="ri-btn" onclick="reveal(this,'e2a${i}')">▶ Mostrar solució</button>
       </div>
       <div class="ri-ans" id="e2a${i}">
         <div class="ri-ans-label">Càlcul pas a pas</div>
@@ -736,7 +736,7 @@ function checkE1(btn, i, choice) {
     div.innerHTML = `
       <div class="ri-q">
         <p class="ri-q-text">${d.puzzle}</p>
-        <button class="ri-btn" onclick="reveal(this,'e3a${i}')">▶ Veure raonament</button>
+        <button class="ri-btn" onclick="reveal(this,'e3a${i}')" data-txt="raonament">▶ Mostrar raonament</button>
       </div>
       <div class="ri-ans" id="e3a${i}">
         <div class="ri-ans-label">Raonament pas a pas</div>
@@ -758,7 +758,7 @@ function checkE1(btn, i, choice) {
     div.innerHTML = `
       <div class="ri-q">
         <p class="ri-q-text">${i+1}. Cas: <span class="formula">${d.input}</span></p>
-        <button class="ri-btn" onclick="reveal(this,'e4a${i}')">▶ Veure traça</button>
+        <button class="ri-btn" onclick="reveal(this,'e4a${i}')" data-txt="traça">▶ Mostrar traça</button>
       </div>
       <div class="ri-ans" id="e4a${i}">
         <div class="ri-ans-label">Traça pas a pas</div>

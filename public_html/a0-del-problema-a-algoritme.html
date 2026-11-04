@@ -850,10 +850,7 @@ function colorPseudo(text) {
     .replace(/"([^"]*)"/g, (_, s) => `<span class='str'>"${s}"</span>`);
 }
 
-function reveal(btn, id) {
-  document.getElementById(id).classList.add('show');
-  btn.style.display = 'none';
-}
+function reveal(btn, id) { var el = document.getElementById(id); var open = el.classList.toggle('show'); var txt = btn.dataset.txt || 'solució'; btn.innerHTML = open ? '&#9660; Amagar ' + txt : '&#9654; Mostrar ' + txt; }
 
 /* ── Render E1 ── */
 (function() {
@@ -918,7 +915,7 @@ function checkE2(btn, i, choice) {
     div.innerHTML = `
       <div class="ri-q">
         <div class="ri-q-text"><strong>${i+1}.</strong> ${d.q}</div>
-        <button class="ri-btn" onclick="reveal(this,'e3a${i}')">▶ Veure anàlisi</button>
+        <button class="ri-btn" onclick="reveal(this,'e3a${i}')" data-txt="anàlisi">▶ Mostrar anàlisi</button>
       </div>
       <div class="ri-ans" id="e3a${i}">
         <div class="ri-ans-label">Anàlisi</div>
@@ -938,7 +935,7 @@ function checkE2(btn, i, choice) {
     div.innerHTML = `
       <div class="ri-q">
         <div class="ri-q-text">${i+1}. ${d.ctx}</div>
-        <button class="ri-btn" onclick="reveal(this,'e4a${i}')">▶ Veure codi PSeInt</button>
+        <button class="ri-btn" onclick="reveal(this,'e4a${i}')" data-txt="codi PSeInt">▶ Mostrar codi PSeInt</button>
       </div>
       <div class="ri-ans" id="e4a${i}">
         <div class="ri-ans-label">PSeInt</div>

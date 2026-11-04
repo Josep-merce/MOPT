@@ -958,10 +958,7 @@ function colorPseudo(text) {
              (_, s) => `<span class='str'>"${s}"</span>`);
 }
 
-function reveal(btn, id) {
-  document.getElementById(id).classList.add('show');
-  btn.style.display = 'none';
-}
+function reveal(btn, id) { var el = document.getElementById(id); var open = el.classList.toggle('show'); var txt = btn.dataset.txt || 'solució'; btn.innerHTML = open ? '&#9660; Amagar ' + txt : '&#9654; Mostrar ' + txt; }
 
 /* ── Render E1 ── */
 (function() {
@@ -1041,7 +1038,7 @@ function checkE2(btn, i, choice) {
       <div class="ri-q">
         <div class="ri-q-text"><strong>${i+1}.</strong> ${d.q}</div>
         <div class="ri-vars">Variables: ${d.vars}</div>
-        <button class="ri-btn" onclick="reveal(this,'e3a${i}')">▶ Veure solució</button>
+        <button class="ri-btn" onclick="reveal(this,'e3a${i}')">▶ Mostrar solució</button>
       </div>
       <div class="ri-ans" id="e3a${i}">
         <div class="ri-ans-label">Expressió formal</div>
@@ -1064,7 +1061,7 @@ function checkE2(btn, i, choice) {
           ${i+1}. ${d.expr}
         </div>
         <div class="ri-vars" style="margin-top:5px;">${d.ctx}</div>
-        <button class="ri-btn" onclick="reveal(this,'e4a${i}')">▶ Veure codi PSeInt</button>
+        <button class="ri-btn" onclick="reveal(this,'e4a${i}')" data-txt="codi PSeInt">▶ Mostrar codi PSeInt</button>
       </div>
       <div class="ri-ans" id="e4a${i}">
         <div class="ri-ans-label">PSeInt</div>

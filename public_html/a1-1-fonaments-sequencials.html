@@ -647,7 +647,7 @@ const E3 = [
   const c = document.getElementById('ex3-cont');
   E3.forEach((d,i)=>{
     const div=document.createElement('div'); div.className='ri';
-    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong></div><pre class="pseudo-out" style="margin-top:8px;">${colorPseudo(d.code)}</pre><button class="ri-btn" onclick="reveal(this,'e3a${i}')">▶ Veure l'error</button></div><div class="ri-ans" id="e3a${i}"><div class="ri-ans-label">Explicació</div><div class="ri-note" style="margin-top:0;">${d.exp}</div></div>`;
+    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong></div><pre class="pseudo-out" style="margin-top:8px;">${colorPseudo(d.code)}</pre><button class="ri-btn" onclick="reveal(this,'e3a${i}')" data-txt="l'error">▶ Mostrar l'error</button></div><div class="ri-ans" id="e3a${i}"><div class="ri-ans-label">Explicació</div><div class="ri-note" style="margin-top:0;">${d.exp}</div></div>`;
     c.appendChild(div);
   });
 })();
@@ -668,12 +668,12 @@ const E4 = [
   const c = document.getElementById('ex4-cont');
   E4.forEach((d,i)=>{
     const div=document.createElement('div'); div.className='ri';
-    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><button class="ri-btn" onclick="reveal(this,'e4a${i}')">▶ Veure codi PSeInt</button></div><div class="ri-ans" id="e4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.pseudo)}</pre><div class="ri-note">${d.exp}</div></div>`;
+    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><button class="ri-btn" onclick="reveal(this,'e4a${i}')" data-txt="codi PSeInt">▶ Mostrar codi PSeInt</button></div><div class="ri-ans" id="e4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.pseudo)}</pre><div class="ri-note">${d.exp}</div></div>`;
     c.appendChild(div);
   });
 })();
 
-function reveal(btn,id){ document.getElementById(id).classList.add('show'); btn.style.display='none'; }
+function reveal(btn, id) { var el = document.getElementById(id); var open = el.classList.toggle('show'); var txt = btn.dataset.txt || 'solució'; btn.innerHTML = open ? '&#9660; Amagar ' + txt : '&#9654; Mostrar ' + txt; }
 </script>
 </body>
 </html>
