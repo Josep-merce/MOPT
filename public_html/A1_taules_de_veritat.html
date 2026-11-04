@@ -1009,7 +1009,7 @@ const E4 = [
           ${i+1}. Expressió: <span class="formula">${d.expr}</span>
         </p>
         ${makeTable(d, true)}
-        <button class="ri-btn" onclick="reveal(this,'e1a${i}')">▶ Mostra la solució</button>
+        <button class="ri-btn" onclick="reveal(this,'e1a${i}')">▶ Mostrar solució</button>
       </div>
       <div class="ri-ans" id="e1a${i}">
         <div class="ri-ans-label">Taula completa</div>
@@ -1077,7 +1077,7 @@ function checkCls(btn, i, choice) {
           Variables: ${d.headers.filter((_,j) => d.htypes[j]==='var').join(', ')} ·
           ${nFiles} files · ${d.headers.length - nVars} columna(es) a calcular
         </p>
-        <button class="ri-btn" onclick="reveal(this,'e3a${i}')">▶ Mostra la taula completa</button>
+        <button class="ri-btn" onclick="reveal(this,'e3a${i}')" data-txt="taula completa">▶ Mostrar taula completa</button>
       </div>
       <div class="ri-ans" id="e3a${i}">
         <div class="ri-ans-label">Taula de veritat</div>

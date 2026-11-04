@@ -736,12 +736,12 @@ const E4 = [
   const c = document.getElementById('ex4-cont'); c.innerHTML='';
   E4.forEach((d,i)=>{
     const div = document.createElement('div'); div.className='ri';
-    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><button class="ri-btn" onclick="reveal(this,'E4a${i}')">▶ Veure codi PSeInt</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
+    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><button class="ri-btn" onclick="reveal(this,'E4a${i}')" data-txt="codi PSeInt">▶ Mostrar codi PSeInt</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
     c.appendChild(div);
   });
 })();
 
-function reveal(btn,id){ var el=document.getElementById(id); var open=el.classList.toggle('show'); btn.innerHTML = open ? '&#9660; Amagar codi' : '&#9654; Veure codi PSeInt'; }
+function reveal(btn, id) { var el = document.getElementById(id); var open = el.classList.toggle('show'); var txt = btn.dataset.txt || 'solució'; btn.innerHTML = open ? '&#9660; Amagar ' + txt : '&#9654; Mostrar ' + txt; }
 
 /* Botó mostrar / amagar (exercicis cap a la prova) */
 function toggle(btn,id){ var el=document.getElementById(id); var open=el.classList.toggle('show'); btn.innerHTML = open ? '&#9660; Amagar solució' : '&#9654; Mostrar solució'; }
