@@ -880,7 +880,7 @@ function makeTable(data, hideRes) {
   return `<div class="tt-wrap"><table class="tt"><thead><tr>${thRow}</tr></thead><tbody>${rows}</tbody></table></div>`;
 }
 
-function reveal(btn, id) { document.getElementById(id).classList.add('show'); btn.style.display = 'none'; }
+function reveal(btn, id) { var el = document.getElementById(id); var open = el.classList.toggle('show'); var txt = btn.dataset.txt || 'solució'; btn.innerHTML = open ? '&#9660; Amagar ' + txt : '&#9654; Mostrar ' + txt; }
 
 /* ══ E1 DATA ══ */
 const E1 = [
@@ -1102,7 +1102,7 @@ function checkCls(btn, i, choice) {
         </div>
         <div class="ri-q-text">${d.q}</div>
         <div style="font-size:12px;color:var(--ink-3);margin-top:5px;">${d.ctx}</div>
-        <button class="ri-btn" onclick="reveal(this,'e4a${i}')">▶ Veure implicació en codi</button>
+        <button class="ri-btn" onclick="reveal(this,'e4a${i}')" data-txt="implicació en codi">▶ Mostrar implicació en codi</button>
       </div>
       <div class="ri-ans" id="e4a${i}">
         <div class="ri-ans-label">PSeInt</div>
