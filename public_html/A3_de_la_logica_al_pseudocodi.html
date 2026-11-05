@@ -170,10 +170,60 @@
     .ri-steps li { font-size: 13px; color: var(--ink); line-height: 1.5; padding: 5px 0 5px 22px; position: relative; }
     .ri-steps li::before { content: "→"; position: absolute; left: 0; color: var(--indigo-2); font-weight: 600; }
 
+    /* ─── PLA DE SESSIONS ─── */
+    .plan { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 22px 24px; margin-bottom: 52px; }
+    .plan-title { font-family: 'DM Serif Display', serif; font-size: 1.35rem; margin-bottom: 4px; }
+    .plan-intro { font-size: 14px; color: var(--ink-2); margin-bottom: 16px; line-height: 1.6; }
+    .plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+    .plan-card { display: block; text-decoration: none; color: inherit; background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 14px 16px; transition: border-color .12s, transform .12s; }
+    .plan-card:hover { border-color: var(--indigo-mid); transform: translateY(-2px); }
+    .plan-num { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--indigo-2); }
+    .plan-name { font-family: 'DM Serif Display', serif; font-size: 1.05rem; line-height: 1.3; margin: 2px 0 6px; }
+    .plan-acts { font-size: 12px; color: var(--ink-3); line-height: 1.5; }
+
+    .ses { margin-top: 56px; scroll-margin-top: 16px; }
+    .ses .ex-block-head { margin-top: 0; }
+    .ses-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .chip { font-size: 12px; padding: 4px 11px; border-radius: 20px; background: var(--bg); border: 1px solid var(--border); color: var(--ink-2); }
+    .chip a { color: var(--indigo-2); font-weight: 600; text-decoration: none; }
+    .chip a:hover { text-decoration: underline; }
+    .ses-obj { font-size: 14px; color: var(--ink); line-height: 1.6; margin-bottom: 16px; }
+
+    .act { border: 1px solid var(--border); border-radius: var(--r-sm); margin-top: 22px; overflow: hidden; }
+    .act-head { display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: center; padding: 12px 16px; background: #fafaf9; border-bottom: 1px solid var(--border); }
+    .act-code { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 13px; background: var(--indigo-mid); color: #fff; border-radius: var(--r-sm); padding: 2px 9px; }
+    .act-title { font-weight: 600; font-size: 15px; color: var(--ink); }
+    .act-mode { margin-left: auto; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-2); background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 2px 10px; }
+    .act-body { padding: 16px 18px; }
+    .act-enun { font-size: 14px; color: var(--ink-2); line-height: 1.6; margin-bottom: 10px; }
+    .act-enun ol { margin: 6px 0 0 20px; }
+    .act-enun li { margin: 3px 0; }
+    .guide-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--indigo-2); margin: 16px 0 6px; }
+    .guide { list-style: none; counter-reset: g; }
+    .guide li { counter-increment: g; position: relative; padding: 6px 0 6px 34px; font-size: 14px; color: var(--ink); line-height: 1.55; }
+    .guide li::before { content: counter(g); position: absolute; left: 0; top: 7px; width: 22px; height: 22px; border-radius: 50%; background: var(--indigo-bg); color: var(--indigo-2); border: 1px solid var(--indigo-bdr); font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .m { font-family: 'JetBrains Mono', monospace; font-size: 13px; background: var(--indigo-bg); padding: 1px 6px; border-radius: 3px; color: var(--indigo-2); }
+    .ibox.amber { background: #fffbeb; border: 1px solid #fde68a; }
+    .ibox.amber .ibox-label, .ibox.amber .ibox-text { color: #92400e; }
+    .act .ibox { margin: 14px 0 0; }
+    .checklist { list-style: none; }
+    .checklist li { font-size: 14px; padding: 3px 0 3px 26px; position: relative; color: var(--ink); }
+    .checklist li::before { content: "☐"; position: absolute; left: 2px; color: var(--indigo-2); }
+    .dl { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--indigo-2); background: var(--indigo-bg); border: 1px solid var(--indigo-bdr); border-radius: 20px; padding: 4px 12px; text-decoration: none; }
+    .dl:hover { background: var(--indigo-mid); color: #fff; border-color: var(--indigo-mid); }
+    .ex-ans { display: none; margin-top: 10px; }
+    .ex-ans.show { display: block; }
+
+    @media (max-width: 600px) {
+      .act-body { padding: 14px; }
+      .act-mode { margin-left: 0; }
+    }
+
     @media print {
       body { background: white; font-size: 14px; }
       .ri-ans { display: block !important; }
       .ri-btn { display: none; }
+      .ex-ans { display: block !important; }
     }
   </style>
 </head>
@@ -186,6 +236,7 @@
       <span class="badge b-course">DAW · Optativa</span>
       <span class="badge b-ra">RA1 · Raonament Lògic</span>
       <span class="badge b-act">A3</span>
+      <span class="badge b-course">4 sessions</span>
     </div>
     <h1 class="page-title">De la lògica al pseudocodi</h1>
     <p class="page-sub">On tot el que has après es converteix en codi de veritat</p>
@@ -195,11 +246,42 @@
         <div class="obj-label">Objectiu · Criteris 1.1 i 1.5 · pont cap al RA2</div>
         <div class="obj-text">
           Traduir una condició lògica a una instrucció de pseudocodi (<strong>Si</strong> i <strong>Mientras</strong>
-          de PSeInt). És l'últim pas del RA1 i la porta d'entrada al RA2, on començaràs a escriure programes sencers.
+          de PSeInt). Es treballa en <a href="#pla" style="color:inherit;font-weight:600;">4 sessions</a>. És l'últim pas del RA1 i la porta d'entrada al RA2, on començaràs a escriure programes sencers.
         </div>
       </div>
     </div>
   </header>
+
+  <!-- ══════════ PLA DE TREBALL ══════════ -->
+  <div class="plan" id="pla">
+    <h2 class="plan-title">Pla de treball · 4 sessions</h2>
+    <p class="plan-intro">
+      La teoria (seccions 1 a 5) és la base. Després, cada sessió té una fitxa amb activitats.
+      A cada activitat trobaràs l'enunciat i les <strong>directrius per resoldre-la pas a pas</strong>.
+    </p>
+    <div class="plan-grid">
+      <a class="plan-card" href="#sessio-1">
+        <div class="plan-num">Sessió 1</div>
+        <div class="plan-name">Del símbol al codi</div>
+        <div class="plan-acts">1a · 1b · 1c<br>Traduir, classificar i modelar</div>
+      </a>
+      <a class="plan-card" href="#sessio-2">
+        <div class="plan-num">Sessió 2</div>
+        <div class="plan-name">Simplificar codi existent</div>
+        <div class="plan-acts">2a · 2b · 2c (parelles)<br>De Morgan i lleis sobre codi</div>
+      </a>
+      <a class="plan-card" href="#sessio-3">
+        <div class="plan-num">Sessió 3</div>
+        <div class="plan-name">Modelat guiat</div>
+        <div class="plan-acts">3a (individual) · 3b (parelles)<br>El mètode dels 4 passos</div>
+      </a>
+      <a class="plan-card" href="#sessio-4">
+        <div class="plan-num">Sessió 4</div>
+        <div class="plan-name">Modelat obert</div>
+        <div class="plan-acts">4a · 4b (parelles)<br>Disseny propi i exposició</div>
+      </a>
+    </div>
+  </div>
 
   <!-- ══════════ SECCIÓ 1: PER A QUÈ SERVEIX? ══════════ -->
   <section class="section">
@@ -244,7 +326,7 @@
   </section>
 
   <!-- ══════════ SECCIÓ 2: EL Si ══════════ -->
-  <section class="section">
+  <section class="section" id="teoria-si">
     <div class="sec-head">
       <span class="sec-num">2</span>
       <div>
@@ -295,7 +377,7 @@
   </section>
 
   <!-- ══════════ SECCIÓ 3: EL Mientras ══════════ -->
-  <section class="section">
+  <section class="section" id="teoria-mientras">
     <div class="sec-head">
       <span class="sec-num">3</span>
       <div>
@@ -344,7 +426,7 @@
   </section>
 
   <!-- ══════════ SECCIÓ 4: TOT JUNT ══════════ -->
-  <section class="section">
+  <section class="section" id="teoria-tot-junt">
     <div class="sec-head">
       <span class="sec-num">4</span>
       <div>
@@ -429,7 +511,7 @@
     </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="teoria-simplificar">
     <div class="sec-head">
       <span class="sec-num">5</span>
       <div>
@@ -495,10 +577,324 @@
     </div>
   </section>
 
+  <!-- ══════════ SESSIÓ 1 ══════════ -->
+  <div class="ses" id="sessio-1">
+    <div class="ex-block-head">
+      <h2 class="ex-block-title">Sessió 1 — Del símbol al codi</h2>
+      <p class="ex-block-sub">Activitats 1a · 1b · 1c</p>
+    </div>
+    <div class="ex-block-body">
+      <div class="ses-meta">
+        <span class="chip">📖 Repassa: <a href="#teoria-si">Secció 2 · El Si</a> · <a href="A1_taules_de_veritat.html">A1 · Taules de veritat</a></span>
+        <a class="dl" href="fitxes/A3_sessio1_del_simbol_al_codi.docx" download>⬇ Fitxa de la sessió (Word)</a>
+      </div>
+      <p class="ses-obj"><strong>Objectiu:</strong> passar d'una expressió amb símbols (∧, ∨, ¬) a una condició de PSeInt, detectar condicions que no serveixen per decidir res i modelar una situació real.</p>
+      <div class="ibox blue" style="margin-bottom:0;">
+        <div class="ibox-label">Recordatori</div>
+        <div class="ibox-text" style="font-family:'JetBrains Mono',monospace;">∧ = Y &nbsp;·&nbsp; ∨ = O &nbsp;·&nbsp; ¬ = NO &nbsp;en PSeInt</div>
+      </div>
+
+      <!-- 1a -->
+      <div class="act">
+        <div class="act-head"><span class="act-code">1a</span><span class="act-title">Tradueix a PSeInt</span></div>
+        <div class="act-body">
+          <div class="act-enun">Tradueix les expressions lògiques a condicions PSeInt. Defineix primer les variables booleanes.
+            <ol>
+              <li><span class="m">p ∧ ¬q ∨ r</span> &nbsp;(p = té_permís, q = és_menor, r = acompanyat)</li>
+              <li><span class="m">¬(p ∨ q) ∧ r</span> &nbsp;(p = pagat, q = cancel·lat, r = té_estoc)</li>
+              <li><span class="m">(p ∧ q) ∨ (¬p ∧ ¬q)</span> &nbsp;(p = usuari_actiu, q = sessió_vàlida)</li>
+            </ol>
+          </div>
+          <div class="guide-label">Directrius</div>
+          <ol class="guide">
+            <li><strong>Comença per les variables.</strong> Cada lletra és un fet que pot ser cert o fals, per tant és de tipus lògic: <span class="m">Definir te_permis, es_menor, acompanyat Como Logico;</span></li>
+            <li><strong>Noms vàlids.</strong> PSeInt no accepta accents, espais ni el punt volat als noms de variable: <span class="m">té_permís</span> → <span class="m">te_permis</span>, <span class="m">cancel·lat</span> → <span class="m">cancelat</span>.</li>
+            <li><strong>Substitueix símbol per símbol:</strong> ∧ → <span class="m">Y</span>, ∨ → <span class="m">O</span>, ¬ → <span class="m">NO</span>, i cada lletra pel nom de la seva variable.</li>
+            <li><strong>Mira fins on arriba cada ¬.</strong> Davant d'una lletra, nega només aquella lletra (<span class="m">¬q</span> → <span class="m">NO es_menor</span>). Davant d'un parèntesi, nega tot el parèntesi: <span class="m">¬(p ∨ q)</span> → <span class="m">NO (pagat O cancelat)</span>. Si treus el parèntesi, canvies el significat.</li>
+            <li><strong>Posa parèntesis per deixar clar l'ordre.</strong> En lògica primer va ¬, després ∧ i al final ∨; per tant <span class="m">p ∧ ¬q ∨ r</span> vol dir <span class="m">(p ∧ ¬q) ∨ r</span>. Escriu-lo així a PSeInt i no dependràs de l'ordre d'avaluació.</li>
+            <li><strong>Llegeix el resultat en veu alta</strong> amb els noms de les variables. Si la frase té sentit (<em>"té permís i no és menor, o va acompanyat"</em>), vas bé. A la 3, pregunta't quan és certa: quan tots dos valors són iguals.</li>
+          </ol>
+          <div class="ibox amber">
+            <div class="ibox-label">⚠ Errors típics</div>
+            <div class="ibox-text">Deixar símbols lògics (∧, ¬) dins el codi · Oblidar el parèntesi de <span class="m">¬(…)</span> · Fer servir noms amb accents.</div>
+          </div>
+          <button class="ri-btn" data-txt="exemple semblant" onclick="reveal(this,'s1a-ex')">▶ Mostrar exemple semblant</button>
+          <div class="ex-ans" id="s1a-ex">
+            <p class="act-enun" style="margin-bottom:0;"><span class="m">(p ∨ q) ∧ ¬r</span> amb p = és_soci, q = té_cupó, r = bloquejat:</p>
+            <div class="codeblock"><span class="kw">Definir</span> es_soci, te_cupo, bloquejat <span class="kw">Como Logico</span>;
+(es_soci <span class="op">O</span> te_cupo) <span class="op">Y</span> <span class="op">NO</span> bloquejat</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1b -->
+      <div class="act">
+        <div class="act-head"><span class="act-code">1b</span><span class="act-title">Tautologia, contradicció o contingent?</span></div>
+        <div class="act-body">
+          <div class="act-enun">Indica si cada condició és tautologia (sempre V), contradicció (sempre F) o contingent. Justifica.</div>
+          <div class="codeblock"><span class="cmt">1.</span> <span class="kw">SI</span> (actiu = CERT  <span class="op">O</span>  actiu = FALS)  <span class="kw">ENTONCES</span> ...
+<span class="cmt">2.</span> <span class="kw">SI</span> (edat &gt;= 18  <span class="op">Y</span>  edat &lt; 18)  <span class="kw">ENTONCES</span> ...
+<span class="cmt">3.</span> <span class="kw">SI</span> (te_permis  <span class="op">Y</span>  edat &gt;= 16  <span class="op">Y</span>  <span class="op">NO</span> te_permis)  <span class="kw">ENTONCES</span> ...
+<span class="cmt">4.</span> <span class="kw">SI</span> (pagat = CERT  <span class="op">O</span>  <span class="op">NO</span> pagat  <span class="op">O</span>  cancelat)  <span class="kw">ENTONCES</span> ...</div>
+          <div class="guide-label">Directrius</div>
+          <ol class="guide">
+            <li><strong>Recorda els tres tipus.</strong> Tautologia: certa passi el que passi. Contradicció: falsa passi el que passi. Contingent: depèn dels valors.</li>
+            <li><strong>Busca una variable i el seu contrari</strong> dins la mateixa condició. <span class="m">x O NO x</span> sempre és cert; <span class="m">x Y NO x</span> no ho és mai.</li>
+            <li><strong>Les comparacions també poden ser contràries.</strong> <span class="m">edat &gt;= 18</span> i <span class="m">edat &lt; 18</span> són exactament oposades: cap edat compleix les dues i totes en compleixen una. Tracta-les com <span class="m">x</span> i <span class="m">NO x</span>. El mateix passa amb <span class="m">actiu = CERT</span> i <span class="m">actiu = FALS</span>.</li>
+            <li><strong>Amb Y</strong>, si un tros és sempre fals, tot és fals. <strong>Amb O</strong>, si un tros és sempre cert, tot és cert: la resta de variables (com <span class="m">edat &gt;= 16</span> o <span class="m">cancelat</span>) ja no hi pinten res.</li>
+            <li><strong>Si no ho veus clar, fes la taula de veritat</strong> (A1): columna final tota V → tautologia; tota F → contradicció; barrejada → contingent.</li>
+            <li><strong>A la justificació, digues què passa al programa.</strong> Amb una tautologia el <span class="formula" style="font-size:13px;">Si</span> entra sempre (el <span class="formula" style="font-size:13px;">SiNo</span> no s'executa mai); amb una contradicció no hi entra mai (codi mort). En tots dos casos el <span class="formula" style="font-size:13px;">Si</span> sobra: és un error de disseny.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- 1c -->
+      <div class="act">
+        <div class="act-head"><span class="act-code">1c</span><span class="act-title">Modela i tradueix</span></div>
+        <div class="act-body">
+          <div class="act-enun">Per a cada situació: (1) defineix les variables, (2) escriu l'expressió lògica, (3) implementa en PSeInt.
+            <ol>
+              <li>Un alumne pot examinar-se si: està matriculat I ha assistit a més del 80% de les classes I no té cap falta sense justificar.</li>
+              <li>Un producte apareix a la web si: té estoc I és visible I (és destacat O té descompte actiu).</li>
+            </ol>
+          </div>
+          <div class="guide-label">Directrius</div>
+          <ol class="guide">
+            <li><strong>Subratlla cada condició</strong> de l'enunciat i separa-les pels connectors: <em>i</em>, <em>o</em>, <em>no / cap</em>.</li>
+            <li><strong>(1) Variables.</strong> Si la condició és un fet sí/no, fes una variable lògica amb nom clar (<span class="m">esta_matriculat</span>). Si és un número, fes una variable numèrica i una comparació (<span class="m">assistencia &gt; 80</span>).</li>
+            <li><strong>Compte amb les paraules.</strong> "Més del 80%" és <span class="m">&gt; 80</span>, no <span class="m">&gt;= 80</span>. "Cap falta sense justificar" vol dir que n'hi ha zero (<span class="m">faltes_injustificades = 0</span>) o, amb una variable lògica, <span class="m">NO te_faltes_injustificades</span>.</li>
+            <li><strong>(2) Expressió lògica:</strong> <em>i</em> → ∧, <em>o</em> → ∨, <em>no</em> → ¬. Respecta el parèntesi de l'enunciat del producte: <em>(és destacat O té descompte)</em> va junt. Si el treus, canvia el significat.</li>
+            <li><strong>(3) PSeInt:</strong> posa l'expressió dins <span class="m">Si … Entonces … SiNo … FinSi</span>, amb un missatge per a cada cas.</li>
+            <li><strong>Prova un cas.</strong> Inventa valors (per exemple: matriculat, 85% d'assistència, 0 faltes) i comprova que el programa diu el que esperes. Després prova un cas que hagi de dir que no.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SESSIÓ 2 ══════════ -->
+  <div class="ses" id="sessio-2">
+    <div class="ex-block-head">
+      <h2 class="ex-block-title">Sessió 2 — Simplificar codi existent</h2>
+      <p class="ex-block-sub">Activitats 2a · 2b · 2c (parelles)</p>
+    </div>
+    <div class="ex-block-body">
+      <div class="ses-meta">
+        <span class="chip">📖 Repassa: <a href="#teoria-simplificar">Secció 5 · Simplificar i depurar</a> · <a href="A2_equivalencies_i_lleis.html">A2 · Equivalències i lleis</a></span>
+        <a class="dl" href="fitxes/A3_sessio2_simplificar_codi.docx" download>⬇ Fitxa de la sessió (Word)</a>
+      </div>
+      <p class="ses-obj"><strong>Objectiu:</strong> agafar una condició ja escrita dins d'un <span class="formula" style="font-size:14px;">Si</span> i fer-la més clara amb les lleis de l'A2, sense canviar-ne el significat.</p>
+      <div class="ibox blue" style="margin-bottom:0;">
+        <div class="ibox-label">Recordatori · De Morgan</div>
+        <div class="ibox-text" style="font-family:'JetBrains Mono',monospace;">NO(A Y B) = NO A O NO B &nbsp;&nbsp;·&nbsp;&nbsp; NO(A O B) = NO A Y NO B</div>
+      </div>
+
+      <!-- 2a -->
+      <div class="act">
+        <div class="act-head"><span class="act-code">2a</span><span class="act-title">Aplica De Morgan</span></div>
+        <div class="act-body">
+          <div class="act-enun">Reescriu cada condició sense NOT compost. Indica la llei aplicada.</div>
+          <div class="codeblock"><span class="cmt">1.</span> <span class="kw">SI</span> <span class="op">NO</span>(actiu = CERT  <span class="op">Y</span>  edat &gt;= 18)  <span class="kw">ENTONCES</span>  <span class="kw">ESCRIU</span> <span class="str">"Denegat"</span>  <span class="kw">FI SI</span>
+<span class="cmt">2.</span> <span class="kw">SI</span> <span class="op">NO</span>(pagat = FALS  <span class="op">O</span>  cancelat = CERT)  <span class="kw">ENTONCES</span>  processa()  <span class="kw">FI SI</span>
+<span class="cmt">3.</span> <span class="kw">SI</span> <span class="op">NO</span>(estat=<span class="str">"actiu"</span>  <span class="op">Y</span>  <span class="op">NO</span> blocat  <span class="op">Y</span>  saldo &gt;= 0)  <span class="kw">ENTONCES</span>  ...  <span class="kw">FI SI</span></div>
+          <div class="guide-label">Directrius</div>
+          <ol class="guide">
+            <li><strong>Mira el connector de dins del <span class="m">NO(…)</span>:</strong> és <span class="m">Y</span> o <span class="m">O</span>?</li>
+            <li><strong>Aplica De Morgan:</strong> el <span class="m">NO</span> entra a cada tros i el connector canvia (<span class="m">Y</span> ↔ <span class="m">O</span>).</li>
+            <li><strong>Nega cada tros per separat</strong> i deixa'l tan net com puguis:
+              <div class="card" style="padding:4px 14px; margin-top:8px;">
+                <table class="map-table">
+                  <thead><tr><th>Tros</th><th>Negat</th><th>Per què</th></tr></thead>
+                  <tbody>
+                    <tr><td class="map-code">edat &gt;= 18</td><td class="map-code">edat &lt; 18</td><td style="font-size:13px;color:var(--ink-2);">El 18 passa a l'altre costat</td></tr>
+                    <tr><td class="map-code">x = CERT</td><td class="map-code">x = FALS</td><td style="font-size:13px;color:var(--ink-2);">Només hi ha dos valors</td></tr>
+                    <tr><td class="map-code">NO blocat</td><td class="map-code">blocat</td><td style="font-size:13px;color:var(--ink-2);">Doble negació</td></tr>
+                    <tr><td class="map-code">estat = "actiu"</td><td class="map-code">NO(estat = "actiu")</td><td style="font-size:13px;color:var(--ink-2);">Pot haver-hi molts altres estats</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </li>
+            <li><strong>Amb tres trossos funciona igual:</strong> <span class="m">NO(A Y B Y C) = NO A O NO B O NO C</span>.</li>
+            <li><strong>Escriu la versió simplificada i al costat les lleis</strong>: "De Morgan" i, si l'has fet servir, "doble negació".</li>
+            <li><strong>Comprova amb un cas:</strong> dona valors a les variables i mira que la condició original i la nova donin el mateix.</li>
+          </ol>
+          <div class="ibox amber">
+            <div class="ibox-label">⚠ Errors típics</div>
+            <div class="ibox-text">Ficar el NO a dins però no canviar la Y per O (o al revés) · Negar <span class="m">edat &gt;= 18</span> com <span class="m">edat &lt;= 18</span> · Escriure <span class="m">estat = "inactiu"</span> en lloc de <span class="m">NO(estat = "actiu")</span>.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2b -->
+      <div class="act">
+        <div class="act-head"><span class="act-code">2b</span><span class="act-title">Simplifica pas a pas</span></div>
+        <div class="act-body">
+          <div class="act-enun">Simplifica justificant cada pas amb la llei aplicada (idempotència, absorció, De Morgan…):</div>
+          <div class="codeblock"><span class="kw">SI</span> (visible <span class="op">Y</span> preu&gt;0) <span class="op">Y</span> (visible <span class="op">Y</span> estoc&gt;0) <span class="op">Y</span> (visible <span class="op">Y</span> actiu)
+    <span class="kw">ENTONCES</span>
+        mostra_producte()
+<span class="kw">FI SI</span></div>
+          <div class="guide-label">Directrius</div>
+          <ol class="guide">
+            <li><strong>Fixa't en els connectors:</strong> aquí només hi ha <span class="m">Y</span>. Quan tot són <span class="m">Y</span>, l'ordre i els parèntesis no canvien res (lleis commutativa i associativa): pots treure els parèntesis i reordenar.</li>
+            <li><strong>Fes la llista de trossos.</strong> Quin es repeteix? Quantes vegades?</li>
+            <li><strong>Un tros repetit amb Y només cal un cop:</strong> <span class="m">p ∧ p = p</span> (idempotència).</li>
+            <li><strong>Escriu cada pas en una línia, amb la llei al costat</strong>, com a l'exemple de la <a href="#teoria-tot-junt">secció 4</a>.</li>
+            <li><strong>Escriu el <span class="formula" style="font-size:13px;">Si</span> final</strong> i comprova que hi són tots els trossos diferents: n'has de treure els repetits, no cap condició nova.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- 2c -->
+      <div class="act">
+        <div class="act-head"><span class="act-code">2c</span><span class="act-title">Troba l'error</span><span class="act-mode">Parelles</span></div>
+        <div class="act-body">
+          <div class="act-enun">Aquest codi té un error lògic. Identifica'l, explica per què és incorrecte i corregeix-lo:</div>
+          <div class="codeblock"><span class="kw">SI</span> <span class="op">NO</span>(estat=<span class="str">"actiu"</span> <span class="op">Y</span> saldo&gt;=0) <span class="kw">ENTONCES</span>
+    <span class="kw">ESCRIU</span> <span class="str">"Compte bloquejat"</span>
+<span class="kw">SINO SI</span> estat=<span class="str">"actiu"</span> <span class="op">Y</span> saldo&gt;=0 <span class="kw">ENTONCES</span>
+    <span class="kw">ESCRIU</span> <span class="str">"Compte operatiu"</span>
+<span class="kw">FI SI</span></div>
+          <div class="guide-label">Directrius</div>
+          <ol class="guide">
+            <li><strong>Repartiu-vos els papers.</strong> Un aplica De Morgan al primer <span class="formula" style="font-size:13px;">Si</span> (pregunta a). L'altre prepara tres casos de prova i mira quin missatge surt en cadascun: actiu amb saldo 50 · actiu amb saldo −10 · inactiu amb saldo 50.</li>
+            <li><strong>Poseu-ho en comú (pregunta b).</strong> Compareu la condició del primer <span class="formula" style="font-size:13px;">Si</span> amb la del <span class="formula" style="font-size:13px;">SiNo Si</span>. Hi ha algun cas en què no s'entri a cap dels dos?</li>
+            <li><strong>Treieu la conclusió.</strong> Si la segona condició és exactament la negació de la primera, comprovar-la sobra: quan arribem al <span class="formula" style="font-size:13px;">SiNo</span>, ja sabem que és certa.</li>
+            <li><strong>Escriviu el codi simplificat (pregunta c)</strong>: primer <span class="formula" style="font-size:13px;">Si</span> sense el <span class="m">NO</span> de fora i un <span class="formula" style="font-size:13px;">SiNo</span> net.</li>
+            <li><strong>Torneu a passar els tres casos de prova</strong> pel codi nou: han de donar els mateixos missatges que l'original.</li>
+            <li><strong>Intenteu-ho primer sense mirar la teoria.</strong> Quan acabeu, compareu-ho amb la <a href="#teoria-simplificar">secció 5</a>, que treballa aquest mateix patró.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SESSIÓ 3 ══════════ -->
+  <div class="ses" id="sessio-3">
+    <div class="ex-block-head">
+      <h2 class="ex-block-title">Sessió 3 — Modelat guiat</h2>
+      <p class="ex-block-sub">Activitats 3a (individual) · 3b (parelles)</p>
+    </div>
+    <div class="ex-block-body">
+      <div class="ses-meta">
+        <span class="chip">📖 Repassa: <a href="#teoria-tot-junt">Secció 4 · Tot junt</a> (exemple resolt amb els 4 passos)</span>
+        <a class="dl" href="fitxes/A3_sessio3_modelat_guiat.docx" download>⬇ Fitxa de la sessió (Word)</a>
+      </div>
+      <p class="ses-obj"><strong>Objectiu:</strong> resoldre un problema complet seguint sempre el mateix mètode, de l'enunciat al codi.</p>
+      <div class="ibox indigo" style="margin-bottom:0;">
+        <div class="ibox-label">⭐ El mètode dels 4 passos</div>
+        <div class="ibox-text">(1) Variables → (2) Expressió lògica → (3) Simplificació → (4) PSeInt. No et saltis cap pas: l'expressió s'escriu primer tal com diu l'enunciat i després es simplifica.</div>
+      </div>
+
+      <!-- 3a -->
+      <div class="act">
+        <div class="act-head"><span class="act-code">3a</span><span class="act-title">Sistema de descomptes</span><span class="act-mode">Individual</span></div>
+        <div class="act-body">
+          <div class="act-enun">Un client rep descompte si és soci i ha fet més de 5 compres aquest mes, o bé si és soci i és el seu aniversari. Els no socis no reben mai descompte.</div>
+          <div class="guide-label">Directrius</div>
+          <ol class="guide">
+            <li><strong>(1) Variables.</strong> Hi ha tres fets: ser soci, el nombre de compres del mes i ser l'aniversari. El nombre de compres és un número: la condició és una comparació, i "més de 5" no inclou el 5 (<span class="m">&gt; 5</span>).</li>
+            <li><strong>(2) Expressió.</strong> Tradueix l'enunciat tal com està, sense simplificar. Hi ha dos casos units per <em>o bé</em>, i cada cas té una <em>i</em>: posa cada cas entre parèntesis.</li>
+            <li><strong>"Els no socis no reben mai descompte"</strong> no és una condició nova. Comprova que la teva expressió ja ho compleix: si <em>soci</em> és F, quant valen els dos parèntesis?</li>
+            <li><strong>(3) Simplificació.</strong> Hi ha una variable que surt als dos parèntesis. La <strong>llei distributiva</strong> la treu com a factor comú: <span class="m">(p ∧ q) ∨ (p ∧ r) = p ∧ (q ∨ r)</span>. Escriu el pas i la llei.</li>
+            <li><strong>(4) PSeInt.</strong> Compte amb els parèntesis: el que era <span class="m">(q ∨ r)</span> ha de continuar entre parèntesis al codi.</li>
+            <li><strong>Comprova-ho amb tres casos:</strong> soci amb 7 compres · soci el dia de l'aniversari amb 1 compra · no soci amb 10 compres.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- 3b -->
+      <div class="act">
+        <div class="act-head"><span class="act-code">3b</span><span class="act-title">Gestió de biblioteca</span><span class="act-mode">Parelles</span></div>
+        <div class="act-body">
+          <div class="act-enun">Un usuari pot agafar un llibre si: té carnet vigent i no supera el límit de 3 llibres, o bé té carnet vigent i és professor (els professors poden agafar fins a 10 llibres). Si el carnet està caducat no pot agafar res en cap cas.</div>
+          <div class="guide-label">Directrius</div>
+          <ol class="guide">
+            <li><strong>Llegiu l'enunciat junts i subratlleu les condicions.</strong> A més dels fets sí/no, hi ha un número: els llibres que l'usuari ja té en préstec.</li>
+            <li><strong>Decidiu el límit amb precisió i justifiqueu-ho.</strong> Si un alumne ja té 3 llibres i n'agafa un altre, supera el límit? Per tant, la comparació ha de ser <span class="m">&lt; 3</span> o <span class="m">&lt;= 3</span>? Feu el mateix raonament per al límit de 10 dels professors.</li>
+            <li><strong>(2) Expressió literal:</strong> dos casos units per <em>o bé</em>. El cas del professor inclou el carnet, ser professor i el límit de 10.</li>
+            <li><strong>"Si el carnet està caducat no pot agafar res":</strong> comproveu que el carnet vigent apareix a tots els casos. Si hi és, la regla ja queda garantida i no cal afegir res.</li>
+            <li><strong>(3) Simplificació:</strong> la variable del carnet es repeteix als dos casos → distributiva, com a la 3a.</li>
+            <li><strong>(4) PSeInt i proves.</strong> Un de vosaltres fa d'"advocat del diable": busca un usuari a qui el codi deixi agafar un llibre quan no hauria de poder (o al revés). Proveu, com a mínim: alumne amb 2 llibres · alumne amb 3 · professor amb 5 · professor amb el carnet caducat.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ SESSIÓ 4 ══════════ -->
+  <div class="ses" id="sessio-4">
+    <div class="ex-block-head">
+      <h2 class="ex-block-title">Sessió 4 — Modelat obert</h2>
+      <p class="ex-block-sub">Activitats 4a · 4b (parelles) · exposició</p>
+    </div>
+    <div class="ex-block-body">
+      <div class="ses-meta">
+        <span class="chip">📖 Repassa: <a href="#teoria-tot-junt">Secció 4</a> · <a href="#sessio-3">Sessió 3</a> · <a href="A2_equivalencies_i_lleis.html">A2 · Lleis</a></span>
+        <a class="dl" href="fitxes/A3_sessio4_modelat_obert.docx" download>⬇ Fitxa de la sessió (Word)</a>
+      </div>
+      <p class="ses-obj"><strong>Objectiu:</strong> aplicar el mètode dels 4 passos amb menys ajuda, verificar que el codi fa el que diu l'enunciat i dissenyar un sistema de condicions propi.</p>
+
+      <!-- 4a -->
+      <div class="act">
+        <div class="act-head"><span class="act-code">4a</span><span class="act-title">Flux de comanda online</span><span class="act-mode">Parelles</span></div>
+        <div class="act-body">
+          <div class="act-enun">Una comanda es processa si: el pagament està confirmat i hi ha estoc, o bé el pagament està confirmat i el client és premium (els premium poden fer reserva fins i tot sense estoc). Una comanda mai es processa si està marcada com a fraudulenta.</div>
+          <div class="guide-label">Directrius</div>
+          <ol class="guide">
+            <li><strong>(1) Variables:</strong> quatre fets sí/no. Doneu a cadascun un nom clar.</li>
+            <li><strong>(2) Expressió completa, sense simplificar.</strong> Primer la part del <em>o bé</em> (dos casos). Després, la regla "mai si és fraudulenta" afecta <strong>tot</strong>: <span class="m">( … ∨ … ) ∧ ¬…</span>. Vigileu el parèntesi exterior.</li>
+            <li><strong>(3) Simplificació, mínim 2 passos.</strong> Busqueu la variable repetida (distributiva) i després reagrupeu el resultat (associativa / commutativa). Cada línia, una llei.</li>
+            <li><strong>(4) PSeInt:</strong> <span class="m">Si … Entonces</span> "Comanda processada" <span class="m">SiNo</span> "Comanda no processada".</li>
+            <li><strong>Verificació.</strong> Copieu aquesta taula a la fitxa. Per a cada cas, avalueu l'expressió original i la simplificada, i escriviu què hauria de passar segons l'enunciat:
+              <div class="tt-wrap">
+                <table class="tt">
+                  <thead><tr><th class="h-note">Cas</th><th class="h-in">pagat</th><th class="h-in">estoc</th><th class="h-in">premium</th><th class="h-in">frau</th><th class="h-out">Original</th><th class="h-out">Simplificada</th><th class="h-out">Esperat</th></tr></thead>
+                  <tbody>
+                    <tr><td class="note">Client normal amb estoc</td><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="f">F</td><td class="out">?</td><td class="out">?</td><td class="out">?</td></tr>
+                    <tr><td class="note">Premium sense estoc</td><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="f">F</td><td class="out">?</td><td class="out">?</td><td class="out">?</td></tr>
+                    <tr><td class="note">Comanda fraudulenta</td><td class="v">V</td><td class="v">V</td><td class="f">F</td><td class="v">V</td><td class="out">?</td><td class="out">?</td><td class="out">?</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </li>
+            <li><strong>Les tres columnes liles han de coincidir.</strong> Si alguna fila no quadra, hi ha un error a l'expressió o a la simplificació: reviseu-la pas a pas.</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- 4b -->
+      <div class="act">
+        <div class="act-head"><span class="act-code">4b</span><span class="act-title">Disseny propi</span><span class="act-mode">Parelles</span></div>
+        <div class="act-body">
+          <div class="act-enun">Dissenyeu un sistema de condicions per a un cas real que conegueu i prepareu-vos per explicar-lo.</div>
+          <div class="guide-label">Requisits</div>
+          <ul class="checklist">
+            <li>Mínim 4 variables booleanes ben definides</li>
+            <li>Almenys una condició composta amb AND i OR</li>
+            <li>Una simplificació demostrada pas a pas amb les lleis indicades</li>
+            <li>El pseudocodi PSeInt final implementat</li>
+            <li>Preparar l'explicació del disseny (5 min)</li>
+          </ul>
+          <div class="guide-label">Directrius</div>
+          <ol class="guide">
+            <li><strong>Trieu un cas que conegueu bé.</strong> Idees: préstec de portàtils de l'institut, accés al gimnàs, reserva d'una pista esportiva, enviament gratuït d'una botiga, entrada a un concert, desbloqueig d'un nivell en un videojoc.</li>
+            <li><strong>Descripció del sistema:</strong> escriviu l'enunciat en 3 o 4 frases, com els de les fitxes.</li>
+            <li><strong>Feu que hi hagi alguna cosa a simplificar.</strong> Truc: una condició que es repeteix en dos casos (<em>"… si A i B, o bé si A i C …"</em> → distributiva) o una regla que en conté una altra (<em>"… si A, o si A i B …"</em> → absorció).</li>
+            <li><strong>(1) Variables:</strong> per a cadascuna, el nom i una frase que digui què vol dir quan és V.</li>
+            <li><strong>(2) → (4):</strong> expressió completa, simplificació pas a pas amb la llei a cada línia i codi PSeInt final.</li>
+            <li><strong>Proveu-ho</strong> amb una taula de tres casos com la de la 4a abans de presentar.</li>
+            <li><strong>Exposició (5 min).</strong> Proposta: context i enunciat (1 min) · variables (1 min) · expressió i simplificació (2 min) · codi i un cas de prova (1 min). Parleu tots dos.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ══════════ EXERCICIS ══════════ -->
   <div class="ex-block-head">
     <h2 class="ex-block-title">Exercicis de traducció a codi</h2>
-    <p class="ex-block-sub">Cinc nivells · dels operadors a depurar codi · Criteris 1.1 i 1.5</p>
+    <p class="ex-block-sub">Pràctica extra autocorregible · cinc nivells · dels operadors a depurar codi · Criteris 1.1 i 1.5</p>
   </div>
   <div class="ex-block-body">
 
