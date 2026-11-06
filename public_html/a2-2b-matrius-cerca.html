@@ -518,7 +518,6 @@ FinProceso"></pre>
               <li><code>nomsMaquines</code>: vector de mida 4 amb el nom de cada màquina.</li>
               <li><code>nomsTorns</code>: vector de mida 3 amb el nom de cada torn (Matí, Tarda, Nit), que s'omple al principi del programa.</li>
               <li><code>produccio</code>: matriu <code>[4,3]</code> (Entero); les files són les màquines i les columnes, els torns.</li>
-              <li><code>totalTorn</code>: vector de mida 3 (Entero) on es guarda el total d'unitats de cada torn.</li>
             </ul>
             <p style="margin-bottom:6px;"><strong>Funcionalitats:</strong></p>
             <ol style="margin:0 0 4px 20px;">
@@ -571,16 +570,15 @@ Proceso ControlProduccio
     Definir N_MAQUINES, N_TORNS Como Entero;
     N_MAQUINES <- 4;
     N_TORNS <- 3;
-    Definir fila, columna, suma, millorTorn, minim Como Entero;
+    Definir fila, columna, suma, millorTorn, maxTotal, minim Como Entero;
     Definir filaTrobada, columnaTrobada Como Entero;
     Definir mitjana Como Real;
     Definir trobat Como Logico;
     Definir nomsMaquines, nomsTorns Como Caracter;
     Dimension nomsMaquines[N_MAQUINES];
     Dimension nomsTorns[N_TORNS];
-    Definir produccio, totalTorn Como Entero;
+    Definir produccio Como Entero;
     Dimension produccio[N_MAQUINES,N_TORNS];
-    Dimension totalTorn[N_TORNS];
     nomsTorns[0] <- 'Matí';
     nomsTorns[1] <- 'Tarda';
     nomsTorns[2] <- 'Nit';
@@ -609,13 +607,15 @@ Proceso ControlProduccio
     // 3. Torn més productiu (recorregut per columnes)
     Escribir '--- Total per torn ---';
     millorTorn <- 0;
+    maxTotal <- -1;
     Para columna <- 0 Hasta N_TORNS - 1 Hacer
-        totalTorn[columna] <- 0;
+        suma <- 0;
         Para fila <- 0 Hasta N_MAQUINES - 1 Hacer
-            totalTorn[columna] <- totalTorn[columna] + produccio[fila,columna];
+            suma <- suma + produccio[fila,columna];
         FinPara
-        Escribir nomsTorns[columna], ': ', totalTorn[columna], ' unitats';
-        Si totalTorn[columna] > totalTorn[millorTorn] Entonces
+        Escribir nomsTorns[columna], ': ', suma, ' unitats';
+        Si suma > maxTotal Entonces
+            maxTotal <- suma;
             millorTorn <- columna;
         FinSi
     FinPara
@@ -644,7 +644,7 @@ Proceso ControlProduccio
         Escribir 'Totes les màquines arriben al mínim en tots els torns';
     FinSi
 FinProceso"></pre>
-          <div class="ri-note">Les parts 2 i 3 són <strong>recorreguts</strong>: cal mirar totes les caselles, per això fem servir dos <code>Para</code> niats. A la 2 el bucle de fora són les files (cada màquina) i a la 3 són les columnes (cada torn), i el torn més productiu es troba guardant la posició del màxim a <code>millorTorn</code>. La part 4 és una <strong>cerca</strong>: només volem la primera casella per sota del mínim, així que fem servir dos <code>Mientras</code> amb <code>NO trobat</code> i ens aturem en trobar-la. Com que <code>fila</code> i <code>columna</code> continuen avançant, també desem <code>filaTrobada</code> i <code>columnaTrobada</code> per saber on era. Si en lloc d'això et demanessin <em>quantes</em> caselles hi ha per sota del mínim, tornaria a ser un recorregut amb comptador.</div>
+          <div class="ri-note">Les parts 2 i 3 són <strong>recorreguts</strong>: cal mirar totes les caselles, per això fem servir dos <code>Para</code> niats. A la 2 el bucle de fora són les files (cada màquina) i a la 3 són les columnes (cada torn), i en tots dos casos fem servir l'acumulador <code>suma</code>, que es posa a 0 abans de cada fila o columna. No cal guardar els totals en un vector: a mesura que obtenim el total de cada torn el comparem amb el màxim fins ara (<code>maxTotal</code>) i, si el supera, desem el valor i la posició a <code>millorTorn</code>. La part 4 és una <strong>cerca</strong>: només volem la primera casella per sota del mínim, així que fem servir dos <code>Mientras</code> amb <code>NO trobat</code> i ens aturem en trobar-la. Com que <code>fila</code> i <code>columna</code> continuen avançant, també desem <code>filaTrobada</code> i <code>columnaTrobada</code> per saber on era. Si en lloc d'això et demanessin <em>quantes</em> caselles hi ha per sota del mínim, tornaria a ser un recorregut amb comptador.</div>
         </div>
       </div>
     </div>
