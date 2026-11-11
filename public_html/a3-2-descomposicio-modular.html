@@ -181,6 +181,118 @@
     <div class="sec-head">
       <span class="sec-num">2</span>
       <div>
+        <h2 class="sec-title">Un programa modular complet</h2>
+        <p class="sec-sub">Les peces + un menú que les fa servir</p>
+      </div>
+    </div>
+    <p class="lead">
+      Muntem el conversor. Fixa't com es combina tot el que has après: <strong>funcions</strong> i
+      <strong>procediments</strong> (A3.1), un <code>Según</code> (A1.2) i un bucle <code>Repetir</code> per al menú (A1.3).
+    </p>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · conversor de monedes amb menú</div>
+      <pre class="pseudo-out" data-code="// Procediment: mostra les opcions del menú
+Funcion MostrarMenu
+    Escribir '--- CONVERSOR DE MONEDES ---';
+    Escribir '1. Euros a dòlars';
+    Escribir '2. Euros a lliures';
+    Escribir '3. Sortir';
+FinFuncion
+
+// Funció: torna quants dòlars valen uns euros
+Funcion dolars <- EurosADolars(euros)
+    Definir dolars Como Real;
+    dolars <- euros * 1.10;
+FinFuncion
+
+// Funció: torna quantes lliures valen uns euros
+Funcion lliures <- EurosALliures(euros)
+    Definir lliures Como Real;
+    lliures <- euros * 0.85;
+FinFuncion
+
+// Procediment: escriu el resultat del canvi
+Funcion MostrarCanvi(euros, resultat, moneda)
+    Escribir euros, ' euros són ', resultat, ' ', moneda;
+FinFuncion
+
+Proceso Conversor
+    Definir opcio Como Entero;
+    Definir euros Como Real;
+    Repetir
+        MostrarMenu();
+        Escribir 'Tria una opció:';
+        Leer opcio;
+        Segun opcio Hacer
+            1:
+                Escribir 'Quants euros?';
+                Leer euros;
+                MostrarCanvi(euros, EurosADolars(euros), 'dòlars');
+            2:
+                Escribir 'Quants euros?';
+                Leer euros;
+                MostrarCanvi(euros, EurosALliures(euros), 'lliures');
+            3:
+                Escribir 'Adéu!';
+            De Otro Modo:
+                Escribir 'Opció no vàlida';
+        FinSegun
+    Hasta Que opcio = 3
+FinProceso"></pre>
+      <div class="demo-label" style="margin-top:12px;">El programa ha de mostrar (exemple d'execució)</div>
+      <pre class="pseudo-out" style="margin:6px 0 4px;">--- CONVERSOR DE MONEDES ---
+1. Euros a dòlars
+2. Euros a lliures
+3. Sortir
+Tria una opció:
+&gt; 1
+Quants euros?
+&gt; 20
+20 euros són 22 dòlars
+--- CONVERSOR DE MONEDES ---
+1. Euros a dòlars
+2. Euros a lliures
+3. Sortir
+Tria una opció:
+&gt; 2
+Quants euros?
+&gt; 100
+100 euros són 85 lliures
+--- CONVERSOR DE MONEDES ---
+1. Euros a dòlars
+2. Euros a lliures
+3. Sortir
+Tria una opció:
+&gt; 3
+Adéu!</pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona, pas a pas</div>
+        <div class="exp-text">
+          El programa principal és un <strong>bucle de menú</strong>: mostra les opcions (cridant
+          <code>MostrarMenu</code>), llegeix l'opció i, amb un <code>Según</code>, decideix què fer. Les opcions 1 i 2 criden
+          una <strong>funció</strong> (<code>EurosADolars</code> o <code>EurosALliures</code>) que fa el càlcul i en torna el resultat,
+          i aquest resultat el rep el <strong>procediment</strong> <code>MostrarCanvi</code>, que l'escriu per pantalla. El bucle es repeteix fins que tries el 3. Cada peça fa
+          una sola cosa i el principal només les coordina.
+        </div>
+      </div>
+    </div>
+
+    <div class="ibox yellow">
+      <div class="ibox-label">Fixa't · una funció dins d'una crida</div>
+      <div class="ibox-text">
+        A <code>MostrarCanvi(euros, EurosADolars(euros), 'dòlars');</code> no desem el resultat de <code>EurosADolars</code> en cap
+        variable: com que una funció <strong>torna un valor</strong>, la podem posar directament allà on hi aniria aquest
+        valor, també com a dada d'una altra subrutina.
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓ 3 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">3</span>
+      <div>
         <h2 class="sec-title">Recursivitat <span style="font-size:13px;color:var(--ink-3);font-family:'DM Sans';font-weight:400;">· opcional, avançat</span></h2>
         <p class="sec-sub">Una funció que es crida a si mateixa</p>
       </div>
@@ -380,9 +492,9 @@ const E4 = [
     run:"Escriu dos números:\n> 12\n> 18\nEl MCD és: 6",
     code:"Funcion mcd <- CalcularMCD(num1, num2)\n    Definir mcd, resta Como Entero;\n    Mientras num2 <> 0 Hacer\n        resta <- num1 mod num2;\n        num1 <- num2;\n        num2 <- resta;\n    FinMientras\n    mcd <- num1;\nFinFuncion\n\nProceso ProgramaMCD\n    Definir primer, segon Como Entero;\n    Escribir 'Escriu dos números:';\n    Leer primer;\n    Leer segon;\n    Escribir 'El MCD és: ', CalcularMCD(primer, segon);\nFinProceso",
     exp:'Euclides: mentre el segon no sigui 0, ens quedem amb el residu (num1 mod num2) i avancem. Quan num2 arriba a 0, el MCD és num1. Reutilitza el mod i el <> de l\'A1.3.' },
-  { ctx:'Crea una funció MitjanaNotes(nota1, nota2, nota3) que torni la mitjana de tres notes i un procediment MostrarQualificacio(nota) que escrigui Suspès (menys de 5), Aprovat (menys de 7), Notable (menys de 9) o Excel·lent. El programa demana quants alumnes hi ha i, per a cada alumne, llegeix les tres notes i mostra la mitjana i la qualificació.',
+  { ctx:'Crea una funció MitjanaNotes(nota1, nota2, nota3) que torni la mitjana de tres notes i un procediment MostrarQualificacio(nota) que, amb un Segun, escrigui Suspès (menys de 5), Aprovat (menys de 7), Notable (menys de 9) o Excel·lent. El programa demana quants alumnes hi ha i, per a cada alumne, llegeix les tres notes i mostra la mitjana i la qualificació.',
     run:"Quants alumnes hi ha?\n> 2\nAlumne 1: escriu les tres notes\n> 5\n> 6\n> 7\nMitjana: 6\nAprovat\nAlumne 2: escriu les tres notes\n> 9\n> 8\n> 10\nMitjana: 9\nExcel·lent",
-    code:"Funcion mitjana <- MitjanaNotes(nota1, nota2, nota3)\n    Definir mitjana Como Real;\n    mitjana <- (nota1 + nota2 + nota3) / 3;\nFinFuncion\n\nFuncion MostrarQualificacio(nota)\n    Si nota < 5 Entonces\n        Escribir 'Suspès';\n    SiNo\n        Si nota < 7 Entonces\n            Escribir 'Aprovat';\n        SiNo\n            Si nota < 9 Entonces\n                Escribir 'Notable';\n            SiNo\n                Escribir 'Excel·lent';\n            FinSi\n        FinSi\n    FinSi\nFinFuncion\n\nProceso Butlleti\n    Definir alumnes, i Como Entero;\n    Definir nota1, nota2, nota3, mitjana Como Real;\n    Escribir 'Quants alumnes hi ha?';\n    Leer alumnes;\n    Para i <- 1 Hasta alumnes Hacer\n        Escribir 'Alumne ', i, ': escriu les tres notes';\n        Leer nota1;\n        Leer nota2;\n        Leer nota3;\n        mitjana <- MitjanaNotes(nota1, nota2, nota3);\n        Escribir 'Mitjana: ', mitjana;\n        MostrarQualificacio(mitjana);\n    FinPara\nFinProceso",
+    code:"Funcion mitjana <- MitjanaNotes(nota1, nota2, nota3)\n    Definir mitjana Como Real;\n    mitjana <- (nota1 + nota2 + nota3) / 3;\nFinFuncion\n\nFuncion MostrarQualificacio(nota)\n    // trunc treu els decimals: 6.5 passa a ser 6\n    Segun trunc(nota) Hacer\n        0, 1, 2, 3, 4:\n            Escribir 'Suspès';\n        5, 6:\n            Escribir 'Aprovat';\n        7, 8:\n            Escribir 'Notable';\n        9, 10:\n            Escribir 'Excel·lent';\n        De Otro Modo:\n            Escribir 'Nota no vàlida';\n    FinSegun\nFinFuncion\n\nProceso Butlleti\n    Definir alumnes, i Como Entero;\n    Definir nota1, nota2, nota3, mitjana Como Real;\n    Escribir 'Quants alumnes hi ha?';\n    Leer alumnes;\n    Para i <- 1 Hasta alumnes Hacer\n        Escribir 'Alumne ', i, ': escriu les tres notes';\n        Leer nota1;\n        Leer nota2;\n        Leer nota3;\n        mitjana <- MitjanaNotes(nota1, nota2, nota3);\n        Escribir 'Mitjana: ', mitjana;\n        MostrarQualificacio(mitjana);\n    FinPara\nFinProceso",
     exp:'Una funció per calcular (torna la mitjana) i un procediment per mostrar (escriu la qualificació). Abans de muntar el bucle, valida-les per separat: MitjanaNotes(5, 6, 7) ha de tornar 6 i MostrarQualificacio(8) ha d\'escriure Notable.' }
 ];
 (function(){
