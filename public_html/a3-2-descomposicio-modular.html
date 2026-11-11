@@ -370,7 +370,15 @@ FinProceso"></pre>
         <div class="ex-name">Segueix la recursió</div>
         <div class="ex-level">Nivell mitjà · seguiment (traça)</div>
       </div></div>
-      <p class="ex-intro">Fes servir l'exemple del factorial per respondre.</p>
+      <p class="ex-intro">Aquesta funció recursiva suma tots els números des de l'1 fins a <code>num</code>. Segueix les crides i respon.</p>
+      <pre class="pseudo-out" style="margin-bottom:14px" data-code="Funcion total <- SumaFins(num)
+    Definir total Como Entero;
+    Si num = 1 Entonces
+        total <- 1;                     // cas base
+    SiNo
+        total <- num + SumaFins(num - 1);   // es crida a si mateixa
+    FinSi
+FinFuncion"></pre>
       <div id="ex2-cont"></div>
     </div>
 
@@ -420,10 +428,11 @@ document.querySelectorAll('pre[data-code]').forEach(function(pre){
 
 /* ── Exercici 1 ── */
 const E1 = [
-  { t:'Una peça que rep dos números i torna el seu màxim comú divisor.', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor (el MCD): funció.' },
-  { t:'Una peça que ensenya per pantalla les opcions d\'un menú.', opts:['Funció','Procediment'], ans:1, exp:'Només mostra coses, no torna res: procediment.' },
-  { t:'Una peça que rep una fracció i la mostra simplificada.', opts:['Funció','Procediment'], ans:1, exp:'La seva feina és mostrar; no torna cap valor: procediment.' },
-  { t:'Una peça que rep un any i torna si és de traspàs (cert/fals).', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor lògic: funció.' }
+  { t:'En un joc de daus: una peça que torna un número a l\'atzar de l\'1 al 6.', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor (el número que ha sortit): funció.' },
+  { t:'En un joc de dos jugadors: una peça que mostra per pantalla el marcador de tots dos.', opts:['Funció','Procediment'], ans:1, exp:'Només ensenya els punts, no torna res: procediment.' },
+  { t:'En una botiga: una peça que rep el preu d\'un producte i la quantitat i torna l\'import total.', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor (l\'import a pagar): funció.' },
+  { t:'En una aplicació del temps: una peça que rep una temperatura i torna Verdadero si està glaçant (menys de 0 graus).', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor lògic (cert/fals): funció.' },
+  { t:'En una botiga: una peça que imprimeix el tiquet de compra amb el total.', opts:['Funció','Procediment'], ans:1, exp:'La seva feina és escriure el tiquet; no torna cap valor: procediment.' }
 ];
 (function(){
   const c = document.getElementById('ex1-cont');
@@ -437,9 +446,9 @@ const E1 = [
 
 /* ── Exercici 2 ── */
 const E2 = [
-  { t:'Quant val Factorial(4)? (4 × 3 × 2 × 1)', opts:['12','24','10'], ans:1, exp:'4 × 3 × 2 × 1 = 24.' },
-  { t:'Quin és el cas base de la funció Factorial?', opts:['num = 0 o num = 1','num = 10','num > 0'], ans:0, exp:'Quan num és 0 o 1, es torna 1 directament i s\'atura la recursió.' },
-  { t:'Què passaria si traguéssim el cas base?', opts:['Donaria 0','Es cridaria infinitament i es penjaria','Donaria el doble'], ans:1, exp:'Sense cas base, les crides no s\'aturarien mai: recursió infinita.' }
+  { t:'Quant val SumaFins(4)?', opts:['10','24','4'], ans:0, exp:'4 + SumaFins(3) = 4 + 3 + SumaFins(2) = 4 + 3 + 2 + 1 = 10. Compte: suma, no multiplica com el factorial.' },
+  { t:'Quin és el cas base de SumaFins?', opts:['num = 1','num = 4','num > 1'], ans:0, exp:'Quan num val 1, la funció torna 1 directament i ja no es crida més.' },
+  { t:'Quantes vegades s\'executa SumaFins en total si al programa principal fem SumaFins(3)?', opts:['1','3','6'], ans:1, exp:'SumaFins(3) crida SumaFins(2), que crida SumaFins(1): tres execucions. La darrera és el cas base.' }
 ];
 (function(){
   const c = document.getElementById('ex2-cont');
@@ -462,12 +471,12 @@ function checkQ(grp,btn,i,choice){
 
 /* ── Exercici 3 ── */
 const E3 = [
-  { q:'Un programa que treballa amb fraccions a/b: vol simplificar-les, sumar-les i mostrar-les.',
-    code:"Funcion mcd <- CalcularMCD(num1, num2)  // funció (torna el MCD)\nFuncion SimplificarFraccio(numerador Por Referencia, denominador Por Referencia)  // procediment (modifica numerador i denominador)\nFuncion SumarFraccions(numerador1, denominador1, numerador2, denominador2)  // procediment (mostra el resultat)\nFuncion EscriureFraccio(numerador, denominador)  // procediment (mostra numerador/denominador)",
-    exp:'El MCD és una funció (torna un valor) i el reutilitzem per simplificar. La resta són procediments que modifiquen o mostren.' },
-  { q:'Un programa amb un menú per a una calculadora simple (sumar i restar dos números).',
-    code:"Funcion MostrarMenu()              // procediment\nFuncion suma <- Sumar(num1, num2)          // funció (torna num1 + num2)\nFuncion diferencia <- Restar(num1, num2)   // funció (torna num1 - num2)",
-    exp:'El menú és un procediment; cada operació és una funció que torna el resultat del càlcul.' }
+  { q:'Un caixer automàtic: mostra el saldo, permet ingressar diners i permet treure\'n, però sense deixar mai el compte en negatiu.',
+    code:"Funcion MostrarSaldo(saldo)                     // procediment (ensenya el saldo)\nFuncion nouSaldo <- Ingressar(saldo, quantitat)  // funció (torna el saldo nou)\nFuncion nouSaldo <- Treure(saldo, quantitat)     // funció (torna el saldo nou o el mateix si no n'hi ha prou)",
+    exp:'Mostrar és una feina sense resultat: procediment. Ingressar i Treure calculen un saldo nou i el tornen: funcions. El programa principal desa el que tornen a la variable saldo.' },
+  { q:'Una votació a classe amb tres opcions: llegeix el vot de cada alumne, rebutja els vots que no siguin 1, 2 o 3 i al final anuncia l\'opció guanyadora.',
+    code:"Funcion MostrarOpcions()                          // procediment (ensenya les tres opcions)\nFuncion valid <- VotValid(vot)                     // funció (torna Verdadero si el vot és 1, 2 o 3)\nFuncion MostrarGuanyador(vots1, vots2, vots3)      // procediment (compara i anuncia el guanyador)",
+    exp:'VotValid torna un valor lògic que el programa principal fa servir en un Si: funció. Les altres dues peces només mostren coses: procediments. El recompte el pot fer el principal amb tres comptadors.' }
 ];
 (function(){
   const c = document.getElementById('ex3-cont');
@@ -483,9 +492,9 @@ const E4 = [
   { ctx:'Crea una funció CalcularMCD(num1, num2) que torni el màxim comú divisor pel mètode d\'Euclides (anar dividint i quedar-se amb el residu fins que sigui 0). Fes un programa que llegeixi dos números i mostri el MCD.',
     code:"Funcion mcd <- CalcularMCD(num1, num2)\n    Definir mcd, resta Como Entero;\n    Mientras num2 <> 0 Hacer\n        resta <- num1 mod num2;\n        num1 <- num2;\n        num2 <- resta;\n    FinMientras\n    mcd <- num1;\nFinFuncion\n\nProceso ProgramaMCD\n    Definir primer, segon Como Entero;\n    Escribir 'Escriu dos números:';\n    Leer primer;\n    Leer segon;\n    Escribir 'El MCD és: ', CalcularMCD(primer, segon);\nFinProceso",
     exp:'Euclides: mentre el segon no sigui 0, ens quedem amb el residu (num1 mod num2) i avancem. Quan num2 arriba a 0, el MCD és num1. Reutilitza el mod i el <> de l\'A1.3.' },
-  { ctx:'Crea una calculadora amb menú: opcions sumar i restar dos números, i sortir. Fes servir una funció per a cada operació i un procediment per al menú.',
-    code:"Funcion MostrarMenu\n    Escribir '--- CALCULADORA ---';\n    Escribir '1. Sumar';\n    Escribir '2. Restar';\n    Escribir '3. Sortir';\nFinFuncion\n\nFuncion suma <- Sumar(num1, num2)\n    Definir suma Como Real;\n    suma <- num1 + num2;\nFinFuncion\n\nFuncion diferencia <- Restar(num1, num2)\n    Definir diferencia Como Real;\n    diferencia <- num1 - num2;\nFinFuncion\n\nProceso Calculadora\n    Definir opcio Como Entero;\n    Definir primer, segon Como Real;\n    Repetir\n        MostrarMenu();\n        Leer opcio;\n        Si opcio = 1 O opcio = 2 Entonces\n            Escribir 'Escriu dos números:';\n            Leer primer;\n            Leer segon;\n        FinSi\n        Segun opcio Hacer\n            1: Escribir 'Resultat: ', Sumar(primer, segon);\n            2: Escribir 'Resultat: ', Restar(primer, segon);\n            3: Escribir 'Adéu!';\n            De Otro Modo: Escribir 'Opció no vàlida';\n        FinSegun\n    Hasta Que opcio = 3\nFinProceso",
-    exp:'El procediment MostrarMenu i les funcions Sumar/Restar són les peces; el programa principal les coordina amb un bucle de menú (Repetir + Según), igual que el convertidor de temps.' }
+  { ctx:'Crea una funció MitjanaNotes(nota1, nota2, nota3) que torni la mitjana de tres notes i un procediment MostrarQualificacio(nota) que escrigui Suspès (menys de 5), Aprovat (menys de 7), Notable (menys de 9) o Excel·lent. El programa demana quants alumnes hi ha i, per a cada alumne, llegeix les tres notes i mostra la mitjana i la qualificació.',
+    code:"Funcion mitjana <- MitjanaNotes(nota1, nota2, nota3)\n    Definir mitjana Como Real;\n    mitjana <- (nota1 + nota2 + nota3) / 3;\nFinFuncion\n\nFuncion MostrarQualificacio(nota)\n    Si nota < 5 Entonces\n        Escribir 'Suspès';\n    SiNo\n        Si nota < 7 Entonces\n            Escribir 'Aprovat';\n        SiNo\n            Si nota < 9 Entonces\n                Escribir 'Notable';\n            SiNo\n                Escribir 'Excel·lent';\n            FinSi\n        FinSi\n    FinSi\nFinFuncion\n\nProceso Butlleti\n    Definir alumnes, i Como Entero;\n    Definir nota1, nota2, nota3, mitjana Como Real;\n    Escribir 'Quants alumnes hi ha?';\n    Leer alumnes;\n    Para i <- 1 Hasta alumnes Hacer\n        Escribir 'Alumne ', i, ': escriu les tres notes';\n        Leer nota1;\n        Leer nota2;\n        Leer nota3;\n        mitjana <- MitjanaNotes(nota1, nota2, nota3);\n        Escribir 'Mitjana: ', mitjana;\n        MostrarQualificacio(mitjana);\n    FinPara\nFinProceso",
+    exp:'Una funció per calcular (torna la mitjana) i un procediment per mostrar (escriu la qualificació). Abans de muntar el bucle, valida-les per separat: MitjanaNotes(5, 6, 7) ha de tornar 6 i MostrarQualificacio(8) ha d\'escriure Notable.' }
 ];
 (function(){
   const c = document.getElementById('ex4-cont');

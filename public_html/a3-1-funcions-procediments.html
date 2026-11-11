@@ -66,6 +66,9 @@
     .fn-box.in { background:var(--blue-bg); border-color:var(--blue-bdr); color:var(--blue); }
     .fn-box.proc { background:var(--accent-bg); border-color:var(--accent-bdr); color:var(--accent); }
     .fn-box.out { background:var(--green-bg); border-color:var(--green-bdr); color:var(--green); }
+    .fn-box.none { background:transparent; border:1px dashed var(--ink-3); color:var(--ink-2); }
+    .fn-type { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-2); margin-bottom:8px; }
+    .fn-type small { font-weight:400; text-transform:none; letter-spacing:0; color:var(--ink-3); margin-left:6px; }
     .fn-box small { display:block; font-weight:400; font-size:11px; margin-top:3px; opacity:.85; }
     .fn-arrow { font-size:20px; color:var(--ink-3); }
     @media (max-width:600px){ .fn-flow { grid-template-columns:1fr; } .fn-arrow { transform:rotate(90deg); justify-self:center; } }
@@ -151,12 +154,22 @@
       concreta. Aquestes peces es diuen <strong>subrutines</strong>, i n'hi ha de dos tipus:
     </p>
 
+    <div class="fn-type">Funció <small>la màquina</small></div>
     <div class="fn-flow">
-      <div class="fn-box in">Funció<small>li dones dades…</small></div>
+      <div class="fn-box in">li dones dades…<small>p. ex. dos números</small></div>
       <div class="fn-arrow">→</div>
       <div class="fn-box proc">fa el càlcul<small>per dins</small></div>
       <div class="fn-arrow">→</div>
       <div class="fn-box out">…i et torna<br>un resultat</div>
+    </div>
+
+    <div class="fn-type">Procediment <small>l'ajudant</small></div>
+    <div class="fn-flow">
+      <div class="fn-box in">li dones dades…<small>p. ex. un text</small></div>
+      <div class="fn-arrow">→</div>
+      <div class="fn-box proc">fa una feina<small>p. ex. escriure per pantalla</small></div>
+      <div class="fn-arrow">→</div>
+      <div class="fn-box none">…i no et torna<br>res</div>
     </div>
 
     <div class="ibox blue">
