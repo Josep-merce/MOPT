@@ -200,9 +200,9 @@ Funcion MostrarMenu
 FinFuncion
 
 // Funció: torna el temps total en segons
-Funcion s <- ASegons(h, m, seg)
-    Definir s Como Entero;
-    s <- h * 3600 + m * 60 + seg;
+Funcion totalSegons <- ASegons(hores, minuts, segons)
+    Definir totalSegons Como Entero;
+    totalSegons <- hores * 3600 + minuts * 60 + segons;
 FinFuncion
 
 // Procediment: mostra un total de segons en h/m/s
@@ -216,7 +216,7 @@ Funcion AHMS(total)
 FinFuncion
 
 Proceso Convertidor
-    Definir opcio, h, m, seg, total Como Entero;
+    Definir opcio, hores, minuts, segons, total Como Entero;
     Repetir
         MostrarMenu();
         Escribir 'Tria una opció:';
@@ -224,10 +224,10 @@ Proceso Convertidor
         Segun opcio Hacer
             1:
                 Escribir 'Hores, minuts i segons:';
-                Leer h;
-                Leer m;
-                Leer seg;
-                Escribir 'Total: ', ASegons(h, m, seg), ' segons';
+                Leer hores;
+                Leer minuts;
+                Leer segons;
+                Escribir 'Total: ', ASegons(hores, minuts, segons), ' segons';
             2:
                 Escribir 'Quants segons?';
                 Leer total;
@@ -254,7 +254,7 @@ FinProceso"></pre>
     <div class="ibox yellow">
       <div class="ibox-label">Eina nova · <code>trunc()</code></div>
       <div class="ibox-text">
-        <code>trunc(x)</code> et torna la <strong>part entera</strong> d'un número, descartant els decimals. Aquí la fem
+        <code>trunc(numero)</code> et torna la <strong>part entera</strong> d'un número, descartant els decimals. Aquí la fem
         servir perquè <code>total / 3600</code> dóna un resultat amb decimals i nosaltres volem les hores senceres.
       </div>
     </div>
@@ -320,10 +320,10 @@ FinProceso"></pre>
 FinFuncion
 
 Proceso ProvaFactorial
-    Definir n Como Entero;
+    Definir numero Como Entero;
     Escribir 'Escriu un número:';
-    Leer n;
-    Escribir 'El factorial és: ', Factorial(n);
+    Leer numero;
+    Escribir 'El factorial és: ', Factorial(numero);
 FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona · seguim Factorial(3)</div>
@@ -463,10 +463,10 @@ function checkQ(grp,btn,i,choice){
 /* ── Exercici 3 ── */
 const E3 = [
   { q:'Un programa que treballa amb fraccions a/b: vol simplificar-les, sumar-les i mostrar-les.',
-    code:"Funcion m <- CalcularMCD(a, b)        // funció (torna el MCD)\nFuncion SimplificarFraccio(n Por Referencia, d Por Referencia)  // procediment (modifica n i d)\nFuncion SumarFraccions(n1, d1, n2, d2)  // procediment (mostra el resultat)\nFuncion EscriureFraccio(n, d)           // procediment (mostra n/d)",
+    code:"Funcion mcd <- CalcularMCD(num1, num2)  // funció (torna el MCD)\nFuncion SimplificarFraccio(numerador Por Referencia, denominador Por Referencia)  // procediment (modifica numerador i denominador)\nFuncion SumarFraccions(n1, d1, n2, d2)  // procediment (mostra el resultat)\nFuncion EscriureFraccio(numerador, denominador)  // procediment (mostra numerador/denominador)",
     exp:'El MCD és una funció (torna un valor) i el reutilitzem per simplificar. La resta són procediments que modifiquen o mostren.' },
   { q:'Un programa amb un menú per a una calculadora simple (sumar i restar dos números).',
-    code:"Funcion MostrarMenu()              // procediment\nFuncion s <- Sumar(a, b)           // funció (torna a + b)\nFuncion r <- Restar(a, b)          // funció (torna a - b)",
+    code:"Funcion MostrarMenu()              // procediment\nFuncion suma <- Sumar(num1, num2)          // funció (torna num1 + num2)\nFuncion diferencia <- Restar(num1, num2)   // funció (torna num1 - num2)",
     exp:'El menú és un procediment; cada operació és una funció que torna el resultat del càlcul.' }
 ];
 (function(){
@@ -480,11 +480,11 @@ const E3 = [
 
 /* ── Exercici 4 ── */
 const E4 = [
-  { ctx:'Crea una funció CalcularMCD(a, b) que torni el màxim comú divisor pel mètode d\'Euclides (anar dividint i quedar-se amb el residu fins que sigui 0). Fes un programa que llegeixi dos números i mostri el MCD.',
-    code:"Funcion mcd <- CalcularMCD(a, b)\n    Definir mcd, resta Como Entero;\n    Mientras b <> 0 Hacer\n        resta <- a mod b;\n        a <- b;\n        b <- resta;\n    FinMientras\n    mcd <- a;\nFinFuncion\n\nProceso ProgramaMCD\n    Definir x, z Como Entero;\n    Escribir 'Escriu dos números:';\n    Leer x;\n    Leer z;\n    Escribir 'El MCD és: ', CalcularMCD(x, z);\nFinProceso",
-    exp:'Euclides: mentre el segon no sigui 0, ens quedem amb el residu (a mod b) i avancem. Quan b arriba a 0, el MCD és a. Reutilitza el mod i el <> de l\'A1.3.' },
+  { ctx:'Crea una funció CalcularMCD(num1, num2) que torni el màxim comú divisor pel mètode d\'Euclides (anar dividint i quedar-se amb el residu fins que sigui 0). Fes un programa que llegeixi dos números i mostri el MCD.',
+    code:"Funcion mcd <- CalcularMCD(num1, num2)\n    Definir mcd, resta Como Entero;\n    Mientras num2 <> 0 Hacer\n        resta <- num1 mod num2;\n        num1 <- num2;\n        num2 <- resta;\n    FinMientras\n    mcd <- num1;\nFinFuncion\n\nProceso ProgramaMCD\n    Definir primer, segon Como Entero;\n    Escribir 'Escriu dos números:';\n    Leer primer;\n    Leer segon;\n    Escribir 'El MCD és: ', CalcularMCD(primer, segon);\nFinProceso",
+    exp:'Euclides: mentre el segon no sigui 0, ens quedem amb el residu (num1 mod num2) i avancem. Quan num2 arriba a 0, el MCD és num1. Reutilitza el mod i el <> de l\'A1.3.' },
   { ctx:'Crea una calculadora amb menú: opcions sumar i restar dos números, i sortir. Fes servir una funció per a cada operació i un procediment per al menú.',
-    code:"Funcion MostrarMenu\n    Escribir '--- CALCULADORA ---';\n    Escribir '1. Sumar';\n    Escribir '2. Restar';\n    Escribir '3. Sortir';\nFinFuncion\n\nFuncion s <- Sumar(a, b)\n    Definir s Como Real;\n    s <- a + b;\nFinFuncion\n\nFuncion r <- Restar(a, b)\n    Definir r Como Real;\n    r <- a - b;\nFinFuncion\n\nProceso Calculadora\n    Definir opcio Como Entero;\n    Definir x, z Como Real;\n    Repetir\n        MostrarMenu();\n        Leer opcio;\n        Si opcio = 1 O opcio = 2 Entonces\n            Escribir 'Escriu dos números:';\n            Leer x;\n            Leer z;\n        FinSi\n        Segun opcio Hacer\n            1: Escribir 'Resultat: ', Sumar(x, z);\n            2: Escribir 'Resultat: ', Restar(x, z);\n            3: Escribir 'Adéu!';\n            De Otro Modo: Escribir 'Opció no vàlida';\n        FinSegun\n    Hasta Que opcio = 3\nFinProceso",
+    code:"Funcion MostrarMenu\n    Escribir '--- CALCULADORA ---';\n    Escribir '1. Sumar';\n    Escribir '2. Restar';\n    Escribir '3. Sortir';\nFinFuncion\n\nFuncion suma <- Sumar(num1, num2)\n    Definir suma Como Real;\n    suma <- num1 + num2;\nFinFuncion\n\nFuncion diferencia <- Restar(num1, num2)\n    Definir diferencia Como Real;\n    diferencia <- num1 - num2;\nFinFuncion\n\nProceso Calculadora\n    Definir opcio Como Entero;\n    Definir primer, segon Como Real;\n    Repetir\n        MostrarMenu();\n        Leer opcio;\n        Si opcio = 1 O opcio = 2 Entonces\n            Escribir 'Escriu dos números:';\n            Leer primer;\n            Leer segon;\n        FinSi\n        Segun opcio Hacer\n            1: Escribir 'Resultat: ', Sumar(primer, segon);\n            2: Escribir 'Resultat: ', Restar(primer, segon);\n            3: Escribir 'Adéu!';\n            De Otro Modo: Escribir 'Opció no vàlida';\n        FinSegun\n    Hasta Que opcio = 3\nFinProceso",
     exp:'El procediment MostrarMenu i les funcions Sumar/Restar són les peces; el programa principal les coordina amb un bucle de menú (Repetir + Según), igual que el convertidor de temps.' }
 ];
 (function(){
