@@ -211,12 +211,12 @@
 FinFuncion
 
 Proceso ProvaMaxim
-    Definir a, b, resultat Como Entero;
+    Definir primer, segon, resultat Como Entero;
     Escribir 'Escriu el primer número:';
-    Leer a;
+    Leer primer;
     Escribir 'Escriu el segon número:';
-    Leer b;
-    resultat <- CalcularMaxim(a, b);
+    Leer segon;
+    resultat <- CalcularMaxim(primer, segon);
     Escribir 'El més gran és: ', resultat;
 FinProceso"></pre>
       <div class="exp-box">
@@ -224,8 +224,8 @@ FinProceso"></pre>
         <div class="exp-text">
           La funció rep dos números (<code>num1</code> i <code>num2</code>), decideix quin és el més gran i el guarda a
           <code>max</code>, que és la <strong>variable de retorn</strong> (té el mateix nom que apareix abans de la fletxa).
-          Al programa principal cridem <code>CalcularMaxim(a, b)</code> <strong>com si fos un valor</strong> i el desem a
-          <code>resultat</code>. Així, si <code>a = 3</code> i <code>b = 8</code>, <code>resultat</code> val 8.
+          Al programa principal cridem <code>CalcularMaxim(primer, segon)</code> <strong>com si fos un valor</strong> i el desem a
+          <code>resultat</code>. Així, si <code>primer = 3</code> i <code>segon = 8</code>, <code>resultat</code> val 8.
         </div>
       </div>
     </div>
@@ -234,8 +234,8 @@ FinProceso"></pre>
       <div class="ibox-label">On es crida una funció</div>
       <div class="ibox-text">
         Com que torna un valor, una funció es fa servir <strong>allà on hi aniria un valor</strong>: en una assignació
-        (<code>r &lt;- CalcularMaxim(a, b);</code>) o directament dins d'un <code>Escribir</code>
-        (<code>Escribir CalcularMaxim(a, b);</code>).
+        (<code>resultat &lt;- CalcularMaxim(primer, segon);</code>) o directament dins d'un <code>Escribir</code>
+        (<code>Escribir CalcularMaxim(primer, segon);</code>).
       </div>
     </div>
   </section>
@@ -263,9 +263,9 @@ FinProceso"></pre>
     <div class="demo">
       <div class="demo-label">Exemple · un procediment que escriu un títol subratllat</div>
       <pre class="pseudo-out" data-code="Funcion Subratllar(text)
-    Definir i Como Entero;
+    Definir posicio Como Entero;
     Escribir text;
-    Para i <- 1 Hasta Longitud(text) Hacer
+    Para posicio <- 1 Hasta Longitud(text) Hacer
         Escribir Sin Saltar '-';
     FinPara
     Escribir '';
@@ -328,15 +328,15 @@ FinProceso"></pre>
 FinFuncion
 
 Proceso Prova
-    Definir n Como Entero;
-    n <- 5;
-    PasPerValor(n);
-    Escribir 'Fora, n encara val: ', n;
+    Definir numero Como Entero;
+    numero <- 5;
+    PasPerValor(numero);
+    Escribir 'Fora, numero encara val: ', numero;
 FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          Dins, <code>num</code> puja a 6 i es mostra 6. Però fora, <code>n</code> <strong>continua valent 5</strong>:
+          Dins, <code>num</code> puja a 6 i es mostra 6. Però fora, <code>numero</code> <strong>continua valent 5</strong>:
           la subrutina només ha treballat amb una còpia. La sortida és <code>6</code> i després <code>5</code>.
         </div>
       </div>
@@ -349,16 +349,16 @@ FinProceso"></pre>
 FinFuncion
 
 Proceso Prova
-    Definir n Como Entero;
-    n <- 5;
-    PasPerReferencia(n);
-    Escribir 'Fora, n ara val: ', n;
+    Definir numero Como Entero;
+    numero <- 5;
+    PasPerReferencia(numero);
+    Escribir 'Fora, numero ara val: ', numero;
 FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
           En afegir <code>Por Referencia</code>, la subrutina treballa amb l'<strong>original</strong>. Ara el canvi sí
-          que es nota: fora, <code>n</code> val <strong>6</strong>. La diferència amb l'exemple anterior és només aquestes
+          que es nota: fora, <code>numero</code> val <strong>6</strong>. La diferència amb l'exemple anterior és només aquestes
           dues paraules.
         </div>
       </div>
@@ -446,13 +446,13 @@ function checkQ(grp,btn,i,choice){
 /* ── Exercici 2 ── */
 const E4 = [
   { ctx:'Crea una funció Potencia(base, exponent) que torni el resultat d\'elevar la base a l\'exponent fent multiplicacions amb un bucle (sense fer servir ^). Fes un programa que demani tots dos números i mostri el resultat.',
-    code:"Funcion res <- Potencia(base, exponent)\n    Definir res, i Como Entero;\n    res <- 1;\n    Para i <- 1 Hasta exponent Hacer\n        res <- res * base;\n    FinPara\nFinFuncion\n\nProceso ProvaPotencia\n    Definir b, e Como Entero;\n    Escribir 'Base:';\n    Leer b;\n    Escribir 'Exponent:';\n    Leer e;\n    Escribir b, ' elevat a ', e, ' és: ', Potencia(b, e);\nFinProceso",
-    exp:'La variable de retorn comença a 1 i el bucle la multiplica per la base tantes vegades com indica l\'exponent. Les variables res i i són locals: només existeixen dins de la funció.' },
+    code:"Funcion resultat <- Potencia(base, exponent)\n    Definir resultat, vegada Como Entero;\n    resultat <- 1;\n    Para vegada <- 1 Hasta exponent Hacer\n        resultat <- resultat * base;\n    FinPara\nFinFuncion\n\nProceso ProvaPotencia\n    Definir numBase, numExponent Como Entero;\n    Escribir 'Base:';\n    Leer numBase;\n    Escribir 'Exponent:';\n    Leer numExponent;\n    Escribir numBase, ' elevat a ', numExponent, ' és: ', Potencia(numBase, numExponent);\nFinProceso",
+    exp:'La variable de retorn comença a 1 i el bucle la multiplica per la base tantes vegades com indica l\'exponent. Les variables resultat i vegada són locals: només existeixen dins de la funció.' },
   { ctx:'Crea dues funcions, ImportDescompte(preu, percentatge), que torni quants euros es descompten, i PreuFinal(preu, percentatge), que torni el preu un cop aplicat el descompte. Fes un programa que llegeixi el preu i el percentatge i mostri totes dues coses.',
-    code:"Funcion d <- ImportDescompte(preu, percentatge)\n    Definir d Como Real;\n    d <- preu * percentatge / 100;\nFinFuncion\n\nFuncion f <- PreuFinal(preu, percentatge)\n    Definir f Como Real;\n    f <- preu - ImportDescompte(preu, percentatge);\nFinFuncion\n\nProceso Rebaixes\n    Definir preu, percentatge Como Real;\n    Escribir 'Preu original:';\n    Leer preu;\n    Escribir 'Percentatge de descompte:';\n    Leer percentatge;\n    Escribir 'Estalvi: ', ImportDescompte(preu, percentatge), ' €';\n    Escribir 'Preu final: ', PreuFinal(preu, percentatge), ' €';\nFinProceso",
+    code:"Funcion descompte <- ImportDescompte(preu, percentatge)\n    Definir descompte Como Real;\n    descompte <- preu * percentatge / 100;\nFinFuncion\n\nFuncion preuRebaixat <- PreuFinal(preu, percentatge)\n    Definir preuRebaixat Como Real;\n    preuRebaixat <- preu - ImportDescompte(preu, percentatge);\nFinFuncion\n\nProceso Rebaixes\n    Definir preu, percentatge Como Real;\n    Escribir 'Preu original:';\n    Leer preu;\n    Escribir 'Percentatge de descompte:';\n    Leer percentatge;\n    Escribir 'Estalvi: ', ImportDescompte(preu, percentatge), ' €';\n    Escribir 'Preu final: ', PreuFinal(preu, percentatge), ' €';\nFinProceso",
     exp:'Un percentatge és dividir entre 100 i multiplicar: el 20% de 50 € és 50 * 20 / 100 = 10 €. PreuFinal reutilitza ImportDescompte en lloc de repetir el càlcul: una funció pot cridar una altra funció.' },
   { ctx:'Crea una funció MitjanaDia(maxima, minima) que torni la temperatura mitjana. El programa demana per a quants dies, i per a cada dia llegeix la màxima i la mínima i mostra la mitjana.',
-    code:"Funcion m <- MitjanaDia(maxima, minima)\n    Definir m Como Real;\n    m <- (maxima + minima) / 2;\nFinFuncion\n\nProceso Temperatures\n    Definir dies, i Como Entero;\n    Definir maxima, minima Como Real;\n    Escribir 'Quants dies vols introduir?';\n    Leer dies;\n    Para i <- 1 Hasta dies Hacer\n        Escribir 'Màxima del dia ', i, ':';\n        Leer maxima;\n        Escribir 'Mínima del dia ', i, ':';\n        Leer minima;\n        Escribir 'Mitjana del dia ', i, ': ', MitjanaDia(maxima, minima);\n    FinPara\nFinProceso",
+    code:"Funcion mitjana <- MitjanaDia(maxima, minima)\n    Definir mitjana Como Real;\n    mitjana <- (maxima + minima) / 2;\nFinFuncion\n\nProceso Temperatures\n    Definir dies, dia Como Entero;\n    Definir maxima, minima Como Real;\n    Escribir 'Quants dies vols introduir?';\n    Leer dies;\n    Para dia <- 1 Hasta dies Hacer\n        Escribir 'Màxima del dia ', dia, ':';\n        Leer maxima;\n        Escribir 'Mínima del dia ', dia, ':';\n        Leer minima;\n        Escribir 'Mitjana del dia ', dia, ': ', MitjanaDia(maxima, minima);\n    FinPara\nFinProceso",
     exp:'La funció encapsula el càlcul de la mitjana; el bucle (de l\'A1.3) la crida un cop per dia. Reutilitzem la mateixa peça moltes vegades.' }
 ];
 (function(){
