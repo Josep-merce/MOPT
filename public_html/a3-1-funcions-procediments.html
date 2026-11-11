@@ -386,7 +386,7 @@ FinProceso"></pre>
         <div class="ex-name">Què passa quan es crida?</div>
         <div class="ex-level">Nivell mitjà · seguiment (traça)</div>
       </div></div>
-      <p class="ex-intro">Segueix cada crida i tria el resultat. Vigila el pas per valor!</p>
+      <p class="ex-intro">Segueix cada crida i tria el resultat. Vigila el pas per valor i per referència!</p>
       <div id="ex2-cont"></div>
     </div>
 
@@ -436,11 +436,11 @@ document.querySelectorAll('pre[data-code]').forEach(function(pre){
 
 /* ── Exercici 1 ── */
 const E1 = [
-  { t:'Rebre dos números i tornar el més gran.', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor (el més gran): és una funció.' },
-  { t:'Escriure un títol subratllat per pantalla.', opts:['Funció','Procediment'], ans:1, exp:'Només fa una feina i no torna res: és un procediment.' },
+  { t:'Rebre un preu i un percentatge de descompte i tornar el preu final.', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor (el preu amb el descompte aplicat): és una funció.' },
+  { t:'Mostrar per pantalla el menú d\'opcions d\'un programa.', opts:['Funció','Procediment'], ans:1, exp:'Només escriu coses per pantalla i no torna res: és un procediment.' },
   { t:'Rebre un any i tornar Verdadero si és de traspàs.', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor lògic (cert/fals): és una funció.' },
-  { t:'Dibuixar una línia de guions a la pantalla.', opts:['Funció','Procediment'], ans:1, exp:'Fa una acció però no torna cap valor: procediment.' },
-  { t:'Rebre el radi i tornar l\'àrea d\'un cercle.', opts:['Funció','Procediment'], ans:0, exp:'Torna l\'àrea calculada: és una funció.' }
+  { t:'Rebre un nom i escriure «Benvingut/da, nom!» per pantalla.', opts:['Funció','Procediment'], ans:1, exp:'Fa una acció (saludar) però no torna cap valor: procediment.' },
+  { t:'Rebre una temperatura en graus Celsius i tornar-la en Fahrenheit.', opts:['Funció','Procediment'], ans:0, exp:'Torna la temperatura convertida: és una funció.' }
 ];
 (function(){
   const c = document.getElementById('ex1-cont');
@@ -454,12 +454,12 @@ const E1 = [
 
 /* ── Exercici 2 ── */
 const E2 = [
-  { code:"Funcion PasPerValor(num)\n    num <- num + 1;\nFinFuncion\n\nProceso P\n    Definir n Como Entero;\n    n <- 5;\n    PasPerValor(n);\n    Escribir n;\nFinProceso",
-    opts:['5','6'], ans:0, exp:'Per valor: la funció treballa amb una còpia, així que fora n segueix valent 5.' },
-  { code:"Funcion PasPerReferencia(num Por Referencia)\n    num <- num + 1;\nFinFuncion\n\nProceso P\n    Definir n Como Entero;\n    n <- 5;\n    PasPerReferencia(n);\n    Escribir n;\nFinProceso",
-    opts:['5','6'], ans:1, exp:'Per referència: la funció modifica l\'original, així que fora n val 6.' },
-  { code:"Funcion max <- CalcularMaxim(a, b)\n    Definir max Como Entero;\n    Si a > b Entonces\n        max <- a;\n    SiNo\n        max <- b;\n    FinSi\nFinFuncion\n\nProceso P\n    Escribir CalcularMaxim(3, 8);\nFinProceso",
-    opts:['3','8','38'], ans:1, exp:'La funció torna el més gran de 3 i 8: mostra 8.' }
+  { code:"Funcion Doblar(x)\n    x <- x * 2;\n    Escribir x;\nFinFuncion\n\nProceso P\n    Definir a Como Entero;\n    a <- 4;\n    Doblar(a);\n    Escribir a;\nFinProceso",
+    opts:['8 i després 8','8 i després 4','4 i després 4'], ans:1, exp:'Dins, x (una còpia) passa a valer 8 i es mostra. Però a va per valor, així que fora continua valent 4.' },
+  { code:"Funcion Restar(x Por Referencia, y)\n    x <- x - y;\n    y <- 0;\nFinFuncion\n\nProceso P\n    Definir a, b Como Entero;\n    a <- 10;\n    b <- 3;\n    Restar(a, b);\n    Escribir a, ' ', b;\nFinProceso",
+    opts:['10 3','7 3','7 0'], ans:1, exp:'x va per referència: a canvia i passa a 7. En canvi, y va per valor: posar-la a 0 no afecta b, que continua valent 3.' },
+  { code:"Funcion r <- Triple(n)\n    Definir r Como Entero;\n    r <- n * 3;\nFinFuncion\n\nProceso P\n    Escribir Triple(2) + Triple(1);\nFinProceso",
+    opts:['6','9','63'], ans:1, exp:'Cada crida torna un valor: Triple(2) val 6 i Triple(1) val 3. La suma és 9.' }
 ];
 (function(){
   const c = document.getElementById('ex2-cont');
@@ -482,15 +482,15 @@ function checkQ(grp,btn,i,choice){
 
 /* ── Exercici 3 ── */
 const E3 = [
-  { q:'Una funció que rep dos números i torna el més petit.',
-    code:"Funcion min <- CalcularMinim(a, b)\n    Definir min Como Entero;\n    ...\nFinFuncion",
-    exp:'Com que torna un valor, cal la variable de retorn (min) abans del nom, i s\'ha de definir dins.' },
-  { q:'Un procediment que rep un text i el mostra entre asteriscos.',
-    code:"Funcion MostrarAmbAsteriscos(text)\n    ...\nFinFuncion",
-    exp:'No torna res, així que NO porta variable de retorn: només el nom i el paràmetre.' },
-  { q:'Una funció que rep el radi i torna l\'àrea d\'un cercle.',
-    code:"Funcion area <- AreaCercle(radi)\n    Definir area Como Real;\n    area <- PI * radi^2;\nFinFuncion",
-    exp:'Torna un nombre amb decimals, per això la variable de retorn area és Real.' }
+  { q:'Una funció que rep la nota d\'un examen i torna Verdadero si està aprovat.',
+    code:"Funcion aprovat <- EsAprovat(nota)\n    Definir aprovat Como Logico;\n    ...\nFinFuncion",
+    exp:'Com que torna un valor (cert o fals), cal la variable de retorn (aprovat) abans del nom, i s\'ha de definir dins com a Logico.' },
+  { q:'Un procediment que rep un número i mostra la seva taula de multiplicar.',
+    code:"Funcion TaulaMultiplicar(num)\n    ...\nFinFuncion",
+    exp:'Només escriu la taula per pantalla i no torna res, així que NO porta variable de retorn: només el nom i el paràmetre.' },
+  { q:'Una funció que rep la base i l\'altura i torna l\'àrea d\'un triangle.',
+    code:"Funcion area <- AreaTriangle(base, altura)\n    Definir area Como Real;\n    area <- base * altura / 2;\nFinFuncion",
+    exp:'Rep dos paràmetres i torna un nombre que pot tenir decimals, per això la variable de retorn area és Real.' }
 ];
 (function(){
   const c = document.getElementById('ex3-cont');
