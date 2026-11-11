@@ -368,7 +368,7 @@ FinProceso"></pre>
   <!-- EXERCICIS -->
   <div class="ex-block-head">
     <h2 class="ex-block-title">Exercicis de demostració</h2>
-    <p class="ex-block-sub">Tres nivells · del reconeixement a la codificació · criteris 2.3 i 2.4</p>
+    <p class="ex-block-sub">Dos nivells · del reconeixement a la codificació · criteris 2.3 i 2.4</p>
   </div>
   <div class="ex-block-body">
 
@@ -383,15 +383,6 @@ FinProceso"></pre>
 
     <div class="exercise">
       <div class="ex-head"><div class="ex-num">2</div><div>
-        <div class="ex-name">Què passa quan es crida?</div>
-        <div class="ex-level">Nivell mitjà · seguiment (traça)</div>
-      </div></div>
-      <p class="ex-intro">Segueix cada crida i tria el resultat. Vigila el pas per valor i per referència!</p>
-      <div id="ex2-cont"></div>
-    </div>
-
-    <div class="exercise">
-      <div class="ex-head"><div class="ex-num">3</div><div>
         <div class="ex-name">Programa complet amb funció</div>
         <div class="ex-level">Nivell avançat · de l'enunciat al codi</div>
       </div></div>
@@ -443,27 +434,8 @@ const E1 = [
   });
 })();
 
-/* ── Exercici 2 ── */
-const E2 = [
-  { code:"Funcion Doblar(x)\n    x <- x * 2;\n    Escribir x;\nFinFuncion\n\nProceso P\n    Definir a Como Entero;\n    a <- 4;\n    Doblar(a);\n    Escribir a;\nFinProceso",
-    opts:['8 i després 8','8 i després 4','4 i després 4'], ans:1, exp:'Dins, x (una còpia) passa a valer 8 i es mostra. Però a va per valor, així que fora continua valent 4.' },
-  { code:"Funcion Restar(x Por Referencia, y)\n    x <- x - y;\n    y <- 0;\nFinFuncion\n\nProceso P\n    Definir a, b Como Entero;\n    a <- 10;\n    b <- 3;\n    Restar(a, b);\n    Escribir a, ' ', b;\nFinProceso",
-    opts:['10 3','7 3','7 0'], ans:1, exp:'x va per referència: a canvia i passa a 7. En canvi, y va per valor: posar-la a 0 no afecta b, que continua valent 3.' },
-  { code:"Funcion r <- Triple(n)\n    Definir r Como Entero;\n    r <- n * 3;\nFinFuncion\n\nProceso P\n    Escribir Triple(2) + Triple(1);\nFinProceso",
-    opts:['6','9','63'], ans:1, exp:'Cada crida torna un valor: Triple(2) val 6 i Triple(1) val 3. La suma és 9.' }
-];
-(function(){
-  const c = document.getElementById('ex2-cont');
-  E2.forEach((d,i)=>{
-    const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E2',this,${i},${j})">${o}</button>`).join('');
-    const div = document.createElement('div'); div.className='qi';
-    div.innerHTML = `<div class="qi-text">${i+1}. Què mostra el programa?</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="qi-opts">${opts}</div><div class="qi-fb" id="E2f${i}"></div>`;
-    c.appendChild(div);
-  });
-})();
-
-/* Comprovació compartida E1/E2 */
-const DATA = { E1:E1, E2:E2 };
+/* Comprovació E1 */
+const DATA = { E1:E1 };
 function checkQ(grp,btn,i,choice){
   const d = DATA[grp][i], fb = document.getElementById(grp+'f'+i);
   const btns = btn.closest('.qi-opts').querySelectorAll('.qi-btn'); btns.forEach(b=>b.disabled=true);
@@ -471,7 +443,7 @@ function checkQ(grp,btn,i,choice){
   else{ btn.classList.add('fail'); btns[d.ans].classList.add('ok'); fb.className='qi-fb fail'; fb.textContent='✗ Incorrecte. '+d.exp; }
 }
 
-/* ── Exercici 3 ── */
+/* ── Exercici 2 ── */
 const E4 = [
   { ctx:'Crea una funció Potencia(base, exponent) que torni el resultat d\'elevar la base a l\'exponent fent multiplicacions amb un bucle (sense fer servir ^). Fes un programa que demani tots dos números i mostri el resultat.',
     code:"Funcion res <- Potencia(base, exponent)\n    Definir res, i Como Entero;\n    res <- 1;\n    Para i <- 1 Hasta exponent Hacer\n        res <- res * base;\n    FinPara\nFinFuncion\n\nProceso ProvaPotencia\n    Definir b, e Como Entero;\n    Escribir 'Base:';\n    Leer b;\n    Escribir 'Exponent:';\n    Leer e;\n    Escribir b, ' elevat a ', e, ' és: ', Potencia(b, e);\nFinProceso",
