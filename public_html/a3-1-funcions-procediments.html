@@ -263,9 +263,9 @@ FinProceso"></pre>
     <div class="demo">
       <div class="demo-label">Exemple · un procediment que escriu un títol subratllat</div>
       <pre class="pseudo-out" data-code="Funcion Subratllar(text)
-    Definir posicio Como Entero;
+    Definir i Como Entero;
     Escribir text;
-    Para posicio <- 1 Hasta Longitud(text) Hacer
+    Para i <- 1 Hasta Longitud(text) Hacer
         Escribir Sin Saltar '-';
     FinPara
     Escribir '';
@@ -383,7 +383,7 @@ const E4 = [
     code:"Funcion descompte <- ImportDescompte(preu, percentatge)\n    Definir descompte Como Real;\n    descompte <- preu * percentatge / 100;\nFinFuncion\n\nFuncion preuRebaixat <- PreuFinal(preu, percentatge)\n    Definir preuRebaixat Como Real;\n    preuRebaixat <- preu - ImportDescompte(preu, percentatge);\nFinFuncion\n\nProceso Rebaixes\n    Definir preu, percentatge Como Real;\n    Escribir 'Preu original:';\n    Leer preu;\n    Escribir 'Percentatge de descompte:';\n    Leer percentatge;\n    Escribir 'Estalvi: ', ImportDescompte(preu, percentatge), ' €';\n    Escribir 'Preu final: ', PreuFinal(preu, percentatge), ' €';\nFinProceso",
     exp:'Un percentatge és dividir entre 100 i multiplicar: el 20% de 50 € és 50 * 20 / 100 = 10 €. PreuFinal reutilitza ImportDescompte en lloc de repetir el càlcul: una funció pot cridar una altra funció.' },
   { ctx:'Crea una funció MitjanaDia(maxima, minima) que torni la temperatura mitjana. El programa demana per a quants dies, i per a cada dia llegeix la màxima i la mínima i mostra la mitjana.',
-    code:"Funcion mitjana <- MitjanaDia(maxima, minima)\n    Definir mitjana Como Real;\n    mitjana <- (maxima + minima) / 2;\nFinFuncion\n\nProceso Temperatures\n    Definir dies, dia Como Entero;\n    Definir maxima, minima Como Real;\n    Escribir 'Quants dies vols introduir?';\n    Leer dies;\n    Para dia <- 1 Hasta dies Hacer\n        Escribir 'Màxima del dia ', dia, ':';\n        Leer maxima;\n        Escribir 'Mínima del dia ', dia, ':';\n        Leer minima;\n        Escribir 'Mitjana del dia ', dia, ': ', MitjanaDia(maxima, minima);\n    FinPara\nFinProceso",
+    code:"Funcion mitjana <- MitjanaDia(maxima, minima)\n    Definir mitjana Como Real;\n    mitjana <- (maxima + minima) / 2;\nFinFuncion\n\nProceso Temperatures\n    Definir dies, i Como Entero;\n    Definir maxima, minima Como Real;\n    Escribir 'Quants dies vols introduir?';\n    Leer dies;\n    Para i <- 1 Hasta dies Hacer\n        Escribir 'Màxima del dia ', i, ':';\n        Leer maxima;\n        Escribir 'Mínima del dia ', i, ':';\n        Leer minima;\n        Escribir 'Mitjana del dia ', i, ': ', MitjanaDia(maxima, minima);\n    FinPara\nFinProceso",
     exp:'La funció encapsula el càlcul de la mitjana; el bucle (de l\'A1.3) la crida un cop per dia. Reutilitzem la mateixa peça moltes vegades.' }
 ];
 (function(){
