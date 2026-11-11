@@ -295,75 +295,6 @@ FinProceso"></pre>
     </div>
   </section>
 
-  <!-- SECCIÓ 4 -->
-  <section class="section">
-    <div class="sec-head">
-      <span class="sec-num">4</span>
-      <div>
-        <h2 class="sec-title">Paràmetres i àmbit de variables</h2>
-        <p class="sec-sub">Què entra a la subrutina i què hi viu dins</p>
-      </div>
-    </div>
-    <p class="lead">
-      Les dades que una subrutina rep entre parèntesis es diuen <strong>paràmetres</strong>. I hi ha una regla
-      important: les variables que es creen dins d'una subrutina són <strong>privades</strong>, només existeixen allà
-      dins. Les del programa principal tampoc no existeixen dins de la subrutina. Això es diu <strong>àmbit</strong>.
-    </p>
-
-    <div class="ibox blue">
-      <div class="ibox-label">Per valor o per referència · l'analogia</div>
-      <div class="ibox-text">
-        Quan passes una dada a una subrutina pots fer-ho de dues maneres. <strong>Per valor</strong>: li dones una
-        <strong>fotocòpia</strong>, així que el que faci la subrutina <strong>no canvia</strong> la dada original.
-        <strong>Per referència</strong>: li dones l'<strong>original</strong>, així que els canvis <strong>sí</strong>
-        que afecten. Per defecte tot va per valor (els vectors, en canvi, van per referència).
-      </div>
-    </div>
-
-    <div class="demo">
-      <div class="demo-label">Exemple · per valor (fotocòpia)</div>
-      <pre class="pseudo-out" data-code="Funcion PasPerValor(num)
-    num <- num + 1;
-    Escribir 'Dins de la subrutina, num val: ', num;
-FinFuncion
-
-Proceso Prova
-    Definir numero Como Entero;
-    numero <- 5;
-    PasPerValor(numero);
-    Escribir 'Fora, numero encara val: ', numero;
-FinProceso"></pre>
-      <div class="exp-box">
-        <div class="exp-label">Com funciona</div>
-        <div class="exp-text">
-          Dins, <code>num</code> puja a 6 i es mostra 6. Però fora, <code>numero</code> <strong>continua valent 5</strong>:
-          la subrutina només ha treballat amb una còpia. La sortida és <code>6</code> i després <code>5</code>.
-        </div>
-      </div>
-    </div>
-
-    <div class="demo">
-      <div class="demo-label">Exemple · per referència (l'original)</div>
-      <pre class="pseudo-out" data-code="Funcion PasPerReferencia(num Por Referencia)
-    num <- num + 1;
-FinFuncion
-
-Proceso Prova
-    Definir numero Como Entero;
-    numero <- 5;
-    PasPerReferencia(numero);
-    Escribir 'Fora, numero ara val: ', numero;
-FinProceso"></pre>
-      <div class="exp-box">
-        <div class="exp-label">Com funciona</div>
-        <div class="exp-text">
-          En afegir <code>Por Referencia</code>, la subrutina treballa amb l'<strong>original</strong>. Ara el canvi sí
-          que es nota: fora, <code>numero</code> val <strong>6</strong>. La diferència amb l'exemple anterior és només aquestes
-          dues paraules.
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- EXERCICIS -->
   <div class="ex-block-head">
@@ -446,8 +377,8 @@ function checkQ(grp,btn,i,choice){
 /* ── Exercici 2 ── */
 const E4 = [
   { ctx:'Crea una funció Potencia(base, exponent) que torni el resultat d\'elevar la base a l\'exponent fent multiplicacions amb un bucle (sense fer servir ^). Fes un programa que demani tots dos números i mostri el resultat.',
-    code:"Funcion resultat <- Potencia(base, exponent)\n    Definir resultat, vegada Como Entero;\n    resultat <- 1;\n    Para vegada <- 1 Hasta exponent Hacer\n        resultat <- resultat * base;\n    FinPara\nFinFuncion\n\nProceso ProvaPotencia\n    Definir numBase, numExponent Como Entero;\n    Escribir 'Base:';\n    Leer numBase;\n    Escribir 'Exponent:';\n    Leer numExponent;\n    Escribir numBase, ' elevat a ', numExponent, ' és: ', Potencia(numBase, numExponent);\nFinProceso",
-    exp:'La variable de retorn comença a 1 i el bucle la multiplica per la base tantes vegades com indica l\'exponent. Les variables resultat i vegada són locals: només existeixen dins de la funció.' },
+    code:"Funcion resultat <- Potencia(base, exponent)\n    Definir resultat, i Como Entero;\n    resultat <- 1;\n    Para i <- 1 Hasta exponent Hacer\n        resultat <- resultat * base;\n    FinPara\nFinFuncion\n\nProceso ProvaPotencia\n    Definir numBase, numExponent Como Entero;\n    Escribir 'Base:';\n    Leer numBase;\n    Escribir 'Exponent:';\n    Leer numExponent;\n    Escribir numBase, ' elevat a ', numExponent, ' és: ', Potencia(numBase, numExponent);\nFinProceso",
+    exp:'La variable de retorn comença a 1 i el bucle la multiplica per la base tantes vegades com indica l\'exponent.' },
   { ctx:'Crea dues funcions, ImportDescompte(preu, percentatge), que torni quants euros es descompten, i PreuFinal(preu, percentatge), que torni el preu un cop aplicat el descompte. Fes un programa que llegeixi el preu i el percentatge i mostri totes dues coses.',
     code:"Funcion descompte <- ImportDescompte(preu, percentatge)\n    Definir descompte Como Real;\n    descompte <- preu * percentatge / 100;\nFinFuncion\n\nFuncion preuRebaixat <- PreuFinal(preu, percentatge)\n    Definir preuRebaixat Como Real;\n    preuRebaixat <- preu - ImportDescompte(preu, percentatge);\nFinFuncion\n\nProceso Rebaixes\n    Definir preu, percentatge Como Real;\n    Escribir 'Preu original:';\n    Leer preu;\n    Escribir 'Percentatge de descompte:';\n    Leer percentatge;\n    Escribir 'Estalvi: ', ImportDescompte(preu, percentatge), ' €';\n    Escribir 'Preu final: ', PreuFinal(preu, percentatge), ' €';\nFinProceso",
     exp:'Un percentatge és dividir entre 100 i multiplicar: el 20% de 50 € és 50 * 20 / 100 = 10 €. PreuFinal reutilitza ImportDescompte en lloc de repetir el càlcul: una funció pot cridar una altra funció.' },
