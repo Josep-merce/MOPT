@@ -275,10 +275,10 @@ FinProceso"></pre>
 
     <div class="demo">
       <div class="demo-label">Exemple · un procediment que escriu un títol subratllat</div>
-      <pre class="pseudo-out" data-code="Funcion Subratllar(text)
+      <pre class="pseudo-out" data-code="Funcion Subratllar(text, llargada)
     Definir i Como Entero;
     Escribir text;
-    Para i <- 1 Hasta Longitud(text) Hacer
+    Para i <- 1 Hasta llargada Hacer
         Escribir Sin Saltar '-';
     FinPara
     Escribir '';
@@ -287,23 +287,16 @@ FinFuncion
 Proceso Titols
     Definir titol Como Caracter;
     titol <- 'Exercici 1';
-    Subratllar(titol);
+    Subratllar(titol, 10);
 FinProceso"></pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona</div>
         <div class="exp-text">
-          <code>Subratllar</code> no té variable de retorn: és un <strong>procediment</strong>. Escriu el text i, a sota,
-          una línia de guions tan llarga com el text. El cridem amb <code>Subratllar(titol);</code> com una instrucció
+          <code>Subratllar</code> no té variable de retorn: és un <strong>procediment</strong>. Rep dues dades: el text i
+          quants guions volem a sota (<code>llargada</code>). Escriu el text i, amb un bucle <code>Para</code>, tants guions
+          com indica <code>llargada</code>. El cridem amb <code>Subratllar(titol, 10);</code> com una instrucció
           qualsevol, sense desar res. Mostraria <code>Exercici 1</code> i, a sota, <code>----------</code>.
         </div>
-      </div>
-    </div>
-
-    <div class="ibox yellow">
-      <div class="ibox-label">Eina nova · <code>Longitud()</code></div>
-      <div class="ibox-text">
-        <code>Longitud(text)</code> és una funció que ja ve feta a PSeInt: et torna <strong>quants caràcters</strong> té
-        un text. Aquí la fem servir perquè la línia de guions tingui la mateixa llargada que el títol.
       </div>
     </div>
   </section>
