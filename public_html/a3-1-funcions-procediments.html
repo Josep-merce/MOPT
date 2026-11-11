@@ -383,12 +383,15 @@ function checkQ(grp,btn,i,choice){
 /* ── Exercici 2 ── */
 const E4 = [
   { ctx:'Crea una funció Potencia(base, exponent) que torni el resultat d\'elevar la base a l\'exponent fent multiplicacions amb un bucle (sense fer servir ^). Fes un programa que demani tots dos números i mostri el resultat.',
+    run:"Base:\n> 2\nExponent:\n> 5\n2 elevat a 5 és: 32\n\n--- i si l'exponent és 0 ---\nBase:\n> 7\nExponent:\n> 0\n7 elevat a 0 és: 1",
     code:"Funcion resultat <- Potencia(base, exponent)\n    Definir resultat, i Como Entero;\n    resultat <- 1;\n    Para i <- 1 Hasta exponent Hacer\n        resultat <- resultat * base;\n    FinPara\nFinFuncion\n\nProceso ProvaPotencia\n    Definir numBase, numExponent Como Entero;\n    Escribir 'Base:';\n    Leer numBase;\n    Escribir 'Exponent:';\n    Leer numExponent;\n    Escribir numBase, ' elevat a ', numExponent, ' és: ', Potencia(numBase, numExponent);\nFinProceso",
     exp:'La variable de retorn comença a 1 i el bucle la multiplica per la base tantes vegades com indica l\'exponent.' },
   { ctx:'Crea dues funcions, ImportDescompte(preu, percentatge), que torni quants euros es descompten, i PreuFinal(preu, percentatge), que torni el preu un cop aplicat el descompte. Fes un programa que llegeixi el preu i el percentatge i mostri totes dues coses.',
+    run:"Preu original:\n> 50\nPercentatge de descompte:\n> 20\nEstalvi: 10 €\nPreu final: 40 €",
     code:"Funcion descompte <- ImportDescompte(preu, percentatge)\n    Definir descompte Como Real;\n    descompte <- preu * percentatge / 100;\nFinFuncion\n\nFuncion preuRebaixat <- PreuFinal(preu, percentatge)\n    Definir preuRebaixat Como Real;\n    preuRebaixat <- preu - ImportDescompte(preu, percentatge);\nFinFuncion\n\nProceso Rebaixes\n    Definir preu, percentatge Como Real;\n    Escribir 'Preu original:';\n    Leer preu;\n    Escribir 'Percentatge de descompte:';\n    Leer percentatge;\n    Escribir 'Estalvi: ', ImportDescompte(preu, percentatge), ' €';\n    Escribir 'Preu final: ', PreuFinal(preu, percentatge), ' €';\nFinProceso",
     exp:'Un percentatge és dividir entre 100 i multiplicar: el 20% de 50 € és 50 * 20 / 100 = 10 €. PreuFinal reutilitza ImportDescompte en lloc de repetir el càlcul: una funció pot cridar una altra funció.' },
   { ctx:'Crea una funció MitjanaDia(maxima, minima) que torni la temperatura mitjana. El programa demana per a quants dies, i per a cada dia llegeix la màxima i la mínima i mostra la mitjana.',
+    run:"Quants dies vols introduir?\n> 2\nMàxima del dia 1:\n> 18\nMínima del dia 1:\n> 10\nMitjana del dia 1: 14\nMàxima del dia 2:\n> 21\nMínima del dia 2:\n> 12\nMitjana del dia 2: 16.5",
     code:"Funcion mitjana <- MitjanaDia(maxima, minima)\n    Definir mitjana Como Real;\n    mitjana <- (maxima + minima) / 2;\nFinFuncion\n\nProceso Temperatures\n    Definir dies, i Como Entero;\n    Definir maxima, minima Como Real;\n    Escribir 'Quants dies vols introduir?';\n    Leer dies;\n    Para i <- 1 Hasta dies Hacer\n        Escribir 'Màxima del dia ', i, ':';\n        Leer maxima;\n        Escribir 'Mínima del dia ', i, ':';\n        Leer minima;\n        Escribir 'Mitjana del dia ', i, ': ', MitjanaDia(maxima, minima);\n    FinPara\nFinProceso",
     exp:'La funció encapsula el càlcul de la mitjana; el bucle (de l\'A1.3) la crida un cop per dia. Reutilitzem la mateixa peça moltes vegades.' }
 ];
@@ -396,11 +399,12 @@ const E4 = [
   const c = document.getElementById('ex4-cont');
   E4.forEach((d,i)=>{
     const div = document.createElement('div'); div.className='ri';
-    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><button class="ri-btn" onclick="reveal(this,'E4a${i}')" data-txt="codi PSeInt">▶ Mostrar codi PSeInt</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
+    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}${d.run ? `<div class="demo-label" style="margin-top:12px;">El programa ha de mostrar (exemple d'execució)</div><pre class="pseudo-out" style="margin:6px 0 4px;">${escHtml(d.run)}</pre>` : ''}</div><button class="ri-btn" onclick="reveal(this,'E4a${i}')" data-txt="codi PSeInt">▶ Mostrar codi PSeInt</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
     c.appendChild(div);
   });
 })();
 
+function escHtml(t){ return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function reveal(btn, id) { var el = document.getElementById(id); var open = el.classList.toggle('show'); var txt = btn.dataset.txt || 'solució'; btn.innerHTML = open ? '&#9660; Amagar ' + txt : '&#9654; Mostrar ' + txt; }
 </script>
 </body>

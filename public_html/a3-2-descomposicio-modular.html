@@ -240,6 +240,32 @@ Proceso Conversor
         FinSegun
     Hasta Que opcio = 3
 FinProceso"></pre>
+      <div class="demo-label" style="margin-top:12px;">El programa ha de mostrar (exemple d'execució)</div>
+      <pre class="pseudo-out" style="margin:6px 0 4px;">--- CONVERSOR DE MONEDES ---
+1. Euros a dòlars
+2. Euros a lliures
+3. Sortir
+Tria una opció:
+&gt; 1
+Quants euros?
+&gt; 20
+20 euros són 22 dòlars
+--- CONVERSOR DE MONEDES ---
+1. Euros a dòlars
+2. Euros a lliures
+3. Sortir
+Tria una opció:
+&gt; 2
+Quants euros?
+&gt; 100
+100 euros són 85 lliures
+--- CONVERSOR DE MONEDES ---
+1. Euros a dòlars
+2. Euros a lliures
+3. Sortir
+Tria una opció:
+&gt; 3
+Adéu!</pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona, pas a pas</div>
         <div class="exp-text">
@@ -329,6 +355,10 @@ Proceso ProvaFactorial
     Leer numero;
     Escribir 'El factorial és: ', Factorial(numero);
 FinProceso"></pre>
+      <div class="demo-label" style="margin-top:12px;">El programa ha de mostrar (exemple d'execució)</div>
+      <pre class="pseudo-out" style="margin:6px 0 4px;">Escriu un número:
+&gt; 4
+El factorial és: 24</pre>
       <div class="exp-box">
         <div class="exp-label">Com funciona · seguim Factorial(3)</div>
         <div class="steps">
@@ -494,9 +524,11 @@ const E3 = [
 /* ── Exercici 4 ── */
 const E4 = [
   { ctx:'Crea una funció CalcularMCD(num1, num2) que torni el màxim comú divisor pel mètode d\'Euclides (anar dividint i quedar-se amb el residu fins que sigui 0). Fes un programa que llegeixi dos números i mostri el MCD.',
+    run:"Escriu dos números:\n> 12\n> 18\nEl MCD és: 6",
     code:"Funcion mcd <- CalcularMCD(num1, num2)\n    Definir mcd, resta Como Entero;\n    Mientras num2 <> 0 Hacer\n        resta <- num1 mod num2;\n        num1 <- num2;\n        num2 <- resta;\n    FinMientras\n    mcd <- num1;\nFinFuncion\n\nProceso ProgramaMCD\n    Definir primer, segon Como Entero;\n    Escribir 'Escriu dos números:';\n    Leer primer;\n    Leer segon;\n    Escribir 'El MCD és: ', CalcularMCD(primer, segon);\nFinProceso",
     exp:'Euclides: mentre el segon no sigui 0, ens quedem amb el residu (num1 mod num2) i avancem. Quan num2 arriba a 0, el MCD és num1. Reutilitza el mod i el <> de l\'A1.3.' },
   { ctx:'Crea una funció MitjanaNotes(nota1, nota2, nota3) que torni la mitjana de tres notes i un procediment MostrarQualificacio(nota) que escrigui Suspès (menys de 5), Aprovat (menys de 7), Notable (menys de 9) o Excel·lent. El programa demana quants alumnes hi ha i, per a cada alumne, llegeix les tres notes i mostra la mitjana i la qualificació.',
+    run:"Quants alumnes hi ha?\n> 2\nAlumne 1: escriu les tres notes\n> 5\n> 6\n> 7\nMitjana: 6\nAprovat\nAlumne 2: escriu les tres notes\n> 9\n> 8\n> 10\nMitjana: 9\nExcel·lent",
     code:"Funcion mitjana <- MitjanaNotes(nota1, nota2, nota3)\n    Definir mitjana Como Real;\n    mitjana <- (nota1 + nota2 + nota3) / 3;\nFinFuncion\n\nFuncion MostrarQualificacio(nota)\n    Si nota < 5 Entonces\n        Escribir 'Suspès';\n    SiNo\n        Si nota < 7 Entonces\n            Escribir 'Aprovat';\n        SiNo\n            Si nota < 9 Entonces\n                Escribir 'Notable';\n            SiNo\n                Escribir 'Excel·lent';\n            FinSi\n        FinSi\n    FinSi\nFinFuncion\n\nProceso Butlleti\n    Definir alumnes, i Como Entero;\n    Definir nota1, nota2, nota3, mitjana Como Real;\n    Escribir 'Quants alumnes hi ha?';\n    Leer alumnes;\n    Para i <- 1 Hasta alumnes Hacer\n        Escribir 'Alumne ', i, ': escriu les tres notes';\n        Leer nota1;\n        Leer nota2;\n        Leer nota3;\n        mitjana <- MitjanaNotes(nota1, nota2, nota3);\n        Escribir 'Mitjana: ', mitjana;\n        MostrarQualificacio(mitjana);\n    FinPara\nFinProceso",
     exp:'Una funció per calcular (torna la mitjana) i un procediment per mostrar (escriu la qualificació). Abans de muntar el bucle, valida-les per separat: MitjanaNotes(5, 6, 7) ha de tornar 6 i MostrarQualificacio(8) ha d\'escriure Notable.' }
 ];
@@ -504,11 +536,12 @@ const E4 = [
   const c = document.getElementById('ex4-cont');
   E4.forEach((d,i)=>{
     const div = document.createElement('div'); div.className='ri';
-    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}</div><button class="ri-btn" onclick="reveal(this,'E4a${i}')" data-txt="codi PSeInt">▶ Mostrar codi PSeInt</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
+    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.ctx}${d.run ? `<div class="demo-label" style="margin-top:12px;">El programa ha de mostrar (exemple d'execució)</div><pre class="pseudo-out" style="margin:6px 0 4px;">${escHtml(d.run)}</pre>` : ''}</div><button class="ri-btn" onclick="reveal(this,'E4a${i}')" data-txt="codi PSeInt">▶ Mostrar codi PSeInt</button></div><div class="ri-ans" id="E4a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
     c.appendChild(div);
   });
 })();
 
+function escHtml(t){ return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function reveal(btn, id) { var el = document.getElementById(id); var open = el.classList.toggle('show'); var txt = btn.dataset.txt || 'solució'; btn.innerHTML = open ? '&#9660; Amagar ' + txt : '&#9654; Mostrar ' + txt; }
 </script>
 </body>
