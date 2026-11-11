@@ -369,30 +369,12 @@ FinFuncion"></pre>
   <!-- EXERCICIS -->
   <div class="ex-block-head">
     <h2 class="ex-block-title">Exercicis de demostració</h2>
-    <p class="ex-block-sub">Tres nivells · del reconeixement a la codificació · criteris 2.3, 2.4 i 2.5</p>
+    <p class="ex-block-sub">Nivell avançat · de l'enunciat al codi · criteris 2.3, 2.4 i 2.5</p>
   </div>
   <div class="ex-block-body">
 
     <div class="exercise">
       <div class="ex-head"><div class="ex-num">1</div><div>
-        <div class="ex-name">Funció o procediment dins del programa?</div>
-        <div class="ex-level">Nivell bàsic · disseny de les peces</div>
-      </div></div>
-      <p class="ex-intro">Per a cada peça d'un programa modular, decideix si convé que sigui funció (torna un valor) o procediment (fa una feina).</p>
-      <div id="ex1-cont"></div>
-    </div>
-
-    <div class="exercise">
-      <div class="ex-head"><div class="ex-num">2</div><div>
-        <div class="ex-name">Reparteix el problema</div>
-        <div class="ex-level">Nivell mitjà · descomposició</div>
-      </div></div>
-      <p class="ex-intro">Dissenya les capçaleres de les subrutines que faries servir per a cada programa. Després compara.</p>
-      <div id="ex3-cont"></div>
-    </div>
-
-    <div class="exercise">
-      <div class="ex-head"><div class="ex-num">3</div><div>
         <div class="ex-name">Programa modular complet</div>
         <div class="ex-level">Nivell avançat · de l'enunciat al codi</div>
       </div></div>
@@ -426,29 +408,9 @@ document.querySelectorAll('pre[data-code]').forEach(function(pre){
   pre.innerHTML = colorPseudo(pre.getAttribute('data-code'));
 });
 
-/* ── Exercici 1 ── */
-const E1 = [
-  { t:'En un joc de daus: una peça que torna un número a l\'atzar de l\'1 al 6.', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor (el número que ha sortit): funció.' },
-  { t:'En un joc de dos jugadors: una peça que mostra per pantalla el marcador de tots dos.', opts:['Funció','Procediment'], ans:1, exp:'Només ensenya els punts, no torna res: procediment.' },
-  { t:'En una botiga: una peça que rep el preu d\'un producte i la quantitat i torna l\'import total.', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor (l\'import a pagar): funció.' },
-  { t:'En una aplicació del temps: una peça que rep una temperatura i torna Verdadero si està glaçant (menys de 0 graus).', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor lògic (cert/fals): funció.' },
-  { t:'En una botiga: una peça que imprimeix el tiquet de compra amb el total.', opts:['Funció','Procediment'], ans:1, exp:'La seva feina és escriure el tiquet; no torna cap valor: procediment.' }
-];
-(function(){
-  const c = document.getElementById('ex1-cont');
-  E1.forEach((d,i)=>{
-    const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E1',this,${i},${j})">${o}</button>`).join('');
-    const div = document.createElement('div'); div.className='qi';
-    div.innerHTML = `<div class="qi-text">${i+1}. ${d.t}</div><div class="qi-opts">${opts}</div><div class="qi-fb" id="E1f${i}"></div>`;
-    c.appendChild(div);
-  });
-})();
-
 /* ── Exercici 2 ── */
 const E2 = [
-  { t:'Quant val SumaFins(4)?', opts:['10','24','4'], ans:0, exp:'4 + SumaFins(3) = 4 + 3 + SumaFins(2) = 4 + 3 + 2 + 1 = 10. Compte: suma, no multiplica com el factorial.' },
-  { t:'Quin és el cas base de SumaFins?', opts:['num = 1','num = 4','num > 1'], ans:0, exp:'Quan num val 1, la funció torna 1 directament i ja no es crida més.' },
-  { t:'Quantes vegades s\'executa SumaFins en total si al programa principal fem SumaFins(3)?', opts:['1','3','6'], ans:1, exp:'SumaFins(3) crida SumaFins(2), que crida SumaFins(1): tres execucions. La darrera és el cas base.' }
+  { t:'Quant val SumaFins(4)?', opts:['10','24','4'], ans:0, exp:'4 + SumaFins(3) = 4 + 3 + SumaFins(2) = 4 + 3 + 2 + 1 = 10. Compte: suma, no multiplica com el factorial.' }
 ];
 (function(){
   const c = document.getElementById('ex2-cont');
@@ -460,32 +422,14 @@ const E2 = [
   });
 })();
 
-/* Comprovació compartida E1/E2 */
-const DATA = { E1:E1, E2:E2 };
+/* Comprovació E2 */
+const DATA = { E2:E2 };
 function checkQ(grp,btn,i,choice){
   const d = DATA[grp][i], fb = document.getElementById(grp+'f'+i);
   const btns = btn.closest('.qi-opts').querySelectorAll('.qi-btn'); btns.forEach(b=>b.disabled=true);
   if(choice===d.ans){ btn.classList.add('ok'); fb.className='qi-fb ok'; fb.textContent='✓ Correcte! '+d.exp; }
   else{ btn.classList.add('fail'); btns[d.ans].classList.add('ok'); fb.className='qi-fb fail'; fb.textContent='✗ Incorrecte. '+d.exp; }
 }
-
-/* ── Exercici 3 ── */
-const E3 = [
-  { q:'Un caixer automàtic: mostra el saldo, permet ingressar diners i permet treure\'n, però sense deixar mai el compte en negatiu.',
-    code:"Funcion MostrarSaldo(saldo)                     // procediment (ensenya el saldo)\nFuncion nouSaldo <- Ingressar(saldo, quantitat)  // funció (torna el saldo nou)\nFuncion nouSaldo <- Treure(saldo, quantitat)     // funció (torna el saldo nou o el mateix si no n'hi ha prou)",
-    exp:'Mostrar és una feina sense resultat: procediment. Ingressar i Treure calculen un saldo nou i el tornen: funcions. El programa principal desa el que tornen a la variable saldo.' },
-  { q:'Una votació a classe amb tres opcions: llegeix el vot de cada alumne, rebutja els vots que no siguin 1, 2 o 3 i al final anuncia l\'opció guanyadora.',
-    code:"Funcion MostrarOpcions()                          // procediment (ensenya les tres opcions)\nFuncion valid <- VotValid(vot)                     // funció (torna Verdadero si el vot és 1, 2 o 3)\nFuncion MostrarGuanyador(vots1, vots2, vots3)      // procediment (compara i anuncia el guanyador)",
-    exp:'VotValid torna un valor lògic que el programa principal fa servir en un Si: funció. Les altres dues peces només mostren coses: procediments. El recompte el pot fer el principal amb tres comptadors.' }
-];
-(function(){
-  const c = document.getElementById('ex3-cont');
-  E3.forEach((d,i)=>{
-    const div = document.createElement('div'); div.className='ri';
-    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.q}</div><button class="ri-btn" onclick="reveal(this,'E3a${i}')" data-txt="proposta">▶ Mostrar proposta</button></div><div class="ri-ans" id="E3a${i}"><div class="ri-ans-label">Subrutines proposades</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
-    c.appendChild(div);
-  });
-})();
 
 /* ── Exercici 4 ── */
 const E4 = [
