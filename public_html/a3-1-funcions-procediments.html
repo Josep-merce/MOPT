@@ -211,12 +211,12 @@
 FinFuncion
 
 Proceso ProvaMaxim
-    Definir a, b, resultat Como Entero;
+    Definir primer, segon, resultat Como Entero;
     Escribir 'Escriu el primer número:';
-    Leer a;
+    Leer primer;
     Escribir 'Escriu el segon número:';
-    Leer b;
-    resultat <- CalcularMaxim(a, b);
+    Leer segon;
+    resultat <- CalcularMaxim(primer, segon);
     Escribir 'El més gran és: ', resultat;
 FinProceso"></pre>
       <div class="exp-box">
@@ -224,8 +224,8 @@ FinProceso"></pre>
         <div class="exp-text">
           La funció rep dos números (<code>num1</code> i <code>num2</code>), decideix quin és el més gran i el guarda a
           <code>max</code>, que és la <strong>variable de retorn</strong> (té el mateix nom que apareix abans de la fletxa).
-          Al programa principal cridem <code>CalcularMaxim(a, b)</code> <strong>com si fos un valor</strong> i el desem a
-          <code>resultat</code>. Així, si <code>a = 3</code> i <code>b = 8</code>, <code>resultat</code> val 8.
+          Al programa principal cridem <code>CalcularMaxim(primer, segon)</code> <strong>com si fos un valor</strong> i el desem a
+          <code>resultat</code>. Així, si <code>primer = 3</code> i <code>segon = 8</code>, <code>resultat</code> val 8.
         </div>
       </div>
     </div>
@@ -234,8 +234,8 @@ FinProceso"></pre>
       <div class="ibox-label">On es crida una funció</div>
       <div class="ibox-text">
         Com que torna un valor, una funció es fa servir <strong>allà on hi aniria un valor</strong>: en una assignació
-        (<code>r &lt;- CalcularMaxim(a, b);</code>) o directament dins d'un <code>Escribir</code>
-        (<code>Escribir CalcularMaxim(a, b);</code>).
+        (<code>resultat &lt;- CalcularMaxim(primer, segon);</code>) o directament dins d'un <code>Escribir</code>
+        (<code>Escribir CalcularMaxim(primer, segon);</code>).
       </div>
     </div>
   </section>
@@ -295,80 +295,11 @@ FinProceso"></pre>
     </div>
   </section>
 
-  <!-- SECCIÓ 4 -->
-  <section class="section">
-    <div class="sec-head">
-      <span class="sec-num">4</span>
-      <div>
-        <h2 class="sec-title">Paràmetres i àmbit de variables</h2>
-        <p class="sec-sub">Què entra a la subrutina i què hi viu dins</p>
-      </div>
-    </div>
-    <p class="lead">
-      Les dades que una subrutina rep entre parèntesis es diuen <strong>paràmetres</strong>. I hi ha una regla
-      important: les variables que es creen dins d'una subrutina són <strong>privades</strong>, només existeixen allà
-      dins. Les del programa principal tampoc no existeixen dins de la subrutina. Això es diu <strong>àmbit</strong>.
-    </p>
-
-    <div class="ibox blue">
-      <div class="ibox-label">Per valor o per referència · l'analogia</div>
-      <div class="ibox-text">
-        Quan passes una dada a una subrutina pots fer-ho de dues maneres. <strong>Per valor</strong>: li dones una
-        <strong>fotocòpia</strong>, així que el que faci la subrutina <strong>no canvia</strong> la dada original.
-        <strong>Per referència</strong>: li dones l'<strong>original</strong>, així que els canvis <strong>sí</strong>
-        que afecten. Per defecte tot va per valor (els vectors, en canvi, van per referència).
-      </div>
-    </div>
-
-    <div class="demo">
-      <div class="demo-label">Exemple · per valor (fotocòpia)</div>
-      <pre class="pseudo-out" data-code="Funcion PasPerValor(num)
-    num <- num + 1;
-    Escribir 'Dins de la subrutina, num val: ', num;
-FinFuncion
-
-Proceso Prova
-    Definir n Como Entero;
-    n <- 5;
-    PasPerValor(n);
-    Escribir 'Fora, n encara val: ', n;
-FinProceso"></pre>
-      <div class="exp-box">
-        <div class="exp-label">Com funciona</div>
-        <div class="exp-text">
-          Dins, <code>num</code> puja a 6 i es mostra 6. Però fora, <code>n</code> <strong>continua valent 5</strong>:
-          la subrutina només ha treballat amb una còpia. La sortida és <code>6</code> i després <code>5</code>.
-        </div>
-      </div>
-    </div>
-
-    <div class="demo">
-      <div class="demo-label">Exemple · per referència (l'original)</div>
-      <pre class="pseudo-out" data-code="Funcion PasPerReferencia(num Por Referencia)
-    num <- num + 1;
-FinFuncion
-
-Proceso Prova
-    Definir n Como Entero;
-    n <- 5;
-    PasPerReferencia(n);
-    Escribir 'Fora, n ara val: ', n;
-FinProceso"></pre>
-      <div class="exp-box">
-        <div class="exp-label">Com funciona</div>
-        <div class="exp-text">
-          En afegir <code>Por Referencia</code>, la subrutina treballa amb l'<strong>original</strong>. Ara el canvi sí
-          que es nota: fora, <code>n</code> val <strong>6</strong>. La diferència amb l'exemple anterior és només aquestes
-          dues paraules.
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- EXERCICIS -->
   <div class="ex-block-head">
     <h2 class="ex-block-title">Exercicis de demostració</h2>
-    <p class="ex-block-sub">Quatre nivells · del reconeixement a la codificació · criteris 2.3 i 2.4</p>
+    <p class="ex-block-sub">Dos nivells · del reconeixement a la codificació · criteris 2.3 i 2.4</p>
   </div>
   <div class="ex-block-body">
 
@@ -383,24 +314,6 @@ FinProceso"></pre>
 
     <div class="exercise">
       <div class="ex-head"><div class="ex-num">2</div><div>
-        <div class="ex-name">Què passa quan es crida?</div>
-        <div class="ex-level">Nivell mitjà · seguiment (traça)</div>
-      </div></div>
-      <p class="ex-intro">Segueix cada crida i tria el resultat. Vigila el pas per valor!</p>
-      <div id="ex2-cont"></div>
-    </div>
-
-    <div class="exercise">
-      <div class="ex-head"><div class="ex-num">3</div><div>
-        <div class="ex-name">Escriu la capçalera</div>
-        <div class="ex-level">Nivell mitjà · dissenyar la subrutina</div>
-      </div></div>
-      <p class="ex-intro">Escriu només la primera línia (la capçalera) de la subrutina que es demana. Després compara.</p>
-      <div id="ex3-cont"></div>
-    </div>
-
-    <div class="exercise">
-      <div class="ex-head"><div class="ex-num">4</div><div>
         <div class="ex-name">Programa complet amb funció</div>
         <div class="ex-level">Nivell avançat · de l'enunciat al codi</div>
       </div></div>
@@ -436,11 +349,11 @@ document.querySelectorAll('pre[data-code]').forEach(function(pre){
 
 /* ── Exercici 1 ── */
 const E1 = [
-  { t:'Rebre dos números i tornar el més gran.', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor (el més gran): és una funció.' },
-  { t:'Escriure un títol subratllat per pantalla.', opts:['Funció','Procediment'], ans:1, exp:'Només fa una feina i no torna res: és un procediment.' },
+  { t:'Rebre els minuts i tornar quantes hores completes són.', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor (les hores calculades): és una funció.' },
+  { t:'Mostrar per pantalla el menú d\'opcions d\'un programa.', opts:['Funció','Procediment'], ans:1, exp:'Només escriu coses per pantalla i no torna res: és un procediment.' },
   { t:'Rebre un any i tornar Verdadero si és de traspàs.', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor lògic (cert/fals): és una funció.' },
-  { t:'Dibuixar una línia de guions a la pantalla.', opts:['Funció','Procediment'], ans:1, exp:'Fa una acció però no torna cap valor: procediment.' },
-  { t:'Rebre el radi i tornar l\'àrea d\'un cercle.', opts:['Funció','Procediment'], ans:0, exp:'Torna l\'àrea calculada: és una funció.' }
+  { t:'Rebre un nom i escriure «Benvingut/da, nom!» per pantalla.', opts:['Funció','Procediment'], ans:1, exp:'Fa una acció (saludar) però no torna cap valor: procediment.' },
+  { t:'Rebre una temperatura en graus Celsius i tornar-la en Fahrenheit.', opts:['Funció','Procediment'], ans:0, exp:'Torna la temperatura convertida: és una funció.' }
 ];
 (function(){
   const c = document.getElementById('ex1-cont');
@@ -452,27 +365,8 @@ const E1 = [
   });
 })();
 
-/* ── Exercici 2 ── */
-const E2 = [
-  { code:"Funcion PasPerValor(num)\n    num <- num + 1;\nFinFuncion\n\nProceso P\n    Definir n Como Entero;\n    n <- 5;\n    PasPerValor(n);\n    Escribir n;\nFinProceso",
-    opts:['5','6'], ans:0, exp:'Per valor: la funció treballa amb una còpia, així que fora n segueix valent 5.' },
-  { code:"Funcion PasPerReferencia(num Por Referencia)\n    num <- num + 1;\nFinFuncion\n\nProceso P\n    Definir n Como Entero;\n    n <- 5;\n    PasPerReferencia(n);\n    Escribir n;\nFinProceso",
-    opts:['5','6'], ans:1, exp:'Per referència: la funció modifica l\'original, així que fora n val 6.' },
-  { code:"Funcion max <- CalcularMaxim(a, b)\n    Definir max Como Entero;\n    Si a > b Entonces\n        max <- a;\n    SiNo\n        max <- b;\n    FinSi\nFinFuncion\n\nProceso P\n    Escribir CalcularMaxim(3, 8);\nFinProceso",
-    opts:['3','8','38'], ans:1, exp:'La funció torna el més gran de 3 i 8: mostra 8.' }
-];
-(function(){
-  const c = document.getElementById('ex2-cont');
-  E2.forEach((d,i)=>{
-    const opts = d.opts.map((o,j)=>`<button class="qi-btn" onclick="checkQ('E2',this,${i},${j})">${o}</button>`).join('');
-    const div = document.createElement('div'); div.className='qi';
-    div.innerHTML = `<div class="qi-text">${i+1}. Què mostra el programa?</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="qi-opts">${opts}</div><div class="qi-fb" id="E2f${i}"></div>`;
-    c.appendChild(div);
-  });
-})();
-
-/* Comprovació compartida E1/E2 */
-const DATA = { E1:E1, E2:E2 };
+/* Comprovació E1 */
+const DATA = { E1:E1 };
 function checkQ(grp,btn,i,choice){
   const d = DATA[grp][i], fb = document.getElementById(grp+'f'+i);
   const btns = btn.closest('.qi-opts').querySelectorAll('.qi-btn'); btns.forEach(b=>b.disabled=true);
@@ -480,37 +374,16 @@ function checkQ(grp,btn,i,choice){
   else{ btn.classList.add('fail'); btns[d.ans].classList.add('ok'); fb.className='qi-fb fail'; fb.textContent='✗ Incorrecte. '+d.exp; }
 }
 
-/* ── Exercici 3 ── */
-const E3 = [
-  { q:'Una funció que rep dos números i torna el més petit.',
-    code:"Funcion min <- CalcularMinim(a, b)\n    Definir min Como Entero;\n    ...\nFinFuncion",
-    exp:'Com que torna un valor, cal la variable de retorn (min) abans del nom, i s\'ha de definir dins.' },
-  { q:'Un procediment que rep un text i el mostra entre asteriscos.',
-    code:"Funcion MostrarAmbAsteriscos(text)\n    ...\nFinFuncion",
-    exp:'No torna res, així que NO porta variable de retorn: només el nom i el paràmetre.' },
-  { q:'Una funció que rep el radi i torna l\'àrea d\'un cercle.',
-    code:"Funcion area <- AreaCercle(radi)\n    Definir area Como Real;\n    area <- PI * radi^2;\nFinFuncion",
-    exp:'Torna un nombre amb decimals, per això la variable de retorn area és Real.' }
-];
-(function(){
-  const c = document.getElementById('ex3-cont');
-  E3.forEach((d,i)=>{
-    const div = document.createElement('div'); div.className='ri';
-    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.q}</div><button class="ri-btn" onclick="reveal(this,'E3a${i}')" data-txt="capçalera">▶ Mostrar capçalera</button></div><div class="ri-ans" id="E3a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
-    c.appendChild(div);
-  });
-})();
-
-/* ── Exercici 4 ── */
+/* ── Exercici 2 ── */
 const E4 = [
-  { ctx:'Crea una funció EsMultiple(a, b) que torni Verdadero si a és múltiple de b. Fes un programa que demani dos números i digui si un és múltiple de l\'altre.',
-    code:"Funcion res <- EsMultiple(a, b)\n    Definir res Como Logico;\n    Si a mod b = 0 Entonces\n        res <- Verdadero;\n    SiNo\n        res <- Falso;\n    FinSi\nFinFuncion\n\nProceso Multiples\n    Definir x, z Como Entero;\n    Escribir 'Escriu dos números:';\n    Leer x;\n    Leer z;\n    Si EsMultiple(x, z) O EsMultiple(z, x) Entonces\n        Escribir 'Un dels dos és múltiple';\n    SiNo\n        Escribir 'Cap és múltiple';\n    FinSi\nFinProceso",
-    exp:'a mod b = 0 vol dir que la divisió és exacta (a és múltiple de b). Provem les dues direccions amb O perquè en val qualsevol.' },
-  { ctx:'Crea dues funcions, AreaCercle(radi) i PerimetreCercle(radi), i un programa que llegeixi el radi i mostri totes dues coses.',
-    code:"Funcion a <- AreaCercle(radi)\n    Definir a Como Real;\n    a <- PI * radi^2;\nFinFuncion\n\nFuncion p <- PerimetreCercle(radi)\n    Definir p Como Real;\n    p <- 2 * PI * radi;\nFinFuncion\n\nProceso Cercle\n    Definir radi Como Real;\n    Escribir 'Escriu el radi:';\n    Leer radi;\n    Escribir 'Àrea: ', AreaCercle(radi);\n    Escribir 'Perímetre: ', PerimetreCercle(radi);\nFinProceso",
-    exp:'Com que una funció torna un sol valor, fem una funció per a cada càlcul. Les cridem directament dins de l\'Escribir.' },
+  { ctx:'Crea una funció Potencia(base, exponent) que torni el resultat d\'elevar la base a l\'exponent fent multiplicacions amb un bucle (sense fer servir ^). Fes un programa que demani tots dos números i mostri el resultat.',
+    code:"Funcion resultat <- Potencia(base, exponent)\n    Definir resultat, i Como Entero;\n    resultat <- 1;\n    Para i <- 1 Hasta exponent Hacer\n        resultat <- resultat * base;\n    FinPara\nFinFuncion\n\nProceso ProvaPotencia\n    Definir numBase, numExponent Como Entero;\n    Escribir 'Base:';\n    Leer numBase;\n    Escribir 'Exponent:';\n    Leer numExponent;\n    Escribir numBase, ' elevat a ', numExponent, ' és: ', Potencia(numBase, numExponent);\nFinProceso",
+    exp:'La variable de retorn comença a 1 i el bucle la multiplica per la base tantes vegades com indica l\'exponent.' },
+  { ctx:'Crea dues funcions, ImportDescompte(preu, percentatge), que torni quants euros es descompten, i PreuFinal(preu, percentatge), que torni el preu un cop aplicat el descompte. Fes un programa que llegeixi el preu i el percentatge i mostri totes dues coses.',
+    code:"Funcion descompte <- ImportDescompte(preu, percentatge)\n    Definir descompte Como Real;\n    descompte <- preu * percentatge / 100;\nFinFuncion\n\nFuncion preuRebaixat <- PreuFinal(preu, percentatge)\n    Definir preuRebaixat Como Real;\n    preuRebaixat <- preu - ImportDescompte(preu, percentatge);\nFinFuncion\n\nProceso Rebaixes\n    Definir preu, percentatge Como Real;\n    Escribir 'Preu original:';\n    Leer preu;\n    Escribir 'Percentatge de descompte:';\n    Leer percentatge;\n    Escribir 'Estalvi: ', ImportDescompte(preu, percentatge), ' €';\n    Escribir 'Preu final: ', PreuFinal(preu, percentatge), ' €';\nFinProceso",
+    exp:'Un percentatge és dividir entre 100 i multiplicar: el 20% de 50 € és 50 * 20 / 100 = 10 €. PreuFinal reutilitza ImportDescompte en lloc de repetir el càlcul: una funció pot cridar una altra funció.' },
   { ctx:'Crea una funció MitjanaDia(maxima, minima) que torni la temperatura mitjana. El programa demana per a quants dies, i per a cada dia llegeix la màxima i la mínima i mostra la mitjana.',
-    code:"Funcion m <- MitjanaDia(maxima, minima)\n    Definir m Como Real;\n    m <- (maxima + minima) / 2;\nFinFuncion\n\nProceso Temperatures\n    Definir dies, i Como Entero;\n    Definir maxima, minima Como Real;\n    Escribir 'Quants dies vols introduir?';\n    Leer dies;\n    Para i <- 1 Hasta dies Hacer\n        Escribir 'Màxima del dia ', i, ':';\n        Leer maxima;\n        Escribir 'Mínima del dia ', i, ':';\n        Leer minima;\n        Escribir 'Mitjana del dia ', i, ': ', MitjanaDia(maxima, minima);\n    FinPara\nFinProceso",
+    code:"Funcion mitjana <- MitjanaDia(maxima, minima)\n    Definir mitjana Como Real;\n    mitjana <- (maxima + minima) / 2;\nFinFuncion\n\nProceso Temperatures\n    Definir dies, i Como Entero;\n    Definir maxima, minima Como Real;\n    Escribir 'Quants dies vols introduir?';\n    Leer dies;\n    Para i <- 1 Hasta dies Hacer\n        Escribir 'Màxima del dia ', i, ':';\n        Leer maxima;\n        Escribir 'Mínima del dia ', i, ':';\n        Leer minima;\n        Escribir 'Mitjana del dia ', i, ': ', MitjanaDia(maxima, minima);\n    FinPara\nFinProceso",
     exp:'La funció encapsula el càlcul de la mitjana; el bucle (de l\'A1.3) la crida un cop per dia. Reutilitzem la mateixa peça moltes vegades.' }
 ];
 (function(){
