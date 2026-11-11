@@ -368,7 +368,7 @@ FinProceso"></pre>
   <!-- EXERCICIS -->
   <div class="ex-block-head">
     <h2 class="ex-block-title">Exercicis de demostració</h2>
-    <p class="ex-block-sub">Quatre nivells · del reconeixement a la codificació · criteris 2.3 i 2.4</p>
+    <p class="ex-block-sub">Tres nivells · del reconeixement a la codificació · criteris 2.3 i 2.4</p>
   </div>
   <div class="ex-block-body">
 
@@ -392,15 +392,6 @@ FinProceso"></pre>
 
     <div class="exercise">
       <div class="ex-head"><div class="ex-num">3</div><div>
-        <div class="ex-name">Escriu la capçalera</div>
-        <div class="ex-level">Nivell mitjà · dissenyar la subrutina</div>
-      </div></div>
-      <p class="ex-intro">Escriu només la primera línia (la capçalera) de la subrutina que es demana. Després compara.</p>
-      <div id="ex3-cont"></div>
-    </div>
-
-    <div class="exercise">
-      <div class="ex-head"><div class="ex-num">4</div><div>
         <div class="ex-name">Programa complet amb funció</div>
         <div class="ex-level">Nivell avançat · de l'enunciat al codi</div>
       </div></div>
@@ -436,7 +427,7 @@ document.querySelectorAll('pre[data-code]').forEach(function(pre){
 
 /* ── Exercici 1 ── */
 const E1 = [
-  { t:'Rebre un preu i un percentatge de descompte i tornar el preu final.', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor (el preu amb el descompte aplicat): és una funció.' },
+  { t:'Rebre els minuts i tornar quantes hores completes són.', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor (les hores calculades): és una funció.' },
   { t:'Mostrar per pantalla el menú d\'opcions d\'un programa.', opts:['Funció','Procediment'], ans:1, exp:'Només escriu coses per pantalla i no torna res: és un procediment.' },
   { t:'Rebre un any i tornar Verdadero si és de traspàs.', opts:['Funció','Procediment'], ans:0, exp:'Torna un valor lògic (cert/fals): és una funció.' },
   { t:'Rebre un nom i escriure «Benvingut/da, nom!» per pantalla.', opts:['Funció','Procediment'], ans:1, exp:'Fa una acció (saludar) però no torna cap valor: procediment.' },
@@ -481,34 +472,13 @@ function checkQ(grp,btn,i,choice){
 }
 
 /* ── Exercici 3 ── */
-const E3 = [
-  { q:'Una funció que rep la nota d\'un examen i torna Verdadero si està aprovat.',
-    code:"Funcion aprovat <- EsAprovat(nota)\n    Definir aprovat Como Logico;\n    ...\nFinFuncion",
-    exp:'Com que torna un valor (cert o fals), cal la variable de retorn (aprovat) abans del nom, i s\'ha de definir dins com a Logico.' },
-  { q:'Un procediment que rep un número i mostra la seva taula de multiplicar.',
-    code:"Funcion TaulaMultiplicar(num)\n    ...\nFinFuncion",
-    exp:'Només escriu la taula per pantalla i no torna res, així que NO porta variable de retorn: només el nom i el paràmetre.' },
-  { q:'Una funció que rep la base i l\'altura i torna l\'àrea d\'un triangle.',
-    code:"Funcion area <- AreaTriangle(base, altura)\n    Definir area Como Real;\n    area <- base * altura / 2;\nFinFuncion",
-    exp:'Rep dos paràmetres i torna un nombre que pot tenir decimals, per això la variable de retorn area és Real.' }
-];
-(function(){
-  const c = document.getElementById('ex3-cont');
-  E3.forEach((d,i)=>{
-    const div = document.createElement('div'); div.className='ri';
-    div.innerHTML = `<div class="ri-q"><div class="ri-q-text"><strong>${i+1}.</strong> ${d.q}</div><button class="ri-btn" onclick="reveal(this,'E3a${i}')" data-txt="capçalera">▶ Mostrar capçalera</button></div><div class="ri-ans" id="E3a${i}"><div class="ri-ans-label">PSeInt</div><pre class="pseudo-out">${colorPseudo(d.code)}</pre><div class="ri-note">${d.exp}</div></div>`;
-    c.appendChild(div);
-  });
-})();
-
-/* ── Exercici 4 ── */
 const E4 = [
-  { ctx:'Crea una funció EsMultiple(a, b) que torni Verdadero si a és múltiple de b. Fes un programa que demani dos números i digui si un és múltiple de l\'altre.',
-    code:"Funcion res <- EsMultiple(a, b)\n    Definir res Como Logico;\n    Si a mod b = 0 Entonces\n        res <- Verdadero;\n    SiNo\n        res <- Falso;\n    FinSi\nFinFuncion\n\nProceso Multiples\n    Definir x, z Como Entero;\n    Escribir 'Escriu dos números:';\n    Leer x;\n    Leer z;\n    Si EsMultiple(x, z) O EsMultiple(z, x) Entonces\n        Escribir 'Un dels dos és múltiple';\n    SiNo\n        Escribir 'Cap és múltiple';\n    FinSi\nFinProceso",
-    exp:'a mod b = 0 vol dir que la divisió és exacta (a és múltiple de b). Provem les dues direccions amb O perquè en val qualsevol.' },
-  { ctx:'Crea dues funcions, AreaCercle(radi) i PerimetreCercle(radi), i un programa que llegeixi el radi i mostri totes dues coses.',
-    code:"Funcion a <- AreaCercle(radi)\n    Definir a Como Real;\n    a <- PI * radi^2;\nFinFuncion\n\nFuncion p <- PerimetreCercle(radi)\n    Definir p Como Real;\n    p <- 2 * PI * radi;\nFinFuncion\n\nProceso Cercle\n    Definir radi Como Real;\n    Escribir 'Escriu el radi:';\n    Leer radi;\n    Escribir 'Àrea: ', AreaCercle(radi);\n    Escribir 'Perímetre: ', PerimetreCercle(radi);\nFinProceso",
-    exp:'Com que una funció torna un sol valor, fem una funció per a cada càlcul. Les cridem directament dins de l\'Escribir.' },
+  { ctx:'Crea una funció Potencia(base, exponent) que torni el resultat d\'elevar la base a l\'exponent fent multiplicacions amb un bucle (sense fer servir ^). Fes un programa que demani tots dos números i mostri el resultat.',
+    code:"Funcion res <- Potencia(base, exponent)\n    Definir res, i Como Entero;\n    res <- 1;\n    Para i <- 1 Hasta exponent Hacer\n        res <- res * base;\n    FinPara\nFinFuncion\n\nProceso ProvaPotencia\n    Definir b, e Como Entero;\n    Escribir 'Base:';\n    Leer b;\n    Escribir 'Exponent:';\n    Leer e;\n    Escribir b, ' elevat a ', e, ' és: ', Potencia(b, e);\nFinProceso",
+    exp:'La variable de retorn comença a 1 i el bucle la multiplica per la base tantes vegades com indica l\'exponent. Les variables res i i són locals: només existeixen dins de la funció.' },
+  { ctx:'Crea dues funcions, ImportDescompte(preu, percentatge), que torni quants euros es descompten, i PreuFinal(preu, percentatge), que torni el preu un cop aplicat el descompte. Fes un programa que llegeixi el preu i el percentatge i mostri totes dues coses.',
+    code:"Funcion d <- ImportDescompte(preu, percentatge)\n    Definir d Como Real;\n    d <- preu * percentatge / 100;\nFinFuncion\n\nFuncion f <- PreuFinal(preu, percentatge)\n    Definir f Como Real;\n    f <- preu - ImportDescompte(preu, percentatge);\nFinFuncion\n\nProceso Rebaixes\n    Definir preu, percentatge Como Real;\n    Escribir 'Preu original:';\n    Leer preu;\n    Escribir 'Percentatge de descompte:';\n    Leer percentatge;\n    Escribir 'Estalvi: ', ImportDescompte(preu, percentatge), ' €';\n    Escribir 'Preu final: ', PreuFinal(preu, percentatge), ' €';\nFinProceso",
+    exp:'Un percentatge és dividir entre 100 i multiplicar: el 20% de 50 € és 50 * 20 / 100 = 10 €. PreuFinal reutilitza ImportDescompte en lloc de repetir el càlcul: una funció pot cridar una altra funció.' },
   { ctx:'Crea una funció MitjanaDia(maxima, minima) que torni la temperatura mitjana. El programa demana per a quants dies, i per a cada dia llegeix la màxima i la mínima i mostra la mitjana.',
     code:"Funcion m <- MitjanaDia(maxima, minima)\n    Definir m Como Real;\n    m <- (maxima + minima) / 2;\nFinFuncion\n\nProceso Temperatures\n    Definir dies, i Como Entero;\n    Definir maxima, minima Como Real;\n    Escribir 'Quants dies vols introduir?';\n    Leer dies;\n    Para i <- 1 Hasta dies Hacer\n        Escribir 'Màxima del dia ', i, ':';\n        Leer maxima;\n        Escribir 'Mínima del dia ', i, ':';\n        Leer minima;\n        Escribir 'Mitjana del dia ', i, ': ', MitjanaDia(maxima, minima);\n    FinPara\nFinProceso",
     exp:'La funció encapsula el càlcul de la mitjana; el bucle (de l\'A1.3) la crida un cop per dia. Reutilitzem la mateixa peça moltes vegades.' }
