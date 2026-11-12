@@ -437,10 +437,10 @@ Després: 7 i 3</pre>
 
     <div class="exercise">
       <div class="ex-head"><div class="ex-num">2</div><div>
-        <div class="ex-name">Programa complet amb funció</div>
+        <div class="ex-name">Programa complet amb subrutines</div>
         <div class="ex-level">Nivell avançat · de l'enunciat al codi</div>
       </div></div>
-      <p class="ex-intro">Escriu la funció i el programa principal que la fa servir. Després obre la solució per comparar.</p>
+      <p class="ex-intro">Escriu la subrutina i el programa principal que la fa servir. Després obre la solució per comparar.</p>
       <div id="ex4-cont"></div>
     </div>
 
@@ -510,7 +510,11 @@ const E4 = [
   { ctx:'Crea una funció MitjanaDia(maxima, minima) que torni la temperatura mitjana. El programa demana per a quants dies, i per a cada dia llegeix la màxima i la mínima i mostra la mitjana.',
     run:"Quants dies vols introduir?\n> 2\nMàxima del dia 1:\n> 18\nMínima del dia 1:\n> 10\nMitjana del dia 1: 14\nMàxima del dia 2:\n> 21\nMínima del dia 2:\n> 12\nMitjana del dia 2: 16.5",
     code:"Funcion mitjana <- MitjanaDia(maxima, minima)\n    Definir mitjana Como Real;\n    mitjana <- (maxima + minima) / 2;\nFinFuncion\n\nProceso Temperatures\n    Definir dies, i Como Entero;\n    Definir maxima, minima Como Real;\n    Escribir 'Quants dies vols introduir?';\n    Leer dies;\n    Para i <- 1 Hasta dies Hacer\n        Escribir 'Màxima del dia ', i, ':';\n        Leer maxima;\n        Escribir 'Mínima del dia ', i, ':';\n        Leer minima;\n        Escribir 'Mitjana del dia ', i, ': ', MitjanaDia(maxima, minima);\n    FinPara\nFinProceso",
-    exp:'La funció encapsula el càlcul de la mitjana; el bucle (de l\'A1.3) la crida un cop per dia. Reutilitzem la mateixa peça moltes vegades.' }
+    exp:'La funció encapsula el càlcul de la mitjana; el bucle (de l\'A1.3) la crida un cop per dia. Reutilitzem la mateixa peça moltes vegades.' },
+  { ctx:'Crea un procediment RepartirCaramels(caramels, nens, perNen, sobren) que calculi quants caramels rep cada nen i quants en sobren. Com que ha de donar <strong>dos resultats</strong>, perNen i sobren han d\'anar <strong>per referència</strong>. El programa demana els caramels i els nens, crida el procediment i mostra els dos resultats.',
+    run:"Quants caramels hi ha?\n> 23\nEntre quants nens es reparteixen?\n> 5\nCada nen rep 4 caramels\nEn sobren 3",
+    code:"Funcion RepartirCaramels(caramels, nens, perNen Por Referencia, sobren Por Referencia)\n    sobren <- caramels mod nens;\n    perNen <- (caramels - sobren) / nens;\nFinFuncion\n\nProceso Repartiment\n    Definir caramels, nens, perNen, sobren Como Entero;\n    Escribir 'Quants caramels hi ha?';\n    Leer caramels;\n    Escribir 'Entre quants nens es reparteixen?';\n    Leer nens;\n    RepartirCaramels(caramels, nens, perNen, sobren);\n    Escribir 'Cada nen rep ', perNen, ' caramels';\n    Escribir 'En sobren ', sobren;\nFinProceso",
+    exp:'Una funció només pot tornar un valor, però aquí en necessitem dos. Per això fem un procediment i passem perNen i sobren amb Por Referencia: el procediment els omple i el programa principal els troba plens. caramels i nens només s\'han de llegir, així que van sense referència. Per repartir fem servir mod: el que sobra és el residu, i la resta es divideix exactament entre els nens.' }
 ];
 (function(){
   const c = document.getElementById('ex4-cont');
