@@ -302,6 +302,123 @@ FinProceso"></pre>
   </section>
 
 
+  <!-- SECCIÓ 4 -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-num">4</span>
+      <div>
+        <h2 class="sec-title">Passar dades amb i sense referència</h2>
+        <p class="sec-sub">Una fotocòpia o l'original?</p>
+      </div>
+    </div>
+    <p class="lead">
+      Quan cridem una subrutina, li passem dades entre parèntesis. Hi ha dues maneres de fer-ho, i la diferència és
+      si la subrutina pot <strong>canviar</strong> la variable del programa principal o no.
+    </p>
+
+    <div class="ibox blue">
+      <div class="ibox-label">La idea clau, amb una analogia</div>
+      <div class="ibox-text">
+        <strong>Sense referència</strong> (per valor): li dones una <strong>fotocòpia</strong>. Pot gargotejar-la tant com
+        vulgui, que el teu original queda igual. <strong>Amb referència</strong>: li dones l'<strong>original</strong>.
+        Tot el que hi canviï, ho trobaràs canviat quan te'l torni. Si no escrius res, PSeInt passa les dades
+        <strong>sense referència</strong>.
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · sense referència (fotocòpia)</div>
+      <pre class="pseudo-out" data-code="Funcion SumarPunts(punts)
+    punts <- punts + 10;
+    Escribir 'Dins: ', punts;
+FinFuncion
+
+Proceso Joc
+    Definir marcador Como Entero;
+    marcador <- 50;
+    SumarPunts(marcador);
+    Escribir 'Fora: ', marcador;
+FinProceso"></pre>
+      <div class="demo-label" style="margin-top:12px;">El programa mostra (exemple d'execució)</div>
+      <pre class="pseudo-out" style="margin:6px 0 4px;">Dins: 60
+Fora: 50</pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          <code>punts</code> rep una <strong>còpia</strong> del valor de <code>marcador</code> (50). Dins, la còpia puja a 60
+          i es mostra. Però quan el procediment acaba, la còpia desapareix i <code>marcador</code>
+          <strong>continua valent 50</strong>.
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · amb referència (l'original)</div>
+      <pre class="pseudo-out" data-code="Funcion SumarPunts(punts Por Referencia)
+    punts <- punts + 10;
+    Escribir 'Dins: ', punts;
+FinFuncion
+
+Proceso Joc
+    Definir marcador Como Entero;
+    marcador <- 50;
+    SumarPunts(marcador);
+    Escribir 'Fora: ', marcador;
+FinProceso"></pre>
+      <div class="demo-label" style="margin-top:12px;">El programa mostra (exemple d'execució)</div>
+      <pre class="pseudo-out" style="margin:6px 0 4px;">Dins: 60
+Fora: 60</pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          L'únic canvi són les paraules <code>Por Referencia</code> a la capçalera. Ara <code>punts</code> no és una còpia:
+          és un <strong>altre nom per a la mateixa variable</strong> <code>marcador</code>. Per això, quan torna al
+          programa principal, <code>marcador</code> <strong>val 60</strong>.
+        </div>
+      </div>
+    </div>
+
+    <div class="ibox green">
+      <div class="ibox-label">Quan cal fer servir la referència?</div>
+      <div class="ibox-text">
+        Una funció només pot <strong>tornar un valor</strong>. Si una subrutina ha de <strong>canviar més d'una
+        variable</strong> del programa principal, la passem amb referència. L'exemple clàssic és intercanviar el valor
+        de dues variables.
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo-label">Exemple · intercanviar dues variables</div>
+      <pre class="pseudo-out" data-code="Funcion Intercanviar(primer Por Referencia, segon Por Referencia)
+    Definir temporal Como Entero;
+    temporal <- primer;     // guardem el primer per no perdre'l
+    primer <- segon;
+    segon <- temporal;
+FinFuncion
+
+Proceso ProvaIntercanvi
+    Definir esquerra, dreta Como Entero;
+    esquerra <- 3;
+    dreta <- 7;
+    Escribir 'Abans: ', esquerra, ' i ', dreta;
+    Intercanviar(esquerra, dreta);
+    Escribir 'Després: ', esquerra, ' i ', dreta;
+FinProceso"></pre>
+      <div class="demo-label" style="margin-top:12px;">El programa mostra (exemple d'execució)</div>
+      <pre class="pseudo-out" style="margin:6px 0 4px;">Abans: 3 i 7
+Després: 7 i 3</pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona</div>
+        <div class="exp-text">
+          Com que tots dos paràmetres van <strong>amb referència</strong>, el procediment canvia directament
+          <code>esquerra</code> i <code>dreta</code>. La variable <code>temporal</code> fa de tercer got: sense ella,
+          en fer <code>primer &lt;- segon</code> perdríem el valor del primer. Si traguéssim els <code>Por Referencia</code>,
+          s'intercanviarien només les còpies i el programa mostraria <code>Després: 3 i 7</code>.
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- EXERCICIS -->
   <div class="ex-block-head">
     <h2 class="ex-block-title">Exercicis de demostració</h2>
