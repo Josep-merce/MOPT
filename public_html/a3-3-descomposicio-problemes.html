@@ -385,16 +385,10 @@ fPrograma</pre>
         <div class="ri-q">
           <div class="ri-q-text">
             Una biblioteca vol saber quantes vegades s'ha prestat cada llibre aquest mes. Hi caben com a màxim 40 llibres
-            (<code>MAX_LLIBRES</code>) i un llibre es pot prestar com a molt 200 vegades (<code>MAX_PRESTECS</code>).
-            Vectors paral·lels: <code>titols</code> (Cadena) i <code>prestecs</code> (Entero).
-            <ol style="margin:8px 0 0 20px;font-size:14px;">
-              <li>Preguntar quants llibres hi ha (1 a <code>MAX_LLIBRES</code>) i demanar el títol i els préstecs de cadascun (0 a <code>MAX_PRESTECS</code>).</li>
-              <li>Mostrar el total de préstecs del mes.</li>
-              <li>Mostrar el llibre més prestat i quantes vegades.</li>
-              <li>Mostrar els llibres que no s'han prestat cap vegada. Si no n'hi ha cap, dir-ho.</li>
-              <li>Demanar un títol i cercar-lo. Si existeix, mostrar els préstecs; si no, avisar.</li>
-            </ol>
-            <div class="ibox green" style="margin:12px 0 0;"><div class="ibox-text">💡 <strong>Pista:</strong> tres de les peces que necessites ja surten als exemples.</div></div>
+            i guarda els títols i els préstecs en dos vectors paral·lels. El programa pregunta quants llibres hi ha i en
+            demana el títol i els préstecs de cadascun (entre 0 i 200), mostra el total de préstecs del mes, el llibre més
+            prestat i quantes vegades, i els llibres que no s'han prestat cap vegada (o un avís si no n'hi ha cap).
+            Finalment demana un títol, el cerca i en mostra els préstecs, o avisa si no hi és.
           </div>
           <button class="ri-btn" onclick="reveal(this,'S1')" data-txt="solució">▶ Mostrar solució</button>
         </div>
@@ -449,16 +443,10 @@ fPrograma</pre>
       <div class="ri">
         <div class="ri-q">
           <div class="ri-q-text">
-            Una lliga escolar té 4 equips que juguen 3 jornades. A cada jornada un equip guanya entre 0 i 3 punts.
-            Constants: <code>N_EQUIPS = 4</code>, <code>N_JORNADES = 3</code>, <code>MAX_PUNTS = 3</code>.
-            Dades: vector <code>noms</code>, matriu <code>punts[N_EQUIPS, N_JORNADES]</code> (files = equips, columnes = jornades)
-            i vector <code>totals</code> on es guarda el total de cada equip.
-            <ol style="margin:8px 0 0 20px;font-size:14px;">
-              <li>Demanar el nom de cada equip i els punts de cada jornada (0 a <code>MAX_PUNTS</code>).</li>
-              <li>Calcular el total de cada equip, guardar-lo al vector <code>totals</code> i mostrar-lo.</li>
-              <li>Mostrar l'equip líder (el de més punts).</li>
-              <li>Mostrar la jornada on s'han repartit menys punts entre tots els equips.</li>
-            </ol>
+            Una lliga escolar té 4 equips que juguen 3 jornades, i a cada jornada un equip guanya entre 0 i 3 punts. Els
+            punts es guarden en una matriu (files = equips, columnes = jornades) i els noms en un vector. El programa demana
+            el nom de cada equip i els punts de cada jornada, calcula el total de cada equip, el guarda en un vector i
+            mostra la classificació. Després mostra l'equip líder i la jornada on s'han repartit menys punts entre tots els equips.
           </div>
           <button class="ri-btn" onclick="reveal(this,'S2')" data-txt="solució">▶ Mostrar solució</button>
         </div>
