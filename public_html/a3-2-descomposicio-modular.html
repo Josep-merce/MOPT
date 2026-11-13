@@ -294,7 +294,7 @@ Adéu!</pre>
       <span class="sec-num">3</span>
       <div>
         <h2 class="sec-title">Recursivitat <span style="font-size:13px;color:var(--ink-3);font-family:'DM Sans';font-weight:400;">· opcional, avançat</span></h2>
-        <p class="sec-sub">Una funció que es crida a si mateixa</p>
+        <p class="sec-sub">Funcions que es criden a si mateixes: recursivitat directa i indirecta</p>
       </div>
     </div>
     <p class="lead">
@@ -302,9 +302,13 @@ Adéu!</pre>
       S'anomenen <strong>recursives</strong>. Perquè no es cridin infinitament, sempre necessiten un <strong>cas base</strong>:
       una situació senzilla que es resol directament i atura la cadena de crides.
     </p>
+    <p class="lead">
+      N'hi ha de dues menes: la <strong>directa</strong>, quan la funció es crida a si mateixa, i la
+      <strong>indirecta</strong>, quan la funció en crida una altra que, al seu torn, torna a cridar la primera.
+    </p>
 
     <div class="demo">
-      <div class="demo-label">Exemple · factorial (n! = n · (n-1) · … · 1)</div>
+      <div class="demo-label">Recursivitat directa · factorial (n! = n · (n-1) · … · 1)</div>
       <pre class="pseudo-out" data-code="Funcion fact <- Factorial(num)
     Definir fact Como Entero;
     Si num = 0 O num = 1 Entonces
@@ -339,6 +343,70 @@ El factorial és: 24</pre>
       </div>
     </div>
 
+    <div class="demo">
+      <div class="demo-label">Recursivitat indirecta · és parell o senar?</div>
+      <p class="lead" style="margin-bottom:10px;">
+        Un número és <strong>parell</strong> si l'anterior és <strong>senar</strong>, i és <strong>senar</strong> si l'anterior
+        és <strong>parell</strong>. El 0 és parell (cas base). Cap de les dues funcions es crida a si mateixa: es criden
+        <strong>l'una a l'altra</strong>.
+      </p>
+      <pre class="pseudo-out" data-code="Funcion parell <- EsParell(num)
+    Definir parell Como Logico;
+    Si num = 0 Entonces
+        parell <- Verdadero;           // cas base
+    SiNo
+        parell <- EsSenar(num - 1);    // crida l'ALTRA funció
+    FinSi
+FinFuncion
+
+Funcion senar <- EsSenar(num)
+    Definir senar Como Logico;
+    Si num = 0 Entonces
+        senar <- Falso;                // cas base
+    SiNo
+        senar <- EsParell(num - 1);    // i aquesta torna a cridar la primera
+    FinSi
+FinFuncion
+
+Proceso ParellSenar
+    Definir numero Como Entero;
+    Escribir 'Escriu un número:';
+    Leer numero;
+    Si EsParell(numero) Entonces
+        Escribir numero, ' és parell';
+    SiNo
+        Escribir numero, ' és senar';
+    FinSi
+FinProceso"></pre>
+      <div class="demo-label" style="margin-top:12px;">El programa ha de mostrar (exemple d'execució)</div>
+      <pre class="pseudo-out" style="margin:6px 0 4px;">Escriu un número:
+&gt; 3
+3 és senar</pre>
+      <div class="exp-box">
+        <div class="exp-label">Com funciona · seguim EsParell(3)</div>
+        <div class="steps">
+          <div>EsParell(3) → pregunta a EsSenar(2)</div>
+          <div>EsSenar(2) → pregunta a EsParell(1)</div>
+          <div>EsParell(1) → pregunta a EsSenar(0)</div>
+          <div class="hl">EsSenar(0) = Falso &nbsp;← cas base, ja no es crida més</div>
+          <div>…la resposta torna enrere sense canviar: EsParell(3) = <strong>Falso</strong>, és a dir, 3 és senar</div>
+        </div>
+        <div class="exp-text">
+          Les crides van saltant d'una funció a l'altra (EsParell → EsSenar → EsParell → …) i el número baixa d'1 en 1
+          fins arribar a 0, on actua el cas base de la funció que toqui.
+        </div>
+      </div>
+    </div>
+
+    <div class="ibox blue">
+      <div class="ibox-label">Directa o indirecta?</div>
+      <div class="ibox-text">
+        <strong>Directa:</strong> dins de <code>Factorial</code> hi ha una crida a <code>Factorial</code>. A → A.<br>
+        <strong>Indirecta:</strong> <code>EsParell</code> crida <code>EsSenar</code> i <code>EsSenar</code> crida <code>EsParell</code>. A → B → A.<br>
+        En totes dues, cada crida ha d'anar amb un cas <strong>més petit</strong> i ha d'arribar a un <strong>cas base</strong>.
+      </div>
+    </div>
+
     <div class="ibox red">
       <div class="ibox-label">⚠️ Sense cas base, crides infinites</div>
       <div class="ibox-text">
@@ -352,7 +420,7 @@ El factorial és: 24</pre>
         <div class="ex-name">Segueix la recursió</div>
         <div class="ex-level">Nivell mitjà · seguiment (traça)</div>
       </div></div>
-      <p class="ex-intro">Aquesta funció recursiva suma tots els números des de l'1 fins a <code>num</code>. Segueix les crides i respon.</p>
+      <p class="ex-intro">Aquesta funció recursiva suma tots els números des de l'1 fins a <code>num</code>. Segueix les crides i respon. Les dues últimes preguntes fan servir <code>EsParell</code> i <code>EsSenar</code> de l'exemple anterior.</p>
       <pre class="pseudo-out" style="margin-bottom:14px" data-code="Funcion total <- SumaFins(num)
     Definir total Como Entero;
     Si num = 1 Entonces
@@ -410,7 +478,10 @@ document.querySelectorAll('pre[data-code]').forEach(function(pre){
 
 /* ── Exercici 2 ── */
 const E2 = [
-  { t:'Quant val SumaFins(4)?', opts:['10','24','4'], ans:0, exp:'4 + SumaFins(3) = 4 + 3 + SumaFins(2) = 4 + 3 + 2 + 1 = 10. Compte: suma, no multiplica com el factorial.' }
+  { t:'Quant val SumaFins(4)?', opts:['10','24','4'], ans:0, exp:'4 + SumaFins(3) = 4 + 3 + SumaFins(2) = 4 + 3 + 2 + 1 = 10. Compte: suma, no multiplica com el factorial.' },
+  { t:'SumaFins és un exemple de recursivitat…', opts:['directa','indirecta','no és recursiva'], ans:0, exp:'Dins de SumaFins hi ha una crida a SumaFins: la funció es crida a si mateixa, per tant és directa.' },
+  { t:'Quant torna EsSenar(4)?', opts:['Falso','Verdadero'], ans:0, exp:'EsSenar(4) → EsParell(3) → EsSenar(2) → EsParell(1) → EsSenar(0) = Falso (cas base). La resposta torna enrere sense canviar: 4 no és senar.' },
+  { t:'EsParell i EsSenar són un exemple de recursivitat…', opts:['indirecta','directa','no és recursiva'], ans:0, exp:'Cap de les dues es crida a si mateixa: EsParell crida EsSenar i EsSenar crida EsParell (A → B → A). És indirecta.' }
 ];
 (function(){
   const c = document.getElementById('ex2-cont');
