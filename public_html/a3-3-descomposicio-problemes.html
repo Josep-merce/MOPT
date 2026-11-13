@@ -247,12 +247,9 @@
     <p class="lead"><strong>Pas 1 · llegir i marcar.</strong> Les funcionalitats estan <mark>marcades</mark>:</p>
     <div class="enun">
       <div class="enun-label">Enunciat</div>
-      Un alumne vol controlar quantes hores estudia cada dia de dilluns a divendres (constant <code>N_DIES = 5</code>).
-      <ol>
-        <li><mark>Demanar les hores</mark> de cada dia, <mark>validant</mark> que estiguin entre 0 i 24.</li>
-        <li><mark>Mostrar la mitjana</mark> d'hores diàries.</li>
-        <li><mark>Mostrar el dia que ha estudiat més</mark> i quantes hores.</li>
-      </ol>
+      Un alumne vol controlar quantes hores estudia cada dia de dilluns a divendres. El programa ha de
+      <mark>demanar les hores</mark> de cada dia, <mark>validant</mark> que estiguin entre 0 i 24. Després ha de
+      <mark>mostrar la mitjana</mark> d'hores diàries i <mark>mostrar el dia que ha estudiat més</mark> i quantes hores.
     </div>
 
     <p class="lead"><strong>Pas 2 · esquema.</strong> Tres funcionalitats → tres passos grans:</p>
@@ -310,14 +307,11 @@ fPrograma</pre>
     <p class="lead"><strong>Pas 1 · llegir i marcar.</strong></p>
     <div class="enun">
       <div class="enun-label">Enunciat</div>
-      Un professor vol gestionar les notes d'un examen. Hi caben com a màxim 30 alumnes (constant <code>MAX_ALUMNES</code>).
-      Fes servir dos vectors paral·lels: <code>noms</code> (Cadena) i <code>notes</code> (Entero).
-      <ol>
-        <li><mark>Preguntar quants alumnes</mark> hi ha (entre 1 i <code>MAX_ALUMNES</code>) i <mark>demanar el nom i la nota</mark> de cadascun (nota entre 0 i 10).</li>
-        <li><mark>Mostrar la mitjana</mark> de la classe.</li>
-        <li><mark>Mostrar els alumnes suspesos</mark> (nota menor que 5) <mark>i quants n'hi ha</mark>. Si no n'hi ha cap, dir-ho.</li>
-        <li><mark>Demanar un nom i cercar-lo</mark>. Si existeix, mostrar la seva nota; si no, avisar.</li>
-      </ol>
+      Un professor vol gestionar les notes d'un examen d'una classe de com a màxim 30 alumnes, guardant els noms i les
+      notes en dos vectors paral·lels. El programa ha de <mark>preguntar quants alumnes</mark> hi ha i
+      <mark>demanar el nom i la nota</mark> de cadascun (nota entre 0 i 10). Després ha de <mark>mostrar la mitjana</mark>
+      de la classe i <mark>mostrar els alumnes suspesos</mark> (nota menor que 5) <mark>i quants n'hi ha</mark>, o dir que
+      no n'hi ha cap. Finalment ha de <mark>demanar un nom i cercar-lo</mark>: si existeix, mostra la seva nota; si no, avisa.
     </div>
 
     <p class="lead"><strong>Pas 2 · esquema.</strong></p>
@@ -371,7 +365,7 @@ fPrograma</pre>
   <!-- EXERCICIS -->
   <div class="ex-block-head">
     <h2 class="ex-block-title">Exercicis per resoldre</h2>
-    <p class="ex-block-sub">No cal programar. Per a cada enunciat: ① esquema ② arbre de peces ③ taula de contractes · criteris 2.3 i 2.4</p>
+    <p class="ex-block-sub">No cal programar. Per a cada enunciat: ① esquema ② taula de peces i contractes · criteris 2.3 i 2.4</p>
   </div>
   <div class="ex-block-body">
 
@@ -402,27 +396,16 @@ fPrograma</pre>
   Mostrar els llibres sense préstecs (o un avís)
   Llegir un títol, cercar-lo i mostrar el resultat
 fPrograma</pre>
-          <div class="ri-ans-label" style="margin-top:16px;">② Arbre</div>
-          <div class="tree" style="margin-bottom:6px;">
-            <div class="tree-root">Biblioteca</div>
-            <div class="tree-row">
-              <div class="tree-node">LlegirEnter ♻️<small>quants llibres</small></div>
-              <div class="tree-node">LlegirLlibres<small>omple els vectors</small></div>
-              <div class="tree-node">SumarVector<small>total</small></div>
-              <div class="tree-node">PosicioMaxim ♻️<small>més prestat</small></div>
-              <div class="tree-node">MostrarSensePrestec<small>llista o avís</small></div>
-              <div class="tree-node">CercarNom ♻️<small>posició o -1</small></div>
-            </div>
-            <span class="tree-sub">↓ LlegirLlibres fa servir ↓</span>
-            <div class="tree-row"><div class="tree-node lvl2" style="flex:0 1 200px;">LlegirEnter ♻️<small>préstecs 0 a 200</small></div></div>
-          </div>
-          <div class="ri-ans-label" style="margin-top:16px;">③ Contractes de les peces noves</div>
+          <div class="ri-ans-label" style="margin-top:16px;">② Peces i contractes</div>
           <div class="tbl-scroll">
             <table class="mod-table">
               <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th></tr>
+              <tr><td>LlegirEnter ♻️</td><td><span class="tag f">funció</span></td><td>missatge, mínim, màxim</td><td>Un enter vàlid (quants llibres, préstecs)</td></tr>
               <tr><td>LlegirLlibres</td><td><span class="tag p">procediment</span></td><td>titols, prestecs, n</td><td>Omple els dos vectors</td></tr>
               <tr><td>SumarVector</td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un enter: la suma</td></tr>
               <tr><td>MostrarSensePrestec</td><td><span class="tag p">procediment</span></td><td>titols, prestecs, n</td><td>Escriu els que tenen 0, o un avís</td></tr>
+              <tr><td>PosicioMaxim ♻️</td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un enter: posició del més prestat</td></tr>
+              <tr><td>CercarNom ♻️</td><td><span class="tag f">funció</span></td><td>titols, n, títol cercat</td><td>Un enter: la posició, o -1</td></tr>
             </table>
           </div>
           <div class="ri-note">
@@ -459,31 +442,17 @@ fPrograma</pre>
   Buscar l'equip líder i mostrar-lo
   Buscar la jornada amb menys punts i mostrar-la
 fPrograma</pre>
-          <div class="ri-ans-label" style="margin-top:16px;">② Arbre</div>
-          <div class="tree" style="margin-bottom:6px;">
-            <div class="tree-root">Lliga</div>
-            <div class="tree-row">
-              <div class="tree-node">LlegirLliga<small>noms i matriu</small></div>
-              <div class="tree-node">CalcularTotals<small>suma cada fila</small></div>
-              <div class="tree-node">MostrarTotals<small>classificació</small></div>
-              <div class="tree-node">PosicioMaxim ♻️<small>líder, sobre totals</small></div>
-              <div class="tree-node">JornadaMinima<small>columna amb menys punts</small></div>
-            </div>
-            <span class="tree-sub">↓ peces de segon nivell ↓</span>
-            <div class="tree-row">
-              <div class="tree-node lvl2" style="flex:0 1 200px;">LlegirEnter ♻️<small>la fa servir LlegirLliga</small></div>
-              <div class="tree-node lvl2" style="flex:0 1 200px;">PuntsJornada<small>la fa servir JornadaMinima: suma una columna</small></div>
-            </div>
-          </div>
-          <div class="ri-ans-label" style="margin-top:16px;">③ Contractes de les peces noves</div>
+          <div class="ri-ans-label" style="margin-top:16px;">② Peces i contractes</div>
           <div class="tbl-scroll">
             <table class="mod-table">
               <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th></tr>
+              <tr><td>LlegirEnter ♻️</td><td><span class="tag f">funció</span></td><td>missatge, mínim, màxim</td><td>Un enter vàlid (punts 0 a 3)</td></tr>
               <tr><td>LlegirLliga</td><td><span class="tag p">procediment</span></td><td>noms, punts</td><td>Omple el vector i la matriu</td></tr>
               <tr><td>CalcularTotals</td><td><span class="tag p">procediment</span></td><td>punts, totals</td><td>Omple el vector <code>totals</code></td></tr>
               <tr><td>MostrarTotals</td><td><span class="tag p">procediment</span></td><td>noms, totals</td><td>Escriu la classificació</td></tr>
+              <tr><td>PosicioMaxim ♻️</td><td><span class="tag f">funció</span></td><td>totals, n</td><td>Un enter: posició de l'equip líder</td></tr>
               <tr><td>PuntsJornada</td><td><span class="tag f">funció</span></td><td>punts, jornada</td><td>Un enter: suma d'aquella columna</td></tr>
-              <tr><td>JornadaMinima</td><td><span class="tag f">funció</span></td><td>punts</td><td>Un enter: la jornada amb menys punts</td></tr>
+              <tr><td>JornadaMinima</td><td><span class="tag f">funció</span></td><td>punts</td><td>Un enter: la jornada amb menys punts (fa servir PuntsJornada)</td></tr>
             </table>
           </div>
           <div class="ri-note">
@@ -525,22 +494,7 @@ fPrograma</pre>
       5: Llegir k; buscar la fila amb k seguides
   Fins que l'opció sigui sortir
 fPrograma</pre>
-          <div class="ri-ans-label" style="margin-top:16px;">② Arbre</div>
-          <div class="tree" style="margin-bottom:6px;">
-            <div class="tree-root">Cinema</div>
-            <div class="tree-row">
-              <div class="tree-node">InicialitzarSala</div>
-              <div class="tree-node">MostrarMenu</div>
-              <div class="tree-node">MostrarSala</div>
-              <div class="tree-node">Reservar</div>
-              <div class="tree-node">Anullar</div>
-              <div class="tree-node">ComptarLliures</div>
-              <div class="tree-node">FilaAmbSeguides</div>
-            </div>
-            <span class="tree-sub">↓ Reservar i Anullar fan servir ↓</span>
-            <div class="tree-row"><div class="tree-node lvl2" style="flex:0 1 220px;">PosicioValida<small>la fila i el número existeixen?</small></div></div>
-          </div>
-          <div class="ri-ans-label" style="margin-top:16px;">③ Contractes</div>
+          <div class="ri-ans-label" style="margin-top:16px;">② Peces i contractes</div>
           <div class="tbl-scroll">
             <table class="mod-table">
               <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th></tr>
@@ -548,8 +502,8 @@ fPrograma</pre>
               <tr><td>MostrarMenu</td><td><span class="tag p">procediment</span></td><td>—</td><td>Escriu les opcions</td></tr>
               <tr><td>MostrarSala</td><td><span class="tag p">procediment</span></td><td>sala</td><td>Dibuixa el mapa</td></tr>
               <tr><td>PosicioValida</td><td><span class="tag f">funció</span></td><td>fila, número</td><td>Un lògic: existeix o no</td></tr>
-              <tr><td>Reservar</td><td><span class="tag p">procediment</span></td><td>sala, fila, número</td><td>Posa la butaca a 1, o avisa si no es pot</td></tr>
-              <tr><td>Anullar</td><td><span class="tag p">procediment</span></td><td>sala, fila, número</td><td>Posa la butaca a 0, o avisa si no es pot</td></tr>
+              <tr><td>Reservar</td><td><span class="tag p">procediment</span></td><td>sala, fila, número</td><td>Posa la butaca a 1, o avisa si no es pot (fa servir PosicioValida)</td></tr>
+              <tr><td>Anullar</td><td><span class="tag p">procediment</span></td><td>sala, fila, número</td><td>Posa la butaca a 0, o avisa si no es pot (fa servir PosicioValida)</td></tr>
               <tr><td>ComptarLliures</td><td><span class="tag f">funció</span></td><td>sala</td><td>Un enter: butaques lliures</td></tr>
               <tr><td>FilaAmbSeguides</td><td><span class="tag f">funció</span></td><td>sala, k</td><td>Un enter: la fila, o -1 si no n'hi ha</td></tr>
             </table>
