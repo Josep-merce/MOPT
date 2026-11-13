@@ -165,7 +165,7 @@
       <div>
         <div class="obj-label">Objectiu · criteris 2.3 i 2.4</div>
         <div class="obj-text">
-          A partir d'un enunciat com els de les proves, saber-ne fer l'esquema general, l'arbre de peces i decidir per a cada
+          A partir d'un enunciat com els de les proves, saber-ne fer l'esquema general, trobar les peces i decidir per a cada
           peça si és una funció o un procediment, què rep i què torna.
         </div>
       </div>
@@ -214,7 +214,7 @@
     <div class="method">
       <div><b>Llegeix l'enunciat i marca les funcionalitats.</b> Cada cosa que el programa ha de <em>fer</em> (llegir, calcular, buscar, mostrar…) és una candidata a peça.</div>
       <div><b>Escriu l'esquema del programa principal</b> amb passos grans, en llenguatge natural, com si cada pas ja existís.</div>
-      <div><b>Dibuixa l'arbre de peces</b> i, per a cada peça, omple el seu <em>contracte</em>: funció o procediment, què rep i què torna o fa.</div>
+      <div><b>Fes la taula de peces</b> i, per a cada peça, omple el seu <em>contracte</em>: funció o procediment, què rep i què torna o fa.</div>
       <div><b>Revisa la descomposició</b> amb les tres preguntes de sota.</div>
     </div>
     <div class="ibox blue">
@@ -259,24 +259,12 @@
   Buscar el dia amb més hores i mostrar-lo
 fPrograma</pre>
 
-    <p class="lead"><strong>Pas 3 · arbre i contractes.</strong> "Llegir un valor validant" és una feina que es fa a cada dia: en fem una peça a part.</p>
-    <div class="tree">
-      <div class="tree-root">HoresEstudi (programa principal)</div>
-      <div class="tree-row">
-        <div class="tree-node">LlegirHores<small>omple el vector</small></div>
-        <div class="tree-node">CalcularMitjana<small>torna la mitjana</small></div>
-        <div class="tree-node">PosicioMaxim<small>torna on és el màxim</small></div>
-      </div>
-      <span class="tree-sub">↓ LlegirHores fa servir ↓</span>
-      <div class="tree-row">
-        <div class="tree-node lvl2" style="flex:0 1 220px;">LlegirEnter<small>llegeix un enter entre un mínim i un màxim</small></div>
-      </div>
-    </div>
+    <p class="lead"><strong>Pas 3 · peces i contractes.</strong> "Llegir un valor validant" és una feina que es fa a cada dia: en fem una peça a part.</p>
     <div class="tbl-scroll">
       <table class="mod-table">
         <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th></tr>
         <tr><td>LlegirEnter</td><td><span class="tag f">funció</span></td><td>missatge, mínim, màxim</td><td>Un enter vàlid</td></tr>
-        <tr><td>LlegirHores</td><td><span class="tag p">procediment</span></td><td>dies, hores, n</td><td>Omple el vector <code>hores</code></td></tr>
+        <tr><td>LlegirHores</td><td><span class="tag p">procediment</span></td><td>dies, hores, n</td><td>Omple el vector <code>hores</code> (fa servir LlegirEnter)</td></tr>
         <tr><td>CalcularMitjana</td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un real: la mitjana</td></tr>
         <tr><td>PosicioMaxim</td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un enter: la posició del màxim</td></tr>
       </table>
@@ -324,26 +312,12 @@ fPrograma</pre>
   Cercar-lo i mostrar la nota o un avís
 fPrograma</pre>
 
-    <p class="lead"><strong>Pas 3 · arbre i contractes.</strong> Les peces amb ♻️ són les de l'exemple 1, reutilitzades tal qual.</p>
-    <div class="tree">
-      <div class="tree-root">NotesClasse (programa principal)</div>
-      <div class="tree-row">
-        <div class="tree-node">LlegirEnter ♻️<small>quants alumnes</small></div>
-        <div class="tree-node">LlegirAlumnes<small>omple noms i notes</small></div>
-        <div class="tree-node">CalcularMitjana ♻️<small>mitjana de la classe</small></div>
-        <div class="tree-node">MostrarSuspesos<small>llista i compta</small></div>
-        <div class="tree-node">CercarNom<small>torna la posició o -1</small></div>
-      </div>
-      <span class="tree-sub">↓ LlegirAlumnes fa servir ↓</span>
-      <div class="tree-row">
-        <div class="tree-node lvl2" style="flex:0 1 220px;">LlegirEnter ♻️<small>nota entre 0 i 10</small></div>
-      </div>
-    </div>
+    <p class="lead"><strong>Pas 3 · peces i contractes.</strong> Les peces amb ♻️ són les de l'exemple 1, reutilitzades tal qual.</p>
     <div class="tbl-scroll">
       <table class="mod-table">
         <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th></tr>
         <tr><td>LlegirEnter ♻️</td><td><span class="tag f">funció</span></td><td>missatge, mínim, màxim</td><td>Un enter vàlid</td></tr>
-        <tr><td>LlegirAlumnes</td><td><span class="tag p">procediment</span></td><td>noms, notes, n</td><td>Omple els dos vectors</td></tr>
+        <tr><td>LlegirAlumnes</td><td><span class="tag p">procediment</span></td><td>noms, notes, n</td><td>Omple els dos vectors (fa servir LlegirEnter)</td></tr>
         <tr><td>CalcularMitjana ♻️</td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un real: la mitjana</td></tr>
         <tr><td>MostrarSuspesos</td><td><span class="tag p">procediment</span></td><td>noms, notes, n</td><td>Escriu la llista i el total, o "cap suspès"</td></tr>
         <tr><td>CercarNom</td><td><span class="tag f">funció</span></td><td>noms, n, nom cercat</td><td>Un enter: la posició, o -1 si no hi és</td></tr>
