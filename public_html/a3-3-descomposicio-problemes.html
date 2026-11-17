@@ -264,11 +264,11 @@ fPrograma</pre>
     <p class="lead"><strong>Pas 3 · peces i contractes.</strong> "Llegir un valor validant" és una feina que es fa a cada dia: en fem una peça a part.</p>
     <div class="tbl-scroll">
       <table class="mod-table">
-        <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th></tr>
-        <tr><td>LlegirEnter</td><td><span class="tag f">funció</span></td><td>missatge, mínim, màxim</td><td>Un enter vàlid</td></tr>
-        <tr><td>LlegirHores</td><td><span class="tag p">procediment</span></td><td>dies, hores, n</td><td>Omple el vector <code>hores</code> (fa servir LlegirEnter)</td></tr>
-        <tr><td>CalcularMitjana</td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un real: la mitjana</td></tr>
-        <tr><td>PosicioMaxim</td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un enter: la posició del màxim</td></tr>
+        <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th><th>Exemple</th></tr>
+        <tr><td>LlegirEnter</td><td><span class="tag f">funció</span></td><td>missatge, mínim, màxim</td><td>Un enter vàlid</td><td><code>LlegirEnter('Hores de dilluns', 0, 24)</code> → si escrius 30 torna a preguntar; si escrius 2, torna <strong>2</strong></td></tr>
+        <tr><td>LlegirHores</td><td><span class="tag p">procediment</span></td><td>dies, hores, n</td><td>Omple el vector <code>hores</code> (fa servir LlegirEnter)</td><td><code>LlegirHores(dies, hores, 5)</code> → no torna res: deixa <code>hores</code> = <strong>[2, 3, 5, 1, 4]</strong></td></tr>
+        <tr><td>CalcularMitjana</td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un real: la mitjana</td><td><code>CalcularMitjana(hores, 5)</code> → (2+3+5+1+4) / 5 = <strong>3</strong></td></tr>
+        <tr><td>PosicioMaxim</td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un enter: la posició del màxim</td><td><code>PosicioMaxim(hores, 5)</code> → <strong>2</strong> (la posició del 5, és a dir, dimecres)</td></tr>
       </table>
     </div>
 
