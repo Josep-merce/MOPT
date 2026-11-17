@@ -105,11 +105,15 @@
     .ri-ans.show { display:block; }
     .ri-btn + .ri-btn { margin-left:8px; }
     .code-box { display:none; } .code-box.show { display:block; }
+    .mod-table tr.code-row { display:none; } .mod-table tr.code-row.show { display:table-row; }
+    .mod-table tr.code-row td { white-space:normal; font-family:inherit; border-top:none; padding:0 12px 12px; }
+    .mod-table tr.code-row pre { margin:0; }
+    .ri-btn.tbl-btn { margin-top:8px; padding:4px 10px; font-size:11px; font-family:'DM Sans',system-ui,sans-serif; }
     .ri-ans-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--accent-mid); margin-bottom:8px; }
     .ri-note { font-size:13px; color:var(--ink-2); margin-top:10px; line-height:1.55; }
     @media print {
       body { background:white; font-size:14px; }
-      .ri-ans, .code-box { display:block !important; } .ri-btn { display:none; }
+      .ri-ans, .code-box { display:block !important; } .mod-table tr.code-row { display:table-row !important; } .ri-btn { display:none; }
       .ex-block-head { background:#1c1917 !important; -webkit-print-color-adjust:exact; }
     }
     /* A3.3 · extres */
@@ -265,17 +269,8 @@ fPrograma</pre>
     <div class="tbl-scroll">
       <table class="mod-table">
         <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th><th>Exemple</th></tr>
-        <tr><td>LlegirEnter</td><td><span class="tag f">funció</span></td><td>missatge, mínim, màxim</td><td>Un enter vàlid</td><td><code>LlegirEnter('Hores de dilluns', 0, 24)</code> → si escrius 30 torna a preguntar; si escrius 2, torna <strong>2</strong></td></tr>
-        <tr><td>LlegirHores</td><td><span class="tag p">procediment</span></td><td>dies, hores, n</td><td>Omple el vector <code>hores</code> (fa servir LlegirEnter)</td><td><code>LlegirHores(dies, hores, 5)</code> → no torna res: deixa <code>hores</code> = <strong>[2, 3, 5, 1, 4]</strong></td></tr>
-        <tr><td>CalcularMitjana</td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un real: la mitjana</td><td><code>CalcularMitjana(hores, 5)</code> → (2+3+5+1+4) / 5 = <strong>3</strong></td></tr>
-        <tr><td>PosicioMaxim</td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un enter: la posició del màxim</td><td><code>PosicioMaxim(hores, 5)</code> → <strong>2</strong> (la posició del 5, és a dir, dimecres)</td></tr>
-      </table>
-    </div>
-    <p class="lead" style="margin-top:14px;">El codi PSeInt de cada peça de la taula:</p>
-    <div class="pieces-code">
-      <div>
-        <button class="ri-btn" onclick="reveal(this,'PC1-0')" data-txt="codi de LlegirEnter">▶ Mostrar codi de LlegirEnter</button>
-        <div class="code-box" id="PC1-0"><pre class="pseudo-out" style="margin:8px 0 4px;" data-code="// Funció: demana un enter fins que estigui entre minim i maxim
+        <tr><td>LlegirEnter<br><button class="ri-btn tbl-btn" onclick="reveal(this,'PC1-0')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag f">funció</span></td><td>missatge, mínim, màxim</td><td>Un enter vàlid</td><td><code>LlegirEnter('Hores de dilluns', 0, 24)</code> → si escrius 30 torna a preguntar; si escrius 2, torna <strong>2</strong></td></tr>
+        <tr class="code-row" id="PC1-0"><td colspan="5"><pre class="pseudo-out" data-code="// Funció: demana un enter fins que estigui entre minim i maxim
 Funcion valor &lt;- LlegirEnter(missatge, minim, maxim)
     Definir valor Como Entero;
     Repetir
@@ -285,21 +280,17 @@ Funcion valor &lt;- LlegirEnter(missatge, minim, maxim)
             Escribir 'Valor no vàlid, torna-ho a provar.';
         FinSi
     Hasta Que valor &gt;= minim Y valor &lt;= maxim
-FinFuncion"></pre></div>
-      </div>
-      <div>
-        <button class="ri-btn" onclick="reveal(this,'PC1-1')" data-txt="codi de LlegirHores">▶ Mostrar codi de LlegirHores</button>
-        <div class="code-box" id="PC1-1"><pre class="pseudo-out" style="margin:8px 0 4px;" data-code="// Procediment: omple el vector hores, un valor per dia
+FinFuncion"></pre></td></tr>
+        <tr><td>LlegirHores<br><button class="ri-btn tbl-btn" onclick="reveal(this,'PC1-1')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag p">procediment</span></td><td>dies, hores, n</td><td>Omple el vector <code>hores</code> (fa servir LlegirEnter)</td><td><code>LlegirHores(dies, hores, 5)</code> → no torna res: deixa <code>hores</code> = <strong>[2, 3, 5, 1, 4]</strong></td></tr>
+        <tr class="code-row" id="PC1-1"><td colspan="5"><pre class="pseudo-out" data-code="// Procediment: omple el vector hores, un valor per dia
 Funcion LlegirHores(dies, hores Por Referencia, n)
     Definir i Como Entero;
     Para i &lt;- 0 Hasta n - 1 Hacer
         hores[i] &lt;- LlegirEnter(Concatenar('Hores de ', dies[i]), 0, 24);
     FinPara
-FinFuncion"></pre></div>
-      </div>
-      <div>
-        <button class="ri-btn" onclick="reveal(this,'PC1-2')" data-txt="codi de CalcularMitjana">▶ Mostrar codi de CalcularMitjana</button>
-        <div class="code-box" id="PC1-2"><pre class="pseudo-out" style="margin:8px 0 4px;" data-code="// Funció: torna la mitjana dels n primers valors del vector
+FinFuncion"></pre></td></tr>
+        <tr><td>CalcularMitjana<br><button class="ri-btn tbl-btn" onclick="reveal(this,'PC1-2')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un real: la mitjana</td><td><code>CalcularMitjana(hores, 5)</code> → (2+3+5+1+4) / 5 = <strong>3</strong></td></tr>
+        <tr class="code-row" id="PC1-2"><td colspan="5"><pre class="pseudo-out" data-code="// Funció: torna la mitjana dels n primers valors del vector
 Funcion mitjana &lt;- CalcularMitjana(v, n)
     Definir mitjana Como Real;
     Definir i, suma Como Entero;
@@ -308,11 +299,9 @@ Funcion mitjana &lt;- CalcularMitjana(v, n)
         suma &lt;- suma + v[i];
     FinPara
     mitjana &lt;- suma / n;
-FinFuncion"></pre></div>
-      </div>
-      <div>
-        <button class="ri-btn" onclick="reveal(this,'PC1-3')" data-txt="codi de PosicioMaxim">▶ Mostrar codi de PosicioMaxim</button>
-        <div class="code-box" id="PC1-3"><pre class="pseudo-out" style="margin:8px 0 4px;" data-code="// Funció: torna la POSICIÓ del valor més gran del vector
+FinFuncion"></pre></td></tr>
+        <tr><td>PosicioMaxim<br><button class="ri-btn tbl-btn" onclick="reveal(this,'PC1-3')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un enter: la posició del màxim</td><td><code>PosicioMaxim(hores, 5)</code> → <strong>2</strong> (la posició del 5, és a dir, dimecres)</td></tr>
+        <tr class="code-row" id="PC1-3"><td colspan="5"><pre class="pseudo-out" data-code="// Funció: torna la POSICIÓ del valor més gran del vector
 Funcion pos &lt;- PosicioMaxim(v, n)
     Definir pos, i Como Entero;
     pos &lt;- 0;
@@ -321,8 +310,8 @@ Funcion pos &lt;- PosicioMaxim(v, n)
             pos &lt;- i;
         FinSi
     FinPara
-FinFuncion"></pre></div>
-      </div>
+FinFuncion"></pre></td></tr>
+      </table>
     </div>
 
     <p class="lead"><strong>Pas 4 · revisió.</strong></p>
@@ -463,18 +452,8 @@ fPrograma</pre>
     <div class="tbl-scroll">
       <table class="mod-table">
         <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th><th>Exemple</th></tr>
-        <tr><td>LlegirEnter ♻️</td><td><span class="tag f">funció</span></td><td>missatge, mínim, màxim</td><td>Un enter vàlid</td><td><code>LlegirEnter('Quants alumnes hi ha?', 1, 30)</code> → si escrius 4, torna <strong>4</strong></td></tr>
-        <tr><td>LlegirAlumnes</td><td><span class="tag p">procediment</span></td><td>noms, notes, n</td><td>Omple els dos vectors (fa servir LlegirEnter)</td><td><code>LlegirAlumnes(noms, notes, 4)</code> → no torna res: deixa <code>noms</code> = <strong>[Anna, Biel, Carla, David]</strong> i <code>notes</code> = <strong>[7, 4, 9, 3]</strong></td></tr>
-        <tr><td>CalcularMitjana ♻️</td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un real: la mitjana</td><td><code>CalcularMitjana(notes, 4)</code> → (7+4+9+3) / 4 = <strong>5.75</strong></td></tr>
-        <tr><td>MostrarSuspesos</td><td><span class="tag p">procediment</span></td><td>noms, notes, n</td><td>Escriu la llista i el total, o "cap suspès"</td><td><code>MostrarSuspesos(noms, notes, 4)</code> → no torna res: escriu <strong>- Biel (4)</strong>, <strong>- David (3)</strong> i <strong>Total de suspesos: 2</strong></td></tr>
-        <tr><td>CercarNom</td><td><span class="tag f">funció</span></td><td>noms, n, nom cercat</td><td>Un enter: la posició, o -1 si no hi és</td><td><code>CercarNom(noms, 4, 'Carla')</code> → <strong>2</strong><br><code>CercarNom(noms, 4, 'Joan')</code> → <strong>-1</strong> (no hi és)</td></tr>
-      </table>
-    </div>
-    <p class="lead" style="margin-top:14px;">El codi PSeInt de cada peça de la taula:</p>
-    <div class="pieces-code">
-      <div>
-        <button class="ri-btn" onclick="reveal(this,'PC2-0')" data-txt="codi de LlegirEnter">▶ Mostrar codi de LlegirEnter</button>
-        <div class="code-box" id="PC2-0"><pre class="pseudo-out" style="margin:8px 0 4px;" data-code="// ♻️ Funció: demana un enter fins que estigui entre minim i maxim
+        <tr><td>LlegirEnter ♻️<br><button class="ri-btn tbl-btn" onclick="reveal(this,'PC2-0')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag f">funció</span></td><td>missatge, mínim, màxim</td><td>Un enter vàlid</td><td><code>LlegirEnter('Quants alumnes hi ha?', 1, 30)</code> → si escrius 4, torna <strong>4</strong></td></tr>
+        <tr class="code-row" id="PC2-0"><td colspan="5"><pre class="pseudo-out" data-code="// ♻️ Funció: demana un enter fins que estigui entre minim i maxim
 Funcion valor &lt;- LlegirEnter(missatge, minim, maxim)
     Definir valor Como Entero;
     Repetir
@@ -484,11 +463,9 @@ Funcion valor &lt;- LlegirEnter(missatge, minim, maxim)
             Escribir 'Valor no vàlid, torna-ho a provar.';
         FinSi
     Hasta Que valor &gt;= minim Y valor &lt;= maxim
-FinFuncion"></pre></div>
-      </div>
-      <div>
-        <button class="ri-btn" onclick="reveal(this,'PC2-1')" data-txt="codi de LlegirAlumnes">▶ Mostrar codi de LlegirAlumnes</button>
-        <div class="code-box" id="PC2-1"><pre class="pseudo-out" style="margin:8px 0 4px;" data-code="// Procediment: omple els noms i les notes dels n alumnes
+FinFuncion"></pre></td></tr>
+        <tr><td>LlegirAlumnes<br><button class="ri-btn tbl-btn" onclick="reveal(this,'PC2-1')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag p">procediment</span></td><td>noms, notes, n</td><td>Omple els dos vectors (fa servir LlegirEnter)</td><td><code>LlegirAlumnes(noms, notes, 4)</code> → no torna res: deixa <code>noms</code> = <strong>[Anna, Biel, Carla, David]</strong> i <code>notes</code> = <strong>[7, 4, 9, 3]</strong></td></tr>
+        <tr class="code-row" id="PC2-1"><td colspan="5"><pre class="pseudo-out" data-code="// Procediment: omple els noms i les notes dels n alumnes
 Funcion LlegirAlumnes(noms Por Referencia, notes Por Referencia, n)
     Definir i Como Entero;
     Para i &lt;- 0 Hasta n - 1 Hacer
@@ -496,11 +473,9 @@ Funcion LlegirAlumnes(noms Por Referencia, notes Por Referencia, n)
         Leer noms[i];
         notes[i] &lt;- LlegirEnter(Concatenar('Nota de ', noms[i]), 0, 10);
     FinPara
-FinFuncion"></pre></div>
-      </div>
-      <div>
-        <button class="ri-btn" onclick="reveal(this,'PC2-2')" data-txt="codi de CalcularMitjana">▶ Mostrar codi de CalcularMitjana</button>
-        <div class="code-box" id="PC2-2"><pre class="pseudo-out" style="margin:8px 0 4px;" data-code="// ♻️ Funció: torna la mitjana dels n primers valors del vector
+FinFuncion"></pre></td></tr>
+        <tr><td>CalcularMitjana ♻️<br><button class="ri-btn tbl-btn" onclick="reveal(this,'PC2-2')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un real: la mitjana</td><td><code>CalcularMitjana(notes, 4)</code> → (7+4+9+3) / 4 = <strong>5.75</strong></td></tr>
+        <tr class="code-row" id="PC2-2"><td colspan="5"><pre class="pseudo-out" data-code="// ♻️ Funció: torna la mitjana dels n primers valors del vector
 Funcion mitjana &lt;- CalcularMitjana(v, n)
     Definir mitjana Como Real;
     Definir i, suma Como Entero;
@@ -509,11 +484,9 @@ Funcion mitjana &lt;- CalcularMitjana(v, n)
         suma &lt;- suma + v[i];
     FinPara
     mitjana &lt;- suma / n;
-FinFuncion"></pre></div>
-      </div>
-      <div>
-        <button class="ri-btn" onclick="reveal(this,'PC2-3')" data-txt="codi de MostrarSuspesos">▶ Mostrar codi de MostrarSuspesos</button>
-        <div class="code-box" id="PC2-3"><pre class="pseudo-out" style="margin:8px 0 4px;" data-code="// Procediment: escriu els suspesos i quants són (o que no n'hi ha cap)
+FinFuncion"></pre></td></tr>
+        <tr><td>MostrarSuspesos<br><button class="ri-btn tbl-btn" onclick="reveal(this,'PC2-3')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag p">procediment</span></td><td>noms, notes, n</td><td>Escriu la llista i el total, o "cap suspès"</td><td><code>MostrarSuspesos(noms, notes, 4)</code> → no torna res: escriu <strong>- Biel (4)</strong>, <strong>- David (3)</strong> i <strong>Total de suspesos: 2</strong></td></tr>
+        <tr class="code-row" id="PC2-3"><td colspan="5"><pre class="pseudo-out" data-code="// Procediment: escriu els suspesos i quants són (o que no n'hi ha cap)
 Funcion MostrarSuspesos(noms, notes, n)
     Definir i, quants Como Entero;
     quants &lt;- 0;
@@ -529,11 +502,9 @@ Funcion MostrarSuspesos(noms, notes, n)
     SiNo
         Escribir 'Total de suspesos: ', quants;
     FinSi
-FinFuncion"></pre></div>
-      </div>
-      <div>
-        <button class="ri-btn" onclick="reveal(this,'PC2-4')" data-txt="codi de CercarNom">▶ Mostrar codi de CercarNom</button>
-        <div class="code-box" id="PC2-4"><pre class="pseudo-out" style="margin:8px 0 4px;" data-code="// Funció: torna la posició del nom dins el vector, o -1 si no hi és
+FinFuncion"></pre></td></tr>
+        <tr><td>CercarNom<br><button class="ri-btn tbl-btn" onclick="reveal(this,'PC2-4')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag f">funció</span></td><td>noms, n, nom cercat</td><td>Un enter: la posició, o -1 si no hi és</td><td><code>CercarNom(noms, 4, 'Carla')</code> → <strong>2</strong><br><code>CercarNom(noms, 4, 'Joan')</code> → <strong>-1</strong> (no hi és)</td></tr>
+        <tr class="code-row" id="PC2-4"><td colspan="5"><pre class="pseudo-out" data-code="// Funció: torna la posició del nom dins el vector, o -1 si no hi és
 Funcion pos &lt;- CercarNom(noms, n, nomCercat)
     Definir pos, i Como Entero;
     pos &lt;- -1;
@@ -544,8 +515,8 @@ Funcion pos &lt;- CercarNom(noms, n, nomCercat)
         FinSi
         i &lt;- i + 1;
     FinMientras
-FinFuncion"></pre></div>
-      </div>
+FinFuncion"></pre></td></tr>
+      </table>
     </div>
 
     <p class="lead"><strong>Pas 4 · revisió.</strong></p>
