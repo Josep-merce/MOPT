@@ -462,12 +462,12 @@ fPrograma</pre>
     <p class="lead"><strong>Pas 3 · peces i contractes.</strong> Les peces amb ♻️ són les de l'exemple 1, reutilitzades tal qual.</p>
     <div class="tbl-scroll">
       <table class="mod-table">
-        <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th></tr>
-        <tr><td>LlegirEnter ♻️</td><td><span class="tag f">funció</span></td><td>missatge, mínim, màxim</td><td>Un enter vàlid</td></tr>
-        <tr><td>LlegirAlumnes</td><td><span class="tag p">procediment</span></td><td>noms, notes, n</td><td>Omple els dos vectors (fa servir LlegirEnter)</td></tr>
-        <tr><td>CalcularMitjana ♻️</td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un real: la mitjana</td></tr>
-        <tr><td>MostrarSuspesos</td><td><span class="tag p">procediment</span></td><td>noms, notes, n</td><td>Escriu la llista i el total, o "cap suspès"</td></tr>
-        <tr><td>CercarNom</td><td><span class="tag f">funció</span></td><td>noms, n, nom cercat</td><td>Un enter: la posició, o -1 si no hi és</td></tr>
+        <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th><th>Exemple</th></tr>
+        <tr><td>LlegirEnter ♻️</td><td><span class="tag f">funció</span></td><td>missatge, mínim, màxim</td><td>Un enter vàlid</td><td><code>LlegirEnter('Quants alumnes hi ha?', 1, 30)</code> → si escrius 4, torna <strong>4</strong></td></tr>
+        <tr><td>LlegirAlumnes</td><td><span class="tag p">procediment</span></td><td>noms, notes, n</td><td>Omple els dos vectors (fa servir LlegirEnter)</td><td><code>LlegirAlumnes(noms, notes, 4)</code> → no torna res: deixa <code>noms</code> = <strong>[Anna, Biel, Carla, David]</strong> i <code>notes</code> = <strong>[7, 4, 9, 3]</strong></td></tr>
+        <tr><td>CalcularMitjana ♻️</td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un real: la mitjana</td><td><code>CalcularMitjana(notes, 4)</code> → (7+4+9+3) / 4 = <strong>5.75</strong></td></tr>
+        <tr><td>MostrarSuspesos</td><td><span class="tag p">procediment</span></td><td>noms, notes, n</td><td>Escriu la llista i el total, o "cap suspès"</td><td><code>MostrarSuspesos(noms, notes, 4)</code> → no torna res: escriu <strong>- Biel (4)</strong>, <strong>- David (3)</strong> i <strong>Total de suspesos: 2</strong></td></tr>
+        <tr><td>CercarNom</td><td><span class="tag f">funció</span></td><td>noms, n, nom cercat</td><td>Un enter: la posició, o -1 si no hi és</td><td><code>CercarNom(noms, 4, 'Carla')</code> → <strong>2</strong><br><code>CercarNom(noms, 4, 'Joan')</code> → <strong>-1</strong> (no hi és)</td></tr>
       </table>
     </div>
     <p class="lead" style="margin-top:14px;">El codi PSeInt de cada peça de la taula:</p>
