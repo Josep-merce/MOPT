@@ -666,177 +666,86 @@ FinProceso"></pre>
     <!-- EXERCICI 1 -->
     <div class="exercise">
       <div class="ex-head"><div class="ex-num">1</div><div>
-        <div class="ex-name">Préstecs d'una biblioteca <span class="lvl mid">Mitjà</span></div>
-        <div class="ex-level">Vectors paral·lels · reutilitzar peces</div>
+        <div class="ex-name">Endevina el número <span class="lvl easy">Fàcil</span></div>
+        <div class="ex-level">Mientras · comptador d'intents</div>
       </div></div>
       <div class="ri">
         <div class="ri-q">
           <div class="ri-q-text">
-            Una biblioteca vol saber quantes vegades s'ha prestat cada llibre aquest mes. Hi caben com a màxim 40 llibres
-            i guarda els títols i els préstecs en dos vectors paral·lels. El programa pregunta quants llibres hi ha i en
-            demana el títol i els préstecs de cadascun (entre 0 i 200), mostra el total de préstecs del mes, el llibre més
-            prestat i quantes vegades, i els llibres que no s'han prestat cap vegada (o un avís si no n'hi ha cap).
-            Finalment demana un títol, el cerca i en mostra els préstecs, o avisa si no hi és.
+            Crea un algoritme amb pseudocodi que permeti endevinar un número. L'aplicació genera un número aleatori de
+            l'1 al 100. A continuació va demanant números i va responent si el nombre a endevinar és més gran o més petit
+            que l'introduït, a més dels intents que et queden (tens 10 intents per encertar-ho).<br>
+            El programa acaba quan s'encerta el número (a més et diu en quants intents ho has encertat); si s'arriba al
+            límit d'intents, et mostra el número que havia generat.
           </div>
-          <button class="ri-btn" onclick="reveal(this,'S1')" data-txt="solució (descomposició)">▶ Mostrar solució (descomposició)</button>
+          <button class="ri-btn" onclick="reveal(this,'S1')" data-txt="solució (anàlisi i disseny)">▶ Mostrar solució (anàlisi i disseny)</button>
           <button class="ri-btn" onclick="reveal(this,'C1')" data-txt="solució (codi PSeInt)">▶ Mostrar solució (codi PSeInt)</button>
         </div>
         <div class="ri-ans" id="S1">
-          <div class="ri-ans-label">① Esquema</div>
-          <pre class="pseudo-out">Programa Biblioteca
-  Llegir quants llibres hi ha (validat)
-  Llegir el títol i els préstecs de cada llibre (validats)
-  Calcular i mostrar el total de préstecs
-  Buscar el llibre més prestat i mostrar-lo
-  Mostrar els llibres sense préstecs (o un avís)
-  Llegir un títol, cercar-lo i mostrar el resultat
-fPrograma</pre>
-          <div class="ri-ans-label" style="margin-top:16px;">② Peces i contractes</div>
-          <div class="tbl-scroll">
-            <table class="mod-table">
-              <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th></tr>
-              <tr><td>LlegirEnter ♻️</td><td><span class="tag f">funció</span></td><td>missatge, mínim, màxim</td><td>Un enter vàlid (quants llibres, préstecs)</td></tr>
-              <tr><td>LlegirLlibres</td><td><span class="tag p">procediment</span></td><td>titols, prestecs, n</td><td>Omple els dos vectors</td></tr>
-              <tr><td>SumarVector</td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un enter: la suma</td></tr>
-              <tr><td>MostrarSensePrestec</td><td><span class="tag p">procediment</span></td><td>titols, prestecs, n</td><td>Escriu els que tenen 0, o un avís</td></tr>
-              <tr><td>PosicioMaxim ♻️</td><td><span class="tag f">funció</span></td><td>vector, n</td><td>Un enter: posició del més prestat</td></tr>
-              <tr><td>CercarNom ♻️</td><td><span class="tag f">funció</span></td><td>titols, n, títol cercat</td><td>Un enter: la posició, o -1</td></tr>
-            </table>
+          <div class="ri-ans-label">① Anàlisi</div>
+          <div class="ri-note" style="margin-top:0;">
+            Hem de generar un nombre aleatori (funció <code>Aleatorio</code>) de l'1 al 100.<br>
+            Necessitem un comptador per comptar els 10 intents. Al principi val 10 i anirà decrementant.<br>
+            Mentre no encerti el número i em quedin intents:<br>
+            &nbsp;&nbsp;· Llegeixo un número<br>
+            &nbsp;&nbsp;· Ho comparo amb el nombre generat (dic si és més gran o més petit)<br>
+            &nbsp;&nbsp;· Demano un altre nombre<br>
+            Puc acabar el bucle per dues raons: si he endevinat el número, he guanyat i mostro els intents que he necessitat;
+            si no, he perdut: he utilitzat els 10 intents i mostro el número generat.<br><br>
+            <strong>Dades d'entrada:</strong> número demanat a l'usuari.<br>
+            <strong>Informació de sortida:</strong> has guanyat i els intents, o has perdut i el número.<br>
+            <strong>Variables:</strong> <code>num_secret</code>, <code>num_ingressat</code>, <code>intents</code> (enters)
           </div>
-          <div class="ri-note">
-            La meitat de les peces ja existien. <code>CercarNom</code> serveix per a títols perquè només compara cadenes:
-            no sap si són noms d'alumnes o de llibres. Si has posat <code>PosicioMaxim</code> com a funció que torna el
-            <em>valor</em> màxim, fixa't que llavors no podries mostrar el títol del llibre.
-          </div>
+          <div class="ri-ans-label" style="margin-top:16px;">② Disseny</div>
+          <pre class="pseudo-out">1. Genero un nombre aleatori de l'1 al 100 (num_secret)
+2. intents = 10
+3. Llegir num
+4. Mentre num &lt;&gt; num_secret i intents &gt; 1
+5.     Si num_secret &gt; num -&gt; Escriure &quot;Molt baix&quot;
+6.     Si num_secret &lt; num -&gt; Escriure &quot;Molt alt&quot;
+7.     intents = intents - 1
+8.     Escriure intents
+9.     Llegir num
+10. Si num_secret = num -&gt; Escriure &quot;Has guanyat&quot;, intents
+11. SiNo -&gt; Escriure &quot;Has perdut&quot;, num_secret</pre>
         </div>
         <div class="ri-ans" id="C1">
           <div class="ri-ans-label">③ Codi PSeInt</div>
-          <pre class="pseudo-out" data-code="// ♻️ Funció: demana un enter fins que estigui entre minim i maxim
-Funcion valor <- LlegirEnter(missatge, minim, maxim)
-    Definir valor Como Entero;
-    Repetir
-        Escribir missatge, ' (', minim, '-', maxim, '):';
-        Leer valor;
-        Si valor < minim O valor > maxim Entonces
-            Escribir 'Valor no vàlid, torna-ho a provar.';
+          <pre class="pseudo-out" data-code="Proceso Endevina_Numero
+    Definir intents, num_secret, num_ingressat Como Entero;
+    intents &lt;- 10;
+    num_secret &lt;- Aleatorio(1, 100);
+
+    Escribir 'Endevina el número (entre 1 i 100):';
+    Leer num_ingressat;
+    Mientras num_secret &lt;&gt; num_ingressat Y intents &gt; 1 Hacer
+        Si num_secret &gt; num_ingressat Entonces
+            Escribir 'Molt baix';
+        SiNo
+            Escribir 'Molt alt';
         FinSi
-    Hasta Que valor >= minim Y valor <= maxim
-FinFuncion
-
-// Procediment: omple els títols i els préstecs dels n llibres
-Funcion LlegirLlibres(titols Por Referencia, prestecs Por Referencia, n)
-    Definir i Como Entero;
-    Para i <- 0 Hasta n - 1 Hacer
-        Escribir 'Llibre ', i + 1, ', títol:';
-        Leer titols[i];
-        prestecs[i] <- LlegirEnter(Concatenar('Préstecs de ', titols[i]), 0, 200);
-    FinPara
-FinFuncion
-
-// Funció: torna la suma dels n primers valors del vector
-Funcion suma <- SumarVector(v, n)
-    Definir suma, i Como Entero;
-    suma <- 0;
-    Para i <- 0 Hasta n - 1 Hacer
-        suma <- suma + v[i];
-    FinPara
-FinFuncion
-
-// Procediment: escriu els llibres amb 0 préstecs, o un avís
-Funcion MostrarSensePrestec(titols, prestecs, n)
-    Definir i, quants Como Entero;
-    quants <- 0;
-    Escribir 'Llibres sense cap préstec:';
-    Para i <- 0 Hasta n - 1 Hacer
-        Si prestecs[i] = 0 Entonces
-            Escribir '- ', titols[i];
-            quants <- quants + 1;
-        FinSi
-    FinPara
-    Si quants = 0 Entonces
-        Escribir 'Cap: tots els llibres tenen algun préstec.';
-    FinSi
-FinFuncion
-
-// ♻️ Funció: torna la POSICIÓ del valor més gran del vector
-Funcion pos <- PosicioMaxim(v, n)
-    Definir pos, i Como Entero;
-    pos <- 0;
-    Para i <- 1 Hasta n - 1 Hacer
-        Si v[i] > v[pos] Entonces
-            pos <- i;
-        FinSi
-    FinPara
-FinFuncion
-
-// ♻️ Funció: torna la posició del nom dins el vector, o -1 si no hi és
-Funcion pos <- CercarNom(noms, n, nomCercat)
-    Definir pos, i Como Entero;
-    pos <- -1;
-    i <- 0;
-    Mientras pos = -1 Y i < n Hacer
-        Si noms[i] = nomCercat Entonces
-            pos <- i;
-        FinSi
-        i <- i + 1;
+        intents &lt;- intents - 1;
+        Escribir 'Et queden ', intents, ' intents:';
+        Leer num_ingressat;
     FinMientras
-FinFuncion
 
-Proceso Biblioteca
-    Definir MAX_LLIBRES, n, posMax, pos Como Entero;
-    MAX_LLIBRES <- 40;
-    Definir titols Como Caracter;
-    Dimension titols[MAX_LLIBRES];
-    Definir prestecs Como Entero;
-    Dimension prestecs[MAX_LLIBRES];
-    Definir titolCercat Como Caracter;
-
-    n <- LlegirEnter('Quants llibres hi ha?', 1, MAX_LLIBRES);
-    LlegirLlibres(titols, prestecs, n);
-    Escribir 'Total de préstecs del mes: ', SumarVector(prestecs, n);
-    posMax <- PosicioMaxim(prestecs, n);
-    Escribir 'Llibre més prestat: ', titols[posMax], ' (', prestecs[posMax], ' vegades)';
-    MostrarSensePrestec(titols, prestecs, n);
-
-    Escribir 'Quin títol busques?';
-    Leer titolCercat;
-    pos <- CercarNom(titols, n, titolCercat);
-    Si pos = -1 Entonces
-        Escribir titolCercat, ' no és a la biblioteca.';
+    Si num_secret = num_ingressat Entonces
+        Escribir 'Exacte! Ho has endevinat en ', 11 - intents, ' intents.';
     SiNo
-        Escribir titolCercat, ': ', prestecs[pos], ' préstecs';
+        Escribir 'Has perdut. El número era: ', num_secret;
     FinSi
 FinProceso"></pre>
           <div class="ri-ans-label" style="margin-top:16px;">Exemple d'execució</div>
-          <pre class="pseudo-out">Quants llibres hi ha? (1-40):
-&gt; 4
-Llibre 1, títol:
-&gt; Matilda
-Préstecs de Matilda (0-200):
-&gt; 12
-Llibre 2, títol:
-&gt; Wonder
-Préstecs de Wonder (0-200):
-&gt; 0
-Llibre 3, títol:
-&gt; Momo
-Préstecs de Momo (0-200):
+          <pre class="pseudo-out">Endevina el número (entre 1 i 100):
+&gt; 50
+Molt alt
+Et queden 9 intents:
 &gt; 25
-Llibre 4, títol:
-&gt; Coraline
-Préstecs de Coraline (0-200):
-&gt; 250
-Valor no vàlid, torna-ho a provar.
-Préstecs de Coraline (0-200):
-&gt; 8
-Total de préstecs del mes: 45
-Llibre més prestat: Momo (25 vegades)
-Llibres sense cap préstec:
-- Wonder
-Quin títol busques?
-&gt; Dune
-Dune no és a la biblioteca.</pre>
-          <div class="ri-note">Les peces amb ♻️ són les dels exemples, copiades sense canviar-hi res. <code>SumarVector</code> és gairebé <code>CalcularMitjana</code> sense la divisió final.</div>
+Molt baix
+Et queden 8 intents:
+&gt; 37
+Exacte! Ho has endevinat en 3 intents.</pre>
+          <div class="ri-note">El bucle té dues condicions de sortida (encertar o quedar-se sense intents). Per això, quan acaba, cal tornar a preguntar <code>Si num_secret = num_ingressat</code> per saber quina de les dues ha passat. Com que <code>intents</code> comença a 10 i baixa, els intents fets són <code>11 - intents</code>.</div>
         </div>
       </div>
     </div>
