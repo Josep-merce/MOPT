@@ -103,6 +103,7 @@
     .ri-btn:hover { background:var(--accent-mid); color:#fff; border-color:var(--accent-mid); }
     .ri-ans { display:none; padding:16px 18px; background:var(--accent-bg); border-top:1px solid var(--accent-bdr); }
     .ri-ans.show { display:block; }
+    .ri-btn + .ri-btn { margin-left:8px; }
     .ri-ans-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--accent-mid); margin-bottom:8px; }
     .ri-note { font-size:13px; color:var(--ink-2); margin-top:10px; line-height:1.55; }
     @media print {
@@ -159,7 +160,7 @@
       <span class="badge b-new">Descomposició de problemes</span>
     </div>
     <h1 class="page-title">Descomposició de problemes</h1>
-    <p class="page-sub">Abans d'escriure codi cal saber quines peces fan falta. Aprendrem a llegir un enunciat i dividir-lo en peces, sense programar-lo.</p>
+    <p class="page-sub">Abans d'escriure codi cal saber quines peces fan falta. Aprendrem a llegir un enunciat i dividir-lo en peces abans de programar-lo.</p>
     <div class="obj-box">
       <div class="obj-icon">🎯</div>
       <div>
@@ -208,7 +209,7 @@
       <span class="sec-num">1</span>
       <div>
         <h2 class="sec-title">El mètode, en 4 passos</h2>
-        <p class="sec-sub">Descompondre és pensar, no programar: aquí no escriurem cap línia de codi</p>
+        <p class="sec-sub">Descompondre és pensar abans de programar: primer les peces, després el codi</p>
       </div>
     </div>
     <div class="method">
@@ -280,6 +281,95 @@ fPrograma</pre>
         <strong>qualsevol vector</strong>, i les tornarem a fer servir.
       </div>
     </div>
+
+    <p class="lead" style="margin-top:24px;"><strong>Solució · el codi.</strong> Cada fila de la taula es converteix en una subrutina, i el programa principal és l'esquema del pas 2 escrit en PSeInt.</p>
+    <div class="demo">
+<div class="demo-label">Codi PSeInt</div>
+<pre class="pseudo-out" data-code="// Funció: demana un enter fins que estigui entre minim i maxim
+Funcion valor <- LlegirEnter(missatge, minim, maxim)
+    Definir valor Como Entero;
+    Repetir
+        Escribir missatge, ' (', minim, '-', maxim, '):';
+        Leer valor;
+        Si valor < minim O valor > maxim Entonces
+            Escribir 'Valor no vàlid, torna-ho a provar.';
+        FinSi
+    Hasta Que valor >= minim Y valor <= maxim
+FinFuncion
+
+// Procediment: omple el vector hores, un valor per dia
+Funcion LlegirHores(dies, hores Por Referencia, n)
+    Definir i Como Entero;
+    Para i <- 0 Hasta n - 1 Hacer
+        hores[i] <- LlegirEnter(Concatenar('Hores de ', dies[i]), 0, 24);
+    FinPara
+FinFuncion
+
+// Funció: torna la mitjana dels n primers valors del vector
+Funcion mitjana <- CalcularMitjana(v, n)
+    Definir mitjana Como Real;
+    Definir i, suma Como Entero;
+    suma <- 0;
+    Para i <- 0 Hasta n - 1 Hacer
+        suma <- suma + v[i];
+    FinPara
+    mitjana <- suma / n;
+FinFuncion
+
+// Funció: torna la POSICIÓ del valor més gran del vector
+Funcion pos <- PosicioMaxim(v, n)
+    Definir pos, i Como Entero;
+    pos <- 0;
+    Para i <- 1 Hasta n - 1 Hacer
+        Si v[i] > v[pos] Entonces
+            pos <- i;
+        FinSi
+    FinPara
+FinFuncion
+
+Proceso HoresEstudi
+    Definir N_DIES, posMax Como Entero;
+    N_DIES <- 5;
+    Definir dies Como Caracter;
+    Dimension dies[N_DIES];
+    Definir hores Como Entero;
+    Dimension hores[N_DIES];
+    dies[0] <- 'dilluns';
+    dies[1] <- 'dimarts';
+    dies[2] <- 'dimecres';
+    dies[3] <- 'dijous';
+    dies[4] <- 'divendres';
+
+    LlegirHores(dies, hores, N_DIES);
+    Escribir 'Mitjana diària: ', CalcularMitjana(hores, N_DIES), ' hores';
+    posMax <- PosicioMaxim(hores, N_DIES);
+    Escribir 'Dia que has estudiat més: ', dies[posMax], ' (', hores[posMax], ' hores)';
+FinProceso"></pre>
+<div class="demo-label" style="margin-top:12px;">El programa mostra (exemple d'execució)</div>
+<pre class="pseudo-out" style="margin:6px 0 4px;">Hores de dilluns (0-24):
+&gt; 2
+Hores de dimarts (0-24):
+&gt; 3
+Hores de dimecres (0-24):
+&gt; 30
+Valor no vàlid, torna-ho a provar.
+Hores de dimecres (0-24):
+&gt; 5
+Hores de dijous (0-24):
+&gt; 1
+Hores de divendres (0-24):
+&gt; 4
+Mitjana diària: 3 hores
+Dia que has estudiat més: dimecres (5 hores)</pre>
+    </div>
+    <div class="ibox blue">
+      <div class="ibox-label">Dues coses de PSeInt que cal saber</div>
+      <div class="ibox-text">
+        Les subrutines <strong>no veuen</strong> les variables del programa principal: per això els passem també la mida
+        <code>n</code>. I els vectors i les matrius es passen <strong>sempre per referència</strong>; escrivim
+        <code>Por Referencia</code> a les peces que els omplen perquè quedi clar que els modifiquen.
+      </div>
+    </div>
   </section>
 
   <!-- SECCIÓ 3 · EXEMPLE MITJÀ -->
@@ -334,12 +424,134 @@ fPrograma</pre>
         una alternativa vàlida seria separar-ho en <code>MostrarSuspesos</code> i una funció <code>ComptarSuspesos</code>.
       </div>
     </div>
+
+    <p class="lead" style="margin-top:24px;"><strong>Solució · el codi.</strong> Les peces amb ♻️ són idèntiques a les de l'exemple 1: només les hem copiat.</p>
+    <div class="demo">
+<div class="demo-label">Codi PSeInt</div>
+<pre class="pseudo-out" data-code="// ♻️ Funció: demana un enter fins que estigui entre minim i maxim
+Funcion valor <- LlegirEnter(missatge, minim, maxim)
+    Definir valor Como Entero;
+    Repetir
+        Escribir missatge, ' (', minim, '-', maxim, '):';
+        Leer valor;
+        Si valor < minim O valor > maxim Entonces
+            Escribir 'Valor no vàlid, torna-ho a provar.';
+        FinSi
+    Hasta Que valor >= minim Y valor <= maxim
+FinFuncion
+
+// Procediment: omple els noms i les notes dels n alumnes
+Funcion LlegirAlumnes(noms Por Referencia, notes Por Referencia, n)
+    Definir i Como Entero;
+    Para i <- 0 Hasta n - 1 Hacer
+        Escribir 'Alumne ', i + 1, ', nom:';
+        Leer noms[i];
+        notes[i] <- LlegirEnter(Concatenar('Nota de ', noms[i]), 0, 10);
+    FinPara
+FinFuncion
+
+// ♻️ Funció: torna la mitjana dels n primers valors del vector
+Funcion mitjana <- CalcularMitjana(v, n)
+    Definir mitjana Como Real;
+    Definir i, suma Como Entero;
+    suma <- 0;
+    Para i <- 0 Hasta n - 1 Hacer
+        suma <- suma + v[i];
+    FinPara
+    mitjana <- suma / n;
+FinFuncion
+
+// Procediment: escriu els suspesos i quants són (o que no n'hi ha cap)
+Funcion MostrarSuspesos(noms, notes, n)
+    Definir i, quants Como Entero;
+    quants <- 0;
+    Escribir 'Alumnes suspesos:';
+    Para i <- 0 Hasta n - 1 Hacer
+        Si notes[i] < 5 Entonces
+            Escribir '- ', noms[i], ' (', notes[i], ')';
+            quants <- quants + 1;
+        FinSi
+    FinPara
+    Si quants = 0 Entonces
+        Escribir 'No hi ha cap suspès.';
+    SiNo
+        Escribir 'Total de suspesos: ', quants;
+    FinSi
+FinFuncion
+
+// Funció: torna la posició del nom dins el vector, o -1 si no hi és
+Funcion pos <- CercarNom(noms, n, nomCercat)
+    Definir pos, i Como Entero;
+    pos <- -1;
+    i <- 0;
+    Mientras pos = -1 Y i < n Hacer
+        Si noms[i] = nomCercat Entonces
+            pos <- i;
+        FinSi
+        i <- i + 1;
+    FinMientras
+FinFuncion
+
+Proceso NotesClasse
+    Definir MAX_ALUMNES, n, pos Como Entero;
+    MAX_ALUMNES <- 30;
+    Definir noms Como Caracter;
+    Dimension noms[MAX_ALUMNES];
+    Definir notes Como Entero;
+    Dimension notes[MAX_ALUMNES];
+    Definir nomCercat Como Caracter;
+
+    n <- LlegirEnter('Quants alumnes hi ha?', 1, MAX_ALUMNES);
+    LlegirAlumnes(noms, notes, n);
+    Escribir 'Mitjana de la classe: ', CalcularMitjana(notes, n);
+    MostrarSuspesos(noms, notes, n);
+
+    Escribir 'Quin alumne busques?';
+    Leer nomCercat;
+    pos <- CercarNom(noms, n, nomCercat);
+    Si pos = -1 Entonces
+        Escribir nomCercat, ' no és a la classe.';
+    SiNo
+        Escribir 'Nota de ', nomCercat, ': ', notes[pos];
+    FinSi
+FinProceso"></pre>
+<div class="demo-label" style="margin-top:12px;">El programa mostra (exemple d'execució)</div>
+<pre class="pseudo-out" style="margin:6px 0 4px;">Quants alumnes hi ha? (1-30):
+&gt; 4
+Alumne 1, nom:
+&gt; Anna
+Nota de Anna (0-10):
+&gt; 7
+Alumne 2, nom:
+&gt; Biel
+Nota de Biel (0-10):
+&gt; 4
+Alumne 3, nom:
+&gt; Carla
+Nota de Carla (0-10):
+&gt; 12
+Valor no vàlid, torna-ho a provar.
+Nota de Carla (0-10):
+&gt; 9
+Alumne 4, nom:
+&gt; David
+Nota de David (0-10):
+&gt; 3
+Mitjana de la classe: 5.75
+Alumnes suspesos:
+- Biel (4)
+- David (3)
+Total de suspesos: 2
+Quin alumne busques?
+&gt; Carla
+Nota de Carla: 9</pre>
+    </div>
   </section>
 
   <!-- EXERCICIS -->
   <div class="ex-block-head">
     <h2 class="ex-block-title">Exercicis per resoldre</h2>
-    <p class="ex-block-sub">No cal programar. Per a cada enunciat: ① esquema ② taula de peces i contractes · criteris 2.3 i 2.4</p>
+    <p class="ex-block-sub">Per a cada enunciat: ① esquema ② taula de peces i contractes ③ codi PSeInt · criteris 2.3 i 2.4</p>
   </div>
   <div class="ex-block-body">
 
@@ -358,7 +570,8 @@ fPrograma</pre>
             prestat i quantes vegades, i els llibres que no s'han prestat cap vegada (o un avís si no n'hi ha cap).
             Finalment demana un títol, el cerca i en mostra els préstecs, o avisa si no hi és.
           </div>
-          <button class="ri-btn" onclick="reveal(this,'S1')" data-txt="solució">▶ Mostrar solució</button>
+          <button class="ri-btn" onclick="reveal(this,'S1')" data-txt="solució (descomposició)">▶ Mostrar solució (descomposició)</button>
+          <button class="ri-btn" onclick="reveal(this,'C1')" data-txt="solució (codi PSeInt)">▶ Mostrar solució (codi PSeInt)</button>
         </div>
         <div class="ri-ans" id="S1">
           <div class="ri-ans-label">① Esquema</div>
@@ -388,6 +601,135 @@ fPrograma</pre>
             <em>valor</em> màxim, fixa't que llavors no podries mostrar el títol del llibre.
           </div>
         </div>
+        <div class="ri-ans" id="C1">
+          <div class="ri-ans-label">③ Codi PSeInt</div>
+          <pre class="pseudo-out" data-code="// ♻️ Funció: demana un enter fins que estigui entre minim i maxim
+Funcion valor <- LlegirEnter(missatge, minim, maxim)
+    Definir valor Como Entero;
+    Repetir
+        Escribir missatge, ' (', minim, '-', maxim, '):';
+        Leer valor;
+        Si valor < minim O valor > maxim Entonces
+            Escribir 'Valor no vàlid, torna-ho a provar.';
+        FinSi
+    Hasta Que valor >= minim Y valor <= maxim
+FinFuncion
+
+// Procediment: omple els títols i els préstecs dels n llibres
+Funcion LlegirLlibres(titols Por Referencia, prestecs Por Referencia, n)
+    Definir i Como Entero;
+    Para i <- 0 Hasta n - 1 Hacer
+        Escribir 'Llibre ', i + 1, ', títol:';
+        Leer titols[i];
+        prestecs[i] <- LlegirEnter(Concatenar('Préstecs de ', titols[i]), 0, 200);
+    FinPara
+FinFuncion
+
+// Funció: torna la suma dels n primers valors del vector
+Funcion suma <- SumarVector(v, n)
+    Definir suma, i Como Entero;
+    suma <- 0;
+    Para i <- 0 Hasta n - 1 Hacer
+        suma <- suma + v[i];
+    FinPara
+FinFuncion
+
+// Procediment: escriu els llibres amb 0 préstecs, o un avís
+Funcion MostrarSensePrestec(titols, prestecs, n)
+    Definir i, quants Como Entero;
+    quants <- 0;
+    Escribir 'Llibres sense cap préstec:';
+    Para i <- 0 Hasta n - 1 Hacer
+        Si prestecs[i] = 0 Entonces
+            Escribir '- ', titols[i];
+            quants <- quants + 1;
+        FinSi
+    FinPara
+    Si quants = 0 Entonces
+        Escribir 'Cap: tots els llibres tenen algun préstec.';
+    FinSi
+FinFuncion
+
+// ♻️ Funció: torna la POSICIÓ del valor més gran del vector
+Funcion pos <- PosicioMaxim(v, n)
+    Definir pos, i Como Entero;
+    pos <- 0;
+    Para i <- 1 Hasta n - 1 Hacer
+        Si v[i] > v[pos] Entonces
+            pos <- i;
+        FinSi
+    FinPara
+FinFuncion
+
+// ♻️ Funció: torna la posició del nom dins el vector, o -1 si no hi és
+Funcion pos <- CercarNom(noms, n, nomCercat)
+    Definir pos, i Como Entero;
+    pos <- -1;
+    i <- 0;
+    Mientras pos = -1 Y i < n Hacer
+        Si noms[i] = nomCercat Entonces
+            pos <- i;
+        FinSi
+        i <- i + 1;
+    FinMientras
+FinFuncion
+
+Proceso Biblioteca
+    Definir MAX_LLIBRES, n, posMax, pos Como Entero;
+    MAX_LLIBRES <- 40;
+    Definir titols Como Caracter;
+    Dimension titols[MAX_LLIBRES];
+    Definir prestecs Como Entero;
+    Dimension prestecs[MAX_LLIBRES];
+    Definir titolCercat Como Caracter;
+
+    n <- LlegirEnter('Quants llibres hi ha?', 1, MAX_LLIBRES);
+    LlegirLlibres(titols, prestecs, n);
+    Escribir 'Total de préstecs del mes: ', SumarVector(prestecs, n);
+    posMax <- PosicioMaxim(prestecs, n);
+    Escribir 'Llibre més prestat: ', titols[posMax], ' (', prestecs[posMax], ' vegades)';
+    MostrarSensePrestec(titols, prestecs, n);
+
+    Escribir 'Quin títol busques?';
+    Leer titolCercat;
+    pos <- CercarNom(titols, n, titolCercat);
+    Si pos = -1 Entonces
+        Escribir titolCercat, ' no és a la biblioteca.';
+    SiNo
+        Escribir titolCercat, ': ', prestecs[pos], ' préstecs';
+    FinSi
+FinProceso"></pre>
+          <div class="ri-ans-label" style="margin-top:16px;">Exemple d'execució</div>
+          <pre class="pseudo-out">Quants llibres hi ha? (1-40):
+&gt; 4
+Llibre 1, títol:
+&gt; Matilda
+Préstecs de Matilda (0-200):
+&gt; 12
+Llibre 2, títol:
+&gt; Wonder
+Préstecs de Wonder (0-200):
+&gt; 0
+Llibre 3, títol:
+&gt; Momo
+Préstecs de Momo (0-200):
+&gt; 25
+Llibre 4, títol:
+&gt; Coraline
+Préstecs de Coraline (0-200):
+&gt; 250
+Valor no vàlid, torna-ho a provar.
+Préstecs de Coraline (0-200):
+&gt; 8
+Total de préstecs del mes: 45
+Llibre més prestat: Momo (25 vegades)
+Llibres sense cap préstec:
+- Wonder
+Quin títol busques?
+&gt; Dune
+Dune no és a la biblioteca.</pre>
+          <div class="ri-note">Les peces amb ♻️ són les dels exemples, copiades sense canviar-hi res. <code>SumarVector</code> és gairebé <code>CalcularMitjana</code> sense la divisió final.</div>
+        </div>
       </div>
     </div>
 
@@ -405,7 +747,8 @@ fPrograma</pre>
             el nom de cada equip i els punts de cada jornada, calcula el total de cada equip, el guarda en un vector i
             mostra la classificació. Després mostra l'equip líder i la jornada on s'han repartit menys punts entre tots els equips.
           </div>
-          <button class="ri-btn" onclick="reveal(this,'S2')" data-txt="solució">▶ Mostrar solució</button>
+          <button class="ri-btn" onclick="reveal(this,'S2')" data-txt="solució (descomposició)">▶ Mostrar solució (descomposició)</button>
+          <button class="ri-btn" onclick="reveal(this,'C2')" data-txt="solució (codi PSeInt)">▶ Mostrar solució (codi PSeInt)</button>
         </div>
         <div class="ri-ans" id="S2">
           <div class="ri-ans-label">① Esquema</div>
@@ -435,6 +778,153 @@ fPrograma</pre>
             perquè ha de produir <strong>molts valors</strong> (un per equip), no un de sol.
           </div>
         </div>
+        <div class="ri-ans" id="C2">
+          <div class="ri-ans-label">③ Codi PSeInt</div>
+          <pre class="pseudo-out" data-code="// ♻️ Funció: demana un enter fins que estigui entre minim i maxim
+Funcion valor <- LlegirEnter(missatge, minim, maxim)
+    Definir valor Como Entero;
+    Repetir
+        Escribir missatge, ' (', minim, '-', maxim, '):';
+        Leer valor;
+        Si valor < minim O valor > maxim Entonces
+            Escribir 'Valor no vàlid, torna-ho a provar.';
+        FinSi
+    Hasta Que valor >= minim Y valor <= maxim
+FinFuncion
+
+// Procediment: omple els noms (vector) i els punts (matriu)
+Funcion LlegirLliga(noms Por Referencia, punts Por Referencia, nEquips, nJornades)
+    Definir e, j Como Entero;
+    Para e <- 0 Hasta nEquips - 1 Hacer
+        Escribir 'Equip ', e + 1, ', nom:';
+        Leer noms[e];
+        Escribir 'Punts de ', noms[e], ':';
+        Para j <- 0 Hasta nJornades - 1 Hacer
+            punts[e, j] <- LlegirEnter(Concatenar('Jornada ', ConvertirATexto(j + 1)), 0, 3);
+        FinPara
+    FinPara
+FinFuncion
+
+// Procediment: omple totals amb la suma de cada fila de la matriu
+Funcion CalcularTotals(punts, totals Por Referencia, nEquips, nJornades)
+    Definir e, j Como Entero;
+    Para e <- 0 Hasta nEquips - 1 Hacer
+        totals[e] <- 0;
+        Para j <- 0 Hasta nJornades - 1 Hacer
+            totals[e] <- totals[e] + punts[e, j];
+        FinPara
+    FinPara
+FinFuncion
+
+// Procediment: escriu el total de punts de cada equip
+Funcion MostrarTotals(noms, totals, nEquips)
+    Definir e Como Entero;
+    Escribir 'Classificació (punts totals):';
+    Para e <- 0 Hasta nEquips - 1 Hacer
+        Escribir '- ', noms[e], ': ', totals[e];
+    FinPara
+FinFuncion
+
+// ♻️ Funció: torna la POSICIÓ del valor més gran del vector
+Funcion pos <- PosicioMaxim(v, n)
+    Definir pos, i Como Entero;
+    pos <- 0;
+    Para i <- 1 Hasta n - 1 Hacer
+        Si v[i] > v[pos] Entonces
+            pos <- i;
+        FinSi
+    FinPara
+FinFuncion
+
+// Funció: torna la suma d'una columna (els punts d'una jornada)
+Funcion suma <- PuntsJornada(punts, jornada, nEquips)
+    Definir suma, e Como Entero;
+    suma <- 0;
+    Para e <- 0 Hasta nEquips - 1 Hacer
+        suma <- suma + punts[e, jornada];
+    FinPara
+FinFuncion
+
+// Funció: torna la jornada (columna) amb menys punts. Fa servir PuntsJornada
+Funcion minJ <- JornadaMinima(punts, nEquips, nJornades)
+    Definir minJ, j Como Entero;
+    minJ <- 0;
+    Para j <- 1 Hasta nJornades - 1 Hacer
+        Si PuntsJornada(punts, j, nEquips) < PuntsJornada(punts, minJ, nEquips) Entonces
+            minJ <- j;
+        FinSi
+    FinPara
+FinFuncion
+
+Proceso Lliga
+    Definir N_EQUIPS, N_JORNADES, lider, jornada Como Entero;
+    N_EQUIPS <- 4;
+    N_JORNADES <- 3;
+    Definir noms Como Caracter;
+    Dimension noms[N_EQUIPS];
+    Definir punts Como Entero;
+    Dimension punts[N_EQUIPS, N_JORNADES];
+    Definir totals Como Entero;
+    Dimension totals[N_EQUIPS];
+
+    LlegirLliga(noms, punts, N_EQUIPS, N_JORNADES);
+    CalcularTotals(punts, totals, N_EQUIPS, N_JORNADES);
+    MostrarTotals(noms, totals, N_EQUIPS);
+
+    lider <- PosicioMaxim(totals, N_EQUIPS);
+    Escribir 'Equip líder: ', noms[lider], ' amb ', totals[lider], ' punts';
+    jornada <- JornadaMinima(punts, N_EQUIPS, N_JORNADES);
+    Escribir 'Jornada amb menys punts: ', jornada + 1, ' (', PuntsJornada(punts, jornada, N_EQUIPS), ' punts)';
+FinProceso"></pre>
+          <div class="ri-ans-label" style="margin-top:16px;">Exemple d'execució</div>
+          <pre class="pseudo-out">Equip 1, nom:
+&gt; Lleons
+Punts de Lleons:
+Jornada 1 (0-3):
+&gt; 3
+Jornada 2 (0-3):
+&gt; 1
+Jornada 3 (0-3):
+&gt; 3
+Equip 2, nom:
+&gt; Taurons
+Punts de Taurons:
+Jornada 1 (0-3):
+&gt; 4
+Valor no vàlid, torna-ho a provar.
+Jornada 1 (0-3):
+&gt; 0
+Jornada 2 (0-3):
+&gt; 1
+Jornada 3 (0-3):
+&gt; 3
+Equip 3, nom:
+&gt; Llops
+Punts de Llops:
+Jornada 1 (0-3):
+&gt; 3
+Jornada 2 (0-3):
+&gt; 3
+Jornada 3 (0-3):
+&gt; 0
+Equip 4, nom:
+&gt; Àligues
+Punts de Àligues:
+Jornada 1 (0-3):
+&gt; 1
+Jornada 2 (0-3):
+&gt; 0
+Jornada 3 (0-3):
+&gt; 0
+Classificació (punts totals):
+- Lleons: 7
+- Taurons: 4
+- Llops: 6
+- Àligues: 1
+Equip líder: Lleons amb 7 punts
+Jornada amb menys punts: 2 (5 punts)</pre>
+          <div class="ri-note">La matriu es recorre per <strong>files</strong> a <code>CalcularTotals</code> (un total per equip) i per <strong>columnes</strong> a <code>PuntsJornada</code> (un total per jornada). <code>JornadaMinima</code> torna la columna des de 0; el principal hi suma 1 per mostrar-la.</div>
+        </div>
       </div>
     </div>
 
@@ -452,7 +942,8 @@ fPrograma</pre>
             anul·lar una reserva, mostrar quantes butaques lliures queden i buscar la primera fila on hi hagi <em>k</em>
             butaques lliures seguides.
           </div>
-          <button class="ri-btn" onclick="reveal(this,'S3')" data-txt="solució">▶ Mostrar solució</button>
+          <button class="ri-btn" onclick="reveal(this,'S3')" data-txt="solució (descomposició)">▶ Mostrar solució (descomposició)</button>
+          <button class="ri-btn" onclick="reveal(this,'C3')" data-txt="solució (codi PSeInt)">▶ Mostrar solució (codi PSeInt)</button>
         </div>
         <div class="ri-ans" id="S3">
           <div class="ri-ans-label">① Esquema</div>
@@ -486,6 +977,224 @@ fPrograma</pre>
             <code>PosicioValida</code> surt dues vegades: quan una mateixa feina apareix en diversos llocs, és senyal clar que
             ha de ser una peça. I <code>FilaAmbSeguides</code>, com <code>CercarNom</code>, torna -1 per dir "no l'he trobat".
           </div>
+        </div>
+        <div class="ri-ans" id="C3">
+          <div class="ri-ans-label">③ Codi PSeInt</div>
+          <pre class="pseudo-out" data-code="// Procediment: posa totes les butaques a 0 (lliures)
+Funcion InicialitzarSala(sala Por Referencia, nFiles, nSeients)
+    Definir f, s Como Entero;
+    Para f <- 0 Hasta nFiles - 1 Hacer
+        Para s <- 0 Hasta nSeients - 1 Hacer
+            sala[f, s] <- 0;
+        FinPara
+    FinPara
+FinFuncion
+
+// Procediment: escriu les opcions del menú
+Funcion MostrarMenu
+    Escribir '--- SALA DE CINEMA ---';
+    Escribir '1. Veure el mapa';
+    Escribir '2. Reservar una butaca';
+    Escribir '3. Anul·lar una reserva';
+    Escribir '4. Butaques lliures';
+    Escribir '5. Buscar butaques seguides';
+    Escribir '6. Sortir';
+FinFuncion
+
+// Procediment: dibuixa la sala (. = lliure, X = ocupada)
+Funcion MostrarSala(sala, nFiles, nSeients)
+    Definir f, s Como Entero;
+    Para f <- 0 Hasta nFiles - 1 Hacer
+        Escribir Sin Saltar 'Fila ';
+        Si f + 1 < 10 Entonces
+            Escribir Sin Saltar ' ';
+        FinSi
+        Escribir Sin Saltar f + 1, ': ';
+        Para s <- 0 Hasta nSeients - 1 Hacer
+            Si sala[f, s] = 0 Entonces
+                Escribir Sin Saltar '.';
+            SiNo
+                Escribir Sin Saltar 'X';
+            FinSi
+        FinPara
+        Escribir '';
+    FinPara
+FinFuncion
+
+// Funció: diu si la fila i el número (comptant des d'1) existeixen
+Funcion valida <- PosicioValida(fila, numero, nFiles, nSeients)
+    Definir valida Como Logico;
+    valida <- fila >= 1 Y fila <= nFiles Y numero >= 1 Y numero <= nSeients;
+FinFuncion
+
+// Procediment: ocupa la butaca o avisa si no es pot. Fa servir PosicioValida
+Funcion Reservar(sala Por Referencia, fila, numero, nFiles, nSeients)
+    Si NO PosicioValida(fila, numero, nFiles, nSeients) Entonces
+        Escribir 'Aquesta butaca no existeix.';
+    SiNo
+        Si sala[fila - 1, numero - 1] = 1 Entonces
+            Escribir 'La butaca ja està ocupada.';
+        SiNo
+            sala[fila - 1, numero - 1] <- 1;
+            Escribir 'Butaca reservada.';
+        FinSi
+    FinSi
+FinFuncion
+
+// Procediment: allibera la butaca o avisa si no es pot. Fa servir PosicioValida
+Funcion Anullar(sala Por Referencia, fila, numero, nFiles, nSeients)
+    Si NO PosicioValida(fila, numero, nFiles, nSeients) Entonces
+        Escribir 'Aquesta butaca no existeix.';
+    SiNo
+        Si sala[fila - 1, numero - 1] = 0 Entonces
+            Escribir 'Aquesta butaca no estava reservada.';
+        SiNo
+            sala[fila - 1, numero - 1] <- 0;
+            Escribir 'Reserva anul·lada.';
+        FinSi
+    FinSi
+FinFuncion
+
+// Funció: torna quantes butaques lliures (0) hi ha
+Funcion lliures <- ComptarLliures(sala, nFiles, nSeients)
+    Definir lliures, f, s Como Entero;
+    lliures <- 0;
+    Para f <- 0 Hasta nFiles - 1 Hacer
+        Para s <- 0 Hasta nSeients - 1 Hacer
+            Si sala[f, s] = 0 Entonces
+                lliures <- lliures + 1;
+            FinSi
+        FinPara
+    FinPara
+FinFuncion
+
+// Funció: torna la primera fila (des d'1) amb k lliures seguides, o -1
+Funcion filaTrobada <- FilaAmbSeguides(sala, k, nFiles, nSeients)
+    Definir filaTrobada, f, s, seguides Como Entero;
+    filaTrobada <- -1;
+    f <- 0;
+    Mientras filaTrobada = -1 Y f < nFiles Hacer
+        seguides <- 0;
+        Para s <- 0 Hasta nSeients - 1 Hacer
+            Si sala[f, s] = 0 Entonces
+                seguides <- seguides + 1;
+                Si seguides >= k Entonces
+                    filaTrobada <- f + 1;
+                FinSi
+            SiNo
+                seguides <- 0;
+            FinSi
+        FinPara
+        f <- f + 1;
+    FinMientras
+FinFuncion
+
+Proceso Cinema
+    Definir N_FILES, N_SEIENTS, opcio, fila, numero, k, filaK Como Entero;
+    N_FILES <- 12;
+    N_SEIENTS <- 20;
+    Definir sala Como Entero;
+    Dimension sala[N_FILES, N_SEIENTS];
+
+    InicialitzarSala(sala, N_FILES, N_SEIENTS);
+    Repetir
+        MostrarMenu();
+        Escribir 'Tria una opció:';
+        Leer opcio;
+        Segun opcio Hacer
+            1:
+                MostrarSala(sala, N_FILES, N_SEIENTS);
+            2:
+                Escribir 'Fila:';
+                Leer fila;
+                Escribir 'Butaca:';
+                Leer numero;
+                Reservar(sala, fila, numero, N_FILES, N_SEIENTS);
+            3:
+                Escribir 'Fila:';
+                Leer fila;
+                Escribir 'Butaca:';
+                Leer numero;
+                Anullar(sala, fila, numero, N_FILES, N_SEIENTS);
+            4:
+                Escribir 'Butaques lliures: ', ComptarLliures(sala, N_FILES, N_SEIENTS);
+            5:
+                Escribir 'Quantes butaques seguides necessites?';
+                Leer k;
+                filaK <- FilaAmbSeguides(sala, k, N_FILES, N_SEIENTS);
+                Si filaK = -1 Entonces
+                    Escribir 'No hi ha cap fila amb ', k, ' butaques lliures seguides.';
+                SiNo
+                    Escribir 'Primera fila amb ', k, ' butaques lliures seguides: ', filaK;
+                FinSi
+            6:
+                Escribir 'Adéu!';
+            De Otro Modo:
+                Escribir 'Opció no vàlida';
+        FinSegun
+    Hasta Que opcio = 6
+FinProceso"></pre>
+          <div class="ri-ans-label" style="margin-top:16px;">Exemple d'execució</div>
+          <pre class="pseudo-out">--- SALA DE CINEMA ---
+1. Veure el mapa
+2. Reservar una butaca
+3. Anul·lar una reserva
+4. Butaques lliures
+5. Buscar butaques seguides
+6. Sortir
+Tria una opció:
+&gt; 2
+Fila:
+&gt; 1
+Butaca:
+&gt; 5
+Butaca reservada.
+··· (es torna a mostrar el menú) ···
+Tria una opció:
+&gt; 2
+Fila:
+&gt; 1
+Butaca:
+&gt; 5
+La butaca ja està ocupada.
+··· (es torna a mostrar el menú) ···
+Tria una opció:
+&gt; 2
+Fila:
+&gt; 13
+Butaca:
+&gt; 2
+Aquesta butaca no existeix.
+··· (es torna a mostrar el menú) ···
+Tria una opció:
+&gt; 4
+Butaques lliures: 239
+··· (es torna a mostrar el menú) ···
+Tria una opció:
+&gt; 5
+Quantes butaques seguides necessites?
+&gt; 16
+Primera fila amb 16 butaques lliures seguides: 2
+··· (es torna a mostrar el menú) ···
+Tria una opció:
+&gt; 1
+Fila  1: ....X...............
+Fila  2: ....................
+Fila  3: ....................
+Fila  4: ....................
+Fila  5: ....................
+Fila  6: ....................
+Fila  7: ....................
+Fila  8: ....................
+Fila  9: ....................
+Fila 10: ....................
+Fila 11: ....................
+Fila 12: ....................
+··· (es torna a mostrar el menú) ···
+Tria una opció:
+&gt; 6
+Adéu!</pre>
+          <div class="ri-note">Per no allargar l'exemple, el menú complet només s'escriu la primera vegada. L'usuari compta files i butaques des d'1, però la matriu comença a 0: per això <code>Reservar</code> i <code>Anullar</code> fan servir <code>fila - 1</code> i <code>numero - 1</code>. A la fila 1 només hi ha 15 lliures seguides (de la 6 a la 20), i per això la cerca de 16 torna la fila 2.</div>
         </div>
       </div>
     </div>
