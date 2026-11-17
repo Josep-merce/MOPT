@@ -104,11 +104,12 @@
     .ri-ans { display:none; padding:16px 18px; background:var(--accent-bg); border-top:1px solid var(--accent-bdr); }
     .ri-ans.show { display:block; }
     .ri-btn + .ri-btn { margin-left:8px; }
+    .code-box { display:none; } .code-box.show { display:block; }
     .ri-ans-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.07em; color:var(--accent-mid); margin-bottom:8px; }
     .ri-note { font-size:13px; color:var(--ink-2); margin-top:10px; line-height:1.55; }
     @media print {
       body { background:white; font-size:14px; }
-      .ri-ans { display:block !important; } .ri-btn { display:none; }
+      .ri-ans, .code-box { display:block !important; } .ri-btn { display:none; }
       .ex-block-head { background:#1c1917 !important; -webkit-print-color-adjust:exact; }
     }
     /* A3.3 · extres */
@@ -282,9 +283,27 @@ fPrograma</pre>
       </div>
     </div>
 
-    <p class="lead" style="margin-top:24px;"><strong>Solució · el codi.</strong> Cada fila de la taula es converteix en una subrutina, i el programa principal és l'esquema del pas 2 escrit en PSeInt.</p>
+    <p class="lead" style="margin-top:24px;"><strong>Solució · el programa.</strong> Primer mira què ha de fer el programa; després, si vols, obre el codi. Cada fila de la taula es converteix en una subrutina, i el programa principal és l'esquema del pas 2 escrit en PSeInt.</p>
     <div class="demo">
-<div class="demo-label">Codi PSeInt</div>
+<div class="demo-label">El programa mostra (exemple d'execució)</div>
+<pre class="pseudo-out" style="margin:6px 0 4px;">Hores de dilluns (0-24):
+&gt; 2
+Hores de dimarts (0-24):
+&gt; 3
+Hores de dimecres (0-24):
+&gt; 30
+Valor no vàlid, torna-ho a provar.
+Hores de dimecres (0-24):
+&gt; 5
+Hores de dijous (0-24):
+&gt; 1
+Hores de divendres (0-24):
+&gt; 4
+Mitjana diària: 3 hores
+Dia que has estudiat més: dimecres (5 hores)</pre>
+<button class="ri-btn" onclick="reveal(this,'EX1')" data-txt="codi PSeInt">▶ Mostrar codi PSeInt</button>
+<div class="code-box" id="EX1">
+<div class="demo-label" style="margin-top:14px;">Codi PSeInt</div>
 <pre class="pseudo-out" data-code="// Funció: demana un enter fins que estigui entre minim i maxim
 Funcion valor <- LlegirEnter(missatge, minim, maxim)
     Definir valor Como Entero;
@@ -345,22 +364,7 @@ Proceso HoresEstudi
     posMax <- PosicioMaxim(hores, N_DIES);
     Escribir 'Dia que has estudiat més: ', dies[posMax], ' (', hores[posMax], ' hores)';
 FinProceso"></pre>
-<div class="demo-label" style="margin-top:12px;">El programa mostra (exemple d'execució)</div>
-<pre class="pseudo-out" style="margin:6px 0 4px;">Hores de dilluns (0-24):
-&gt; 2
-Hores de dimarts (0-24):
-&gt; 3
-Hores de dimecres (0-24):
-&gt; 30
-Valor no vàlid, torna-ho a provar.
-Hores de dimecres (0-24):
-&gt; 5
-Hores de dijous (0-24):
-&gt; 1
-Hores de divendres (0-24):
-&gt; 4
-Mitjana diària: 3 hores
-Dia que has estudiat més: dimecres (5 hores)</pre>
+</div>
     </div>
     <div class="ibox blue">
       <div class="ibox-label">Dues coses de PSeInt que cal saber</div>
@@ -425,9 +429,41 @@ fPrograma</pre>
       </div>
     </div>
 
-    <p class="lead" style="margin-top:24px;"><strong>Solució · el codi.</strong> Les peces amb ♻️ són idèntiques a les de l'exemple 1: només les hem copiat.</p>
+    <p class="lead" style="margin-top:24px;"><strong>Solució · el programa.</strong> Primer l'execució, després el codi. Les peces amb ♻️ són idèntiques a les de l'exemple 1: només les hem copiat.</p>
     <div class="demo">
-<div class="demo-label">Codi PSeInt</div>
+<div class="demo-label">El programa mostra (exemple d'execució)</div>
+<pre class="pseudo-out" style="margin:6px 0 4px;">Quants alumnes hi ha? (1-30):
+&gt; 4
+Alumne 1, nom:
+&gt; Anna
+Nota de Anna (0-10):
+&gt; 7
+Alumne 2, nom:
+&gt; Biel
+Nota de Biel (0-10):
+&gt; 4
+Alumne 3, nom:
+&gt; Carla
+Nota de Carla (0-10):
+&gt; 12
+Valor no vàlid, torna-ho a provar.
+Nota de Carla (0-10):
+&gt; 9
+Alumne 4, nom:
+&gt; David
+Nota de David (0-10):
+&gt; 3
+Mitjana de la classe: 5.75
+Alumnes suspesos:
+- Biel (4)
+- David (3)
+Total de suspesos: 2
+Quin alumne busques?
+&gt; Carla
+Nota de Carla: 9</pre>
+<button class="ri-btn" onclick="reveal(this,'EX2')" data-txt="codi PSeInt">▶ Mostrar codi PSeInt</button>
+<div class="code-box" id="EX2">
+<div class="demo-label" style="margin-top:14px;">Codi PSeInt</div>
 <pre class="pseudo-out" data-code="// ♻️ Funció: demana un enter fins que estigui entre minim i maxim
 Funcion valor <- LlegirEnter(missatge, minim, maxim)
     Definir valor Como Entero;
@@ -515,36 +551,7 @@ Proceso NotesClasse
         Escribir 'Nota de ', nomCercat, ': ', notes[pos];
     FinSi
 FinProceso"></pre>
-<div class="demo-label" style="margin-top:12px;">El programa mostra (exemple d'execució)</div>
-<pre class="pseudo-out" style="margin:6px 0 4px;">Quants alumnes hi ha? (1-30):
-&gt; 4
-Alumne 1, nom:
-&gt; Anna
-Nota de Anna (0-10):
-&gt; 7
-Alumne 2, nom:
-&gt; Biel
-Nota de Biel (0-10):
-&gt; 4
-Alumne 3, nom:
-&gt; Carla
-Nota de Carla (0-10):
-&gt; 12
-Valor no vàlid, torna-ho a provar.
-Nota de Carla (0-10):
-&gt; 9
-Alumne 4, nom:
-&gt; David
-Nota de David (0-10):
-&gt; 3
-Mitjana de la classe: 5.75
-Alumnes suspesos:
-- Biel (4)
-- David (3)
-Total de suspesos: 2
-Quin alumne busques?
-&gt; Carla
-Nota de Carla: 9</pre>
+</div>
     </div>
   </section>
 
