@@ -264,6 +264,31 @@
   Calcular i mostrar la mitjana
   Buscar el dia amb més hores i mostrar-lo
 fPrograma</pre>
+    <button class="ri-btn" onclick="reveal(this,'PP1')" data-txt="programa principal" style="margin-top:0;margin-bottom:18px;">&#9654; Mostrar programa principal</button>
+    <div class="code-box" id="PP1" style="margin-bottom:18px;">
+<div class="demo-label">Programa principal en PSeInt (cada pas de l'esquema és una crida)</div>
+<pre class="pseudo-out" data-code="Proceso HoresEstudi
+    Definir N_DIES, posMax Como Entero;
+    N_DIES &lt;- 5;
+    Definir dies Como Caracter;
+    Dimension dies[N_DIES];
+    Definir hores Como Entero;
+    Dimension hores[N_DIES];
+    dies[0] &lt;- 'dilluns';
+    dies[1] &lt;- 'dimarts';
+    dies[2] &lt;- 'dimecres';
+    dies[3] &lt;- 'dijous';
+    dies[4] &lt;- 'divendres';
+
+    // Llegir les hores de cada dia (validades)
+    LlegirHores(dies, hores, N_DIES);
+    // Calcular i mostrar la mitjana
+    Escribir 'Mitjana diària: ', CalcularMitjana(hores, N_DIES), ' hores';
+    // Buscar el dia amb més hores i mostrar-lo
+    posMax &lt;- PosicioMaxim(hores, N_DIES);
+    Escribir 'Dia que has estudiat més: ', dies[posMax], ' (', hores[posMax], ' hores)';
+FinProceso"></pre>
+</div>
 
     <p class="lead"><strong>Pas 3 · peces i contractes.</strong> "Llegir un valor validant" és una feina que es fa a cada dia: en fem una peça a part.</p>
     <div class="tbl-scroll">
@@ -447,6 +472,38 @@ FinProceso"></pre>
   Llegir un nom
   Cercar-lo i mostrar la nota o un avís
 fPrograma</pre>
+    <button class="ri-btn" onclick="reveal(this,'PP2')" data-txt="programa principal" style="margin-top:0;margin-bottom:18px;">&#9654; Mostrar programa principal</button>
+    <div class="code-box" id="PP2" style="margin-bottom:18px;">
+<div class="demo-label">Programa principal en PSeInt (cada pas de l'esquema és una crida)</div>
+<pre class="pseudo-out" data-code="Proceso NotesClasse
+    Definir MAX_ALUMNES, n, pos Como Entero;
+    MAX_ALUMNES &lt;- 30;
+    Definir noms Como Caracter;
+    Dimension noms[MAX_ALUMNES];
+    Definir notes Como Entero;
+    Dimension notes[MAX_ALUMNES];
+    Definir nomCercat Como Caracter;
+
+    // Llegir quants alumnes hi ha (validat)
+    n &lt;- LlegirEnter('Quants alumnes hi ha?', 1, MAX_ALUMNES);
+    // Llegir el nom i la nota de cada alumne (validada)
+    LlegirAlumnes(noms, notes, n);
+    // Calcular i mostrar la mitjana
+    Escribir 'Mitjana de la classe: ', CalcularMitjana(notes, n);
+    // Mostrar els suspesos i quants són
+    MostrarSuspesos(noms, notes, n);
+    // Llegir un nom
+    Escribir 'Quin alumne busques?';
+    Leer nomCercat;
+    // Cercar-lo i mostrar la nota o un avís
+    pos &lt;- CercarNom(noms, n, nomCercat);
+    Si pos = -1 Entonces
+        Escribir nomCercat, ' no és a la classe.';
+    SiNo
+        Escribir 'Nota de ', nomCercat, ': ', notes[pos];
+    FinSi
+FinProceso"></pre>
+</div>
 
     <p class="lead"><strong>Pas 3 · peces i contractes.</strong> Les peces amb ♻️ són les de l'exemple 1, reutilitzades tal qual.</p>
     <div class="tbl-scroll">
@@ -676,11 +733,8 @@ FinProceso"></pre>
             l'1 al 100. A continuació va demanant números i va responent si el nombre a endevinar és més gran o més petit
             que l'introduït, a més dels intents que et queden (tens 10 intents per encertar-ho).<br>
             El programa acaba quan s'encerta el número (a més et diu en quants intents ho has encertat); si s'arriba al
-            límit d'intents, et mostra el número que havia generat.<br>
-            Fes una funció <code>DemanarNumero()</code> que llegeixi un número i el torni a demanar mentre no estigui
-            entre 1 i 100, i un procediment <code>DonarPista(num_secret, num)</code> que escrigui "Molt baix" o "Molt alt".
-            El programa principal ha de fer servir <code>DemanarNumero</code> cada vegada que necessiti un número i
-            <code>DonarPista</code> cada vegada que falli.
+            límit d'intents, et mostra el número que havia generat. Si l'usuari escriu un número que no és entre 1 i 100,
+            el programa l'ha de tornar a demanar sense gastar cap intent.
           </div>
           <button class="ri-btn" onclick="reveal(this,'S1')" data-txt="solució (anàlisi i disseny)">▶ Mostrar solució (anàlisi i disseny)</button>
           <button class="ri-btn" onclick="reveal(this,'C1')" data-txt="solució (codi PSeInt)">▶ Mostrar solució (codi PSeInt)</button>
