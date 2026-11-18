@@ -761,9 +761,27 @@ FinProceso"></pre>
           </div>
           <div class="tbl-scroll" style="margin-top:10px;">
             <table class="mod-table">
-              <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th></tr>
-              <tr><td>DemanarNumero</td><td><span class="tag f">funció</span></td><td>res</td><td>Un enter entre 1 i 100 (torna a demanar si no ho és)</td></tr>
-              <tr><td>DonarPista</td><td><span class="tag p">procediment</span></td><td>num_secret, num</td><td>Escriu "Molt baix" o "Molt alt"</td></tr>
+              <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th><th>Exemple</th></tr>
+              <tr><td>DemanarNumero<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E1-0')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag f">funció</span></td><td>res</td><td>Un enter entre 1 i 100 (torna a demanar si no ho és)</td><td><code>DemanarNumero()</code> → si escrius 150 torna a preguntar; si escrius 37, torna <strong>37</strong></td></tr>
+              <tr class="code-row" id="E1-0"><td colspan="5"><pre class="pseudo-out" data-code="// Funció: llegeix un número i el torna a demanar fins que estigui entre 1 i 100
+Funcion num &lt;- DemanarNumero()
+    Definir num Como Entero;
+    Repetir
+        Leer num;
+        Si num &lt; 1 O num &gt; 100 Entonces
+            Escribir &#x27;Ha de ser entre 1 i 100, torna-ho a provar:&#x27;;
+        FinSi
+    Hasta Que num &gt;= 1 Y num &lt;= 100
+FinFuncion"></pre></td></tr>
+              <tr><td>DonarPista<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E1-1')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag p">procediment</span></td><td><span class="pas">per valor:</span> num_secret, num</td><td>Escriu "Molt baix" o "Molt alt"</td><td><code>DonarPista(37, 50)</code> → no torna res: escriu <strong>Molt alt</strong></td></tr>
+              <tr class="code-row" id="E1-1"><td colspan="5"><pre class="pseudo-out" data-code="// Procediment: escriu si el número secret és més gran o més petit que el que s&#x27;ha dit
+Funcion DonarPista(num_secret, num)
+    Si num_secret &gt; num Entonces
+        Escribir &#x27;Molt baix&#x27;;
+    SiNo
+        Escribir &#x27;Molt alt&#x27;;
+    FinSi
+FinFuncion"></pre></td></tr>
             </table>
           </div>
           <div class="ri-ans-label" style="margin-top:16px;">② Disseny</div>
@@ -788,6 +806,33 @@ DemanarNumero()
 DonarPista(num_secret, num)
   Si num_secret &gt; num -&gt; Escriure &quot;Molt baix&quot;
   SiNo -&gt; Escriure &quot;Molt alt&quot;</pre>
+          <button class="ri-btn" onclick="reveal(this,'PE1')" data-txt="programa principal" style="margin-top:10px;">&#9654; Mostrar programa principal</button>
+          <div class="code-box" id="PE1" style="margin-top:10px;">
+          <div class="demo-label">Programa principal en PSeInt (cada pas de l'esquema és una crida)</div>
+          <pre class="pseudo-out" data-code="Proceso Endevina_Numero
+    Definir intents, num_secret, num_ingressat Como Entero;
+    // Generar el número secret i posar 10 intents
+    intents &lt;- 10;
+    num_secret &lt;- Aleatorio(1, 100);
+
+    // Demanar números mentre no l&#x27;encerti i quedin intents
+    Escribir &#x27;Endevina el número (entre 1 i 100):&#x27;;
+    num_ingressat &lt;- DemanarNumero();
+    Mientras num_secret &lt;&gt; num_ingressat Y intents &gt; 1 Hacer
+        DonarPista(num_secret, num_ingressat);
+        intents &lt;- intents - 1;
+        Escribir &#x27;Et queden &#x27;, intents, &#x27; intents:&#x27;;
+        num_ingressat &lt;- DemanarNumero();
+    FinMientras
+
+    // Dir si ha guanyat (i en quants intents) o si ha perdut
+    Si num_secret = num_ingressat Entonces
+        Escribir &#x27;Exacte! Ho has endevinat en &#x27;, 11 - intents, &#x27; intents.&#x27;;
+    SiNo
+        Escribir &#x27;Has perdut. El número era: &#x27;, num_secret;
+    FinSi
+FinProceso"></pre>
+          </div>
         </div>
         <div class="ri-ans" id="C1">
           <div class="ri-ans-label">③ Codi PSeInt</div>
@@ -874,17 +919,115 @@ Exacte! Ho has endevinat en 3 intents.</pre>
   Buscar l'equip líder i mostrar-lo
   Buscar la jornada amb menys punts i mostrar-la
 fPrograma</pre>
+          <button class="ri-btn" onclick="reveal(this,'PE2')" data-txt="programa principal" style="margin-top:10px;">&#9654; Mostrar programa principal</button>
+          <div class="code-box" id="PE2" style="margin-top:10px;">
+          <div class="demo-label">Programa principal en PSeInt (cada pas de l'esquema és una crida)</div>
+          <pre class="pseudo-out" data-code="Proceso Lliga
+    Definir N_EQUIPS, N_JORNADES, lider, jornada Como Entero;
+    N_EQUIPS &lt;- 4;
+    N_JORNADES &lt;- 3;
+    Definir noms Como Caracter;
+    Dimension noms[N_EQUIPS];
+    Definir punts Como Entero;
+    Dimension punts[N_EQUIPS, N_JORNADES];
+    Definir totals Como Entero;
+    Dimension totals[N_EQUIPS];
+
+    // Llegir el nom i els punts de cada equip (validats)
+    LlegirLliga(noms, punts, N_EQUIPS, N_JORNADES);
+    // Calcular el total de cada equip (vector totals)
+    CalcularTotals(punts, totals, N_EQUIPS, N_JORNADES);
+    // Mostrar la classificació
+    MostrarTotals(noms, totals, N_EQUIPS);
+
+    // Buscar l&#x27;equip líder i mostrar-lo
+    lider &lt;- PosicioMaxim(totals, N_EQUIPS);
+    Escribir &#x27;Equip líder: &#x27;, noms[lider], &#x27; amb &#x27;, totals[lider], &#x27; punts&#x27;;
+    // Buscar la jornada amb menys punts i mostrar-la
+    jornada &lt;- JornadaMinima(punts, N_EQUIPS, N_JORNADES);
+    Escribir &#x27;Jornada amb menys punts: &#x27;, jornada + 1, &#x27; (&#x27;, PuntsJornada(punts, jornada, N_EQUIPS), &#x27; punts)&#x27;;
+FinProceso"></pre>
+          </div>
           <div class="ri-ans-label" style="margin-top:16px;">② Peces i contractes</div>
           <div class="tbl-scroll">
             <table class="mod-table">
-              <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th></tr>
-              <tr><td>LlegirEnter ♻️</td><td><span class="tag f">funció</span></td><td>missatge, mínim, màxim</td><td>Un enter vàlid (punts 0 a 3)</td></tr>
-              <tr><td>LlegirLliga</td><td><span class="tag p">procediment</span></td><td>noms, punts</td><td>Omple el vector i la matriu</td></tr>
-              <tr><td>CalcularTotals</td><td><span class="tag p">procediment</span></td><td>punts, totals</td><td>Omple el vector <code>totals</code></td></tr>
-              <tr><td>MostrarTotals</td><td><span class="tag p">procediment</span></td><td>noms, totals</td><td>Escriu la classificació</td></tr>
-              <tr><td>PosicioMaxim ♻️</td><td><span class="tag f">funció</span></td><td>totals, n</td><td>Un enter: posició de l'equip líder</td></tr>
-              <tr><td>PuntsJornada</td><td><span class="tag f">funció</span></td><td>punts, jornada</td><td>Un enter: suma d'aquella columna</td></tr>
-              <tr><td>JornadaMinima</td><td><span class="tag f">funció</span></td><td>punts</td><td>Un enter: la jornada amb menys punts (fa servir PuntsJornada)</td></tr>
+              <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th><th>Exemple</th></tr>
+              <tr><td>LlegirEnter ♻️<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E2-0')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag f">funció</span></td><td><span class="pas">per valor:</span> missatge, mínim, màxim</td><td>Un enter vàlid (punts 0 a 3)</td><td><code>LlegirEnter('Jornada 1', 0, 3)</code> → si escrius 4 torna a preguntar; si escrius 0, torna <strong>0</strong></td></tr>
+              <tr class="code-row" id="E2-0"><td colspan="5"><pre class="pseudo-out" data-code="// ♻️ Funció: demana un enter fins que estigui entre minim i maxim
+Funcion valor &lt;- LlegirEnter(missatge, minim, maxim)
+    Definir valor Como Entero;
+    Repetir
+        Escribir missatge, &#x27; (&#x27;, minim, &#x27;-&#x27;, maxim, &#x27;):&#x27;;
+        Leer valor;
+        Si valor &lt; minim O valor &gt; maxim Entonces
+            Escribir &#x27;Valor no vàlid, torna-ho a provar.&#x27;;
+        FinSi
+    Hasta Que valor &gt;= minim Y valor &lt;= maxim
+FinFuncion"></pre></td></tr>
+              <tr><td>LlegirLliga<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E2-1')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag p">procediment</span></td><td><span class="pas">per valor:</span> nEquips, nJornades<br><span class="pas ref">per referència:</span> <strong>noms</strong>, <strong>punts</strong></td><td>Omple el vector i la matriu (fa servir LlegirEnter)</td><td><code>LlegirLliga(noms, punts, 4, 3)</code> → no torna res: deixa <code>noms</code> = <strong>[Lleons, Taurons, Llops, Àligues]</strong> i a <code>punts</code> una fila per equip: <strong>[3,1,3] [0,1,3] [3,3,0] [1,0,0]</strong></td></tr>
+              <tr class="code-row" id="E2-1"><td colspan="5"><pre class="pseudo-out" data-code="// Procediment: omple els noms (vector) i els punts (matriu)
+Funcion LlegirLliga(noms Por Referencia, punts Por Referencia, nEquips, nJornades)
+    Definir e, j Como Entero;
+    Para e &lt;- 0 Hasta nEquips - 1 Hacer
+        Escribir &#x27;Equip &#x27;, e + 1, &#x27;, nom:&#x27;;
+        Leer noms[e];
+        Escribir &#x27;Punts de &#x27;, noms[e], &#x27;:&#x27;;
+        Para j &lt;- 0 Hasta nJornades - 1 Hacer
+            punts[e, j] &lt;- LlegirEnter(Concatenar(&#x27;Jornada &#x27;, ConvertirATexto(j + 1)), 0, 3);
+        FinPara
+    FinPara
+FinFuncion"></pre></td></tr>
+              <tr><td>CalcularTotals<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E2-2')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag p">procediment</span></td><td><span class="pas">per valor:</span> punts, nEquips, nJornades<br><span class="pas ref">per referència:</span> <strong>totals</strong></td><td>Omple el vector <code>totals</code> (suma de cada fila)</td><td><code>CalcularTotals(punts, totals, 4, 3)</code> → no torna res: deixa <code>totals</code> = <strong>[7, 4, 6, 1]</strong></td></tr>
+              <tr class="code-row" id="E2-2"><td colspan="5"><pre class="pseudo-out" data-code="// Procediment: omple totals amb la suma de cada fila de la matriu
+Funcion CalcularTotals(punts, totals Por Referencia, nEquips, nJornades)
+    Definir e, j Como Entero;
+    Para e &lt;- 0 Hasta nEquips - 1 Hacer
+        totals[e] &lt;- 0;
+        Para j &lt;- 0 Hasta nJornades - 1 Hacer
+            totals[e] &lt;- totals[e] + punts[e, j];
+        FinPara
+    FinPara
+FinFuncion"></pre></td></tr>
+              <tr><td>MostrarTotals<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E2-3')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag p">procediment</span></td><td><span class="pas">per valor:</span> noms, totals, nEquips</td><td>Escriu la classificació</td><td><code>MostrarTotals(noms, totals, 4)</code> → no torna res: escriu <strong>- Lleons: 7</strong>, <strong>- Taurons: 4</strong>, …</td></tr>
+              <tr class="code-row" id="E2-3"><td colspan="5"><pre class="pseudo-out" data-code="// Procediment: escriu el total de punts de cada equip
+Funcion MostrarTotals(noms, totals, nEquips)
+    Definir e Como Entero;
+    Escribir &#x27;Classificació (punts totals):&#x27;;
+    Para e &lt;- 0 Hasta nEquips - 1 Hacer
+        Escribir &#x27;- &#x27;, noms[e], &#x27;: &#x27;, totals[e];
+    FinPara
+FinFuncion"></pre></td></tr>
+              <tr><td>PosicioMaxim ♻️<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E2-4')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag f">funció</span></td><td><span class="pas">per valor:</span> vector, n</td><td>Un enter: posició de l'equip líder</td><td><code>PosicioMaxim(totals, 4)</code> → <strong>0</strong> (la posició del 7, és a dir, Lleons)</td></tr>
+              <tr class="code-row" id="E2-4"><td colspan="5"><pre class="pseudo-out" data-code="// ♻️ Funció: torna la POSICIÓ del valor més gran del vector
+Funcion pos &lt;- PosicioMaxim(v, n)
+    Definir pos, i Como Entero;
+    pos &lt;- 0;
+    Para i &lt;- 1 Hasta n - 1 Hacer
+        Si v[i] &gt; v[pos] Entonces
+            pos &lt;- i;
+        FinSi
+    FinPara
+FinFuncion"></pre></td></tr>
+              <tr><td>PuntsJornada<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E2-5')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag f">funció</span></td><td><span class="pas">per valor:</span> punts, jornada, nEquips</td><td>Un enter: suma d'aquella columna</td><td><code>PuntsJornada(punts, 1, 4)</code> → 1+1+3+0 = <strong>5</strong></td></tr>
+              <tr class="code-row" id="E2-5"><td colspan="5"><pre class="pseudo-out" data-code="// Funció: torna la suma d&#x27;una columna (els punts d&#x27;una jornada)
+Funcion suma &lt;- PuntsJornada(punts, jornada, nEquips)
+    Definir suma, e Como Entero;
+    suma &lt;- 0;
+    Para e &lt;- 0 Hasta nEquips - 1 Hacer
+        suma &lt;- suma + punts[e, jornada];
+    FinPara
+FinFuncion"></pre></td></tr>
+              <tr><td>JornadaMinima<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E2-6')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag f">funció</span></td><td><span class="pas">per valor:</span> punts, nEquips, nJornades</td><td>Un enter: la jornada amb menys punts (fa servir PuntsJornada)</td><td><code>JornadaMinima(punts, 4, 3)</code> → <strong>1</strong> (la jornada 2: 5 punts, davant de 7 i 6)</td></tr>
+              <tr class="code-row" id="E2-6"><td colspan="5"><pre class="pseudo-out" data-code="// Funció: torna la jornada (columna) amb menys punts. Fa servir PuntsJornada
+Funcion minJ &lt;- JornadaMinima(punts, nEquips, nJornades)
+    Definir minJ, j Como Entero;
+    minJ &lt;- 0;
+    Para j &lt;- 1 Hasta nJornades - 1 Hacer
+        Si PuntsJornada(punts, j, nEquips) &lt; PuntsJornada(punts, minJ, nEquips) Entonces
+            minJ &lt;- j;
+        FinSi
+    FinPara
+FinFuncion"></pre></td></tr>
             </table>
           </div>
           <div class="ri-note">
@@ -1074,18 +1217,171 @@ Jornada amb menys punts: 2 (5 punts)</pre>
       5: Llegir k; buscar la fila amb k seguides
   Fins que l'opció sigui sortir
 fPrograma</pre>
+          <button class="ri-btn" onclick="reveal(this,'PE3')" data-txt="programa principal" style="margin-top:10px;">&#9654; Mostrar programa principal</button>
+          <div class="code-box" id="PE3" style="margin-top:10px;">
+          <div class="demo-label">Programa principal en PSeInt (cada pas de l'esquema és una crida)</div>
+          <pre class="pseudo-out" data-code="Proceso Cinema
+    Definir N_FILES, N_SEIENTS, opcio, fila, numero, k, filaK Como Entero;
+    N_FILES &lt;- 12;
+    N_SEIENTS &lt;- 20;
+    Definir sala Como Entero;
+    Dimension sala[N_FILES, N_SEIENTS];
+
+    // Inicialitzar la sala tota lliure
+    InicialitzarSala(sala, N_FILES, N_SEIENTS);
+    Repetir
+        // Mostrar el menú i llegir l&#x27;opció
+        MostrarMenu();
+        Escribir &#x27;Tria una opció:&#x27;;
+        Leer opcio;
+        // Segons l&#x27;opció: cada cas crida la seva peça
+        Segun opcio Hacer
+            1:
+                MostrarSala(sala, N_FILES, N_SEIENTS);
+            2:
+                Escribir &#x27;Fila:&#x27;;
+                Leer fila;
+                Escribir &#x27;Butaca:&#x27;;
+                Leer numero;
+                Reservar(sala, fila, numero, N_FILES, N_SEIENTS);
+            3:
+                Escribir &#x27;Fila:&#x27;;
+                Leer fila;
+                Escribir &#x27;Butaca:&#x27;;
+                Leer numero;
+                Anullar(sala, fila, numero, N_FILES, N_SEIENTS);
+            4:
+                Escribir &#x27;Butaques lliures: &#x27;, ComptarLliures(sala, N_FILES, N_SEIENTS);
+            5:
+                Escribir &#x27;Quantes butaques seguides necessites?&#x27;;
+                Leer k;
+                filaK &lt;- FilaAmbSeguides(sala, k, N_FILES, N_SEIENTS);
+                Si filaK = -1 Entonces
+                    Escribir &#x27;No hi ha cap fila amb &#x27;, k, &#x27; butaques lliures seguides.&#x27;;
+                SiNo
+                    Escribir &#x27;Primera fila amb &#x27;, k, &#x27; butaques lliures seguides: &#x27;, filaK;
+                FinSi
+            6:
+                Escribir &#x27;Adéu!&#x27;;
+            De Otro Modo:
+                Escribir &#x27;Opció no vàlida&#x27;;
+        FinSegun
+    Hasta Que opcio = 6
+FinProceso"></pre>
+          </div>
           <div class="ri-ans-label" style="margin-top:16px;">② Peces i contractes</div>
           <div class="tbl-scroll">
             <table class="mod-table">
-              <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th></tr>
-              <tr><td>InicialitzarSala</td><td><span class="tag p">procediment</span></td><td>sala</td><td>Posa totes les butaques a 0</td></tr>
-              <tr><td>MostrarMenu</td><td><span class="tag p">procediment</span></td><td>—</td><td>Escriu les opcions</td></tr>
-              <tr><td>MostrarSala</td><td><span class="tag p">procediment</span></td><td>sala</td><td>Dibuixa el mapa</td></tr>
-              <tr><td>PosicioValida</td><td><span class="tag f">funció</span></td><td>fila, número</td><td>Un lògic: existeix o no</td></tr>
-              <tr><td>Reservar</td><td><span class="tag p">procediment</span></td><td>sala, fila, número</td><td>Posa la butaca a 1, o avisa si no es pot (fa servir PosicioValida)</td></tr>
-              <tr><td>Anullar</td><td><span class="tag p">procediment</span></td><td>sala, fila, número</td><td>Posa la butaca a 0, o avisa si no es pot (fa servir PosicioValida)</td></tr>
-              <tr><td>ComptarLliures</td><td><span class="tag f">funció</span></td><td>sala</td><td>Un enter: butaques lliures</td></tr>
-              <tr><td>FilaAmbSeguides</td><td><span class="tag f">funció</span></td><td>sala, k</td><td>Un enter: la fila, o -1 si no n'hi ha</td></tr>
+              <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th><th>Exemple</th></tr>
+              <tr><td>InicialitzarSala<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E3-0')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag p">procediment</span></td><td><span class="pas">per valor:</span> nFiles, nSeients<br><span class="pas ref">per referència:</span> <strong>sala</strong></td><td>Posa totes les butaques a 0</td><td><code>InicialitzarSala(sala, 12, 20)</code> → no torna res: deixa les <strong>240</strong> butaques a <strong>0</strong></td></tr>
+              <tr class="code-row" id="E3-0"><td colspan="5"><pre class="pseudo-out" data-code="// Procediment: posa totes les butaques a 0 (lliures)
+Funcion InicialitzarSala(sala Por Referencia, nFiles, nSeients)
+    Definir f, s Como Entero;
+    Para f &lt;- 0 Hasta nFiles - 1 Hacer
+        Para s &lt;- 0 Hasta nSeients - 1 Hacer
+            sala[f, s] &lt;- 0;
+        FinPara
+    FinPara
+FinFuncion"></pre></td></tr>
+              <tr><td>MostrarMenu<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E3-1')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag p">procediment</span></td><td>res</td><td>Escriu les opcions</td><td><code>MostrarMenu()</code> → no torna res: escriu <strong>--- SALA DE CINEMA ---</strong> i les opcions 1 a 6</td></tr>
+              <tr class="code-row" id="E3-1"><td colspan="5"><pre class="pseudo-out" data-code="// Procediment: escriu les opcions del menú
+Funcion MostrarMenu
+    Escribir &#x27;--- SALA DE CINEMA ---&#x27;;
+    Escribir &#x27;1. Veure el mapa&#x27;;
+    Escribir &#x27;2. Reservar una butaca&#x27;;
+    Escribir &#x27;3. Anul·lar una reserva&#x27;;
+    Escribir &#x27;4. Butaques lliures&#x27;;
+    Escribir &#x27;5. Buscar butaques seguides&#x27;;
+    Escribir &#x27;6. Sortir&#x27;;
+FinFuncion"></pre></td></tr>
+              <tr><td>MostrarSala<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E3-2')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag p">procediment</span></td><td><span class="pas">per valor:</span> sala, nFiles, nSeients</td><td>Dibuixa el mapa</td><td><code>MostrarSala(sala, 12, 20)</code> → no torna res: escriu una línia per fila, p. ex. <strong>Fila  1: ....X...............</strong></td></tr>
+              <tr class="code-row" id="E3-2"><td colspan="5"><pre class="pseudo-out" data-code="// Procediment: dibuixa la sala (. = lliure, X = ocupada)
+Funcion MostrarSala(sala, nFiles, nSeients)
+    Definir f, s Como Entero;
+    Para f &lt;- 0 Hasta nFiles - 1 Hacer
+        Escribir Sin Saltar &#x27;Fila &#x27;;
+        Si f + 1 &lt; 10 Entonces
+            Escribir Sin Saltar &#x27; &#x27;;
+        FinSi
+        Escribir Sin Saltar f + 1, &#x27;: &#x27;;
+        Para s &lt;- 0 Hasta nSeients - 1 Hacer
+            Si sala[f, s] = 0 Entonces
+                Escribir Sin Saltar &#x27;.&#x27;;
+            SiNo
+                Escribir Sin Saltar &#x27;X&#x27;;
+            FinSi
+        FinPara
+        Escribir &#x27;&#x27;;
+    FinPara
+FinFuncion"></pre></td></tr>
+              <tr><td>PosicioValida<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E3-3')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag f">funció</span></td><td><span class="pas">per valor:</span> fila, número, nFiles, nSeients</td><td>Un lògic: existeix o no</td><td><code>PosicioValida(1, 5, 12, 20)</code> → <strong>Verdadero</strong><br><code>PosicioValida(13, 2, 12, 20)</code> → <strong>Falso</strong> (no hi ha fila 13)</td></tr>
+              <tr class="code-row" id="E3-3"><td colspan="5"><pre class="pseudo-out" data-code="// Funció: diu si la fila i el número (comptant des d&#x27;1) existeixen
+Funcion valida &lt;- PosicioValida(fila, numero, nFiles, nSeients)
+    Definir valida Como Logico;
+    valida &lt;- fila &gt;= 1 Y fila &lt;= nFiles Y numero &gt;= 1 Y numero &lt;= nSeients;
+FinFuncion"></pre></td></tr>
+              <tr><td>Reservar<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E3-4')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag p">procediment</span></td><td><span class="pas">per valor:</span> fila, número, nFiles, nSeients<br><span class="pas ref">per referència:</span> <strong>sala</strong></td><td>Posa la butaca a 1, o avisa si no es pot (fa servir PosicioValida)</td><td><code>Reservar(sala, 1, 5, 12, 20)</code> → no torna res: posa <code>sala[0, 4]</code> a <strong>1</strong> i escriu <strong>Butaca reservada.</strong> Si ja era ocupada, escriu <strong>La butaca ja està ocupada.</strong></td></tr>
+              <tr class="code-row" id="E3-4"><td colspan="5"><pre class="pseudo-out" data-code="// Procediment: ocupa la butaca o avisa si no es pot. Fa servir PosicioValida
+Funcion Reservar(sala Por Referencia, fila, numero, nFiles, nSeients)
+    Si NO PosicioValida(fila, numero, nFiles, nSeients) Entonces
+        Escribir &#x27;Aquesta butaca no existeix.&#x27;;
+    SiNo
+        Si sala[fila - 1, numero - 1] = 1 Entonces
+            Escribir &#x27;La butaca ja està ocupada.&#x27;;
+        SiNo
+            sala[fila - 1, numero - 1] &lt;- 1;
+            Escribir &#x27;Butaca reservada.&#x27;;
+        FinSi
+    FinSi
+FinFuncion"></pre></td></tr>
+              <tr><td>Anullar<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E3-5')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag p">procediment</span></td><td><span class="pas">per valor:</span> fila, número, nFiles, nSeients<br><span class="pas ref">per referència:</span> <strong>sala</strong></td><td>Posa la butaca a 0, o avisa si no es pot (fa servir PosicioValida)</td><td><code>Anullar(sala, 1, 5, 12, 20)</code> → no torna res: posa <code>sala[0, 4]</code> a <strong>0</strong> i escriu <strong>Reserva anul·lada.</strong></td></tr>
+              <tr class="code-row" id="E3-5"><td colspan="5"><pre class="pseudo-out" data-code="// Procediment: allibera la butaca o avisa si no es pot. Fa servir PosicioValida
+Funcion Anullar(sala Por Referencia, fila, numero, nFiles, nSeients)
+    Si NO PosicioValida(fila, numero, nFiles, nSeients) Entonces
+        Escribir &#x27;Aquesta butaca no existeix.&#x27;;
+    SiNo
+        Si sala[fila - 1, numero - 1] = 0 Entonces
+            Escribir &#x27;Aquesta butaca no estava reservada.&#x27;;
+        SiNo
+            sala[fila - 1, numero - 1] &lt;- 0;
+            Escribir &#x27;Reserva anul·lada.&#x27;;
+        FinSi
+    FinSi
+FinFuncion"></pre></td></tr>
+              <tr><td>ComptarLliures<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E3-6')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag f">funció</span></td><td><span class="pas">per valor:</span> sala, nFiles, nSeients</td><td>Un enter: butaques lliures</td><td><code>ComptarLliures(sala, 12, 20)</code> → amb una butaca reservada, <strong>239</strong></td></tr>
+              <tr class="code-row" id="E3-6"><td colspan="5"><pre class="pseudo-out" data-code="// Funció: torna quantes butaques lliures (0) hi ha
+Funcion lliures &lt;- ComptarLliures(sala, nFiles, nSeients)
+    Definir lliures, f, s Como Entero;
+    lliures &lt;- 0;
+    Para f &lt;- 0 Hasta nFiles - 1 Hacer
+        Para s &lt;- 0 Hasta nSeients - 1 Hacer
+            Si sala[f, s] = 0 Entonces
+                lliures &lt;- lliures + 1;
+            FinSi
+        FinPara
+    FinPara
+FinFuncion"></pre></td></tr>
+              <tr><td>FilaAmbSeguides<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E3-7')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag f">funció</span></td><td><span class="pas">per valor:</span> sala, k, nFiles, nSeients</td><td>Un enter: la fila, o -1 si no n'hi ha</td><td><code>FilaAmbSeguides(sala, 4, 12, 20)</code> → <strong>1</strong><br><code>FilaAmbSeguides(sala, 25, 12, 20)</code> → <strong>-1</strong> (cap fila té 25 butaques)</td></tr>
+              <tr class="code-row" id="E3-7"><td colspan="5"><pre class="pseudo-out" data-code="// Funció: torna la primera fila (des d&#x27;1) amb k lliures seguides, o -1
+Funcion filaTrobada &lt;- FilaAmbSeguides(sala, k, nFiles, nSeients)
+    Definir filaTrobada, f, s, seguides Como Entero;
+    filaTrobada &lt;- -1;
+    f &lt;- 0;
+    Mientras filaTrobada = -1 Y f &lt; nFiles Hacer
+        seguides &lt;- 0;
+        Para s &lt;- 0 Hasta nSeients - 1 Hacer
+            Si sala[f, s] = 0 Entonces
+                seguides &lt;- seguides + 1;
+                Si seguides &gt;= k Entonces
+                    filaTrobada &lt;- f + 1;
+                FinSi
+            SiNo
+                seguides &lt;- 0;
+            FinSi
+        FinPara
+        f &lt;- f + 1;
+    FinMientras
+FinFuncion"></pre></td></tr>
             </table>
           </div>
           <div class="ri-note">
