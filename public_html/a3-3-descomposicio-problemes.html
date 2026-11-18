@@ -264,6 +264,31 @@
   Calcular i mostrar la mitjana
   Buscar el dia amb més hores i mostrar-lo
 fPrograma</pre>
+    <button class="ri-btn" onclick="reveal(this,'PP1')" data-txt="programa principal" style="margin-top:0;margin-bottom:18px;">&#9654; Mostrar programa principal</button>
+    <div class="code-box" id="PP1" style="margin-bottom:18px;">
+<div class="demo-label">Programa principal en PSeInt (cada pas de l'esquema és una crida)</div>
+<pre class="pseudo-out" data-code="Proceso HoresEstudi
+    Definir N_DIES, posMax Como Entero;
+    N_DIES &lt;- 5;
+    Definir dies Como Caracter;
+    Dimension dies[N_DIES];
+    Definir hores Como Entero;
+    Dimension hores[N_DIES];
+    dies[0] &lt;- 'dilluns';
+    dies[1] &lt;- 'dimarts';
+    dies[2] &lt;- 'dimecres';
+    dies[3] &lt;- 'dijous';
+    dies[4] &lt;- 'divendres';
+
+    // Llegir les hores de cada dia (validades)
+    LlegirHores(dies, hores, N_DIES);
+    // Calcular i mostrar la mitjana
+    Escribir 'Mitjana diària: ', CalcularMitjana(hores, N_DIES), ' hores';
+    // Buscar el dia amb més hores i mostrar-lo
+    posMax &lt;- PosicioMaxim(hores, N_DIES);
+    Escribir 'Dia que has estudiat més: ', dies[posMax], ' (', hores[posMax], ' hores)';
+FinProceso"></pre>
+</div>
 
     <p class="lead"><strong>Pas 3 · peces i contractes.</strong> "Llegir un valor validant" és una feina que es fa a cada dia: en fem una peça a part.</p>
     <div class="tbl-scroll">
