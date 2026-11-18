@@ -738,28 +738,12 @@ FinProceso"></pre>
             límit d'intents, et mostra el número que havia generat. Si l'usuari escriu un número que no és entre 1 i 100,
             el programa l'ha de tornar a demanar sense gastar cap intent.
           </div>
-          <button class="ri-btn" onclick="reveal(this,'S1')" data-txt="solució (anàlisi i disseny)">▶ Mostrar solució (anàlisi i disseny)</button>
+          <button class="ri-btn" onclick="reveal(this,'S1')" data-txt="solució (descomposició)">▶ Mostrar solució (descomposició)</button>
           <button class="ri-btn" onclick="reveal(this,'C1')" data-txt="solució (codi PSeInt)">▶ Mostrar solució (codi PSeInt)</button>
         </div>
         <div class="ri-ans" id="S1">
-          <div class="ri-ans-label">① Anàlisi</div>
-          <div class="ri-note" style="margin-top:0;">
-            Hem de generar un nombre aleatori (funció <code>Aleatorio</code>) de l'1 al 100.<br>
-            Necessitem un comptador per comptar els 10 intents. Al principi val 10 i anirà decrementant.<br>
-            Mentre no encerti el número i em quedin intents:<br>
-            &nbsp;&nbsp;· Llegeixo un número<br>
-            &nbsp;&nbsp;· Ho comparo amb el nombre generat (dic si és més gran o més petit)<br>
-            &nbsp;&nbsp;· Demano un altre nombre<br>
-            Puc acabar el bucle per dues raons: si he endevinat el número, he guanyat i mostro els intents que he necessitat;
-            si no, he perdut: he utilitzat els 10 intents i mostro el número generat.<br><br>
-            <strong>Dades d'entrada:</strong> número demanat a l'usuari.<br>
-            <strong>Informació de sortida:</strong> has guanyat i els intents, o has perdut i el número.<br>
-            <strong>Variables:</strong> <code>num_secret</code>, <code>num_ingressat</code>, <code>intents</code> (enters)<br><br>
-            <strong>Peça:</strong> llegir un número vàlid es fa a l'inici i a cada volta del bucle, per tant és una feina
-            que es repeteix: en fem la funció <code>DemanarNumero</code>. Dir si el número és massa baix o massa alt és
-            una feina que <strong>escriu</strong> i no torna res: en fem el procediment <code>DonarPista</code>.
-          </div>
-          <div class="tbl-scroll" style="margin-top:10px;">
+          <div class="ri-ans-label">① Peces i contractes</div>
+          <div class="tbl-scroll">
             <table class="mod-table">
               <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th><th>Exemple</th></tr>
               <tr><td>DemanarNumero<br><button class="ri-btn tbl-btn" onclick="reveal(this,'E1-0')" data-txt="codi">▶ Mostrar codi</button></td><td><span class="tag f">funció</span></td><td>res</td><td>Un enter entre 1 i 100 (torna a demanar si no ho és)</td><td><code>DemanarNumero()</code> → si escrius 150 torna a preguntar; si escrius 37, torna <strong>37</strong></td></tr>
