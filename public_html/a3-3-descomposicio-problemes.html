@@ -742,7 +742,44 @@ FinProceso"></pre>
           <button class="ri-btn" onclick="reveal(this,'C1')" data-txt="solució (codi PSeInt)">▶ Mostrar solució (codi PSeInt)</button>
         </div>
         <div class="ri-ans" id="S1">
-          <div class="ri-ans-label">① Peces i contractes</div>
+          <div class="ri-ans-label">① Esquema</div>
+          <pre class="pseudo-out">Programa EndevinaNumero
+  Generar el número secret (1-100) i posar 10 intents
+  Llegir un número (validat)
+  Mentre no l'encerti i quedin intents
+    Donar una pista i restar un intent
+    Llegir un altre número (validat)
+  Mostrar si ha guanyat (i en quants intents) o el número secret
+fPrograma</pre>
+          <button class="ri-btn" onclick="reveal(this,'PE1')" data-txt="programa principal" style="margin-top:10px;">&#9654; Mostrar programa principal</button>
+          <div class="code-box" id="PE1" style="margin-top:10px;">
+          <div class="demo-label">Programa principal en PSeInt (cada pas de l'esquema és una crida)</div>
+          <pre class="pseudo-out" data-code="Proceso Endevina_Numero
+    Definir intents, num_secret, num_ingressat Como Entero;
+    // Generar el número secret (1-100) i posar 10 intents
+    intents &lt;- 10;
+    num_secret &lt;- Aleatorio(1, 100);
+    Escribir &#x27;Endevina el número (entre 1 i 100):&#x27;;
+    // Llegir un número (validat)
+    num_ingressat &lt;- DemanarNumero();
+    // Mentre no l&#x27;encerti i quedin intents
+    Mientras num_secret &lt;&gt; num_ingressat Y intents &gt; 1 Hacer
+        // Donar una pista i restar un intent
+        DonarPista(num_secret, num_ingressat);
+        intents &lt;- intents - 1;
+        Escribir &#x27;Et queden &#x27;, intents, &#x27; intents:&#x27;;
+        // Llegir un altre número (validat)
+        num_ingressat &lt;- DemanarNumero();
+    FinMientras
+    // Mostrar si ha guanyat (i en quants intents) o el número secret
+    Si num_secret = num_ingressat Entonces
+        Escribir &#x27;Exacte! Ho has endevinat en &#x27;, 11 - intents, &#x27; intents.&#x27;;
+    SiNo
+        Escribir &#x27;Has perdut. El número era: &#x27;, num_secret;
+    FinSi
+FinProceso"></pre>
+          </div>
+          <div class="ri-ans-label" style="margin-top:16px;">② Peces i contractes</div>
           <div class="tbl-scroll">
             <table class="mod-table">
               <tr><th>Peça</th><th>Tipus</th><th>Rep</th><th>Torna / fa</th><th>Exemple</th></tr>
@@ -768,54 +805,10 @@ Funcion DonarPista(num_secret, num)
 FinFuncion"></pre></td></tr>
             </table>
           </div>
-          <div class="ri-ans-label" style="margin-top:16px;">② Disseny</div>
-          <pre class="pseudo-out">1. Genero un nombre aleatori de l'1 al 100 (num_secret)
-2. intents = 10
-3. num = DemanarNumero()
-4. Mentre num &lt;&gt; num_secret i intents &gt; 1
-5.     DonarPista(num_secret, num)
-6.     intents = intents - 1
-7.     Escriure intents
-8.     num = DemanarNumero()
-9. Si num_secret = num -&gt; Escriure &quot;Has guanyat&quot;, intents
-10. SiNo -&gt; Escriure &quot;Has perdut&quot;, num_secret
-
-DemanarNumero()
-  Repetir
-    Llegir num
-    Si num &lt; 1 o num &gt; 100 -&gt; Escriure &quot;Ha de ser entre 1 i 100&quot;
-  Fins que num &gt;= 1 i num &lt;= 100
-  Tornar num
-
-DonarPista(num_secret, num)
-  Si num_secret &gt; num -&gt; Escriure &quot;Molt baix&quot;
-  SiNo -&gt; Escriure &quot;Molt alt&quot;</pre>
-          <button class="ri-btn" onclick="reveal(this,'PE1')" data-txt="programa principal" style="margin-top:10px;">&#9654; Mostrar programa principal</button>
-          <div class="code-box" id="PE1" style="margin-top:10px;">
-          <div class="demo-label">Programa principal en PSeInt (cada pas de l'esquema és una crida)</div>
-          <pre class="pseudo-out" data-code="Proceso Endevina_Numero
-    Definir intents, num_secret, num_ingressat Como Entero;
-    // Generar el número secret i posar 10 intents
-    intents &lt;- 10;
-    num_secret &lt;- Aleatorio(1, 100);
-
-    // Demanar números mentre no l&#x27;encerti i quedin intents
-    Escribir &#x27;Endevina el número (entre 1 i 100):&#x27;;
-    num_ingressat &lt;- DemanarNumero();
-    Mientras num_secret &lt;&gt; num_ingressat Y intents &gt; 1 Hacer
-        DonarPista(num_secret, num_ingressat);
-        intents &lt;- intents - 1;
-        Escribir &#x27;Et queden &#x27;, intents, &#x27; intents:&#x27;;
-        num_ingressat &lt;- DemanarNumero();
-    FinMientras
-
-    // Dir si ha guanyat (i en quants intents) o si ha perdut
-    Si num_secret = num_ingressat Entonces
-        Escribir &#x27;Exacte! Ho has endevinat en &#x27;, 11 - intents, &#x27; intents.&#x27;;
-    SiNo
-        Escribir &#x27;Has perdut. El número era: &#x27;, num_secret;
-    FinSi
-FinProceso"></pre>
+          <div class="ri-note">
+            <code>DemanarNumero</code> surt dues vegades a l'esquema (abans del bucle i a dins): quan una feina es repeteix,
+            és senyal que ha de ser una peça. <code>DonarPista</code> és un procediment i no una funció perquè no torna cap
+            valor: només <strong>escriu</strong>.
           </div>
         </div>
         <div class="ri-ans" id="C1">
